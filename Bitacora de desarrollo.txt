@@ -1,0 +1,4 @@
+BITACORA DE DESARROLLO CON REACT:
+
+Aplicacion: audiophone-core
+Nucleo: React.js
