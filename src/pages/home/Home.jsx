@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import Navbar from './../../components/navbar/Navbar';
-import Sidebar from './../../components/sidebar/Sidebar'
+// componentes
+// import Navbar from './../../components/navbar/Navbar';
+// import Sidebar from './../../components/sidebar/Sidebar'
 
 class Home extends Component {
 
@@ -9,8 +10,7 @@ class Home extends Component {
 		return (
 
 			<div>
-				<Navbar />
-				<Sidebar />
+				<h2>Home works</h2>
 			</div>
 		);
 	}

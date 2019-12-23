@@ -6,7 +6,7 @@ class Login extends Component {
   render() {
 
     return (
-        <h1>Login works</h1>	
+        <h2>Login works</h2>	
      );
   }
 }
