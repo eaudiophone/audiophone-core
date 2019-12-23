@@ -1,4 +1,33 @@
 BITACORA DE DESARROLLO CON REACT:
 
+1.- Cada componente de react tiene propiedades que pueden ser consultadas desde la
+consola solo coloca: console.log( props ); en el metodo render.
+
+	muestra las propiedadades de la clase
+	
+	console.log( this.props );
+	console.log( this.props.history ); historial
+	console.log( this.props.location ); locaciones html
+	console.log( this.props.match ); match components
+
+INPUT:
+
+2.- Se pueden añadir nuevas propiedades de entrada al componente solo asegurate,
+de establecer las propiedades en las llamadas al elemento
+
+	<Persona name="Gabriel" />
+
+NOTA: React es bantante flexible pero solo tiene una sola regla estricta.
+
+	"Todos los componentes de React deben actuar como funciones puras con respecto a sus props".
+
+3.- NO USAR array.forEach(): en listas de valores que se deben recorrer porque retorna
+	undefined en este caso utiliza el array.map() 
+
+	names.map( ( name, index ) => <Persona key={ index } name={ name } /> )
+
+
+| ---------------------------------------------------------------------------------- |
+
 Aplicacion: audiophone-core
 Nucleo: React.js
