@@ -7,6 +7,9 @@ import {
 // rutes
 import Home from './../../routes/Home';
 
+import { MENU } from './Sidebar-hardcode'; // menu-hardcode
+
+
 class Sidebar extends Component {
 
 	getSidebar() {
@@ -18,8 +21,17 @@ class Sidebar extends Component {
 					<h3>Gestionar servicios</h3>
 					<hr />
           			<ul>
-            			<li><Link to="/records">Records</Link></li>
-            			<li><Link to="/rental">Rental</Link></li>
+          				{ 	MENU.user.map( ( element ) => {
+
+          						return ( 
+          							<li key={ element.id }>
+          								<Link to={ element.link }>
+          									{ element.name }
+          								</Link>
+          							</li> 
+          						)
+          					}) 
+          				}
           			</ul>
           			<h3>Información</h3>
           			<hr />
