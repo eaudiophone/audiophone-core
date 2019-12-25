@@ -10,7 +10,7 @@ class Home extends Component {
 
 			<div>
 				<Navbar />
-				<Sidebar admin={ true } />
+				<Sidebar admin={ false } />
 			</div>
 		);
 	}

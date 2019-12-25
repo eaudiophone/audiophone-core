@@ -8,8 +8,6 @@ class Sidebar extends Component {
 
 	checkUser() {
 
-		// console.log( this.props );
-
 		if ( this.props.admin ) {
 
 			return (
