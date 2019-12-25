@@ -1,14 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
-// pages
 import Record from './../pages/record/Record';
 import Rental from './../pages/rental/Rental';
 
 // data de prueba
 const getInfo = () => <h2>Info works</h2>;
 
-const Home = () => (
+const UserRoutes = () => (
 
 	<Switch>
 		<Route 
@@ -26,4 +24,4 @@ const Home = () => (
 	</Switch>
 ); 
 
-export default Home;
+export default UserRoutes;

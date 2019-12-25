@@ -14,23 +14,18 @@ export const MENU = {
 	admin: [
 		{
 			id: 1,
-			link: '/calendar',
-			name: 'Calendar'
-		},
-		{
-			id: 2,
 			link: '/budget',
 			name: 'Budget'
 		},
 		{
-			id: 3,
-			link: '/days',
-			name: 'Days of service'
+			id: 2,
+			link: '/day',
+			name: 'Day of service'
 		},
 		{
-			id: 4,
-			link: '/users',
-			name: 'Users'
+			id: 3,
+			link: '/client',
+			name: 'Client'
 		}
 	],	
 };

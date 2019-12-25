@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-// componentes
 import Navbar from './../../components/navbar/Navbar';
 import Sidebar from './../../components/sidebar/Sidebar'
 
@@ -12,7 +10,7 @@ class Home extends Component {
 
 			<div>
 				<Navbar />
-				<Sidebar />
+				<Sidebar admin={ true } />
 			</div>
 		);
 	}

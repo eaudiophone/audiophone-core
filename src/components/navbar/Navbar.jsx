@@ -8,12 +8,12 @@ class Navbar extends React.Component {
 	
 			<div>
 				<nav>
-          			<ol>
+          			<ul>
             			<li>Register</li>
             			<li>Notifications</li>
             			<li>Email</li>
             			<li>User</li>
-          			</ol>
+          			</ul>
           		</nav>
 			</div>
 		);
