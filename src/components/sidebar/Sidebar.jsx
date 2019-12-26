@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link, BrowserRouter as Router, } from 'react-router-dom';
-import UserRoutes from './../../routes/User';
+import { MENU } from './Sidebar-hardcode';
 import AdminRoutes from './../../routes/Admin';
-import { MENU } from './Sidebar-hardcode'; 
+import UserRoutes from './../../routes/User'; 
 
 class Sidebar extends Component {
 

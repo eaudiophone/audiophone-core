@@ -26,6 +26,10 @@ NOTA: React es bantante flexible pero solo tiene una sola regla estricta.
 
 	names.map( ( name, index ) => <Persona key={ index } name={ name } /> )
 
+4.- Ruta not found:
+
+	<Route path="**" component={ NotFound } />
+
 
 | ---------------------------------------------------------------------------------- |
 
