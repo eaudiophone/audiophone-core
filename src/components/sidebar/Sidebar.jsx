@@ -22,7 +22,7 @@ class Sidebar extends Component {
 			return (
 				<div>
 					{ this.getSidebar( MENU.user ) }
-					<UserRoutes />;
+					<UserRoutes />
 				</div>
 			);
 		} 

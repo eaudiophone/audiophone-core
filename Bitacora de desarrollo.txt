@@ -30,6 +30,21 @@ NOTA: React es bantante flexible pero solo tiene una sola regla estricta.
 
 	<Route path="**" component={ NotFound } />
 
+5.- Cada componente de react controla su estado, se pueden manipular las propiedades
+del componente para controlar eventos dentro del constructor utilizando la propiedad
+state de la clase.
+
+	this.state = { value: '' };
+
+6.- Para manejar eventos es un poco diferente con JSX pasar el nombre de la funcion
+en vez de un string. Las funciones handle reciben un parametro que corresponde al
+evento. No se necesita utilizar eventListener para las funciones.
+
+7.- El metodo bind permite enlaza la funcion de la clase con el evento, y no se
+se ejecuta de inmediato. Devuelve una copia del archivo.
+
+	// previene que siga ejecutando el metodo en JavaScript
+	event.preventDefault(); -> return false
 
 | ---------------------------------------------------------------------------------- |
 
