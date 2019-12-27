@@ -14,7 +14,7 @@ const AppRoutes = () => (
 			<Route path="/home" component={ Home } />
 			<Route path="/register" component={ Register } />
 			<Route exact path="/" component={ Login } />
-			<Route path="**" component={ NotFound } />
+			<Route component={ NotFound } />
 		</Switch>
 	</Suspense>
 );

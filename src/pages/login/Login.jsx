@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-// Componente principal
 class Login extends Component {
 
 	constructor( props ) {
@@ -12,8 +11,6 @@ class Login extends Component {
 			user: '',
 			password: ''
 		};
-
-		// vincula la funcion a un evento de addEventListener
 
 		this.handleInputChange = this.handleInputChange.bind( this );
 		this.handleSubmit = this.handleSubmit.bind( this ); 
@@ -31,29 +28,13 @@ class Login extends Component {
 
 		const login = {
 			user: event.target[0].value,
-			password: event.target[1].value
+			password: event.target[1].value,
+			login: true,
 		};
 
-		console.log( login );
-
-		this.cleanForm( event.target );
-
-		alert( 'datos enviados al servidor' );
+		console.log('datos enviados al servidor: ', login );
 
 		event.preventDefault();
-	}
-
-	cleanForm( element ) {
-
-		element[0].value = '';
-		element[1].value = '';
-
-		this.setState({
-			user: '',
-			password: ''
-		});
-
-		console.log( this.state );
 	}
 
   	render() {
@@ -68,10 +49,11 @@ class Login extends Component {
     				<div>
     					<label>user:</label>
     					<input 
-    						type="text" 
+    						type="email" 
     						value={ this.state.name }
     						name="user" 
-    						onChange={ this.handleInputChange } 
+    						onChange={ this.handleInputChange }
+    						required 
     					/>
     				</div>
 
@@ -82,6 +64,7 @@ class Login extends Component {
     						value={ this.state.password }
     						name="password" 
     						onChange={ this.handleInputChange } 
+    						required
     					/>
     				</div>
 

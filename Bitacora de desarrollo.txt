@@ -46,6 +46,24 @@ se ejecuta de inmediato. Devuelve una copia del archivo.
 	// previene que siga ejecutando el metodo en JavaScript
 	event.preventDefault(); -> return false
 
+8.- Hay un par de cosas sobre el set state :
+
+	8.1.- No modifiques el estado directamente, solo aplica en el constructor de 
+	la clase en su lugar utiliza set state.
+
+	8.2.- Las actualizaciones de estado son asincronas, es decir react agrupa varias
+	invocaciones a set state, no debes confiar en sus valores para calcular su
+	siguiente estado.
+
+	Para arreglarlo, se usa la segunda forma de setState que acepta una funcion 
+	en lugar de un objeto. Esta funcion recibirá el estado previo como primer 
+	argumento y las props como el segundo argumento
+
+	// Correcto
+		this.setState((state, props) => ({
+  			counter: state.counter + props.increment
+		}));
+
 | ---------------------------------------------------------------------------------- |
 
 Aplicacion: audiophone-core
