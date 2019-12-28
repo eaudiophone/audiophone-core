@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AuthService from './../../services/AuthService';
 
 class Login extends Component {
 
@@ -6,20 +7,26 @@ class Login extends Component {
 		
 		super( props );
 
-		// estado del componente inicial
+		// initial state
 		this.state = {  
-			user: '',
-			password: ''
+			user: localStorage.getItem('email') || '',
+			password: '',
+            remember: false
 		};
 
+        // events and vinculation with the state
 		this.handleInputChange = this.handleInputChange.bind( this );
 		this.handleSubmit = this.handleSubmit.bind( this ); 
+
+        // services
+        this.authService = new AuthService();
 	}
 
 	handleInputChange( event ) {
 
-		const name = event.target.name;
-		const value = event.target.value
+        const target = event.target;
+		const name = target.name;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
 
 		this.setState({ [ name ]: value });
 	}
@@ -29,12 +36,13 @@ class Login extends Component {
 		const login = {
 			user: event.target[0].value,
 			password: event.target[1].value,
-			login: true,
 		};
 
-		console.log('datos enviados al servidor: ', login );
+        const rememberMe = event.target[2].checked;
 
-		event.preventDefault();
+		this.authService.logIn( login, rememberMe );
+
+		event.preventDefault(); 
 	}
 
   	render() {
@@ -50,7 +58,7 @@ class Login extends Component {
     					<label>user:</label>
     					<input 
     						type="email" 
-    						value={ this.state.name }
+    						value={ this.state.user }
     						name="user" 
     						onChange={ this.handleInputChange }
     						required 
@@ -68,8 +76,18 @@ class Login extends Component {
     					/>
     				</div>
 
+                    <div>
+                        <label>remember me:</label>
+                        <input 
+                            name="remember"
+                            type="checkbox"
+                            checked={ this.state.remember }
+                            onChange={ this.handleInputChange }
+                        />    
+                    </div>
+
     				<div>
-    					<input type="submit" value="log in" />
+    					<input type="submit" value="Log In" />
     				</div>
 
     			</form>
