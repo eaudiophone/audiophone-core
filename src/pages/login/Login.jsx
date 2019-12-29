@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import AuthService from './../../services/AuthService';
 
 class Login extends Component {
@@ -11,7 +12,8 @@ class Login extends Component {
 		this.state = {  
 			user: localStorage.getItem('email') || '',
 			password: '',
-            remember: false
+            remember: false,
+            redirect: false
 		};
 
         // events and vinculation with the state
@@ -39,11 +41,19 @@ class Login extends Component {
 		};
 
         const rememberMe = event.target[2].checked;
-
 		this.authService.logIn( login, rememberMe );
-
+        
+        this.setState({ redirect: true });
+  
 		event.preventDefault(); 
 	}
+
+    redirect() {
+        
+        if ( this.state.redirect ) {
+            return ( <Redirect to="/home" /> );
+        }
+    }
 
   	render() {
 
@@ -91,6 +101,9 @@ class Login extends Component {
     				</div>
 
     			</form>
+
+                { this.redirect() }
+                
     		</div>
      	);
   	}
