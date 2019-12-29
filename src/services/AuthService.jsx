@@ -3,7 +3,7 @@ class AuthService {
 	logIn( login, rememberMe ) {
 
 		if ( rememberMe ) { 		
-			localStorage.setItem( 'email', login.user ); 
+			localStorage.setItem( 'email', login.email ); 
 		}
 		else { 
 			localStorage.removeItem( 'email' );

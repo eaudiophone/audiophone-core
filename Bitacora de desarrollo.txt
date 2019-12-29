@@ -64,6 +64,14 @@ se ejecuta de inmediato. Devuelve una copia del archivo.
   			counter: state.counter + props.increment
 		}));
 
+9.- Cuando hagas una redireccion existen 2 formas:
+
+	1.- A traves de componentes controlados: busca la actualizacion de
+	estados es una buena practica al momento de realizar una redirección
+
+	2.- Sino tambien puedes modificar el history de la clase para obligar 
+	al componente a redireccionar cuando sea necesario. 
+
 | ---------------------------------------------------------------------------------- |
 
 Aplicacion: audiophone-core

@@ -1,9 +1,91 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Register extends Component {
 
+	constructor( props ) {
+
+		super( props );
+
+		this.state = {
+			redirect: false
+		}
+
+		this.handleSubmit = this.handleSubmit.bind( this );
+	}
+
+	handleSubmit( event ) {
+
+		const user = {
+			name: event.target[0].value,
+			email: event.target[1].value,
+			password: event.target[2].value,
+			role: 'USER_ROLE',
+			status: true
+		};
+
+		alert('cliente registrado');
+
+		this.setState({ redirect: true });
+
+		console.log( user );
+
+		event.preventDefault();
+	}
+
+	redirectTo() {
+
+		if ( this.state.redirect ) {
+			return ( <Redirect to="/" /> );
+		}
+	}
+
 	render() {
-		return ( <h2>Register works</h2> );
+		
+		return ( 
+
+			<div>
+				<h2>Registro de clientes</h2>
+
+				<form onSubmit={ this.handleSubmit }>
+					
+					<div>
+						<label>Nombre y apellido:</label>
+						<input 
+							type="text"
+							name="name"
+							required
+						/>
+					</div>
+
+					<div>
+						<label>Correo electronico</label>
+						<input 
+							type="email"
+							name="email"
+							required
+						/>
+					</div>
+
+					<div>
+						<label>Contraseña</label>
+						<input 
+							type="password"
+							name="password"
+							required
+						/>
+					</div>
+
+					<div>
+						<input type="submit" value="registrar" />
+						<input type="reset" value="cancelar" />
+					</div>
+
+				</form>
+
+				{ this.redirectTo() }
+			</div>
+		);
 	}
 }
 

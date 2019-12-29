@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import AuthService from './../../services/AuthService';
 
 class Login extends Component {
@@ -10,33 +10,31 @@ class Login extends Component {
 
 		// initial state
 		this.state = {  
-			user: localStorage.getItem('email') || '',
-			password: '',
-            remember: false,
+			email: localStorage.getItem('email') || '',
             redirect: false
 		};
 
         // events and vinculation with the state
-		this.handleInputChange = this.handleInputChange.bind( this );
+		this.handleInputChange = this.handleChange.bind( this );
 		this.handleSubmit = this.handleSubmit.bind( this ); 
 
         // services
         this.authService = new AuthService();
 	}
 
-	handleInputChange( event ) {
+	handleChange( event ) {
 
         const target = event.target;
 		const name = target.name;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const value = target.value;
 
-		this.setState({ [ name ]: value });
+		this.setState({ [ name ] : value });
 	}
 
 	handleSubmit( event ) {
 
 		const login = {
-			user: event.target[0].value,
+			email: event.target[0].value,
 			password: event.target[1].value,
 		};
 
@@ -65,11 +63,11 @@ class Login extends Component {
     			<form onSubmit={ this.handleSubmit }> 
 
     				<div>
-    					<label>user:</label>
+    					<label>email:</label>
     					<input 
-    						type="email" 
-    						value={ this.state.user }
-    						name="user" 
+                            name="email"
+                            type="email"
+                            value={ this.state.email }  
     						onChange={ this.handleInputChange }
     						required 
     					/>
@@ -78,10 +76,8 @@ class Login extends Component {
     				<div>
     					<label>password:</label>
     					<input 
+                            name="password"
     						type="password" 
-    						value={ this.state.password }
-    						name="password" 
-    						onChange={ this.handleInputChange } 
     						required
     					/>
     				</div>
@@ -91,22 +87,32 @@ class Login extends Component {
                         <input 
                             name="remember"
                             type="checkbox"
-                            checked={ this.state.remember }
-                            onChange={ this.handleInputChange }
                         />    
                     </div>
 
     				<div>
     					<input type="submit" value="Log In" />
+                        <input type="reset" value="Cancelar" />
     				</div>
 
     			</form>
 
+                { register() }
                 { this.redirect() }
                 
     		</div>
      	);
   	}
 }
+
+const register = () => (
+       
+    <div> 
+        <p>
+            Si no posees cuenta 
+            <Link to="/register">Registrese</Link>
+        </p>
+    </div>
+);
 
 export default Login;
