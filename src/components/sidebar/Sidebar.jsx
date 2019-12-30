@@ -13,7 +13,7 @@ class Sidebar extends Component {
 			return (
 				<div>
 					{ this.getSidebar( MENU.admin ) }
-					<AdminRoutes />;
+					<AdminRoutes />
 				</div>
 			);
 						

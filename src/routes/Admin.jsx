@@ -4,6 +4,8 @@ import Client from './../pages/client/Client';
 import Day from './../pages/day/Day';
 import Budget from './../pages/budget/Budget';
 
+const getInfo = () => ( <h2>Info works</h2> );
+
 const AdminRoutes = () => (
 
 	<Switch>
@@ -18,6 +20,10 @@ const AdminRoutes = () => (
 		<Route 
 			path="/budget"
 			component={ Budget }
+		/>
+		<Route 
+			path="/info"
+			component={ getInfo }
 		/>
 	</Switch>
 ); 
