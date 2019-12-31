@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import User from './../../Models/UserModels';
+import User from './../../models/UserModels';
 
 class Register extends Component {
 

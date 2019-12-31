@@ -18,7 +18,7 @@ class User {
 
 		let format = new Date();
 		let month = parseInt( format.getMonth() ) + 1;
-		
+
 		return `${ format.getFullYear() }/${ month }/${ format.getDate() }`;
 	}
 }

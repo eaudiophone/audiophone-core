@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Client from './../pages/client/Client';
+import User from './../pages/user/User';
 import Day from './../pages/day/Day';
 import Budget from './../pages/budget/Budget';
 
@@ -10,8 +10,8 @@ const AdminRoutes = () => (
 
 	<Switch>
 		<Route 
-			path="/client"
-			component={ Client }
+			path="/user"
+			component={ User }
 		/>
 		<Route 
 			path="/day"

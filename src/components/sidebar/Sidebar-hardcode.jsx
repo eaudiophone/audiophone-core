@@ -24,8 +24,8 @@ export const MENU = {
 		},
 		{
 			id: 3,
-			link: '/client',
-			name: 'Client'
+			link: '/user',
+			name: 'User'
 		}
 	],	
 };

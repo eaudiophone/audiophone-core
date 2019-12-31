@@ -8,7 +8,7 @@ class Sidebar extends Component {
 
 	checkUser() {
 
-		if ( this.props.admin ) {
+		if ( this.props.admin === 'ADMIN_ROLE' ) {
 
 			return (
 				<div>
