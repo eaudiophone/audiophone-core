@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import AuthService from './../../services/AuthService';
 
+import './Login.css';
+
 class Login extends Component {
 
 	constructor( props ) {
@@ -57,14 +59,16 @@ class Login extends Component {
 
     	return (
 
-    		<div>
-    			<h2>Estudios audiophone</h2>
+    		<div className="container">
 
+                <h2>Estudios Audiophone</h2>
+              
     			<form onSubmit={ this.handleSubmit }> 
 
-    				<div>
+    				<div className="form-group">
     					<label>email:</label>
     					<input 
+                            className="form-control"
                             name="email"
                             type="email"
                             value={ this.state.email }  
@@ -73,26 +77,36 @@ class Login extends Component {
     					/>
     				</div>
 
-    				<div>
+    				<div className="form-group">
     					<label>password:</label>
-    					<input 
+    					<input
+                            className="form-control" 
                             name="password"
     						type="password" 
     						required
     					/>
     				</div>
 
-                    <div>
-                        <label>remember me:</label>
-                        <input 
+                    <div className="form-group form-check">
+                        <input
+                            className="form-check-input" 
                             name="remember"
                             type="checkbox"
-                        />    
+                        /> 
+                         <label id="remember">remember me</label>   
                     </div>
 
     				<div>
-    					<input type="submit" value="Log In" />
-                        <input type="reset" value="Cancelar" />
+    					<input 
+                            className="btn btn-primary btn-block" 
+                            type="submit" 
+                            value="Log In" 
+                        />
+                        <input
+                            className="btn btn-secondary btn-block" 
+                            type="reset" 
+                            value="Cancelar" 
+                        />
     				</div>
 
     			</form>
@@ -107,11 +121,12 @@ class Login extends Component {
 
 const register = () => (
        
-    <div> 
+    <div id="register"> 
         <p>
-            Si no posees cuenta 
+            Si no posees cuenta
             <Link to="/register">Registrese</Link>
         </p>
+       
     </div>
 );
 
