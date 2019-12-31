@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import User from './../../Models/UserModels';
 
 class Register extends Component {
 
@@ -16,13 +17,11 @@ class Register extends Component {
 
 	handleSubmit( event ) {
 
-		const user = {
-			name: event.target[0].value,
-			email: event.target[1].value,
-			password: event.target[2].value,
-			role: 'USER_ROLE',
-			status: true
-		};
+		let user = new User( 
+			event.target[0].value, 
+			event.target[1].value, 
+			event.target[2].value,
+		);
 
 		alert('cliente registrado');
 
