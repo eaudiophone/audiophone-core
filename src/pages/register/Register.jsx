@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import User from './../../models/UserModels';
 
+import './Register.css';
+
 class Register extends Component {
 
 	constructor( props ) {
@@ -39,48 +41,102 @@ class Register extends Component {
 		}
 	}
 
+	getInputName() {
+
+		return (
+
+			<div className="form-group">
+				<label htmlFor="inputName">Nombre y apellido:</label>
+				<input
+					className="form-control form-control-lg"
+					id="inputName" 
+					type="text"
+					name="name"
+					required
+					/>
+			</div>
+		);
+	}
+
+	getEmailInput() {
+
+		return ( 
+
+			<div className="form-group">
+				<label htmlFor="inputEmail">Correo electronico:</label>
+				<input
+					id="inputEmail"
+					className="form-control form-control-lg" 
+					type="email"
+					name="email"
+					required
+				/>
+			</div>
+		 );
+	}
+
+	getPasswordInput() {
+		
+		return (
+
+			<div className="form-group">
+				<label htmlFor="inputPassword">Nueva Contraseña:</label>
+				<input
+					className="form-control form-control-lg"
+					id="inputPassword" 
+					type="password"
+					name="password"
+					required
+				/>
+			</div>
+		);
+	}
+
+	getButtons() {
+
+		return(
+			
+			<div className="row">
+				<div className="col-6">
+					<input 
+						type="submit" 
+						value="Registrar" 
+						className="btn btn-primary btn-lg btn-block"
+					/>
+				</div>
+				<div className="col-6">
+					<input 
+						type="reset" 
+						value="Cancelar" 
+						className="btn btn-secondary btn-lg btn-block"
+					/>	
+				</div>	
+			</div>
+		);
+	}
+
 	render() {
 		
 		return ( 
 
-			<div>
-				<h2>Registro de clientes</h2>
+			<div className="container">
+				
+				<form className="form-register" onSubmit={ this.handleSubmit }>
 
-				<form onSubmit={ this.handleSubmit }>
+					<h2 className="mb-5">
+						Registro de usuarios
+					</h2>
 					
-					<div>
-						<label>Nombre y apellido:</label>
-						<input 
-							type="text"
-							name="name"
-							required
-						/>
-					</div>
-
-					<div>
-						<label>Correo electronico</label>
-						<input 
-							type="email"
-							name="email"
-							required
-						/>
-					</div>
-
-					<div>
-						<label>Contraseña</label>
-						<input 
-							type="password"
-							name="password"
-							required
-						/>
-					</div>
-
-					<div>
-						<input type="submit" value="registrar" />
-						<input type="reset" value="cancelar" />
-					</div>
-
+					{ this.getInputName() }
+					{ this.getEmailInput() }
+					{ this.getPasswordInput() }
+					{ this.getButtons() }
+					
 				</form>
+
+				<p className="mt-5 text-center">
+					<a href="/">Volver al login</a>
+				</p>
 
 				{ this.redirectTo() }
 			</div>

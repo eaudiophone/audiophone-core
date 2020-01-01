@@ -72,6 +72,11 @@ se ejecuta de inmediato. Devuelve una copia del archivo.
 	2.- Sino tambien puedes modificar el history de la clase para obligar 
 	al componente a redireccionar cuando sea necesario. 
 
+10.- Parece que el router dom conserva los estilos generados por la pagina
+hay que reiniciar los estilos cada vez que la aplicacion aplique una redirección.
+
+	Revisar la documentacion de link to
+
 | ---------------------------------------------------------------------------------- |
 
 Aplicacion: audiophone-core

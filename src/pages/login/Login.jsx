@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import AuthService from './../../services/AuthService'; 
 
 import './Login.css';
@@ -112,10 +112,29 @@ class Login extends Component {
     		 <div className="register"> 
         		<p>
             		Si no posees cuenta
-            		<Link to="/register">Registrese</Link>
+            		<a href="/register">Registrese</a>
         		</p>
     		</div>
     	);
+    }
+
+    getButtons() {
+
+        return (
+
+            <div>
+                <input 
+                    className="btn btn-primary btn-block btn-lg" 
+                    type="submit" 
+                    value="Log In" 
+                />
+                <input
+                    className="btn btn-secondary btn-block btn-lg" 
+                    type="reset" 
+                    value="Cancelar" 
+                />
+            </div>
+        );
     }
 
   	render() {
@@ -134,20 +153,7 @@ class Login extends Component {
     				{ this.getEmailInput() }
     				{ this.getPasswordInput() }
     				{ this.getCheckboxInput() }
-
-    				<div>
-    					<input 
-                            className="btn btn-primary btn-block btn-lg" 
-                            type="submit" 
-                            value="Log In" 
-                        />
-                        <input
-                            className="btn btn-secondary btn-block btn-lg" 
-                            type="reset" 
-                            value="Cancelar" 
-                        />
-    				</div>
-
+                    { this.getButtons() }
     				{ this.getRegister() }
 
                 	<p className="mt-3 mb-3 text-muted text-center">
