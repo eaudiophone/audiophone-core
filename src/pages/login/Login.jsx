@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
-import AuthService from './../../services/AuthService';
+import { Link, Redirect } from 'react-router-dom';
+import AuthService from './../../services/AuthService'; 
 
 import './Login.css';
 
@@ -48,11 +48,74 @@ class Login extends Component {
 		event.preventDefault(); 
 	}
 
-    redirect() {
+    redirectTo() {
         
         if ( this.state.redirect ) {
             return ( <Redirect to="/home" /> );
         }
+    }
+
+    getEmailInput() {
+    	
+    	return (
+
+    		<div className="form-group">
+    			<label htmlFor="inputEmail">email:</label>
+    			<input
+    				id="inputEmail" 
+                    className="form-control"
+                    name="email"
+                    type="email"
+                    value={ this.state.email }  
+    				onChange={ this.handleInputChange }
+    				required 
+    				/>
+    		</div>
+
+    	);
+    }
+
+    getPasswordInput() {
+
+    	return (
+    		<div className="form-group">
+    			<label htmlFor="inputPassword">password:</label>
+    			<input
+    				id="inputPassword"
+                    className="form-control" 
+                    name="password"
+    				type="password" 
+    				required
+    			/>
+    		</div>
+    	);
+    }
+
+    getCheckboxInput() {
+
+    	return (
+    		 
+    		 <div className="form-group form-check">
+                <input
+                   	className="form-check-input" 
+                    name="remember"
+                    type="checkbox"
+                /> 
+                <label id="remember">remember me</label>   
+            </div>
+    	);
+    }
+
+    getRegister() {
+
+    	return (
+    		 <div className="register"> 
+        		<p>
+            		Si no posees cuenta
+            		<Link to="/register">Registrese</Link>
+        		</p>
+    		</div>
+    	);
     }
 
   	render() {
@@ -68,38 +131,9 @@ class Login extends Component {
     					Sign In
     				</h3>
 
-    				<div className="form-group">
-    					<label htmlFor="inputEmail">email:</label>
-    					<input
-    						id="inputEmail" 
-                            className="form-control"
-                            name="email"
-                            type="email"
-                            value={ this.state.email }  
-    						onChange={ this.handleInputChange }
-    						required 
-    					/>
-    				</div>
-
-    				<div className="form-group">
-    					<label htmlFor="inputPassword">password:</label>
-    					<input
-    						id="inputPassword"
-                            className="form-control" 
-                            name="password"
-    						type="password" 
-    						required
-    					/>
-    				</div>
-
-                    <div className="form-group form-check">
-                        <input
-                            className="form-check-input" 
-                            name="remember"
-                            type="checkbox"
-                        /> 
-                         <label id="remember">remember me</label>   
-                    </div>
+    				{ this.getEmailInput() }
+    				{ this.getPasswordInput() }
+    				{ this.getCheckboxInput() }
 
     				<div>
     					<input 
@@ -114,7 +148,7 @@ class Login extends Component {
                         />
     				</div>
 
-    				{ register() }
+    				{ this.getRegister() }
 
                 	<p className="mt-3 mb-3 text-muted text-center">
                 		&copy; Audiophone 2018
@@ -122,21 +156,10 @@ class Login extends Component {
                 	      
     			</form>
 
-                { this.redirect() } 
+                { this.redirectTo() } 
     		</div>
      	);
   	}
 }
-
-const register = () => (
-       
-    <div className="register"> 
-        <p>
-            Si no posees cuenta
-            <Link to="/register">Registrese</Link>
-        </p>
-       
-    </div>
-);
 
 export default Login;
