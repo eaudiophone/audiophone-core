@@ -60,14 +60,18 @@ class Login extends Component {
     	return (
 
     		<div className="container">
+      
+    			<form className="form-signin" onSubmit={ this.handleSubmit }> 
 
-                <h2>Estudios Audiophone</h2>
-              
-    			<form onSubmit={ this.handleSubmit }> 
+    				<h2 className="mb-3">Estudio Audiophone</h2>
+    				<h3 className="mb-3 text-center">
+    					Sign In
+    				</h3>
 
     				<div className="form-group">
-    					<label>email:</label>
-    					<input 
+    					<label htmlFor="inputEmail">email:</label>
+    					<input
+    						id="inputEmail" 
                             className="form-control"
                             name="email"
                             type="email"
@@ -78,8 +82,9 @@ class Login extends Component {
     				</div>
 
     				<div className="form-group">
-    					<label>password:</label>
+    					<label htmlFor="inputPassword">password:</label>
     					<input
+    						id="inputPassword"
                             className="form-control" 
                             name="password"
     						type="password" 
@@ -98,22 +103,26 @@ class Login extends Component {
 
     				<div>
     					<input 
-                            className="btn btn-primary btn-block" 
+                            className="btn btn-primary btn-block btn-lg" 
                             type="submit" 
                             value="Log In" 
                         />
                         <input
-                            className="btn btn-secondary btn-block" 
+                            className="btn btn-secondary btn-block btn-lg" 
                             type="reset" 
                             value="Cancelar" 
                         />
     				</div>
 
+    				{ register() }
+
+                	<p className="mt-3 mb-3 text-muted text-center">
+                		&copy; Audiophone 2018
+                	</p>
+                	      
     			</form>
 
-                { register() }
-                { this.redirect() }
-                
+                { this.redirect() } 
     		</div>
      	);
   	}
@@ -121,7 +130,7 @@ class Login extends Component {
 
 const register = () => (
        
-    <div id="register"> 
+    <div className="register"> 
         <p>
             Si no posees cuenta
             <Link to="/register">Registrese</Link>
