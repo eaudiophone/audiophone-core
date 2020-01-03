@@ -1,0 +1,17 @@
+.navbar-brand {
+	font-size: 25px;
+}
+
+.navbar {
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+.nav-item {
+	font-size: 18px;
+}
+
+.btn-dark, .btn-dark:hover {
+	margin-left: 15px;
+	border: 1px solid white;
+} 

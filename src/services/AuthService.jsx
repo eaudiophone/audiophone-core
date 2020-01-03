@@ -4,8 +4,7 @@ class AuthService {
 
 		if ( rememberMe ) { 		
 			localStorage.setItem( 'email', login.email ); 
-		}
-		else { 
+		} else { 
 			localStorage.removeItem( 'email' );
 		}
 		
@@ -16,7 +15,6 @@ class AuthService {
 	}
 
 	logOut() {
-		
 		console.log( 'exit of application' );
 	}
 }
