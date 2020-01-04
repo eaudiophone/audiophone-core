@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import { MENU } from './Sidebar-hardcode';
 import './Sidebar.css';
 
-// import AdminRoutes from './../../routes/Admin';
-// import UserRoutes from './../../routes/User'; 
-
 class Sidebar extends Component {
 
 	constructor( props ) {
@@ -35,10 +32,11 @@ class Sidebar extends Component {
 		return (
 
 			<ul className="nav flex-column">
-          					
+          		
           		{ this.menu.map( ( element ) => {
 
           			return ( 
+          				
           				<li 
           					key={ element.id } 
           					className="nav-item"
@@ -50,9 +48,10 @@ class Sidebar extends Component {
           						<i className={ element.icon }></i>
           						{ element.name }
           					</Link>
-          				</li> 
-          					)
-          				}) 
+          				</li>
+
+          				)
+          			}) 
           		}
           		<h6>Información</h6>
           		<li className="nav-item">

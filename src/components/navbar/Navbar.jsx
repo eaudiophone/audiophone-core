@@ -37,9 +37,9 @@ const getMenu = () => (
 		<ul className="navbar-nav">
             <li className="nav-item">
             	<span className="nav-link">Notifications</span>
-            </li>
+            </li> 
             <li className="nav-item">
-            	<span className="nav-link">User</span>
+            	<span className="nav-link">Profile</span>
             </li>
             <li className="nav-item">
             	<a className="nav-link" href="/">Sign out</a>

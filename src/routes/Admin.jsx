@@ -9,22 +9,10 @@ const getInfo = () => ( <h2>Info works</h2> );
 const AdminRoutes = () => (
 
 	<Switch>
-		<Route 
-			path="/user"
-			component={ User }
-		/>
-		<Route 
-			path="/day"
-			component={ Day }
-		/>
-		<Route 
-			path="/budget"
-			component={ Budget }
-		/>
-		<Route 
-			path="/info"
-			component={ getInfo }
-		/>
+		<Route path="/user" component={ User } />
+		<Route path="/day" component={ Day } />
+		<Route path="/budget" component={ Budget } />
+		<Route path="/info" component={ getInfo } />
 	</Switch>
 ); 
 

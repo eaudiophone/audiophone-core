@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import Navbar from './../../components/navbar/Navbar';
-import Sidebar from './../../components/sidebar/Sidebar'
+import Sidebar from './../../components/sidebar/Sidebar';
+
+import AdminRoutes from './../../routes/Admin';
+import UserRoutes from './../../routes/User';
+
+import './Home.css';
 
 class Home extends Component {
+
+	getContent( role ) {
+
+		if ( role === 'ADMIN_ROLE' )  {
+
+			return ( <AdminRoutes /> );
+		} 
+
+		else {
+
+			return ( <UserRoutes /> );
+		}
+	}
 
 	render() {
 
@@ -12,17 +32,23 @@ class Home extends Component {
 				
 				<Navbar />
 
-				<div className="row">
+				<Router>
 
-					<div className="col-3 d-none d-md-block">
-						<Sidebar admin="ADMIN_ROLE" />
-					</div>
+					<div className="row">
 
-					<div className="col-9">
-						{ /* Content here */ }
+						<div className="col-3 d-none d-md-block">
+							<Sidebar admin="USER_ROLE" />
+						</div>
+
+						<div className="col-9">
+							<div id="content">
+								{ this.getContent( 'USER_ROLE' ) }
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+			
+				</Router>
+			</div>	
 		);
 	}
 }
