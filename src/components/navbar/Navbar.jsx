@@ -1,6 +1,7 @@
 import React from 'react';
 
 import 'bootstrap/js/dist/collapse';
+
 import './Navbar.css';
 
 const Navbar = () => (
@@ -8,7 +9,7 @@ const Navbar = () => (
 	<div className="navbar-expand-sm">
 		<nav 
 			role="navigation" 
-			className="navbar navbar-dark bg-dark"
+			className="navbar navbar-light bg-"
 		>
 			<span className="navbar-brand">Audiophone</span>
 			<button

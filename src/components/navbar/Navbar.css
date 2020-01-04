@@ -1,14 +1,19 @@
+body {
+	background-color: #f5f5f5;
+}
+
 .navbar-brand {
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .navbar {
 	padding-right: 30px;
 	padding-left: 30px;
+	background-color: white;
 }
 
 .nav-item {
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .btn-dark, .btn-dark:hover {

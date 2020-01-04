@@ -1,69 +1,82 @@
 import React, { Component } from 'react';
-import { Link, BrowserRouter as Router, } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import { MENU } from './Sidebar-hardcode';
-import AdminRoutes from './../../routes/Admin';
-import UserRoutes from './../../routes/User'; 
+import './Sidebar.css';
+
+// import AdminRoutes from './../../routes/Admin';
+// import UserRoutes from './../../routes/User'; 
 
 class Sidebar extends Component {
+
+	constructor( props ) {
+		
+		super( props );
+
+		this.menu = [];
+
+		this.checkUser();
+	}
 
 	checkUser() {
 
 		if ( this.props.admin === 'ADMIN_ROLE' ) {
 
-			return (
-				<div>
-					{ this.getSidebar( MENU.admin ) }
-					<AdminRoutes />
-				</div>
-			);
+			this.menu = MENU.admin;
 						
 		} else {
 
-			return (
-				<div>
-					{ this.getSidebar( MENU.user ) }
-					<UserRoutes />
-				</div>
-			);
+			this.menu = MENU.user;
 		} 
 	}
 
-	getSidebar( role ) {
+	getMenu() {
 
 		return (
-				
-			<div>	
-				<nav>
-					<h3>Gestionar servicios</h3>
-          			<ul>
-          				{ 	role.map( ( element ) => {
 
-          						return ( 
-          							<li key={ element.id }>
-          								<Link to={ element.link }>
-          									{ element.name }
-          								</Link>
-          							</li> 
-          						)
-          					}) 
-          				}
-          			</ul>
-          			<h3>Información</h3>
-          			<ul>
-            			<li><Link to="/info">Info</Link></li>
-          			</ul>
-          		</nav>
-			</div>
-		);
-	} 
+			<ul className="nav flex-column">
+          					
+          		{ this.menu.map( ( element ) => {
+
+          			return ( 
+          				<li 
+          					key={ element.id } 
+          					className="nav-item"
+          				>
+          					<Link 
+          						to={ element.link } 
+          						className="nav-link"
+          					>
+          						<i className={ element.icon }></i>
+          						{ element.name }
+          					</Link>
+          				</li> 
+          					)
+          				}) 
+          		}
+          		<h6>Información</h6>
+          		<li className="nav-item">
+          			<Link className="nav-link" to="/info">
+          				<i className="fas fa-info-circle"></i>
+          				Info
+          			</Link>
+          		</li>
+          	</ul>
+
+		); 
+	}
+
 
 	render() {
 
-		return( 
+		return (
 
-			<Router>
-				{ this.checkUser() }
-			</Router>
+			<div className="bg-dark sidebar">
+				<div className="sidebar-sticky">
+					<h6>Gestionar servicios</h6>
+					{ this.getMenu() }
+				</div>
+			</div>
 		);
 	}
 }

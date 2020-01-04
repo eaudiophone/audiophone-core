@@ -8,9 +8,20 @@ class Home extends Component {
 
 		return (
 
-			<div>
+			<div className="container-fliud">
+				
 				<Navbar />
-				<Sidebar admin="ADMIN_ROLE" />
+
+				<div className="row">
+
+					<div className="col-3 d-none d-md-block">
+						<Sidebar admin="ADMIN_ROLE" />
+					</div>
+
+					<div className="col-9">
+						{ /* Content here */ }
+					</div>
+				</div>
 			</div>
 		);
 	}
