@@ -2,6 +2,10 @@ body {
 	overflow-x: hidden;
 }
 
+.col-9 {
+	margin-top: 4%;
+}
+
 #content {
 	margin: 20px 20px;
 }

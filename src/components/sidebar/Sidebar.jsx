@@ -55,7 +55,7 @@ class Sidebar extends Component {
           		}
           		<h6>Información</h6>
           		<li className="nav-item">
-          			<Link className="nav-link" to="/info">
+          			<Link className="nav-link" to="/home/info">
           				<i className="fas fa-info-circle"></i>
           				Info
           			</Link>

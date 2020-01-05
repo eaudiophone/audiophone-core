@@ -10,15 +10,15 @@ const UserRoutes = () => (
 
 	<Switch>
 		<Route 
-			path="/records"
+			path="/home/records"
 			component={ Record }
 		/>
 		<Route 
-			path="/rental"
+			path="/home/rental"
 			component={ Rental }
 		/>
 		<Route 
-			path="/info"
+			path="/home/info"
 			component={ getInfo }
 		/>
 	</Switch>

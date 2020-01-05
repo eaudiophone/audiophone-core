@@ -9,7 +9,7 @@ const Navbar = () => (
 	<div className="navbar-expand-sm">
 		<nav 
 			role="navigation" 
-			className="navbar navbar-light bg-"
+			className="navbar fixed-top navbar-light"
 		>
 			<span className="navbar-brand">Audiophone</span>
 			<button

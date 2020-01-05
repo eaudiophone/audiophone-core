@@ -2,13 +2,13 @@ export const MENU = {
 	user: [
 		{
 			id: 1,
-			link: '/records',
+			link: '/home/records',
 			name: 'Records',
 			icon: 'fas fa-microphone'
 		},
 		{
 			id: 2,
-			link: '/rental',
+			link: '/home/rental',
 			name: 'Rental',
 			icon: 'fas fa-truck'
 		}
@@ -16,19 +16,19 @@ export const MENU = {
 	admin: [
 		{
 			id: 1,
-			link: '/budget',
+			link: '/home/budget',
 			name: 'Budget',
 			icon: 'fas fa-clipboard'
 		},
 		{
 			id: 2,
-			link: '/day',
+			link: '/home/day',
 			name: 'Day of service',
 			icon: 'fas fa-sun'
 		},
 		{
 			id: 3,
-			link: '/user',
+			link: '/home/user',
 			name: 'User',
 			icon: 'fas fa-user'
 		}
