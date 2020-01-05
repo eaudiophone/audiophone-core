@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { MENU } from './Sidebar-hardcode';
+import { MENU } from './SidebarHardcode';
 import './Sidebar.css';
 
 class Sidebar extends Component {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { recordMeetings } from './RecordHardcode';
 
+import Card from './../../components/card/Card';
+
 class Record extends Component {
 
 	constructor( props ) {
@@ -38,81 +40,12 @@ class Record extends Component {
 	getMeetingRecords() {
 
 		return (
-
-    		<div className="row">
-
-    			{ this.state.meeting.map( ( element ) => (
-
-    					<div className="col-sm-6 mb-3" key={ element.id }>
-
-    						<div className="card">
-    							<div className="card-body">
-    								{ this.getCardmeeting( element ) }
-    							</div>
-    						</div>
-    					
-    					</div>
-    				)) 
-
-    			}
-
-    		</div>
-		);
-	}
-
-	getCardmeeting( element ) {
-
-		return (
-
-			<div className="container-fluid">
 			
-				<div className="row d-flex justify-content-between">
-					<i className="fas fa-microphone"></i>
-					<h5 className="card-title">{ element.title }</h5>
-					<i className="fas fa-times pointer"></i>
-				</div>
-
-				<div className="row d-flex justify-content-between">
-
-					<label className="card-subtitle mb-2 text-muted text-left pt-2">
-						Fecha del evento:
-					</label>
-
-					<label className="card-subtitle mb-2 text-muted text-left pt-2">
-               			{ element.appointmentDate }
-            		</label>
-					
-				</div>
-
-				<div className="row d-flex justify-content-between pt-2">
-
-					<h5>
-                    	<span className="badge badge-secondary">
-                      		<i className="mr-1 fas fa-clock"></i>
-                      		Inicio: { element.startingTime }
-                    	</span>
-                    </h5>
-
-                    <h5>
-                    	<span className="badge badge-secondary">
-                      		<i className="mr-1 fas fa-clock"></i>
-                      		Cierre: { element.finalHour }
-                    	</span>
-                    </h5>
-
-                   <div className="col-sm-12 pt-2 text-justify">
-                    	<p>{ element.description }</p>       
-                  </div>  
-                </div>
-
-                <div className="row d-flex justify-content-center pt-2">
-                	<button className="btn btn-info">
-                       	<i className="fas fa-edit"></i>
-                    	Modificar
-                    </button>  
-                </div>
-
-			</div>
+    		<div className="row">
+    			{ this.state.meeting.map( ( element ) => (
+    				<Card meeting={ element } key={ element.id } /> )) 
+    			}
+    		</div>
 		);
 	}
 
