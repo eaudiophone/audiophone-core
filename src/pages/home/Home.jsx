@@ -40,7 +40,7 @@ class Home extends Component {
 							<Sidebar admin="USER_ROLE" />
 						</div>
 
-						<div className="col-9">
+						<div className="col-sm-9">
 							<div id="content">
 								{ this.getContent( 'USER_ROLE' ) }
 							</div>

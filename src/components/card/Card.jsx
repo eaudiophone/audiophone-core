@@ -3,7 +3,10 @@ import React from 'react';
 const Card = ( props ) => (
 
 	<div className="col-sm-6 mb-3">
-		<div className="card">
+		<div 
+            className="card" 
+            style={{ backgroundColor: props.color }}
+         >
 			<div className="card-body">
 				{ cardBody( props.meeting ) }
 			</div>

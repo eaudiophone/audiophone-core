@@ -43,7 +43,7 @@ class Record extends Component {
 			
     		<div className="row">
     			{ this.state.meeting.map( ( element ) => (
-    				<Card meeting={ element } key={ element.id } /> )) 
+    				<Card meeting={ element } color="#c7e5ec" key={ element.id } /> )) 
     			}
     		</div>
 		);
