@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { rentalMeetings } from './RentalHardcode';
 
 import Card from './../../components/card/Card';
+import Modal from './../../components/modal/Modal';
+
+import 'jquery/dist/jquery';
+import 'bootstrap/dist/js/bootstrap';
+
 
 class Rental extends Component {
 
@@ -22,7 +27,11 @@ class Rental extends Component {
 
 				<div className="btn-toolbar mb-2 mb-md-0">
 					<div className="btn-group">
-						<button className="btn btn-sm btn-success">
+						<button 
+							className="btn btn-sm btn-success"
+							data-toogle="modal"
+							data-target="prueba" 
+						>
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
 						</button>
@@ -50,6 +59,7 @@ class Rental extends Component {
 	render() {
 		return ( 
 			<div>
+				<Modal />
 				{ this.setHeader() }
 				{ this.setMeetingRental() }
 			</div>
