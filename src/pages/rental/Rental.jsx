@@ -4,10 +4,6 @@ import { rentalMeetings } from './RentalHardcode';
 import Card from './../../components/card/Card';
 import Modal from './../../components/modal/Modal';
 
-import 'jquery/dist/jquery';
-import 'bootstrap/dist/js/bootstrap';
-
-
 class Rental extends Component {
 
 	constructor( props ) {
