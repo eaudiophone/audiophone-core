@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Container, Form, Button, Row, Col  } from 'react-bootstrap';
+
 import User from './../../models/UserModels';
 
 import './Register.css';
@@ -11,11 +13,34 @@ class Register extends Component {
 		super( props );
 
 		this.state = {
-			redirect: false
+			redirect: false,
+			name: '',
+			email: '',
+			password: ''
 		}
 
 		this.handleSubmit = this.handleSubmit.bind( this );
+		this.handleChange = this.handleChange.bind( this );
+		this.resetForm = this.resetForm.bind( this );
 	}
+
+	handleChange( event ) {
+
+        const target = event.target;
+		const name = target.name;
+		const value = target.value;
+
+		this.setState({ [ name ] : value });
+	}
+
+	resetForm( event ) {
+        
+        this.setState({
+        	name: '',
+            email: '',
+            password: '',
+        });
+    }
 
 	handleSubmit( event ) {
 
@@ -45,16 +70,17 @@ class Register extends Component {
 
 		return (
 
-			<div className="form-group">
-				<label htmlFor="inputName">Nombre y apellido:</label>
-				<input
-					className="form-control form-control-lg"
-					id="inputName" 
+			<Form.Group>
+				<Form.Label>Nombre y apellido:</Form.Label>
+				<Form.Control 
 					type="text"
 					name="name"
+					size="lg"
+					value={ this.state.name }
+					onChange={ this.handleChange }
 					required
-					/>
-			</div>
+				/>
+			</Form.Group>
 		);
 	}
 
@@ -62,16 +88,17 @@ class Register extends Component {
 
 		return ( 
 
-			<div className="form-group">
-				<label htmlFor="inputEmail">Correo electronico:</label>
-				<input
-					id="inputEmail"
-					className="form-control form-control-lg" 
+			<Form.Group>
+				<Form.Label>Correo:</Form.Label>
+				<Form.Control 
 					type="email"
 					name="email"
+					size="lg"
+					value={ this.state.email }
+					onChange={ this.handleChange }
 					required
 				/>
-			</div>
+			</Form.Group>
 		 );
 	}
 
@@ -79,39 +106,47 @@ class Register extends Component {
 		
 		return (
 
-			<div className="form-group">
-				<label htmlFor="inputPassword">Nueva Contraseña:</label>
-				<input
-					className="form-control form-control-lg"
-					id="inputPassword" 
+			<Form.Group>
+				<Form.Label>Contraseña:</Form.Label>
+				<Form.Control 
 					type="password"
 					name="password"
+					size="lg"
+					value={ this.state.password }
+					onChange={ this.handleChange }
 					required
 				/>
-			</div>
+			</Form.Group>
 		);
 	}
 
 	getButtons() {
 
 		return(
-			
-			<div className="row">
-				<div className="col-6">
-					<input 
-						type="submit" 
-						value="Registrar" 
-						className="btn btn-primary btn-lg btn-block"
-					/>
-				</div>
-				<div className="col-6">
-					<input 
-						type="reset" 
-						value="Cancelar" 
-						className="btn btn-secondary btn-lg btn-block"
-					/>	
-				</div>	
-			</div>
+
+			<Row>
+				<Col sm="6">
+					<Button
+						type="submit"
+						variant="primary"
+						size="lg"
+						block
+					>
+						Registrar
+					</Button>
+				</Col>
+				<Col sm="6">
+					<Button
+						type="reset"
+						variant="secondary"
+						size="lg"
+						block
+						onSubmit={ this.resetForm }
+					>
+						Cancelar
+					</Button>
+				</Col>
+			</Row>
 		);
 	}
 
@@ -119,9 +154,9 @@ class Register extends Component {
 		
 		return ( 
 
-			<div className="container">
+			<Container>
 				
-				<form className="form-register" onSubmit={ this.handleSubmit }>
+				<Form className="form-register" onSubmit={ this.handleSubmit }>
 
 					<h2 className="mb-5">
 						Registro de usuarios
@@ -132,14 +167,14 @@ class Register extends Component {
 					{ this.getPasswordInput() }
 					{ this.getButtons() }
 					
-				</form>
+				</Form>
 
 				<p className="mt-5 text-center">
 					<a href="/">Volver al login</a>
 				</p>
 
 				{ this.redirectTo() }
-			</div>
+			</Container>
 		);
 	}
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Container, Form, Button } from 'react-bootstrap';
+
 import AuthService from './../../services/AuthService'; 
 
 import './Login.css';
@@ -13,12 +15,15 @@ class Login extends Component {
 		// initial state
 		this.state = {  
 			email: localStorage.getItem('email') || '',
+            password: '',
+            remember: false,
             redirect: false
 		};
 
         // events and vinculation with the state
 		this.handleInputChange = this.handleChange.bind( this );
 		this.handleSubmit = this.handleSubmit.bind( this ); 
+        this.resetForm = this.resetForm.bind( this );
 
         // services
         this.authService = new AuthService();
@@ -48,6 +53,17 @@ class Login extends Component {
 		event.preventDefault(); 
 	}
 
+    resetForm( event ) {
+        
+        document.getElementById('check').checked = false; 
+    
+        this.setState({
+            email: '',
+            password: '',
+            remember: false
+        });
+    }
+
     redirectTo() {
         
         if ( this.state.redirect ) {
@@ -59,18 +75,16 @@ class Login extends Component {
     	
     	return (
 
-    		<div className="form-group">
-    			<label htmlFor="inputEmail">email:</label>
-    			<input
-    				id="inputEmail" 
-                    className="form-control"
+    		<Form.Group controlId="inputEmail">
+    			<Form.Label>email:</Form.Label>
+    			<Form.Control
                     name="email"
                     type="email"
                     value={ this.state.email }  
     				onChange={ this.handleInputChange }
     				required 
     				/>
-    		</div>
+    		</Form.Group>
 
     	);
     }
@@ -78,16 +92,17 @@ class Login extends Component {
     getPasswordInput() {
 
     	return (
-    		<div className="form-group">
-    			<label htmlFor="inputPassword">password:</label>
-    			<input
-    				id="inputPassword"
-                    className="form-control" 
+
+    		<Form.Group controlId="inputPassword">
+            	<Form.Label>password:</Form.Label>
+    			<Form.Control
                     name="password"
-    				type="password" 
+    				type="password"
+                    onChange={ this.handleInputChange }
+                    value={ this.state.password } 
     				required
-    			/>
-    		</div>
+    		    />
+    	    </Form.Group>
     	);
     }
 
@@ -95,20 +110,22 @@ class Login extends Component {
 
     	return (
     		 
-    		 <div className="form-group form-check">
-                <input
-                   	className="form-check-input" 
+    		 <Form.Group controlId="inputRemember">
+                <Form.Check
+                    id="check"
                     name="remember"
                     type="checkbox"
+                    label="remember me"
+                    value={ this.state.remember }
                 /> 
-                <label id="remember">remember me</label>   
-            </div>
+            </Form.Group>
     	);
     }
 
     getRegister() {
 
     	return (
+            
     		 <div className="register"> 
         		<p>
             		Si no posees cuenta
@@ -123,16 +140,22 @@ class Login extends Component {
         return (
 
             <div>
-                <input 
-                    className="btn btn-primary btn-block btn-lg" 
-                    type="submit" 
-                    value="Log In" 
-                />
-                <input
-                    className="btn btn-secondary btn-block btn-lg" 
-                    type="reset" 
-                    value="Cancelar" 
-                />
+                <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg" 
+                    block
+                >
+                    Iniciar sesión
+                </Button>
+                <Button
+                    onClick={ this.resetForm }
+                    variant="secondary"
+                    size="lg"
+                    block
+                >
+                    Cancelar
+                </Button>
             </div>
         );
     }
@@ -141,29 +164,30 @@ class Login extends Component {
 
     	return (
 
-    		<div className="container">
+            <Container>
       
-    			<form className="form-signin" onSubmit={ this.handleSubmit }> 
+                <Form className="form-signin" onSubmit={ this.handleSubmit }> 
 
-    				<h2 className="mb-3">Estudio Audiophone</h2>
-    				<h3 className="mb-3 text-center">
-    					Sign In
-    				</h3>
+                    <h2 className="mb-3">Estudio Audiophone</h2>
+                    <h3 className="mb-3 text-center">
+                        Sign In
+                    </h3>
 
-    				{ this.getEmailInput() }
-    				{ this.getPasswordInput() }
-    				{ this.getCheckboxInput() }
+                    { this.getEmailInput() }
+                    { this.getPasswordInput() }
+                    { this.getCheckboxInput() }
                     { this.getButtons() }
-    				{ this.getRegister() }
+                    { this.getRegister() }
 
-                	<p className="mt-3 mb-3 text-muted text-center">
-                		&copy; Audiophone 2018
-                	</p>
-                	      
-    			</form>
+                    <p className="mt-3 mb-3 text-muted text-center">
+                        &copy; Audiophone 2018
+                    </p>
+                          
+                </Form>
 
                 { this.redirectTo() } 
-    		</div>
+
+            </Container>
      	);
   	}
 }
