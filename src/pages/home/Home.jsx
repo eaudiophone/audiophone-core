@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Navbar from './../../components/navbar/Navbar';
+import Navegacion from './../../components/navbar/Navbar';
 import Sidebar from './../../components/sidebar/Sidebar';
 
 import AdminRoutes from './../../routes/Admin';
@@ -30,7 +30,7 @@ class Home extends Component {
 
 			<div className="container-fliud">
 				
-				<Navbar />
+				<Navegacion />
 
 				<Router>
 
