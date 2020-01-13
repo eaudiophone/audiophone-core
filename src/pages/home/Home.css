@@ -2,17 +2,11 @@ body {
 	overflow-x: hidden;
 }
 
-.col-sm-9 {
-	margin-top: 5%;
+.col-3 {
+	padding: 0px;
 }
 
 #content {
 	margin: 20px 20px;
-}
-
-@media screen and ( max-width: 576px ) {
-	.col-sm-9 {
-		margin-top: 11%;
-	} 
 }
 

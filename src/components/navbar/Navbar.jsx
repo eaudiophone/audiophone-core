@@ -12,12 +12,12 @@ const getMenu = () => (
 		<Nav>
 			<Nav.Link>Notificaciones</Nav.Link>
 			<Nav.Link>Perfil</Nav.Link>
-			<Nav.Link>Salir</Nav.Link>
+			<Nav.Link href="/">Salir</Nav.Link>
 		</Nav>
 	</Navbar.Collapse>
 );
 
-const Navegacion = () => (
+const TopMenu = () => (
 
 	<Navbar 
 		collapseOnSelect 
@@ -32,4 +32,4 @@ const Navegacion = () => (
 	</Navbar>
 );
 
-export default Navegacion;
+export default TopMenu;

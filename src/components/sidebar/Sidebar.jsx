@@ -29,42 +29,23 @@ class Sidebar extends Component {
 
 	getMenu() {
 
-		return (
-
-			<ul className="nav flex-column">
-          		
-          		{ this.menu.map( ( element ) => {
-
-          			return ( 
+		return this.menu.map( ( element ) => ( 
           				
-          				<li 
-          					key={ element.id } 
-          					className="nav-item"
-          				>
-          					<Link 
-          						to={ element.link } 
-          						className="nav-link"
-          					>
-          						<i className={ element.icon }></i>
-          						{ element.name }
-          					</Link>
-          				</li>
+          	<li 
+          		key={ element.id } 
+          		className="nav-item"
+          	>
+          		<Link 
+          			to={ element.link } 
+          			className="nav-link"
+          		>
+          			<i className={ element.icon }></i>
+          			{ element.name }
+          		</Link>
+          	</li>
 
-          				)
-          			}) 
-          		}
-          		<h6>Información</h6>
-          		<li className="nav-item">
-          			<Link className="nav-link" to="/home/info">
-          				<i className="fas fa-info-circle"></i>
-          				Info
-          			</Link>
-          		</li>
-          	</ul>
-
-		); 
+        ));
 	}
-
 
 	render() {
 
@@ -74,6 +55,13 @@ class Sidebar extends Component {
 				<div className="sidebar-sticky">
 					<h6>Gestionar servicios</h6>
 					{ this.getMenu() }
+					<h6>Información</h6>
+					<li>
+						<Link to="/home/info" className="nav-link">
+          					<i className="fas fa-info-circle"></i>
+          					Info
+          				</Link>
+					</li>
 				</div>
 			</div>
 		);
