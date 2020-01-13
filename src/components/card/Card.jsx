@@ -1,16 +1,12 @@
 import React from 'react';
+import { Card, Row, Button } from 'react-bootstrap';
 
-const Card = ( props ) => (
+const CardComponent = ( props ) => (
 
 	<div className="col-sm-6 mb-3">
-		<div 
-            className="card" 
-            style={{ backgroundColor: props.color }}
-         >
-			<div className="card-body">
-				{ cardBody( props.meeting ) }
-			</div>
-		</div>
+        <Card style={{ backgroundColor: props.color }}>
+            <Card.Body>{ cardBody( props.meeting ) }</Card.Body>
+        </Card>
 	</div>
 );
 
@@ -18,13 +14,13 @@ const cardBody = ( meeting ) => (
 
 	<div className="container-fluid">
 			
-		<div className="row d-flex justify-content-between">
+		<Row className="d-flex justify-content-between">
 			<i className={ meeting.icon }></i>
 			<h5 className="card-title">{ meeting.title }</h5>
 			<i className="fas fa-times pointer"></i>
-		</div>
+		</Row>
 
-		<div className="row d-flex justify-content-between">
+		<Row className="d-flex justify-content-between">
 
 			<label className="card-subtitle mb-2 text-muted text-left pt-2">
 				Fecha del evento:
@@ -34,16 +30,16 @@ const cardBody = ( meeting ) => (
             	{ meeting.appointmentDate }
             </label>
 					
-		</div>
+		</Row>
 
-		<div className="row pt-2 d-flex justify-content-center">
+		<Row className="pt-2 d-flex justify-content-center">
              <h6>
                 <i className="mr-1 fas fa-clock"></i>
                 Total: { meeting.totalHours } horas
             </h6>        
-        </div> 
+        </Row> 
 
-		<div className="row d-flex justify-content-between pt-2">
+		<Row className="d-flex justify-content-between pt-2">
 
 			<h5>
                 <span className="badge badge-secondary">
@@ -58,21 +54,21 @@ const cardBody = ( meeting ) => (
                     Cierre: { meeting.finalHour }
                 </span>
             </h5> 
-        </div>
+        </Row>
 
-        <div className="row pt-2 text-justify">
+        <Row className=" pt-2 text-justify">
             <p>{ meeting.description }</p>       
-        </div>
+        </Row>
         
-        <div className="row d-flex justify-content-center pt-2">
-            <button className="btn btn-info">
+        <Row className="d-flex justify-content-center pt-2">
+            <Button variant="info">
                 <i className="fas fa-edit"></i>
                 Modificar
-            </button>  
-        </div>
+            </Button>  
+        </Row>
 
 	</div>
 
 );
 
-export default Card;
+export default CardComponent;

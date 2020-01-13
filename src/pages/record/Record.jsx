@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { recordMeetings } from './RecordHardcode';
 
-import Card from './../../components/card/Card';
+import CardComponent from './../../components/card/Card';
+import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
 class Record extends Component {
 
@@ -21,18 +22,21 @@ class Record extends Component {
 				
 				<h2>Grabaciones</h2> 
 
-				<div className="btn-toolbar mb-2 mb-md-0">
-					<div className="btn-group">
-						<button className="btn btn-sm btn-success">
+				<ButtonToolbar className="mb-2 mb-md-0">
+					<ButtonGroup>
+						
+						<Button variant="success" size="sm">
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
-						</button>
-						<button className="btn btn-sm btn-secondary">
+						</Button>
+
+						<Button variant="secondary" size="sm">
 							<i className="mr-2 fas fa-info-circle"></i>
 							Información
-						</button>
-					</div>
-				</div>
+						</Button>
+
+					</ButtonGroup>
+				</ButtonToolbar>
 			</div>
 		);
 	}
@@ -41,11 +45,11 @@ class Record extends Component {
 
 		return (
 			
-    		<div className="row">
+    		<Row>
     			{ this.state.meeting.map( ( element ) => (
-    				<Card meeting={ element } color="#c7e5ec" key={ element.id } /> )) 
+    				<CardComponent meeting={ element } color="#c7e5ec" key={ element.id } /> )) 
     			}
-    		</div>
+    		</Row>
 		);
 	}
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { rentalMeetings } from './RentalHardcode';
 
-import Card from './../../components/card/Card';
-import Modal from './../../components/modal/Modal';
+import CardComponent from './../../components/card/Card';
+import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
 class Rental extends Component {
 
@@ -21,22 +21,20 @@ class Rental extends Component {
 				
 				<h2>Alquiler de equipos</h2> 
 
-				<div className="btn-toolbar mb-2 mb-md-0">
-					<div className="btn-group">
-						<button 
-							className="btn btn-sm btn-success"
-							data-toogle="modal"
-							data-target="prueba" 
-						>
+				<ButtonToolbar className="mb-2 mb-md-0">
+
+					<ButtonGroup className="btn-group">
+						<Button variant="success" size="sm">
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
-						</button>
-						<button className="btn btn-sm btn-secondary">
+						</Button>
+						<Button size="sm" variant="secondary">
 							<i className="mr-2 fas fa-info-circle"></i>
 							Información
-						</button>
-					</div>
-				</div>
+						</Button>
+					</ButtonGroup>
+					
+				</ButtonToolbar>
 			</div>
 		);
 	}
@@ -44,18 +42,18 @@ class Rental extends Component {
 	setMeetingRental() {
 
 		return (
-			<div className="row">
+			<Row>
 				{ this.state.meetings.map( ( element ) => (
-					<Card meeting={ element } color="#fbf096" key={ element.id } />
+					<CardComponent meeting={ element } color="#fbf096" key={ element.id } />
 					)) }
-			</div>
+			</Row>
 		);
 	}
 
 	render() {
+
 		return ( 
 			<div>
-				<Modal />
 				{ this.setHeader() }
 				{ this.setMeetingRental() }
 			</div>
