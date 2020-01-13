@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { rentalMeetings } from './RentalHardcode';
 
 import CardComponent from './../../components/card/Card';
+import ModalComponent from './../../components/modal/Modal';
+
 import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
 class Rental extends Component {
@@ -9,7 +11,10 @@ class Rental extends Component {
 	constructor( props ) {
 
 		super( props );
-		this.state = { meetings: rentalMeetings };
+
+		this.state = { 
+			meetings: rentalMeetings, 
+		};
 	}
 
 	setHeader() {
@@ -33,7 +38,7 @@ class Rental extends Component {
 							Información
 						</Button>
 					</ButtonGroup>
-					
+
 				</ButtonToolbar>
 			</div>
 		);

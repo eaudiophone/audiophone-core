@@ -1,72 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { 
+	Modal, 
+	ModalTitle, 
+	ModalHeader, 
+	ModalBody, 
+	ModalFooter, 
+	Button 
+} from 'react-bootstrap';
 
-class Modal extends Component {
+const ModalComponent = ( props ) => {
 
-	setModalTitle() {
+	// react hooks
+	const [ show, setShow ] = useState( false );
+	const handleShow = () => setShow( true );
+	const handleClose = () => setShow( false ); 
 
-		return (
+	return (
+		
+		<div>
+			<Button variant="primary" onClick={ handleShow }>
+        		Launch demo modal
+      		</Button>
 
-			<div className="modal-title">
-				<h5 className="modal-title">Prueba</h5>
-				<button 
-					className="close"
-					data-dismiss="modal"
-					aria-label="close"		
-				>
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-		);
-	}
-
-	setModalBody() {
-
-		return (
-
-			<div className="modal-body">
-				<p>Prueba de contenido</p>
-			</div>
-		);
-	}
-
-	setModalFooter() {
-
-		return (
-			 <div className="modal-footer">
-        		<button 
-        			type="button" 
-        			className="btn btn-primary"
-        		>
-        			Save changes
-        		</button>
-        		<button 
-        			type="button" 
-        			className="btn btn-secondary" 
-        			data-dismiss="modal"
-        		>
-        			Close
-        		</button>
-      		</div>
-		);
-	}
-
-	render() {
-
-		return (
-
-			<div className="modal" id="prueba" tabIndex="-1" role="dialog">
-				<div className="modal-dialog" role="document">
-					<div className="modal-content">
-						{ this.setModalTitle() }
-						{ this.setModalBody() }
-						{ this.setModalFooter() }
-					</div>
-				</div>
-			</div>
-
-		); 
-	}
-}
+      		<Modal show={ show } onHide={ handleClose }>
+        		<Modal.Header closeButton>
+          			<Modal.Title>Modal heading</Modal.Title>
+        		</Modal.Header>
+        		<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        		<Modal.Footer>
+          			<Button variant="secondary" onClick={ handleClose }>
+            			Close
+          			</Button>
+          			<Button variant="primary" onClick={ handleClose }>
+            			Save Changes
+          			</Button>
+        		</Modal.Footer>
+      		</Modal>
+		</div>
+	);
+};
 
 
-export default Modal; 
+export default ModalComponent; 

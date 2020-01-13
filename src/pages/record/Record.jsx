@@ -10,7 +10,9 @@ class Record extends Component {
 
 		super( props );
 
-		this.state = { meeting: recordMeetings };
+		this.state = { 
+			meeting: recordMeetings,
+		};
 	}
 
 	getHeader() {
