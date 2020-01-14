@@ -14,7 +14,21 @@ class Rental extends Component {
 
 		this.state = { 
 			meetings: rentalMeetings, 
+			showModal: false
 		};
+
+		this.handleModal = this.handleModal.bind( this );
+	}
+
+	handleModal() {
+
+		if ( this.state.showModal ) {
+			this.setState({ showModal: false });
+		
+		} else {
+			this.setState({ showModal: true });
+
+		} 
 	}
 
 	setHeader() {
@@ -29,7 +43,11 @@ class Rental extends Component {
 				<ButtonToolbar className="mb-2 mb-md-0">
 
 					<ButtonGroup className="btn-group">
-						<Button variant="success" size="sm">
+						<Button 
+							variant="success" 
+							size="sm"
+							onClick={ this.handleModal }
+						>
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
 						</Button>
@@ -48,9 +66,14 @@ class Rental extends Component {
 
 		return (
 			<Row>
-				{ this.state.meetings.map( ( element ) => (
-					<CardComponent meeting={ element } color="#fbf096" key={ element.id } />
-					)) }
+				{ 	this.state.meetings.map( ( element ) => (
+						<CardComponent 
+							meeting={ element } 
+							color="#fbf096" 
+							key={ element.id }
+						/>
+					)) 
+				}
 			</Row>
 		);
 	}
@@ -59,6 +82,11 @@ class Rental extends Component {
 
 		return ( 
 			<div>
+				<ModalComponent 
+					showModal={ this.state.showModal } 
+					callback={ this.handleModal }
+					target="rental"
+				/>
 				{ this.setHeader() }
 				{ this.setMeetingRental() }
 			</div>

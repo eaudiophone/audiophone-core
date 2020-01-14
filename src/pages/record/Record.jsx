@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { recordMeetings } from './RecordHardcode';
 
 import CardComponent from './../../components/card/Card';
+import ModalComponent from './../../components/modal/Modal';
+
 import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
 class Record extends Component {
@@ -12,7 +14,21 @@ class Record extends Component {
 
 		this.state = { 
 			meeting: recordMeetings,
+			showModal: false
 		};
+
+		this.handleModal = this.handleModal.bind( this );
+	}
+
+	handleModal() {
+
+		if ( this.state.showModal ) {
+			this.setState({ showModal: false });
+		
+		} else {
+			this.setState({ showModal: true });
+			
+		} 
 	}
 
 	getHeader() {
@@ -27,7 +43,11 @@ class Record extends Component {
 				<ButtonToolbar className="mb-2 mb-md-0">
 					<ButtonGroup>
 						
-						<Button variant="success" size="sm">
+						<Button 
+							variant="success" 
+							size="sm"
+							onClick={ this.handleModal }
+						>
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
 						</Button>
@@ -48,8 +68,13 @@ class Record extends Component {
 		return (
 			
     		<Row>
-    			{ this.state.meeting.map( ( element ) => (
-    				<CardComponent meeting={ element } color="#c7e5ec" key={ element.id } /> )) 
+    			{ 	this.state.meeting.map( ( element ) => (
+    					<CardComponent 
+    						meeting={ element } 
+    						color="#c7e5ec" 
+    						key={ element.id } 
+    					/> 
+    				)) 
     			}
     		</Row>
 		);
@@ -60,6 +85,11 @@ class Record extends Component {
 		return (
 			
 			<div>
+				<ModalComponent 
+					showModal={ this.state.showModal }
+					callback={ this.handleModal }
+					target="record"
+				/>
 				{ this.getHeader() }
 				{ this.getMeetingRecords() }
 			</div>
