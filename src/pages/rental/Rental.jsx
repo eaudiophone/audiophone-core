@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { rentalMeetings } from './RentalHardcode';
 
-import CardComponent from './../../components/card/Card';
-import ModalComponent from './../../components/modal/Modal';
+import CardComponent from './../../components/card/CardComponent';
+import ModalComponent from './../../components/modal/ModalComponent';
 
 import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 

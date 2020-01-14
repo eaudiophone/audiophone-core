@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import TopMenu from './../../components/navbar/Navbar';
-import Sidebar from './../../components/sidebar/Sidebar';
+import NavbarComponent from './../../components/navbar/NavbarComponent';
+import SidebarComponent from './../../components/sidebar/SidebarComponent';
 
 import AdminRoutes from './../../routes/Admin';
 import UserRoutes from './../../routes/User';
@@ -30,14 +30,14 @@ class Home extends Component {
 
 			<div className="container-fliud">
 				
-				<TopMenu />
+				<NavbarComponent />
 
 				<Router>
 
 					<div className="row">
 
 						<div className="col-3 d-none bg-dark d-md-block">
-							<Sidebar admin="USER_ROLE" />
+							<SidebarComponent admin="USER_ROLE" />
 						</div>
 
 						<div className="col-sm-9">

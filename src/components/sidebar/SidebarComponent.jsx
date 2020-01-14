@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { MENU } from './SidebarHardcode';
-import './Sidebar.css';
+import './SidebarComponent.css';
 
-class Sidebar extends Component {
+class SidebarComponent extends Component {
 
 	constructor( props ) {
 		
@@ -68,4 +68,4 @@ class Sidebar extends Component {
 	}
 }
 
-export default Sidebar;
+export default SidebarComponent;

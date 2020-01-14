@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 
-import './Navbar.css';
+import './NavbarComponent.css';
 
 const getMenu = () => (
 
@@ -17,7 +17,7 @@ const getMenu = () => (
 	</Navbar.Collapse>
 );
 
-const TopMenu = () => (
+const NavbarComponent = () => (
 
 	<Navbar 
 		collapseOnSelect 
@@ -32,4 +32,4 @@ const TopMenu = () => (
 	</Navbar>
 );
 
-export default TopMenu;
+export default NavbarComponent;
