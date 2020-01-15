@@ -4,9 +4,9 @@ import { Container, Form, Button } from 'react-bootstrap';
 
 import AuthService from './../../services/AuthService'; 
 
-import './Login.css';
+import './LoginPage.css';
 
-class Login extends Component {
+class LoginPage extends Component {
 
 	constructor( props ) {
 		
@@ -192,4 +192,4 @@ class Login extends Component {
   	}
 }
 
-export default Login;
+export default LoginPage;

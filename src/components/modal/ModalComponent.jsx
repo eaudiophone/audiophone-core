@@ -1,19 +1,29 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
+import FormEventsComponent from './../form/FormEventsComponent';
+
 const ModalComponent = ( props ) => {
 
 	const handleClose = () => props.callback(); 
 
 	return (
 		
-    <Modal show={ props.showModal } onHide={ handleClose }>
+    <Modal 
+      show={ props.showModal } 
+      onHide={ handleClose }
+      size="lg"
+    >
         		
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Nuevo evento</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>
+        <FormEventsComponent 
+          callback={ handleClose }
+        />
+      </Modal.Body>
 
       <Modal.Footer>
 
@@ -29,6 +39,5 @@ const ModalComponent = ( props ) => {
     </Modal>
 	);
 };
-
 
 export default ModalComponent; 

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { recordMeetings } from './RecordHardcode';
+import { rentalMeetings } from './RentalHardcode';
 
 import CardComponent from './../../components/card/CardComponent';
 import ModalComponent from './../../components/modal/ModalComponent';
 
 import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
-class Record extends Component {
+class RentalPage extends Component {
 
 	constructor( props ) {
 
 		super( props );
 
 		this.state = { 
-			meeting: recordMeetings,
+			meetings: rentalMeetings, 
 			showModal: false
 		};
 
@@ -31,18 +31,18 @@ class Record extends Component {
 		} 
 	}
 
-	getHeader() {
-		
-		return ( 
+	setHeader() {
+
+		return (
 
 			<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
 				align-items-center pb-2 mb-3 border-bottom">
 				
-				<h2>Grabaciones</h2> 
+				<h2>Alquiler de equipos</h2> 
 
 				<ButtonToolbar className="mb-2 mb-md-0">
-					<ButtonGroup>
-						
+
+					<ButtonGroup className="btn-group">
 						<Button 
 							variant="success" 
 							size="sm"
@@ -51,50 +51,46 @@ class Record extends Component {
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
 						</Button>
-
-						<Button variant="secondary" size="sm">
+						<Button size="sm" variant="secondary">
 							<i className="mr-2 fas fa-info-circle"></i>
 							Información
 						</Button>
-
 					</ButtonGroup>
+
 				</ButtonToolbar>
 			</div>
 		);
 	}
 
-	getMeetingRecords() {
+	setMeetingRental() {
 
 		return (
-			
-    		<Row>
-    			{ 	this.state.meeting.map( ( element ) => (
-    					<CardComponent 
-    						meeting={ element } 
-    						color="#c7e5ec" 
-    						key={ element.id } 
-    					/> 
-    				)) 
-    			}
-    		</Row>
+			<Row>
+				{ 	this.state.meetings.map( ( element ) => (
+						<CardComponent 
+							meeting={ element } 
+							color="#fbf096" 
+							key={ element.id }
+						/>
+					)) 
+				}
+			</Row>
 		);
 	}
 
 	render() {
 
-		return (
-			
+		return ( 
 			<div>
 				<ModalComponent 
-					showModal={ this.state.showModal }
+					showModal={ this.state.showModal } 
 					callback={ this.handleModal }
-					target="record"
 				/>
-				{ this.getHeader() }
-				{ this.getMeetingRecords() }
+				{ this.setHeader() }
+				{ this.setMeetingRental() }
 			</div>
 		);
 	}
 }
 
-export default Record;
+export default RentalPage;

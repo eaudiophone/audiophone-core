@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import NavbarComponent from './../../components/navbar/NavbarComponent';
 import SidebarComponent from './../../components/sidebar/SidebarComponent';
 
-import AdminRoutes from './../../routes/Admin';
-import UserRoutes from './../../routes/User';
+import AdminRoutes from './../../routes/AdminRoutes';
+import UserRoutes from './../../routes/UserRoutes';
 
-import './Home.css';
+import './HomePage.css';
 
-class Home extends Component {
+class HomePage extends Component {
 
 	getContent( role ) {
 
@@ -32,8 +31,6 @@ class Home extends Component {
 				
 				<NavbarComponent />
 
-				<Router>
-
 					<div className="row">
 
 						<div className="col-3 d-none bg-dark d-md-block">
@@ -46,11 +43,10 @@ class Home extends Component {
 							</div>
 						</div>
 					</div>
-			
-				</Router>
+		
 			</div>	
 		);
 	}
 }
 
-export default Home;
+export default HomePage;

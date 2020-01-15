@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Record from './../pages/record/Record';
-import Rental from './../pages/rental/Rental';
+import RecordPage from './../pages/record/RecordPage';
+import RentalPage from './../pages/rental/RentalPage';
 
 // data de prueba
 const getInfo = () => <h2>Info works</h2>;
@@ -11,11 +11,11 @@ const UserRoutes = () => (
 	<Switch>
 		<Route 
 			path="/home/records"
-			component={ Record }
+			component={ RecordPage }
 		/>
 		<Route 
 			path="/home/rental"
-			component={ Rental }
+			component={ RentalPage }
 		/>
 		<Route 
 			path="/home/info"

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-class User extends Component {
+class UserPage extends Component {
 
 	render() {
 		return ( <h2>User works</h2> );
 	}
 }
 
-export default User;
+export default UserPage;

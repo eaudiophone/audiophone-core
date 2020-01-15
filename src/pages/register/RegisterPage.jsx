@@ -4,9 +4,9 @@ import { Container, Form, Button, Row, Col  } from 'react-bootstrap';
 
 import User from './../../models/UserModels';
 
-import './Register.css';
+import './RegisterPage.css';
 
-class Register extends Component {
+class RegisterPage extends Component {
 
 	constructor( props ) {
 
@@ -141,7 +141,7 @@ class Register extends Component {
 						variant="secondary"
 						size="lg"
 						block
-						onSubmit={ this.resetForm }
+						onClick={ this.resetForm }
 					>
 						Cancelar
 					</Button>
@@ -179,4 +179,4 @@ class Register extends Component {
 	}
 }
 
-export default Register;
+export default RegisterPage;
