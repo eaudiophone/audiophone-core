@@ -41,8 +41,8 @@ class LoginPage extends Component {
 	handleSubmit( event ) {
 
 		const login = {
-			email: event.target[0].value,
-			password: event.target[1].value,
+			email: this.state.email,
+			password: this.state.password,
 		};
 
         const rememberMe = event.target[2].checked;

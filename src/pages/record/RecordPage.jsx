@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { recordMeetings } from './RecordHardcode';
 
 import CardComponent from './../../components/card/CardComponent';
-import ModalComponent from './../../components/modal/ModalComponent';
+import FormEventComponent from './../../components/form/FormEventComponent';
 
 import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
@@ -14,21 +14,10 @@ class RecordPage extends Component {
 
 		this.state = { 
 			meeting: recordMeetings,
-			showModal: false
+			tab: false
 		};
 
-		this.handleModal = this.handleModal.bind( this );
-	}
-
-	handleModal() {
-
-		if ( this.state.showModal ) {
-			this.setState({ showModal: false });
-		
-		} else {
-			this.setState({ showModal: true });
-
-		} 
+		console.log( this.state );
 	}
 
 	getHeader() {
@@ -44,18 +33,20 @@ class RecordPage extends Component {
 					<ButtonGroup>
 						
 						<Button 
+							variant="secondary" 
+							size="sm"
+						>
+							<i className="mr-2 fas fa-calendar"></i>
+							Eventos
+						</Button>
+						<Button 
 							variant="success" 
 							size="sm"
-							onClick={ this.handleModal }
 						>
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
 						</Button>
 
-						<Button variant="secondary" size="sm">
-							<i className="mr-2 fas fa-info-circle"></i>
-							Información
-						</Button>
 
 					</ButtonGroup>
 				</ButtonToolbar>
@@ -80,18 +71,26 @@ class RecordPage extends Component {
 		);
 	}
 
+	changeMode( number ) {
+
+		if ( number === 1 ) {
+
+			return  this.getMeetingRecords();
+		} 
+
+		else {
+			
+			return ( <FormEventComponent /> );
+		} 
+	}
+
 	render() {
 
 		return (
 			
 			<div>
-				<ModalComponent 
-					showModal={ this.state.showModal }
-					callback={ this.handleModal }
-					target="record"
-				/>
 				{ this.getHeader() }
-				{ this.getMeetingRecords() }
+				{ this.changeMode( 1 ) }
 			</div>
 		);
 	}

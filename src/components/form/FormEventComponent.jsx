@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 
-import { Container, Form, Row, Col } from 'react-bootstrap'; 
+import { 
+	Form, 
+	Row, 
+	Col, 
+	Button
+} from 'react-bootstrap'; 
 
-class FormEvent extends Component {
+class FormEventComponent extends Component {
 
   constructor( props ) {
 
     super( props );
-
-    console.log( props );
 
     this.state = {
       title: '',
@@ -35,25 +38,22 @@ class FormEvent extends Component {
              <Form.Control 
                type="text"
                name={ name }
-               size="lg"
                value={ state }
                onChange={ this.handleChange }
                required
             />
            </Form.Group>
-
         </Col>
       </Row>
-
      
     );
   }
 
   handleSubmit( event ) {
 
-    console.log( event.target );
+    console.log( this.state );
     this.props.callback();
-
+    alert( 'formulario enviado' );
     event.preventDefault();
   }
 
@@ -68,7 +68,7 @@ class FormEvent extends Component {
     });
   } 
 
-  resetForm( event ) {
+  resetForm() {
         
     this.setState({
           title: '',
@@ -78,25 +78,32 @@ class FormEvent extends Component {
           totalHours: '',
           description: ''
       });
-    }
+
+    this.props.callback();
+  }
 
   render() {
-    
-    return (
-      
-      <Container>
-        <Form onSubmit={ this.handleSubmit }>
+
+  	return(
+  	 
+      <Form onSubmit={ this.handleSubmit }>
           { this.getFromControl( 'title', 'Titulo del evento', this.state.title ) }
           { this.getFromControl( 'date', 'Fecha', this.state.date ) }
           { this.getFromControl( 'startingTime', 'Fecha de inicio', this.state.startingTime ) }
           { this.getFromControl( 'finalHour', 'Hora final', this.state.finalHour ) }
           { this.getFromControl( 'totalHours', 'Total horas', this.state.totalHours ) }
-          { this.getFromControl( 'description', 'Descripcion', this.state.description ) }
-        </Form>  
-      </Container>
+          { this.getFromControl( 'description', 'Descripcion', this.state.description ) } 
 
-    );
+          <Button type="submit" variant="primary">
+          	Enviar
+          </Button>
+          <Button type="reset" onClick={ this.resetForm } variant="secondary">
+          	Cancelar
+          </Button>
+      </Form>
+  	);
+
   }
 }
 
-export default FormEvent;
+export default FormEventComponent;
