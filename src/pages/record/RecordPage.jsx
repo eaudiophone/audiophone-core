@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { recordMeetings } from './RecordHardcode';
-
 import CardComponent from './../../components/card/CardComponent';
 import FormEventComponent from './../../components/form/FormEventComponent';
-
 import { ButtonToolbar, ButtonGroup, Button, Row } from 'react-bootstrap';
 
 class RecordPage extends Component {
@@ -13,11 +11,12 @@ class RecordPage extends Component {
 		super( props );
 
 		this.state = { 
-			meeting: recordMeetings,
-			tab: false
+			meeting: recordMeetings
 		};
+	}
 
-		console.log( this.state );
+	componentDidMount() {
+		this.changeMode('meetings');
 	}
 
 	getHeader() {
@@ -31,17 +30,19 @@ class RecordPage extends Component {
 
 				<ButtonToolbar className="mb-2 mb-md-0">
 					<ButtonGroup>
-						
+
 						<Button 
 							variant="secondary" 
 							size="sm"
+							onClick={ () => this.changeMode('meetings') }
 						>
 							<i className="mr-2 fas fa-calendar"></i>
 							Eventos
 						</Button>
 						<Button 
-							variant="success" 
+							variant="primary" 
 							size="sm"
+							onClick={ () => this.changeMode('form') }
 						>
 							<i className="mr-2 fas fa-plus"></i>
 							Nuevo evento
@@ -60,27 +61,22 @@ class RecordPage extends Component {
 			
     		<Row>
     			{ 	this.state.meeting.map( ( element ) => (
-    					<CardComponent 
-    						meeting={ element } 
-    						color="#c7e5ec" 
-    						key={ element.id } 
-    					/> 
+    					<CardComponent meeting={ element } color="#c7e5ec" key={ element.id } /> 
     				)) 
     			}
     		</Row>
 		);
 	}
 
-	changeMode( number ) {
+	changeMode( mode ) {
 
-		if ( number === 1 ) {
+		if ( mode === 'meetings' ) {
+			document.getElementById('form').style.display = 'none';
+			document.getElementById('meetings').style.display = 'block';
 
-			return  this.getMeetingRecords();
-		} 
-
-		else {
-			
-			return ( <FormEventComponent /> );
+		} else {
+			document.getElementById('form').style.display = 'block';
+			document.getElementById('meetings').style.display = 'none';
 		} 
 	}
 
@@ -90,7 +86,12 @@ class RecordPage extends Component {
 			
 			<div>
 				{ this.getHeader() }
-				{ this.changeMode( 1 ) }
+				<div id="meetings">
+					{ this.getMeetingRecords() }
+				</div>
+				<div id="form">
+					<FormEventComponent callback={ () => this.changeMode('meetings') } />
+				</div>
 			</div>
 		);
 	}

@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-
-import { 
-	Form, 
-	Row, 
-	Col, 
-	Button
-} from 'react-bootstrap'; 
+import { Form, Row, Col, Button } from 'react-bootstrap'; 
 
 class FormEventComponent extends Component {
 
@@ -27,34 +21,15 @@ class FormEventComponent extends Component {
     this.resetForm = this.resetForm.bind( this );
   }
 
-  getFromControl( name, title, state ) {
-
-    return (
-
-      <Row>
-        <Col>
-           <Form.Group>
-             <Form.Label>{ title }</Form.Label>
-             <Form.Control 
-               type="text"
-               name={ name }
-               value={ state }
-               onChange={ this.handleChange }
-               required
-            />
-           </Form.Group>
-        </Col>
-      </Row>
-     
-    );
-  }
 
   handleSubmit( event ) {
 
     console.log( this.state );
-    this.props.callback();
     alert( 'formulario enviado' );
+
+    this.resetForm();
     event.preventDefault();
+    this.props.callback();
   }
 
   handleChange( event ) {
@@ -78,8 +53,28 @@ class FormEventComponent extends Component {
           totalHours: '',
           description: ''
       });
+  }
 
-    this.props.callback();
+  getFromControl( name, title, state ) {
+
+    return (
+
+      <Row>
+        <Col>
+           <Form.Group>
+             <Form.Label>{ title }</Form.Label>
+             <Form.Control 
+               type="text"
+               name={ name }
+               value={ state }
+               onChange={ this.handleChange }
+               required
+            />
+           </Form.Group>
+        </Col>
+      </Row>
+     
+    );
   }
 
   render() {

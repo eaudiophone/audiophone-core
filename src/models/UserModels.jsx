@@ -1,10 +1,6 @@
 class User {
 
-	constructor(
-		name,
-		email,
-		password,
-		) {
+	constructor( name, email, password ) {
 
 		this.name = name;
 		this.email = email;
@@ -16,10 +12,11 @@ class User {
 
 	getDate() {
 
-		let format = new Date();
-		let month = parseInt( format.getMonth() ) + 1;
-
-		return `${ format.getFullYear() }/${ month }/${ format.getDate() }`;
+		let format = new Date().toISOString();
+		format = format.split('T');
+		format = format[0]
+		
+		return format;
 	}
 }
 
