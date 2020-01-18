@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Event from './../../models/EventModels';
 import { Form, Row, Col, Button } from 'react-bootstrap'; 
 
 class FormEventComponent extends Component {
@@ -7,28 +8,34 @@ class FormEventComponent extends Component {
 
     super( props );
 
-    this.state = {
-      title: '',
-      date: '',
-      startingTime: '',
-      finalHour: '', 
-      totalHours: '',
-      description: ''
-    }
+    this.state = new Event();
+
+    console.log( this.state );
 
     this.handleSubmit = this.handleSubmit.bind( this );
     this.handleChange = this.handleChange.bind( this );
-    this.resetForm = this.resetForm.bind( this );
   }
-
 
   handleSubmit( event ) {
 
-    console.log( this.state );
+  	const eventCalendar = new Event(
+  			this.state.title,
+  			this.state.date,
+  			this.state.startingTime,
+  			this.state.finalHour,
+  			this.state.totalHours,
+  			this.state.description,
+  			this.state.addressMeeting
+  	);
+
+  	this.resetForm();
+
+  	console.log( eventCalendar );
+
     alert( 'formulario enviado' );
 
-    this.resetForm();
     event.preventDefault();
+
     this.props.callback();
   }
 
@@ -38,64 +45,76 @@ class FormEventComponent extends Component {
     const name = target.name;
     const value = target.value;
 
-    this.setState({ 
-      [ name ]: value
-    });
+    this.setState({ [ name ]: value });
   } 
 
   resetForm() {
         
-    this.setState({
-          title: '',
-          date: '',
-          startingTime: '',
-          finalHour: '', 
-          totalHours: '',
-          description: ''
-      });
+    this.setState( new Event() );
   }
 
-  getFromControl( name, title, state ) {
+  getForm( name, title, state, columnSize ) {
 
     return (
 
-      <Row>
-        <Col>
-           <Form.Group>
-             <Form.Label>{ title }</Form.Label>
-             <Form.Control 
-               type="text"
-               name={ name }
-               value={ state }
-               onChange={ this.handleChange }
-               required
-            />
-           </Form.Group>
-        </Col>
-      </Row>
-     
+	    <Col sm={ columnSize }>
+	       <Form.Group>
+	         <Form.Label>{ title }</Form.Label>
+	         <Form.Control 
+	           type="text"
+	           name={ name }
+	           value={ state }
+	           onChange={ this.handleChange }
+	           required
+	        />
+	       </Form.Group>
+	    </Col>
+   
     );
+  }
+
+
+
+  getFormDate( name, title, state, columnSize ) {
+
+  	return (
+
+  		 <Col sm={ columnSize }>
+	       <Form.Group>
+	         <Form.Label>{ title }</Form.Label>
+	         <Form.Control 
+	           type="date"
+	           name={ name }
+	           value={ state }
+	           onChange={ this.handleChange }
+	           required
+	        />
+	       </Form.Group>
+	    </Col>
+  	);
   }
 
   render() {
 
   	return(
-  	 
-      <Form onSubmit={ this.handleSubmit }>
-          { this.getFromControl( 'title', 'Titulo del evento', this.state.title ) }
-          { this.getFromControl( 'date', 'Fecha', this.state.date ) }
-          { this.getFromControl( 'startingTime', 'Fecha de inicio', this.state.startingTime ) }
-          { this.getFromControl( 'finalHour', 'Hora final', this.state.finalHour ) }
-          { this.getFromControl( 'totalHours', 'Total horas', this.state.totalHours ) }
-          { this.getFromControl( 'description', 'Descripcion', this.state.description ) } 
 
-          <Button type="submit" variant="primary">
-          	Enviar
-          </Button>
-          <Button type="reset" onClick={ this.resetForm } variant="secondary">
-          	Cancelar
-          </Button>
-      </Form>
+    	<Form onSubmit={ this.handleSubmit }>
+    		<Row>
+    			{ this.getForm( 'title', 'Titulo del evento', this.state.title, 12 ) }
+    			{ this.getFormDate( 'date', 'Fecha', this.state.date, 12 ) }
+    			{ this.getForm( 'startingTime', 'Fecha de inicio', this.state.startingTime, 4 ) }
+        	{ this.getForm( 'finalHour', 'Hora final', this.state.finalHour, 4 ) }
+        	{ this.getForm( 'totalHours', 'Total horas', this.state.totalHours, 4 ) }
+        	{ this.getForm( 'description', 'Descripción', this.state.description, 12 ) }
+    		</Row>
+
+        	<Button type="submit" variant="primary" className="mr-3">
+        		Enviar
+        	</Button>
+        	<Button type="reset" onClick={ this.resetForm } variant="secondary">
+        		Cancelar
+        	</Button>
+    	</Form>
   	);
 
   }

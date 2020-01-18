@@ -59,7 +59,8 @@ class RentalPage extends Component {
 
 		return (
 			<Row>
-				{ 	this.state.meetings.map( ( element ) => (
+				{ 	
+					this.state.meetings.map( ( element ) => (
 						<CardComponent 
 							meeting={ element } 
 							color="#fbf096" 
