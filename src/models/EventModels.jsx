@@ -6,8 +6,9 @@ class Event {
 			startingTime,
 			finalHour,
 			totalHours,
+			addressMeeting,
 			description,
-			addressMeeting
+			idService,
 		) {
 
 		this.title = title || '';
@@ -15,8 +16,9 @@ class Event {
 		this.startingTime = startingTime || '';
 		this.finalHour = finalHour || '';
 		this.totalHours = totalHours || '';
-		this.description = description || '';
 		this.addressMeeting = addressMeeting || '';
+		this.description = description || '';
+		this.idService = idService || 1;
 	}
 };
 

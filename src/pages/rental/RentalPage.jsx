@@ -93,7 +93,10 @@ class RentalPage extends Component {
 					{ this.setMeetingRental() }
 				</div>
 				<div id="form">
-					<FormEventComponent />
+					<FormEventComponent 
+						callback={ () => this.changeMode('meetings') }
+						idService={ 2 }
+					/>
 				</div>
 			</div>
 		);

@@ -10,27 +10,26 @@ class FormEventComponent extends Component {
 
     this.state = new Event();
 
-    console.log( this.state );
-
     this.handleSubmit = this.handleSubmit.bind( this );
     this.handleChange = this.handleChange.bind( this );
   }
 
   handleSubmit( event ) {
 
-  	const eventCalendar = new Event(
-  			this.state.title,
-  			this.state.date,
-  			this.state.startingTime,
-  			this.state.finalHour,
-  			this.state.totalHours,
-  			this.state.description,
-  			this.state.addressMeeting
-  	);
-
+  	const meeting = new Event(
+        this.state.title,
+        this.state.date,
+        this.state.startingTime,
+        this.state.finalHour,
+        parseInt( this.state.totalHours ),
+        this.state.addressMeeting === '' ? 'Estudio principal' : this.state.addressMeeting,
+        this.state.description,
+        this.props.idService
+    );
+  
   	this.resetForm();
 
-  	console.log( eventCalendar );
+  	console.log( meeting );
 
     alert( 'formulario enviado' );
 
@@ -65,15 +64,12 @@ class FormEventComponent extends Component {
 	           name={ name }
 	           value={ state }
 	           onChange={ this.handleChange }
-	           required
 	        />
 	       </Form.Group>
 	    </Col>
    
     );
   }
-
-
 
   getFormDate( name, title, state, columnSize ) {
 
@@ -87,7 +83,24 @@ class FormEventComponent extends Component {
 	           name={ name }
 	           value={ state }
 	           onChange={ this.handleChange }
-	           required
+	        />
+	       </Form.Group>
+	    </Col>
+  	);
+  }
+
+  getFormTextarea( name, title, state, columnSize ) {
+
+  	return (
+
+  		<Col sm={ columnSize }>
+	       <Form.Group>
+	         <Form.Label>{ title }</Form.Label>
+	         <Form.Control
+	         	as="textarea"
+	          name={ name }
+	          value={ state }
+	          onChange={ this.handleChange }
 	        />
 	       </Form.Group>
 	    </Col>
@@ -102,10 +115,20 @@ class FormEventComponent extends Component {
     		<Row>
     			{ this.getForm( 'title', 'Titulo del evento', this.state.title, 12 ) }
     			{ this.getFormDate( 'date', 'Fecha', this.state.date, 12 ) }
-    			{ this.getForm( 'startingTime', 'Fecha de inicio', this.state.startingTime, 4 ) }
+    			{ this.getForm( 'startingTime', 'Hora de inicio', this.state.startingTime, 4 ) }
         	{ this.getForm( 'finalHour', 'Hora final', this.state.finalHour, 4 ) }
         	{ this.getForm( 'totalHours', 'Total horas', this.state.totalHours, 4 ) }
-        	{ this.getForm( 'description', 'Descripción', this.state.description, 12 ) }
+          {
+            this.props.idService === 2 &&  
+
+              this.getFormTextarea( 
+                 'addressMeeting', 
+                 'Direccion del evento', 
+                 this.state.addressMeeting,
+                 12 
+              ) 
+          }
+        	{ this.getFormTextarea( 'description', 'Descripción', this.state.description, 12 ) }
     		</Row>
 
         	<Button type="submit" variant="primary" className="mr-3">

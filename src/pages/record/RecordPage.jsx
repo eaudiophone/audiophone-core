@@ -90,7 +90,10 @@ class RecordPage extends Component {
 					{ this.getMeetingRecords() }
 				</div>
 				<div id="form">
-					<FormEventComponent callback={ () => this.changeMode('meetings') } />
+					<FormEventComponent   
+						callback={ () => this.changeMode('meetings') }
+						idService={ 1 } 
+					/>
 				</div>
 			</div>
 		);
