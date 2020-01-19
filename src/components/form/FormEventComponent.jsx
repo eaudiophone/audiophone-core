@@ -14,6 +14,10 @@ class FormEventComponent extends Component {
     this.handleChange = this.handleChange.bind( this );
   }
 
+  componentDidMount() {
+    this.showAddress('idService', '0');
+  }
+
   handleSubmit( event ) {
 
   	const meeting = new Event(
@@ -40,8 +44,27 @@ class FormEventComponent extends Component {
     const name = target.name;
     const value = target.value;
 
+    // validaciones
+    this.showAddress( name, value );
+
     this.setState({ [ name ]: value });
   } 
+
+  showAddress( name, value ) {
+
+    if ( name === 'idService' && ( value ) === '2' ) {
+      
+      document.getElementById('address').style.display = 'block';
+ 
+    } else if ( name === 'idService' && ( value === '1' || value === '0' ) ) {
+      
+      document.getElementById('address').style.display = 'none';
+
+    } else {
+
+      return;
+    }
+  }
 
   resetForm() {
         
@@ -64,7 +87,6 @@ class FormEventComponent extends Component {
 	        />
 	       </Form.Group>
 	    </Col>
-   
     );
   }
 
@@ -135,14 +157,72 @@ class FormEventComponent extends Component {
 
     	<Form onSubmit={ this.handleSubmit }>
     		<Row>
-    			{ this.getForm( 'title', 'Titulo del evento', this.state.title, 12 ) }
-          { this.getFormSelect( 'idService', 'Servicio a solicitar', this.state.idService, 12 ) }
-    			{ this.getFormDate( 'date', 'Fecha', this.state.date, 12 ) }
-    			{ this.getForm( 'startingTime', 'Hora de inicio', this.state.startingTime, 4 ) }
-        	{ this.getForm( 'finalHour', 'Hora final', this.state.finalHour, 4 ) }
-        	{ this.getForm( 'totalHours', 'Total horas', this.state.totalHours, 4 ) }
-          { this.getFormTextarea( 'addressMeeting', 'Dirección del evento', this.state.addressMeeting, 12 ) }
-        	{ this.getFormTextarea( 'description', 'Descripción', this.state.description, 12 ) }
+    			{ 
+    				this.getForm( 
+    					'title', 
+    					'Titulo del evento', 
+    					this.state.title, 
+    					12 
+    				)
+    			}
+          { 
+          	this.getFormSelect( 
+          		'idService', 
+          		'Servicio a solicitar', 
+          		this.state.idService, 
+          		12 
+          	) 
+          }
+    			{ 
+    				this.getFormDate( 
+    					'date', 
+    					'Fecha', 
+    					this.state.date, 
+    					12 
+    				) 
+    			}
+    			{ 
+    				this.getForm( 
+    					'startingTime', 
+    					'Hora de inicio', 
+    					this.state.startingTime, 
+    					4 
+    				) 
+    			}
+        	{ 
+        		this.getForm( 
+        			'finalHour', 
+        			'Hora final', 
+        			this.state.finalHour, 
+        			4 
+        		) 
+        	}
+        	{ 
+        		this.getForm( 
+        			'totalHours', 
+        			'Total horas', 
+        			this.state.totalHours, 
+        			4 
+        		) 
+        	}
+          <div id="address" className="col-sm-12 p-0">
+            { 
+            	this.getFormTextarea( 
+            		'addressMeeting', 
+            		'Dirección del evento', 
+            		this.state.addressMeeting, 
+            		12 
+            	) 
+            }
+          </div>
+        	{ 
+        		this.getFormTextarea( 
+        			'description', 
+        			'Descripción', 
+        			this.state.description, 
+        			12 
+        		) 
+        	}
     		</Row>
 
         	<Button type="submit" variant="primary" className="mr-3">
