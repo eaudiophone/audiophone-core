@@ -10,8 +10,10 @@ class FormEventComponent extends Component {
 
     this.state = new Event();
 
+    // metodos que vinculan al estado
     this.handleSubmit = this.handleSubmit.bind( this );
     this.handleChange = this.handleChange.bind( this );
+    this.resetForm = this.resetForm.bind( this );
   }
 
   componentDidMount() {
@@ -39,12 +41,10 @@ class FormEventComponent extends Component {
   }
 
   handleChange( event ) {
+  	
+    const name = event.target.name;
+    const value = event.target.value;
 
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-
-    // validaciones
     this.showAddress( name, value );
 
     this.setState({ [ name ]: value });
@@ -66,8 +66,8 @@ class FormEventComponent extends Component {
     }
   }
 
-  resetForm() {
-        
+  resetForm() {   
+    
     this.setState( new Event() );
   }
 

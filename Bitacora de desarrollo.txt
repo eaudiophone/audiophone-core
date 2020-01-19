@@ -49,7 +49,7 @@ se ejecuta de inmediato. Devuelve una copia del archivo.
 8.- Hay un par de cosas sobre el set state :
 
 	8.1.- No modifiques el estado directamente, solo aplica en el constructor de 
-	la clase en su lugar utiliza set state.
+	la clase en su lugar utiliza setState.
 
 	8.2.- Las actualizaciones de estado son asincronas, es decir react agrupa varias
 	invocaciones a set state, no debes confiar en sus valores para calcular su
@@ -75,7 +75,9 @@ se ejecuta de inmediato. Devuelve una copia del archivo.
 10.- Parece que el router dom conserva los estilos generados por la pagina
 hay que reiniciar los estilos cada vez que la aplicacion aplique una redirección.
 
-	Revisar la documentacion de link to
+
+11.- la metodo bind vincula la funcion dentro de la clase para que pueda manipular
+el estado del componente. Sino lo colocas react te muestra que setState es undefined.
 
 | ---------------------------------------------------------------------------------- |
 
