@@ -121,7 +121,6 @@ class FormEventComponent extends Component {
 	          name={ name }
 	          value={ state }
 	          onChange={ this.handleChange }
-            required
 	        />
 	       </Form.Group>
 	    </Col>
