@@ -78,7 +78,8 @@ class FormEventComponent extends Component {
 	    <Col sm={ columnSize }>
 	       <Form.Group>
 	         <Form.Label>{ title }</Form.Label>
-	         <Form.Control 
+	         <Form.Control
+             as="input" 
 	           type="text"
 	           name={ name }
 	           value={ state }
