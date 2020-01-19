@@ -1,16 +1,21 @@
 export const MENU = {
 	user: [
-		
 		{
 			id: 1,
-			link: '/home/records',
-			name: 'Ver grabaciones',
-			icon: 'fas fa-microphone'
+			link: '/home/new',
+			name: 'Nuevo evento',
+			icon: 'fas fa-plus'
 		},
 		{
 			id: 2,
+			link: '/home/records',
+			name: 'Gestionar grabaciones',
+			icon: 'fas fa-microphone'
+		},
+		{
+			id: 3,
 			link: '/home/rental',
-			name: 'Ver alquileres',
+			name: 'Gestionar alquileres',
 			icon: 'fas fa-truck'
 		}
 	],

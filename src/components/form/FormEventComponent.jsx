@@ -21,21 +21,17 @@ class FormEventComponent extends Component {
         this.state.date,
         this.state.startingTime,
         this.state.finalHour,
-        parseInt( this.state.totalHours ),
+        this.state.totalHours,
         this.state.addressMeeting === '' ? 'Estudio principal' : this.state.addressMeeting,
         this.state.description,
-        this.props.idService
+        parseInt( this.state.idService )
     );
   
   	this.resetForm();
-
   	console.log( meeting );
 
     alert( 'formulario enviado' );
-
     event.preventDefault();
-
-    this.props.callback();
   }
 
   handleChange( event ) {
@@ -64,6 +60,7 @@ class FormEventComponent extends Component {
 	           name={ name }
 	           value={ state }
 	           onChange={ this.handleChange }
+             required
 	        />
 	       </Form.Group>
 	    </Col>
@@ -83,6 +80,7 @@ class FormEventComponent extends Component {
 	           name={ name }
 	           value={ state }
 	           onChange={ this.handleChange }
+             required
 	        />
 	       </Form.Group>
 	    </Col>
@@ -101,10 +99,34 @@ class FormEventComponent extends Component {
 	          name={ name }
 	          value={ state }
 	          onChange={ this.handleChange }
+            required
 	        />
 	       </Form.Group>
 	    </Col>
   	);
+  }
+
+  getFormSelect( name, title, state, columnSize ) {
+
+    return (
+
+      <Col sm={ columnSize }>
+         <Form.Group>
+           <Form.Label>{ title }</Form.Label>
+           <Form.Control
+            as="select"
+            name={ name }
+            value={ this.state.idService }
+            onChange={ this.handleChange }
+            required
+          >
+            <option value={ 0 }>Seleccione</option>
+            <option value={ 1 }>Grabación</option>
+            <option value={ 2 }>Alquiler</option>
+          </Form.Control>
+         </Form.Group>
+      </Col>
+    );
   }
 
   render() {
@@ -114,20 +136,12 @@ class FormEventComponent extends Component {
     	<Form onSubmit={ this.handleSubmit }>
     		<Row>
     			{ this.getForm( 'title', 'Titulo del evento', this.state.title, 12 ) }
+          { this.getFormSelect( 'idService', 'Servicio a solicitar', this.state.idService, 12 ) }
     			{ this.getFormDate( 'date', 'Fecha', this.state.date, 12 ) }
     			{ this.getForm( 'startingTime', 'Hora de inicio', this.state.startingTime, 4 ) }
         	{ this.getForm( 'finalHour', 'Hora final', this.state.finalHour, 4 ) }
         	{ this.getForm( 'totalHours', 'Total horas', this.state.totalHours, 4 ) }
-          {
-            this.props.idService === 2 &&  
-
-              this.getFormTextarea( 
-                 'addressMeeting', 
-                 'Direccion del evento', 
-                 this.state.addressMeeting,
-                 12 
-              ) 
-          }
+          { this.getFormTextarea( 'addressMeeting', 'Dirección del evento', this.state.addressMeeting, 12 ) }
         	{ this.getFormTextarea( 'description', 'Descripción', this.state.description, 12 ) }
     		</Row>
 

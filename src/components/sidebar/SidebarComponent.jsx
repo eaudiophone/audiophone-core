@@ -53,7 +53,7 @@ class SidebarComponent extends Component {
 
 			<div className="bg-dark sidebar">
 				<div className="sidebar-sticky">
-					<h6>Ver Eventos</h6>
+					<h6>Gestionar Eventos</h6>
 					{ this.getMenu() }
 					<h6>Información</h6>
 					<li>

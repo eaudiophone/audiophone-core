@@ -18,7 +18,7 @@ class Event {
 		this.totalHours = totalHours || '';
 		this.addressMeeting = addressMeeting || '';
 		this.description = description || '';
-		this.idService = idService || 1;
+		this.idService = idService || 0;
 	}
 };
 
