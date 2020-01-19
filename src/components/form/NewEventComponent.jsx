@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Event from './../../models/EventModels';
 import { Form, Row, Col, Button } from 'react-bootstrap'; 
 
-class FormEventComponent extends Component {
+class NewEventComponent extends Component {
 
   constructor( props ) {
 
@@ -237,4 +237,4 @@ class FormEventComponent extends Component {
   }
 }
 
-export default FormEventComponent;
+export default NewEventComponent;

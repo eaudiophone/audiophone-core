@@ -1,7 +1,7 @@
 import  React, { Component } from 'react';
-import NewEventComponent from './../../components/form/NewEventComponent';
+import EditEventComponent from './../../components/form/EditEventComponent';
 
-class NewEventPage extends Component {
+class EditEventPage extends Component {
 
 	render() {
 
@@ -10,13 +10,13 @@ class NewEventPage extends Component {
 			<div>
 				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 					align-items-center pb-2 mb-3 border-bottom">
-					<h2>Nuevo evento</h2> 
+					<h2>Editar evento</h2> 
 				</div>
 
-				<NewEventComponent />
+				<EditEventComponent />
 			</div>
 		);
 	}
 }
 
-export default NewEventPage;
+export default EditEventPage;

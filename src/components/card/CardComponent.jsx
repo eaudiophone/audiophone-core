@@ -1,74 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Row, Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
-const CardComponent = ( props ) => (
+// react Hooks
+const CardComponent = ( props ) => {
 
-	<div className="col-sm-6 mb-3">
-        <Card style={{ backgroundColor: props.color }}>
-            <Card.Body>{ cardBody( props.meeting ) }</Card.Body>
-        </Card>
-	</div>
-);
+	const [ redirect, setRedirect ] = useState( false );
 
-const cardBody = ( meeting ) => (
+	const redirectTo = () => {
 
-	<div className="container-fluid">
-			
-		<Row className="d-flex justify-content-between">
-			<i className={ meeting.icon }></i>
-			<h5 className="card-title">{ meeting.title }</h5>
-			<i className="fas fa-times pointer"></i>
-		</Row>
+		if ( redirect ) {
+			return ( <Redirect to={ `/home/event/${ props.meeting.id }` } /> );
+		}
+	};
 
-		<Row className="d-flex justify-content-between">
+	const CardBody = () => (
 
-			<label className="card-subtitle mb-2 text-muted text-left pt-2">
-				Fecha del evento:
-			</label>
-
-			<label className="card-subtitle mb-2 text-muted text-left pt-2">
-            	{ meeting.appointmentDate }
-            </label>
+		<div className="container-fluid">
 					
-		</Row>
+				<Row className="d-flex justify-content-between">
+					<i className={ props.meeting.icon }></i>
+					<h5 className="card-title">{ props.meeting.title }</h5>
+					<i className="fas fa-times pointer"></i>
+				</Row>
 
-		<Row className="pt-2 d-flex justify-content-center">
-             <h6>
-                <i className="mr-1 fas fa-clock"></i>
-                Total: { meeting.totalHours } horas
-            </h6>        
-        </Row> 
+				<Row className="d-flex justify-content-between">
 
-		<Row className="d-flex justify-content-between pt-2">
+					<label className="card-subtitle mb-2 text-muted text-left pt-2">
+						Fecha del evento:
+					</label>
 
-			<h5>
-                <span className="badge badge-secondary">
-                    <i className="mr-1 fas fa-clock"></i>
-                    Inicio: { meeting.startingTime }
-                 </span>
-           	</h5>
+					<label className="card-subtitle mb-2 text-muted text-left pt-2">
+		        { props.meeting.appointmentDate }
+		      </label>
+							
+				</Row>
 
-            <h5>
-                <span className="badge badge-secondary">
-                    <i className="mr-1 fas fa-clock"></i>
-                    Cierre: { meeting.finalHour }
-                </span>
-            </h5> 
-        </Row>
+				<Row className="pt-2 d-flex justify-content-center">
+			     <h6>
+			        <i className="mr-1 fas fa-clock"></i>
+			        Total: { props.meeting.totalHours } horas
+			    </h6>        
+		   	</Row> 
 
-        <Row className=" pt-2 text-justify">
-            <p>{ meeting.description }</p>       
-        </Row>
-        
-        <Row className="d-flex justify-content-center pt-2">
-            <Button variant="info">
-                <i className="fas fa-edit"></i>
-                Modificar
-            </Button>  
-        </Row>
+				<Row className="d-flex justify-content-between pt-2">
 
-	</div>
+					<h5>
+			      <span className="badge badge-secondary">
+			          <i className="mr-1 fas fa-clock"></i>
+			          Inicio: { props.meeting.startingTime }
+			       </span>
+			    </h5>
 
-);
+			    <h5>
+			        <span className="badge badge-secondary">
+			            <i className="mr-1 fas fa-clock"></i>
+			            Cierre: { props.meeting.finalHour }
+			        </span>
+			    </h5> 
+		    </Row>
+
+		    <Row className=" pt-2 text-justify">
+		        <p>{ props.meeting.description }</p>       
+		    </Row>
+		    
+		    <Row className="d-flex justify-content-center pt-2">
+		      <Button 
+		      	variant="primary" 
+		      	onClick={ () => setRedirect( true ) }>
+		          <i className="fas fa-edit mr-2"></i>
+		          Modificar
+		      </Button>  
+		    </Row>
+			</div>
+	);
+
+	return (
+
+		<div className="col-sm-6 mb-3">
+      
+      { redirectTo() }
+
+      <Card style={{ backgroundColor: props.color }}>
+        <Card.Body>
+        	{ CardBody() }
+        </Card.Body>
+      </Card>
+
+		</div>
+	);
+};
+
 
 export default CardComponent;

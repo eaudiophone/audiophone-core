@@ -2,7 +2,7 @@ export const MENU = {
 	user: [
 		{
 			id: 1,
-			link: '/home/new',
+			link: '/home/event/new',
 			name: 'Nuevo evento',
 			icon: 'fas fa-plus'
 		},
