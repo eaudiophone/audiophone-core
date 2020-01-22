@@ -66,10 +66,10 @@ const CardComponent = ( props ) => {
 		    
 		    <Row className="d-flex justify-content-center pt-2">
 		      <Button 
-		      	variant="primary" 
+		      	variant="dark" 
 		      	onClick={ () => setRedirect( true ) }>
 		          <i className="fas fa-edit mr-2"></i>
-		          Modificar
+		          Ver detalles
 		      </Button>  
 		    </Row>
 			</div>
@@ -78,14 +78,14 @@ const CardComponent = ( props ) => {
 	return (
 
 		<div className="col-sm-6 mb-3">
-      
-      { redirectTo() }
+		  
+		  { redirectTo() }
 
-      <Card style={{ backgroundColor: props.color }}>
-        <Card.Body>
-        	{ CardBody() }
-        </Card.Body>
-      </Card>
+		  <Card style={{ backgroundColor: props.color }}>
+		    <Card.Body>
+		    	{ CardBody() }
+		    </Card.Body>
+		  </Card>
 
 		</div>
 	);

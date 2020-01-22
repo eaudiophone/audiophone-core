@@ -1,5 +1,5 @@
 export const MEETINGS = {
-	rental: [
+	records: [
 		{ 
 			id: 1,
 			icon: 'fas fa-microphone',
@@ -42,7 +42,7 @@ export const MEETINGS = {
 		}
 	],
 
-	records: [
+	rental: [
 
 		{
 			id: 1,

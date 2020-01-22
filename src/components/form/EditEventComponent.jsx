@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap'; 
 import Event from './../../models/EventModels';
-import { MEETINGS } from './../../hardcode/MeetigsHardcode';
+// import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 
 class EditEventComponent extends Component {
 
