@@ -8,15 +8,9 @@ export const MENU = {
 		},
 		{
 			id: 2,
-			link: '/home/records',
-			name: 'Gestionar grabaciones',
-			icon: 'fas fa-microphone'
-		},
-		{
-			id: 3,
-			link: '/home/rental',
-			name: 'Gestionar alquileres',
-			icon: 'fas fa-truck'
+			link: '/home/event',
+			name: 'Ver eventos',
+			icon: 'fas fa-calendar'
 		}
 	],
 	admin: [
