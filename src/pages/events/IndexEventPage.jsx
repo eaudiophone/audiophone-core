@@ -52,13 +52,19 @@ class IndexEventPage extends Component {
 
 	showMeetings( mode ) {
 
-		if ( mode === 'rental' ) {
+		let events = [];
+		let idService = 0;
+
+		if ( mode === 'record' ) {
+
+			idService = 1;
+			events = MEETINGS.filter( ( element ) => element.idService === idService );
 
 			return(
 
 				<Row>
 					{ 	
-						MEETINGS.rental.map( ( element ) => (
+						events.map( ( element ) => (
 							<CardComponent meeting={ element } color="#fbf096" key={ element.id }/>
 						)) 
 				}
@@ -68,11 +74,14 @@ class IndexEventPage extends Component {
 
 		} else {
 
+			idService = 2;
+			events = MEETINGS.filter( ( element ) => element.idService === idService );
+
 			return(
 
 				<Row>
 					{ 	
-						MEETINGS.records.map( ( element ) => (
+						events.map( ( element ) => (
 							<CardComponent meeting={ element } color="#c7e5ec" key={ element.id }/>
 						)) 
 				}

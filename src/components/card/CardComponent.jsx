@@ -31,7 +31,7 @@ const CardComponent = ( props ) => {
 					</label>
 
 					<label className="card-subtitle mb-2 text-muted text-left pt-2">
-		        { props.meeting.appointmentDate }
+		        { props.meeting.date }
 		      </label>
 							
 				</Row>
