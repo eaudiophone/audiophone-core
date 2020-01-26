@@ -8,8 +8,6 @@ class EditEventComponent extends Component {
 		super( props );
 
 		this.state = props.event;
-
-		console.log( this.state );
 	}
 
 	getForm( name, title, state, columnSize ) {
@@ -39,7 +37,7 @@ class EditEventComponent extends Component {
 	       <Form.Group>
 	         <Form.Label>{ title }</Form.Label>
 	         <Form.Control 
-	           type="date"
+	           type="text"
 	           name={ name }
 	           defaultValue={ state }
 	           onChange={ this.handleChange }

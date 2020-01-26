@@ -20,7 +20,7 @@ class EditEventPage extends Component {
 
 		return new Event(
 			response.title,
-			response.date,
+			this.setFormatDate( response.date ),
 			response.startingTime,
 			response.finalHour,
 			response.totalHours,
@@ -28,6 +28,12 @@ class EditEventPage extends Component {
 			response.addressMeeting,
 			response.idService
 		);		
+	}
+
+	setFormatDate( date ) {
+
+		let newDate = date.split('/');
+		return `${ newDate[2] }/${ newDate[1] }/${ newDate[0] }`;
 	}
 
 	render() {

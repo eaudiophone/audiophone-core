@@ -102,7 +102,7 @@ class NewEventComponent extends Component {
 	       <Form.Group>
 	         <Form.Label>{ title }</Form.Label>
 	         <Form.Control 
-	           type="date"
+	           type="text"
 	           name={ name }
 	           value={ state }
 	           onChange={ this.handleChange }
