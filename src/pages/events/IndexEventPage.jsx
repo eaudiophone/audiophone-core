@@ -10,9 +10,17 @@ import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 
 class IndexEventPage extends Component {
 
+	constructor( props ) {
+
+		super( props );
+
+		// crea referencias para nodos HTML
+		this.rental = React.createRef();
+		this.record = React.createRef();
+	}
+
 	componentDidMount() {
-		
-		this.changeView('record');
+		this.changeView('record')
 	}
 
 	getHeader() {
@@ -94,13 +102,14 @@ class IndexEventPage extends Component {
 	changeView( view ) {
 
 		if ( view === 'record' ) {
-			document.getElementById('record').style.display = 'block';
-			document.getElementById('rental').style.display = 'none';
-		
-		} else {
-			document.getElementById('rental').style.display = 'block';
-			document.getElementById('record').style.display = 'none';
 
+			this.record.current.style.display = 'block';
+			this.rental.current.style.display = 'none';
+	
+		} else {
+
+			this.record.current.style.display = 'none';
+			this.rental.current.style.display = 'block';
 		}
 	}
 
@@ -109,10 +118,10 @@ class IndexEventPage extends Component {
 			
 			<div>
 				{ this.getHeader() }
-				<div id="record">
+				<div ref={ this.record }>
 					{ this.showMeetings('record') }
 				</div>
-				<div id="rental">
+				<div ref={ this.rental }>
 					{ this.showMeetings('rental') }
 				</div>
 			</div>

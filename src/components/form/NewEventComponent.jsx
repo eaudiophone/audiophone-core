@@ -14,6 +14,9 @@ class NewEventComponent extends Component {
     this.handleSubmit = this.handleSubmit.bind( this );
     this.handleChange = this.handleChange.bind( this );
     this.resetForm = this.resetForm.bind( this );
+
+    // elementos DOM
+    this.addressInput = React.createRef();
   }
 
   componentDidMount() {
@@ -54,11 +57,11 @@ class NewEventComponent extends Component {
 
     if ( name === 'idService' && ( value ) === '2' ) {
       
-      document.getElementById('address').style.display = 'block';
+      this.addressInput.current.style.display = 'block';
  
     } else if ( name === 'idService' && ( value === '1' || value === '0' ) ) {
       
-      document.getElementById('address').style.display = 'none';
+      this.addressInput.current.style.display = 'none';
 
     } else {
 
@@ -205,7 +208,7 @@ class NewEventComponent extends Component {
         			4 
         		) 
         	}
-          <div id="address" className="col-sm-12 p-0">
+          <div ref={ this.addressInput } className="col-sm-12 p-0">
             { 
             	this.getFormTextarea( 
             		'addressMeeting', 
