@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { Card, Row, Button } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import RedirectService from './../../services/RedirectService';
+import ModalComponent from './../modal/ModalComponent';
+import './CardComponent.css';
 
 // react Hooks
 const CardComponent = ( props ) => {
 
 	const [ redirect, setRedirect ] = useState( false );
+	const [ show, showModal ] = useState( false )
 
 	const redirectTo = () => {
 
 		if ( redirect ) {
-			return ( <Redirect to={ `/home/event/${ props.meeting.id }` } /> );
+			return ( 
+				<RedirectService route={ `/home/event/${ props.meeting.id }` } /> 
+			);
 		}
 	};
 
@@ -21,7 +26,10 @@ const CardComponent = ( props ) => {
 				<Row className="d-flex justify-content-between">
 					<i className={ props.meeting.icon }></i>
 					<h5 className="card-title">{ props.meeting.title }</h5>
-					<i className="fas fa-times pointer"></i>
+					<i 
+						className="fas fa-times pointer" 
+						onClick={ () => showModal( true ) }>
+					</i>
 				</Row>
 
 				<Row className="d-flex justify-content-between">
@@ -86,6 +94,8 @@ const CardComponent = ( props ) => {
 		    	{ CardBody() }
 		    </Card.Body>
 		  </Card>
+
+		  <ModalComponent showModal={ show } closeModal={ () => showModal( false ) } />
 
 		</div>
 	);

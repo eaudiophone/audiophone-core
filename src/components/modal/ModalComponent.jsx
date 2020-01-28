@@ -3,8 +3,8 @@ import { Modal, Button } from 'react-bootstrap';
 
 const ModalComponent = ( props ) => {
 
-	const handleClose = () => props.callback(); 
-
+	const handleClose = () => props.closeModal(); 
+  
 	return (
 		
     <Modal 
@@ -13,10 +13,10 @@ const ModalComponent = ( props ) => {
     >
       
     		<Modal.Header closeButton>
-        	<Modal.Title>Nuevo evento</Modal.Title>
+        	<Modal.Title>Confirmar:</Modal.Title>
       	</Modal.Header>
 
-      	<Modal.Body>Prueba</Modal.Body>
+      	<Modal.Body>¿Desea cancelar el evento?</Modal.Body>
 
       	<Modal.Footer>
 
