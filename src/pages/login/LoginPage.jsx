@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
-
 import AuthService from './../../services/AuthService'; 
+import RedirectService  from './../../services/RedirectService';
 
 import './LoginPage.css';
 
@@ -67,7 +66,7 @@ class LoginPage extends Component {
     redirectTo() {
         
         if ( this.state.redirect ) {
-            return ( <Redirect to="/home" /> );
+           return <RedirectService route="/home" />
         }
     }
 

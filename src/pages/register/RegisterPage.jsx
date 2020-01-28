@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Container, Form, Button, Row, Col  } from 'react-bootstrap';
-
+import RedirectService from './../../services/RedirectService';
 import User from './../../models/UserModels';
-
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -61,7 +59,7 @@ class RegisterPage extends Component {
 	redirectTo() {
 
 		if ( this.state.redirect ) {
-			return ( <Redirect to="/" /> );
+			return ( <RedirectService route="/" /> );
 		}
 	}
 
