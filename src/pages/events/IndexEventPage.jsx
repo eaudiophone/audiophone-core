@@ -35,7 +35,7 @@ class IndexEventPage extends Component {
 					<ButtonGroup>
 						
 						<Button 
-							variant="info" 
+							variant="success" 
 							size="sm"
 							onClick={ () => this.changeView('record') }
 						>
@@ -44,7 +44,7 @@ class IndexEventPage extends Component {
 						</Button>
 
 						<Button 
-							variant="info" 
+							variant="success" 
 							size="sm"
 							onClick={ () => this.changeView('rental') }
 						>

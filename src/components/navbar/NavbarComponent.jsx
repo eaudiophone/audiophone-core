@@ -11,7 +11,7 @@ const getMenu = () => (
 	>
 		<Nav>
 			<Nav.Link>Notificaciones</Nav.Link>
-			<Nav.Link>Perfil</Nav.Link>
+			<Nav.Link href="/home/profile">Perfil</Nav.Link>
 			<Nav.Link href="/">Salir</Nav.Link>
 		</Nav>
 	</Navbar.Collapse>
