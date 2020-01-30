@@ -3,11 +3,49 @@ import {
 	Form,
 	Row,
 	Col,
-	Image
+	Image,
+	Nav
 } from 'react-bootstrap';
+
+import 'bootstrap/js/dist/tab';  // bootstrap-tabs
 import './ProfilePage.css';
 
 class ProfilePage extends Component {
+
+	getTabs() {
+		
+		return(
+			
+			<Nav variant="tabs">
+				<Nav.Item>
+					<Nav.Link 
+						className="nav-item nav-link" 
+    				id="nav-profile-tab" 
+    				data-toggle="tab" 
+    				href="#nav-profile" 
+    				role="tab" 
+    				aria-controls="nav-profile" 
+    				aria-selected="false"
+    			>
+    				Perfil
+    			</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link
+						className="nav-item nav-link" 
+    				id="nav-contact-tab" 
+    				data-toggle="tab" 
+    				href="#nav-security" 
+    				role="tab" 
+    				aria-controls="nav-contact" 
+    				aria-selected="false"
+					>
+						Seguridad
+					</Nav.Link>
+				</Nav.Item>
+			</Nav>
+		);
+	}
 
 	getImage() {
 
@@ -16,7 +54,7 @@ class ProfilePage extends Component {
 			<div className="img-container">
 				<Image 
 					alt="img-dummy" 
-					src="https://dummyimage.com/100x%20100/000/fff"
+					src="/assets/favicon.ico"
 					roundedCircle
 				/>
 			</div>
@@ -26,15 +64,37 @@ class ProfilePage extends Component {
 	getForm() {
 
 		return (
-			
-			<Form className="form">
 
-				{ this.getInputText( 'nombre', 'Gabriel Martínez' ) }
-				{ this.getInputText( 'correo', 'gabmart1995@gmail.com' ) }
-				{ this.getInputText( 'rol de aplicación', 'USER_ROLE' ) }
-
-			</Form>
+			<div 
+				className="tab-pane fade show active" 
+	  		id="nav-profile" 
+	  		role="tabpanel" 
+	  		aria-labelledby="nav-home-tab"
+	  	>
+				<div className="form">
+					{ this.getInputText( 'nombre', 'Gabriel Martínez' ) }
+					{ this.getInputText( 'correo', 'gabmart1995@gmail.com' ) }
+					{ this.getInputText( 'rol de aplicación', 'USER_ROLE' ) }
+				</div>
+				
+			</div>
 		); 
+	}
+
+	getInputPassword( label ) {
+
+		return (
+
+			<Form.Group as={ Row }>
+				<Form.Label 
+					className="form-label" 
+					column sm={ 2 }
+				>{ label }</Form.Label>
+				<Col sm="10">
+					<Form.Control type="password"></Form.Control>
+				</Col>
+			</Form.Group>
+		);
 	}
 
 	getInputText( label, value ) {
@@ -70,8 +130,20 @@ class ProfilePage extends Component {
 
 			<div>
 				{ this.getHeader() }
+
 				{ this.getImage() }
-				{ this.getForm() }
+				{ this.getTabs() }
+				<div className="tab-content" id="nav-tabContent">
+					{ this.getForm() }
+					<div 
+	  				class="tab-pane fade" 
+	  				id="nav-security" 
+	  				role="tabpanel" 
+	  				aria-labelledby="nav-profile-tab"
+	  			>
+	  				Security
+	  			</div>
+				</div>
 			</div>
 		);
 	}
