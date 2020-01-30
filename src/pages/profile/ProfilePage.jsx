@@ -14,7 +14,7 @@ class ProfilePage extends Component {
 
 	getTabs() {
 		
-		return(
+		return (
 			
 			<Nav variant="tabs">
 				<Nav.Item>
@@ -61,7 +61,7 @@ class ProfilePage extends Component {
 		); 
 	}
 
-	getForm() {
+	getDataUser() {
 
 		return (
 
@@ -124,6 +124,24 @@ class ProfilePage extends Component {
 		);
 	}
 
+	getFormSecurity() {
+
+		return (
+
+			<div 
+					className="tab-pane fade show" 
+		  		id="nav-security" 
+		  		role="tabpanel" 
+		  		aria-labelledby="nav-security-tab"
+		  	>
+				<Form className="form">
+					{ this.getInputPassword( 'contraseña:' ) }
+					{ this.getInputPassword( 'confirmar contraseña:' ) }
+				</Form>
+			</div>
+		);
+	}
+
 	render() {
 
 		return (
@@ -134,15 +152,8 @@ class ProfilePage extends Component {
 				{ this.getImage() }
 				{ this.getTabs() }
 				<div className="tab-content" id="nav-tabContent">
-					{ this.getForm() }
-					<div 
-	  				class="tab-pane fade" 
-	  				id="nav-security" 
-	  				role="tabpanel" 
-	  				aria-labelledby="nav-profile-tab"
-	  			>
-	  				Security
-	  			</div>
+					{ this.getDataUser() }
+					{ this.getFormSecurity() }
 				</div>
 			</div>
 		);
