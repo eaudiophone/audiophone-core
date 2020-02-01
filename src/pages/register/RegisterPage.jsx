@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Form, Button, Row, Col  } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 import User from './../../models/UserModels';
 import './RegisterPage.css';
@@ -14,7 +14,8 @@ class RegisterPage extends Component {
 			redirect: false,
 			name: '',
 			email: '',
-			password: ''
+			password: '',
+			validate: false
 		}
 
 		this.handleSubmit = this.handleSubmit.bind( this );
@@ -41,19 +42,30 @@ class RegisterPage extends Component {
 
 	handleSubmit( event ) {
 
-		const user = new User( 
-			this.state.name,
-			this.state.email,
-			this.state.password
-		);
+		const form = event.currentTarget;
 
-		alert('cliente registrado');
+		if ( form.checkValidity() ) {
 
-		this.setState({ redirect: true });
+			const user = new User( 
+				this.state.name,
+				this.state.email,
+				this.state.password
+			);
 
-		console.log( user );
+			alert('cliente registrado');
 
-		event.preventDefault();
+			this.setState({ redirect: true });
+
+			console.log( user );
+			
+		} else {
+
+			this.setState({ validate: true });
+
+			event.preventDefault();
+    	event.stopPropagation();
+		
+		}	
 	}
 
 	redirectTo() {
@@ -78,6 +90,33 @@ class RegisterPage extends Component {
 					onChange={ this.handleChange }
 					required
 				/>
+				<Form.Control.Feedback type="invalid">
+					Campo requerido
+				</Form.Control.Feedback>
+			</Form.Group>
+		);
+
+	}
+
+	getInputPassword( state ) {
+
+		return ( 
+
+			<Form.Group>
+				<Form.Label>Contraseña</Form.Label>
+				<Form.Control
+					className="mb-0"
+					as="input" 
+					type="password"
+					name="password"
+					size="lg"
+					value={ state }
+					onChange={ this.handleChange }
+					required
+				/>
+				<Form.Control.Feedback type="invalid">
+					Campo requerido
+				</Form.Control.Feedback>
 			</Form.Group>
 		);
 
@@ -87,7 +126,7 @@ class RegisterPage extends Component {
 
 		return(
 
-			<Row>
+			<Row className="mt-5">
 				<Col sm="6">
 					<Button type="submit" variant="primary" size="lg" block>
 						Registrar
@@ -109,7 +148,12 @@ class RegisterPage extends Component {
 
 			<Container>
 				
-				<Form className="form-register" onSubmit={ this.handleSubmit }>
+				<Form 
+					className="form-register" 
+					onSubmit={ this.handleSubmit }
+					noValidate
+					validated={ this.state.validate }
+				>
 
 					<h2 className="mb-5">
 						Registro de usuarios
@@ -117,7 +161,7 @@ class RegisterPage extends Component {
 					
 					{ this.getInput( 'name', 'Nombre del usuario:', 'text', this.state.name ) }
 					{ this.getInput( 'email', 'Correo electronico:', 'email', this.state.email ) }
-					{ this.getInput( 'password', 'Contraseña', 'password', this.state.password ) }
+					{ this.getInputPassword( this.state.password ) }
 					{ this.getButtons() }
 					
 				</Form>
@@ -130,6 +174,6 @@ class RegisterPage extends Component {
 			</Container>
 		);
 	}
-}
+} 
 
 export default RegisterPage;
