@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 import User from './../../models/UserModels';
+import RegisterMessages from './RegisterMessages';
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -21,6 +22,8 @@ class RegisterPage extends Component {
 		this.handleSubmit = this.handleSubmit.bind( this );
 		this.handleChange = this.handleChange.bind( this );
 		this.resetForm = this.resetForm.bind( this );
+
+		this.validationMessages = new RegisterMessages();
 	}
 
 	handleChange( event ) {
