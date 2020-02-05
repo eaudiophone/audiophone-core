@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Formik } from 'formik';
 import RedirectService from './../../services/RedirectService';
 import User from './../../models/UserModels';
-import RegisterMessages from './RegisterMessages';
+import RegisterSchema from './RegisterSchema';
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -11,64 +12,15 @@ class RegisterPage extends Component {
 
 		super( props );
 
-		this.state = {
-			redirect: false,
-			name: '',
-			email: '',
-			password: '',
-			validate: false
-		}
-
-		this.handleSubmit = this.handleSubmit.bind( this );
-		this.handleChange = this.handleChange.bind( this );
-		this.resetForm = this.resetForm.bind( this );
-
-		this.validationMessages = new RegisterMessages();
+		this.state = { redirect: false };
 	}
 
-	handleChange( event ) {
-
-		const name = event.target.name;
-		const value = event.target.value;
-
-		this.setState({ [ name ] : value });
-	}
-
-	resetForm( event ) {
-        
-    this.setState({
-    	name: '',
-      email: '',
-      password: '',
-    });
-  }
-
-	handleSubmit( event ) {
-
-		const form = event.currentTarget;
-
-		if ( form.checkValidity() ) {
-
-			const user = new User( 
-				this.state.name,
-				this.state.email,
-				this.state.password
-			);
-
-			alert('cliente registrado');
-
-			this.setState({ redirect: true });
-
-			console.log( user );
-			
-		} else {
-
-			this.setState({ validate: true });
-
-			event.preventDefault();
-    	event.stopPropagation();
+	handleSubmit( values, actions ) {
+		console.log( values, actions );
 		
-		}	
+		actions.setSubmitting( false );
+
+		this.setState({ redirect: true });
 	}
 
 	redirectTo() {
@@ -78,7 +30,7 @@ class RegisterPage extends Component {
 		}
 	}
 
-	getInput( name, title, type, state ) {
+	getInput( title, type, name, value, handleChange, error ) {
 
 		return (
 
@@ -89,19 +41,19 @@ class RegisterPage extends Component {
 					type={ type }
 					name={ name }
 					size="lg"
-					value={ state }
-					onChange={ this.handleChange }
-					required
+					value={ value }
+					onChange={ handleChange }
+					isInvalid={ !!error }
 				/>
 				<Form.Control.Feedback type="invalid">
-					Campo requerido
+					{ error }
 				</Form.Control.Feedback>
 			</Form.Group>
 		);
 
 	}
 
-	getInputPassword( state ) {
+	getInputPassword(  value, handleChange, error ) {
 
 		return ( 
 
@@ -113,12 +65,12 @@ class RegisterPage extends Component {
 					type="password"
 					name="password"
 					size="lg"
-					value={ state }
-					onChange={ this.handleChange }
-					required
+					value={ value }
+					onChange={ handleChange }
+					isInvalid={ !!error }
 				/>
 				<Form.Control.Feedback type="invalid">
-					Campo requerido
+					{ error }
 				</Form.Control.Feedback>
 			</Form.Group>
 		);
@@ -151,23 +103,37 @@ class RegisterPage extends Component {
 
 			<Container>
 				
-				<Form 
-					className="form-register" 
-					onSubmit={ this.handleSubmit }
-					noValidate
-					validated={ this.state.validate }
+				<Formik 
+					validationSchema={ new RegisterSchema().getSchema() }
+					initialValues={ new User() }
+					onSubmit={ this.handleSubmit } 
 				>
+					{ ({
+						handleSubmit,
+        		handleChange,
+        		values,
+        		errors,
+						}) => (
+							
+							<Form 
+								className="form-register" 
+								onSubmit={ handleSubmit }
+								noValidate
+							>
+								<h2 className="mb-5">
+									Registro de usuarios
+								</h2>
 
-					<h2 className="mb-5">
-						Registro de usuarios
-					</h2>
-					
-					{ this.getInput( 'name', 'Nombre del usuario:', 'text', this.state.name ) }
-					{ this.getInput( 'email', 'Correo electronico:', 'email', this.state.email ) }
-					{ this.getInputPassword( this.state.password ) }
-					{ this.getButtons() }
-					
-				</Form>
+								{ this.getInput( 'nombre', 'text', 'name', values.name, handleChange, errors.name ) }
+								{ this.getInput( 'correo', 'email', 'email', values.email, handleChange, errors.email ) }
+								{ this.getInputPassword( values.password, handleChange, errors.password ) }
+								
+								{ this.getButtons() }
+
+							</Form>
+						)
+					}
+				</Formik>
 
 				<p className="mt-5 text-center">
 					<a href="/">Volver al login</a>
