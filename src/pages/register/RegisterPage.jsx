@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import RedirectService from './../../services/RedirectService';
 import User from './../../models/UserModels';
@@ -13,12 +13,17 @@ class RegisterPage extends Component {
 		super( props );
 
 		this.state = { redirect: false };
+
+		this.getFormData = this.getFormData.bind( this );
 	}
 
-	handleSubmit( values, actions ) {
-		console.log( values, actions );
+	getFormData( values, actions ) {
 		
 		actions.setSubmitting( false );
+		
+		console.log( values );
+
+		alert( 'usuario registrado' );
 
 		this.setState({ redirect: true });
 	}
@@ -30,7 +35,7 @@ class RegisterPage extends Component {
 		}
 	}
 
-	getInput( title, type, name, value, handleChange, error ) {
+	getInput( title, type, name, value, stateChange, error ) {
 
 		return (
 
@@ -40,9 +45,8 @@ class RegisterPage extends Component {
 					as="input" 
 					type={ type }
 					name={ name }
-					size="lg"
 					value={ value }
-					onChange={ handleChange }
+					onChange={ stateChange }
 					isInvalid={ !!error }
 				/>
 				<Form.Control.Feedback type="invalid">
@@ -53,7 +57,7 @@ class RegisterPage extends Component {
 
 	}
 
-	getInputPassword(  value, handleChange, error ) {
+	getInputPassword(  value, stateChange, error ) {
 
 		return ( 
 
@@ -64,9 +68,8 @@ class RegisterPage extends Component {
 					as="input" 
 					type="password"
 					name="password"
-					size="lg"
 					value={ value }
-					onChange={ handleChange }
+					onChange={ stateChange }
 					isInvalid={ !!error }
 				/>
 				<Form.Control.Feedback type="invalid">
@@ -77,23 +80,22 @@ class RegisterPage extends Component {
 
 	}
 
-	getButtons() {
+	getButtons( resetState ) {
 
 		return(
 
-			<Row className="mt-5">
+			<Form.Row className="mt-5">
 				<Col sm="6">
-					<Button type="submit" variant="primary" size="lg" block>
+					<Button type="submit" variant="primary" block>
 						Registrar
 					</Button>
 				</Col>
 				<Col sm="6">
-					<Button type="reset" variant="secondary" size="lg" block 
-					onClick={ this.resetForm }>
+					<Button type="reset" variant="secondary" block onClick={ resetState }>
 						Cancelar
 					</Button>
 				</Col>
-			</Row>
+			</Form.Row>
 		);
 	}
 
@@ -106,14 +108,9 @@ class RegisterPage extends Component {
 				<Formik 
 					validationSchema={ new RegisterSchema().getSchema() }
 					initialValues={ new User() }
-					onSubmit={ this.handleSubmit } 
+					onSubmit={ this.getFormData } 
 				>
-					{ ({
-						handleSubmit,
-        		handleChange,
-        		values,
-        		errors,
-						}) => (
+					{ ({ handleSubmit, handleChange, handleReset, values, errors }) => (
 							
 							<Form 
 								className="form-register" 
@@ -124,11 +121,11 @@ class RegisterPage extends Component {
 									Registro de usuarios
 								</h2>
 
-								{ this.getInput( 'nombre', 'text', 'name', values.name, handleChange, errors.name ) }
-								{ this.getInput( 'correo', 'email', 'email', values.email, handleChange, errors.email ) }
+								{ this.getInput( 'Nombre:', 'text', 'name', values.name, handleChange, errors.name ) }
+								{ this.getInput( 'Correo:', 'email', 'email', values.email, handleChange, errors.email ) }
 								{ this.getInputPassword( values.password, handleChange, errors.password ) }
 								
-								{ this.getButtons() }
+								{ this.getButtons( handleReset ) }
 
 							</Form>
 						)
@@ -140,6 +137,7 @@ class RegisterPage extends Component {
 				</p>
 
 				{ this.redirectTo() }
+
 			</Container>
 		);
 	}
