@@ -13,7 +13,6 @@ class RegisterPage extends Component {
 		super( props );
 
 		this.state = { redirect: false };
-
 		this.getFormData = this.getFormData.bind( this );
 	}
 
@@ -35,7 +34,7 @@ class RegisterPage extends Component {
 		}
 	}
 
-	getInput( title, type, name, value, stateChange, error ) {
+	getInput( title, type, name, value, handleChange, error ) {
 
 		return (
 
@@ -46,7 +45,7 @@ class RegisterPage extends Component {
 					type={ type }
 					name={ name }
 					value={ value }
-					onChange={ stateChange }
+					onChange={ handleChange }
 					isInvalid={ !!error }
 				/>
 				<Form.Control.Feedback type="invalid">
@@ -57,7 +56,7 @@ class RegisterPage extends Component {
 
 	}
 
-	getInputPassword(  value, stateChange, error ) {
+	getInputPassword(  value, handleChange, error ) {
 
 		return ( 
 
@@ -69,7 +68,7 @@ class RegisterPage extends Component {
 					type="password"
 					name="password"
 					value={ value }
-					onChange={ stateChange }
+					onChange={ handleChange }
 					isInvalid={ !!error }
 				/>
 				<Form.Control.Feedback type="invalid">
@@ -80,7 +79,7 @@ class RegisterPage extends Component {
 
 	}
 
-	getButtons( resetState ) {
+	getButtons( handleReset ) {
 
 		return(
 
@@ -91,7 +90,7 @@ class RegisterPage extends Component {
 					</Button>
 				</Col>
 				<Col sm="6">
-					<Button type="reset" variant="secondary" block onClick={ resetState }>
+					<Button type="reset" variant="secondary" block onClick={ handleReset }>
 						Cancelar
 					</Button>
 				</Col>

@@ -9,13 +9,17 @@ class AuthService {
 	logIn( login, rememberMe ) {
 
 		if ( rememberMe ) { 		
-			
 			localStorage.setItem( 'email', login.email ); 
-
 		} else {
-
 			localStorage.removeItem( 'email' );
 		}
+
+		let request = {
+			email: login.email,
+			password: login.password
+		}
+
+		console.log( request );
 
 		this.backendService.getClient();
 		

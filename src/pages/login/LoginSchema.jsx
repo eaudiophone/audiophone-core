@@ -1,6 +1,6 @@
 import { string, object } from 'yup';
 
-class RegisterSchema {
+class LoginSchema {
 
 	constructor() {
 
@@ -8,8 +8,7 @@ class RegisterSchema {
 			string: {
 				required: 'campo requerido',
 				min: ( min ) => `minimo ${ min } caracteres`,
-				max: ( max ) => `maximo ${ max } caracteres`,
-				email: 'debe ser un correo valido'
+				email: 'debe ser un email valido'
 			}
 		};
 
@@ -19,21 +18,15 @@ class RegisterSchema {
 	setSchema() {
 
 		this.schema = object().shape({
-			
-			name: string()
-				.required( this.validationMessages.string.required )
-				.min( 2, this.validationMessages.string.min( 2 ) )
-				.max( 20, this.validationMessages.string.max( 20 ) ),
-			
+
 			email: string()
 				.required( this.validationMessages.string.required )
 				.email( this.validationMessages.string.email ),
-			
+
 			password: string()
-				.required( this.validationMessages.string.required  )
+				.required( this.validationMessages.string.required )
 				.min( 8, this.validationMessages.string.min( 8 ) )
 		});
-
 	}
 
 	getSchema() {
@@ -45,5 +38,4 @@ class RegisterSchema {
 	} 
 }
 
-
-export default RegisterSchema;
+export default LoginSchema;

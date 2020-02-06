@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import { Formik } from 'formik';
 import AuthService from './../../services/AuthService'; 
 import RedirectService  from './../../services/RedirectService';
-
+import LoginSchema from './LoginSchema';
+import Login from './../../models/LoginModels';
 import './LoginPage.css';
 
 class LoginPage extends Component {
@@ -11,57 +13,22 @@ class LoginPage extends Component {
 		
 		super( props );
 
-		// initial state
 		this.state = {  
-			email: localStorage.getItem('email') || '',
-            password: '',
-            remember: false,
-            redirect: false
+      redirect: false
 		};
 
-        // events and vinculation with the state
-		this.handleInputChange = this.handleChange.bind( this );
-		this.handleSubmit = this.handleSubmit.bind( this ); 
-        this.resetForm = this.resetForm.bind( this );
-
-        // services
-        this.authService = new AuthService();
+		this.getFormData = this.getFormData.bind( this ); 
 	}
 
-	handleChange( event ) {
+	getFormData( value, actions ) {
 
-        const target = event.target;
-		const name = target.name;
-		const value = target.value;
+	  actions.setSubmitting( false );
 
-		this.setState({ [ name ] : value });
-	}
-
-	handleSubmit( event ) {
-
-		const login = {
-			email: this.state.email,
-			password: this.state.password,
-		};
-
-        const rememberMe = event.target[2].checked;
-		this.authService.logIn( login, rememberMe );
+    let authService = new AuthService();
+    authService.logIn( value, value.remember );
         
-        this.setState({ redirect: true });
-  
-		event.preventDefault(); 
+    this.setState({ redirect: true });
 	}
-
-    resetForm( event ) {
-        
-        document.getElementById('check').checked = false; 
-    
-        this.setState({
-            email: '',
-            password: '',
-            remember: false
-        });
-    }
 
     redirectTo() {
         
@@ -70,54 +37,59 @@ class LoginPage extends Component {
         }
     }
 
-    getEmailInput() {
+    getEmailInput( value, handleChange, error ) {
     	
     	return (
 
-    		<Form.Group controlId="inputEmail">
+    		<Form.Group>
     			<Form.Label>email:</Form.Label>
     			<Form.Control
-                    name="email"
-                    type="email"
-                    value={ this.state.email }  
-    				onChange={ this.handleInputChange }
-    				required 
-    				/>
+            name="email"
+            type="email"
+            value={ value }  
+    				onChange={ handleChange }
+            isInvalid={ !!error } 
+    			/>
+          <Form.Control.Feedback type="invalid">
+            { error }
+          </Form.Control.Feedback>
     		</Form.Group>
-
     	);
     }
 
-    getPasswordInput() {
+    getPasswordInput( value, handleChange, error ) {
 
     	return (
 
-    		<Form.Group controlId="inputPassword">
-            	<Form.Label>password:</Form.Label>
-    			<Form.Control
-                    name="password"
-    				type="password"
-                    onChange={ this.handleInputChange }
-                    value={ this.state.password } 
-    				required
-    		    />
-    	    </Form.Group>
+  		<Form.Group>
+        <Form.Label>password:</Form.Label>
+  			<Form.Control
+          name="password"
+  				type="password"
+          onChange={ handleChange }
+          value={ value } 
+  				isInvalid={ !!error } 
+  		   />
+         <Form.Control.Feedback type="invalid">
+           { error }
+         </Form.Control.Feedback>
+  	    </Form.Group>
     	);
     }
 
-    getCheckboxInput() {
+    getCheckboxInput( value, handleChange ) {
 
     	return (
     		 
-    		 <Form.Group controlId="inputRemember">
-                <Form.Check
-                    id="check"
-                    name="remember"
-                    type="checkbox"
-                    label="remember me"
-                    value={ this.state.remember }
-                /> 
-            </Form.Group>
+    		 <Form.Group>
+          <Form.Check
+            name="remember"
+            type="checkbox"
+            label="remember me"
+            onChange={ handleChange }
+            value={ value }
+          /> 
+         </Form.Group>
     	);
     }
 
@@ -134,7 +106,7 @@ class LoginPage extends Component {
     	);
     }
 
-    getButtons() {
+    getButtons( handleReset ) {
 
         return (
 
@@ -148,7 +120,7 @@ class LoginPage extends Component {
                     Iniciar sesión
                 </Button>
                 <Button
-                    onClick={ this.resetForm }
+                    onClick={ handleReset }
                     variant="secondary"
                     size="lg"
                     block
@@ -163,30 +135,44 @@ class LoginPage extends Component {
 
     	return (
 
-            <Container>
-      
-                <Form className="form-signin" onSubmit={ this.handleSubmit }> 
+        <Container>
+
+            <Formik
+                initialValues={ new Login( localStorage.getItem('email') ) }
+                validationSchema={ new LoginSchema().getSchema() }
+                onSubmit={ this.getFormData }
+            >
+              {({ handleSubmit, handleChange, handleReset, values, errors }) => (
+
+                 <Form 
+                   className="form-signin" 
+                   onSubmit={ handleSubmit }
+                   noValidate
+                  > 
 
                     <h2 className="mb-3">Estudio Audiophone</h2>
                     <h3 className="mb-3 text-center">
-                        Sign In
+                      Sign In
                     </h3>
 
-                    { this.getEmailInput() }
-                    { this.getPasswordInput() }
-                    { this.getCheckboxInput() }
-                    { this.getButtons() }
+                    { this.getEmailInput( values.email, handleChange, errors.email ) }
+                    { this.getPasswordInput( values.password, handleChange, errors.password ) }
+                    { this.getCheckboxInput( values.remember, handleChange ) }
+                    { this.getButtons( handleReset ) }
                     { this.getRegister() }
 
-                    <p className="mt-3 mb-3 text-muted text-center">
-                        &copy; Audiophone 2018
-                    </p>
-                          
-                </Form>
+                <p className="mt-3 mb-3 text-muted text-center">
+                    &copy; Audiophone 2018
+                </p>
+                      
+            </Form>
+                 
+              )}
+            </Formik>
 
-                { this.redirectTo() } 
+            { this.redirectTo() } 
 
-            </Container>
+        </Container>
      	);
   	}
 }
