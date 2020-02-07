@@ -11,7 +11,7 @@ html, body {
 	padding-bottom: 40px;
 }
 
-#remember {
+#remember > label {
 	margin-left: 10px;
 }
 

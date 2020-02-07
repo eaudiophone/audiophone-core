@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Row, Button } from 'react-bootstrap';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 import ModalComponent from './../modal/ModalComponent';
 import './CardComponent.css';
@@ -19,19 +19,28 @@ const CardComponent = ( props ) => {
 		}
 	};
 
+	const CardHeader = () => (
+
+		<Row>
+			<Col 
+				sm={ 12 } 
+				className="d-flex justify-content-between flex-row mt-1"
+			>
+				<i className={ props.meeting.icon }></i>
+				<h5 className="card-title">{ props.meeting.title }</h5>
+				<i 
+					className="fas fa-times pointer" 
+					onClick={ () => showModal( true ) }>
+				</i>
+			</Col>
+
+		</Row>
+	);
+
 	const CardBody = () => (
 
 		<div className="container-fluid">
 					
-				<Row className="d-flex justify-content-between">
-					<i className={ props.meeting.icon }></i>
-					<h5 className="card-title">{ props.meeting.title }</h5>
-					<i 
-						className="fas fa-times pointer" 
-						onClick={ () => showModal( true ) }>
-					</i>
-				</Row>
-
 				<Row className="d-flex justify-content-between">
 
 					<label className="card-subtitle mb-2 text-muted text-left pt-2">
@@ -89,7 +98,10 @@ const CardComponent = ( props ) => {
 		  
 		  { redirectTo() }
 
-		  <Card style={{ backgroundColor: props.color }}>
+		  <Card>
+		  	<Card.Header style={{ backgroundColor: props.color }}>
+		  		{ CardHeader() }
+		  	</Card.Header>
 		    <Card.Body>
 		    	{ CardBody() }
 		    </Card.Body>

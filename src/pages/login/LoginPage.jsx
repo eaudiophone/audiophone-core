@@ -83,6 +83,7 @@ class LoginPage extends Component {
     		 
     		 <Form.Group>
           <Form.Check
+            id="remember"
             name="remember"
             type="checkbox"
             label="remember me"

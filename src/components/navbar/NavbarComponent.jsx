@@ -3,7 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 
 import './NavbarComponent.css';
 
-const getMenu = () => (
+const getProfile = () => (
 
 	<Navbar.Collapse 
 		id="responsive-navbar-nav"
@@ -28,7 +28,7 @@ const NavbarComponent = () => (
 	>	
   		<Navbar.Brand>Audiophone</Navbar.Brand>
   		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
- 		{ getMenu() }
+ 		{ getProfile() }
 	</Navbar>
 );
 
