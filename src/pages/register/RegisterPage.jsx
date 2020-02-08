@@ -61,7 +61,7 @@ class RegisterPage extends Component {
 		return ( 
 
 			<Form.Group>
-				<Form.Label>Contraseña</Form.Label>
+				<Form.Label>Contraseña:</Form.Label>
 				<Form.Control
 					className="mb-0"
 					as="input" 
@@ -83,17 +83,13 @@ class RegisterPage extends Component {
 
 		return(
 
-			<Form.Row className="mt-5">
-				<Col sm="6">
-					<Button type="submit" variant="primary" block>
-						Registrar
-					</Button>
-				</Col>
-				<Col sm="6">
-					<Button type="reset" variant="secondary" block onClick={ handleReset }>
-						Cancelar
-					</Button>
-				</Col>
+			<Form.Row className="mt-5 d-flex flex-row justify-content-around">
+				<Button type="reset" variant="secondary" onClick={ handleReset }>
+					Cancelar
+				</Button>
+				<Button type="submit" variant="primary">
+					Registrar
+				</Button>
 			</Form.Row>
 		);
 	}
@@ -102,7 +98,7 @@ class RegisterPage extends Component {
 		
 		return ( 
 
-			<Container>
+			<Container className="container-register">
 				
 				<Formik 
 					validationSchema={ new RegisterSchema().getSchema() }
@@ -119,11 +115,17 @@ class RegisterPage extends Component {
 								<h2 className="mb-5">
 									Registro de usuarios
 								</h2>
-
 								{ this.getInput( 'Nombre:', 'text', 'name', values.name, handleChange, errors.name ) }
-								{ this.getInput( 'Correo:', 'email', 'email', values.email, handleChange, errors.email ) }
-								{ this.getInputPassword( values.password, handleChange, errors.password ) }
 								
+								<Form.Row>
+									<Col sm={ 6 }>
+										{ this.getInput( 'Correo:', 'email', 'email', values.email, handleChange, errors.email ) }
+									</Col>
+									<Col sm={ 6 }>
+										{ this.getInputPassword( values.password, handleChange, errors.password ) }
+									</Col>
+								</Form.Row>
+
 								{ this.getButtons( handleReset ) }
 
 							</Form>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { 
 	Form,
+	Button,
 	Row,
 	Col,
 	Image,
@@ -71,11 +72,20 @@ class ProfilePage extends Component {
 	  		role="tabpanel" 
 	  		aria-labelledby="nav-home-tab"
 	  	>
-				<div className="form">
-					{ this.getInputText( 'nombre', 'Gabriel Martínez' ) }
-					{ this.getInputText( 'correo', 'gabmart1995@gmail.com' ) }
-					{ this.getInputText( 'rol de aplicación', 'USER_ROLE' ) }
-				</div>
+				<Form className="form">
+					{ this.getInputText( 'Nombre', 'Gabriel Martínez' ) }
+					{ this.getInputText( 'Correo', 'gabmart1995@gmail.com' ) }
+					<Form.Row className="mt-4">
+						<Col className="d-flex flex-row justify-content-around">
+							<Button variant="secondary" type="reset">
+								Cancelar
+							</Button>
+							<Button variant="primary" type="submit">
+								Actualizar
+							</Button>
+						</Col>
+					</Form.Row>
+				</Form>
 				
 			</div>
 		); 
@@ -107,7 +117,7 @@ class ProfilePage extends Component {
 						column sm={ 2 }
 					>{ label }</Form.Label>
 					<Col sm="10">
-						<Form.Control readOnly defaultValue={ value }></Form.Control>
+						<Form.Control defaultValue={ value }></Form.Control>
 					</Col>
 				</Form.Group>
 		);
@@ -137,6 +147,16 @@ class ProfilePage extends Component {
 				<Form className="form">
 					{ this.getInputPassword( 'contraseña:' ) }
 					{ this.getInputPassword( 'confirmar contraseña:' ) }
+					<Form.Row>
+						<Col className="d-flex flex-row justify-content-around">
+							<Button variant="secondary" type="reset">
+								Cancelar
+							</Button>
+							<Button variant="primary" type="submit">
+								Actualizar
+							</Button>
+						</Col>
+					</Form.Row>
 				</Form>
 			</div>
 		);
@@ -148,12 +168,11 @@ class ProfilePage extends Component {
 
 			<div>
 				{ this.getHeader() }
-
 				{ this.getImage() }
 				{ this.getTabs() }
 				<div className="tab-content" id="nav-tabContent">
-					{ this.getDataUser() }
-					{ this.getFormSecurity() }
+						{ this.getDataUser() }
+						{ this.getFormSecurity() }
 				</div>
 			</div>
 		);

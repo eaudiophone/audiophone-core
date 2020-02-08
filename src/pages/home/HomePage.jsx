@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
+import { Container, Row, Col } from 'react-bootstrap';
 import NavbarComponent from './../../components/navbar/NavbarComponent';
-// import SidebarComponent from './../../components/sidebar/SidebarComponent';
-
 import AdminRoutes from './../../routes/AdminRoutes';
 import UserRoutes from './../../routes/UserRoutes';
 
@@ -27,20 +25,22 @@ class HomePage extends Component {
 
 		return (
 
-			<div className="container-fliud">
+			<Container fluid className="p-0">
 				
 				<NavbarComponent />
 
-					<div className="row">
+				<Container>
+						<Row>
+							<Col sm={ 12 }>
+								<div id="content">
+									{ this.getContent( 'USER_ROLE' ) }
+								</div>
+							</Col>
+						</Row>
+				</Container>	
 
-						<div className="col-sm-12">
-							<div id="content">
-								{ this.getContent( 'USER_ROLE' ) }
-							</div>
-						</div>
-					</div>
-		
-			</div>	
+			</Container>
+
 		);
 	}
 }

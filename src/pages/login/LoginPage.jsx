@@ -33,7 +33,7 @@ class LoginPage extends Component {
     redirectTo() {
         
         if ( this.state.redirect ) {
-           return <RedirectService route="/home" />
+           return <RedirectService route="/home/event" />
         }
     }
 
@@ -136,7 +136,7 @@ class LoginPage extends Component {
 
     	return (
 
-        <Container>
+        <Container className="container-login">
 
             <Formik
                 initialValues={ new Login( localStorage.getItem('email') ) }
