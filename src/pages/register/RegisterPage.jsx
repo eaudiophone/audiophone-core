@@ -104,6 +104,7 @@ class RegisterPage extends Component {
 					validationSchema={ new RegisterSchema().getSchema() }
 					initialValues={ new User() }
 					onSubmit={ this.getFormData } 
+					validateOnChange={ false }
 				>
 					{ ({ handleSubmit, handleChange, handleReset, values, errors }) => (
 							

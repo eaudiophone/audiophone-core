@@ -1,10 +1,240 @@
 import React, { Component } from 'react';
 import Event from './../../models/EventModels';
-import { Form, Row, Col, Button } from 'react-bootstrap'; 
+import { Form, Col, Button } from 'react-bootstrap'; 
+import { Formik } from 'formik';
+import NewEventSchema from './NewEventSchema';
+
 
 class NewEventComponent extends Component {
 
-  constructor( props ) {
+	getData( values, actions ) {
+		console.log( values );
+		actions.setSubmitting( false );
+	}
+
+	render() {
+
+		return (
+			<Formik
+				component={ form }  
+				initialValues={ new Event() }
+				validationSchema={ new NewEventSchema().getSchema() }
+				onSubmit={ this.getData }
+			/>
+		);
+	}
+}
+
+
+const form = ( props ) => {
+	
+	const {
+		handleSubmit,
+		handleChange,
+		handleReset,
+		values,
+		errors
+	} = props;
+
+	const getInputText = ( title, name, value, change, columnSize, error )  => (
+		
+		<Col sm={ columnSize }>
+     <Form.Group>
+       <Form.Label>{ title }</Form.Label>
+       <Form.Control
+         as="input" 
+         type="text"
+         name={ name }
+         value={ value }
+         onChange={ change }
+         isInvalid={ !!error }
+      />
+     </Form.Group>
+		  <Form.Control.Feedback type="invalid">
+		    { error }
+		  </Form.Control.Feedback>
+    </Col>
+	);
+
+	const getInputTextarea = ( title, name, value, change, columnSize, error ) => (
+
+		<Col sm={ columnSize }>
+     <Form.Group>
+       <Form.Label>{ title }</Form.Label>
+       <Form.Control
+       	as="textarea"
+        name={ name }
+        value={ value }
+        onChange={ handleChange }
+        isInvalid={ !!error }
+      />
+     </Form.Group>
+     <Form.Control.Feedback type="invalid">
+		    { error }
+		  </Form.Control.Feedback>
+  	</Col>
+	);
+
+	const getInputDate = ( title, name, value, change, columnSize, error ) => (
+
+		 <Col sm={ columnSize }>
+     <Form.Group>
+       <Form.Label>{ title }</Form.Label>
+       <Form.Control 
+         type="text"
+         name={ name }
+         value={ value }
+         onChange={ change }
+         isInvalid={ !!error }
+      />
+     </Form.Group>
+     <Form.Control.Feedback type="invalid">
+		    { error }
+		 </Form.Control.Feedback>
+    </Col>
+	);
+
+	const getInputHour = ( title, name, value, change, columnSize, error ) => (
+		
+		<Col sm={ columnSize }>
+     <Form.Group>
+       <Form.Label>{ title }</Form.Label>
+       <Form.Control 
+         type="time"
+         name={ name }
+         value={ value }
+         onChange={ change }
+         isInvalid={ !!error }
+      />
+     </Form.Group>
+     <Form.Control.Feedback type="invalid">
+		    { error }
+		 </Form.Control.Feedback>
+    </Col>
+	);
+
+	const getInputSelect = ( title, name, value, change, columnSize, error ) => (
+
+	 <Col sm={ columnSize }>
+     <Form.Group>
+       <Form.Label>{ title }</Form.Label>
+       <Form.Control
+        as="select"
+        name={ name }
+        value={ value }
+        onChange={ change }
+        isInvalid={ !!error }
+      >
+        <option value={ 0 }>Seleccione</option>
+        <option value={ 1 }>Grabación</option>
+        <option value={ 2 }>Alquiler</option>
+      </Form.Control>
+     </Form.Group>
+     <Form.Control.Feedback type="invalid">
+		    { error }
+		 </Form.Control.Feedback>
+    </Col>
+	);
+
+	return (
+
+		<Form onSubmit={ handleSubmit } noValidate>
+			<Form.Row>
+				{	
+					getInputText( 
+						'Titulo del evento', 
+						'title', 
+						values.title, 
+						handleChange, 
+						12,
+						errors.title 
+					) 
+				}
+				{ 
+					getInputSelect( 
+						'Servicio a solicitar', 
+						'idService', 
+						values.idService, 
+						handleChange, 
+						12,
+						errors.idService 
+					) 
+				}
+				{ 
+    				getInputDate(
+    					'Fecha del evento', 
+    					'date', 
+    					values.date, 
+    					handleChange,
+    					12,
+    					errors.date
+    				) 
+    			}
+    			{ 
+    				getInputHour(
+    					'Hora de inicio', 
+    					'startingTime', 
+    					values.startingTime, 
+    					handleChange,
+    					4,
+    					errors.startingTime 
+    				) 
+    			}
+        	{ 
+        		getInputHour(
+        			'Hora Final', 
+        			'finalHour', 
+        			values.finalHour,
+        			handleChange, 
+        			4,
+        			errors.finalHour 
+        		) 
+        	}
+        	{ 
+        		getInputText(
+        			'Total horas', 
+        			'totalHours', 
+        			values.totalHours, 
+        			handleChange, 
+        			4,
+        			errors.totalHours 
+        		) 
+        	}
+          <div className="col-sm-12 p-0">
+            { 
+            	getInputTextarea (
+            		'Direccion del evento', 
+            		'addressMeeting', 
+            		values.addressMeeting, 
+            		handleChange, 
+            		12,
+            	) 
+            }
+          </div>
+        	{ 
+        	getInputTextarea (
+        			'Description', 
+        			'description', 
+        			values.description, 
+        			handleChange, 
+        			12,
+        			errors.description 
+        		) 
+        	}
+			</Form.Row>
+			
+			<Button type="submit" variant="primary" className="mr-3">
+    		Enviar
+    	</Button>
+    	<Button type="reset" onClick={ handleReset } variant="secondary">
+    		Cancelar
+    	</Button>
+
+		</Form>
+	);
+};
+
+  /*constructor( props ) {
 
     super( props );
 
@@ -238,6 +468,6 @@ class NewEventComponent extends Component {
   	);
 
   }
-}
+}*/
 
 export default NewEventComponent;
