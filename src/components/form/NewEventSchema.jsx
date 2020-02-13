@@ -33,7 +33,7 @@ class NewEventSchema {
 				.min( 2, this.validationMessages.string.min( 2 ) )
 				.max( 25, this.validationMessages.string.max( 25 ) ),
 
-			idService: number()
+			idService: string()
 				.required( this.validationMessages.number.required ),
 
 			date: date()

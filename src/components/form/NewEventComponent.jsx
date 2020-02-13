@@ -16,7 +16,7 @@ class NewEventComponent extends Component {
 
 		return (
 			<Formik
-				component={ form }  
+				component={ Formulario }  
 				initialValues={ new Event() }
 				validationSchema={ new NewEventSchema().getSchema() }
 				onSubmit={ this.getData }
@@ -27,8 +27,8 @@ class NewEventComponent extends Component {
 }
 
 // form-hooks
-const form = ( props ) => {
-	
+const Formulario = ( props ) => {
+
 	const {
 		handleSubmit,
 		handleChange,
@@ -36,6 +36,9 @@ const form = ( props ) => {
 		values,
 		errors
 	} = props;
+
+	const addressInput = React.createRef();
+	console.log( addressInput );
 
 	const getInputText = ( title, name, value, columnSize, error )  => (
 		
@@ -57,24 +60,29 @@ const form = ( props ) => {
     </Col>
 	);
 
-	const getInputTextarea = ( title, name, value,  columnSize, error ) => (
+	const getInputTextarea = ( title, name, value,  columnSize, error ) => {
 
-		<Col sm={ columnSize }>
-     <Form.Group>
-       <Form.Label>{ title }</Form.Label>
-       <Form.Control
-       	as="textarea"
-        name={ name }
-        value={ value }
-        onChange={ handleChange }
-        isInvalid={ !!error }
-      />
-     <Form.Control.Feedback type="invalid">
-		    { error }
-		  </Form.Control.Feedback>
-     </Form.Group>
-  	</Col>
-	);
+		console.log( addressInput.current );
+
+		return (
+
+			<Col sm={ columnSize }>
+			<Form.Group>
+				<Form.Label>{ title }</Form.Label>
+				<Form.Control
+					as="textarea"
+					name={ name }
+					value={ value }
+					onChange={ handleChange }
+					isInvalid={ !!error }
+				/>
+			<Form.Control.Feedback type="invalid">
+					{ error }
+				</Form.Control.Feedback>
+			</Form.Group>
+			</Col>
+		);
+	};
 
 	const getInputDate = ( title, name, value, columnSize, error ) => (
 
@@ -126,9 +134,9 @@ const form = ( props ) => {
         onChange={ handleChange }
         isInvalid={ !!error }
       >
-        <option value={ 0 }>Seleccione</option>
-        <option value={ 1 }>Grabación</option>
-        <option value={ 2 }>Alquiler</option>
+        <option value="">Seleccione</option>
+        <option value="1">Grabación</option>
+        <option value="2">Alquiler</option>
       </Form.Control>
 			<Form.Control.Feedback type="invalid">
 					{ error }
@@ -195,16 +203,16 @@ const form = ( props ) => {
         			errors.totalHours 
         		) 
         	}
- 
-          { 
-          	getInputTextarea (
-          		'Direccion del evento', 
-          		'addressMeeting', 
-          		values.addressMeeting,  
-          		12,
-          	) 
-          }
-         
+					<div ref={ addressInput } className="col-sm-12 p-0">
+						{ 
+							getInputTextarea (
+								'Direccion del evento', 
+								'addressMeeting', 
+								values.addressMeeting,  
+								12,
+							) 
+						}
+					</div>
         	{ 
         	  getInputTextarea (
         			'Description', 
@@ -229,8 +237,8 @@ const form = ( props ) => {
 	);
 };
 
-  /*
-class FormComponent extends Component { 
+
+/* class NewEventComponent extends Component { 
   
   constructor( props ) {
 
@@ -387,7 +395,7 @@ class FormComponent extends Component {
   	return(
 
     	<Form onSubmit={ this.handleSubmit }>
-    		<Row>
+    		<Form.Row>
     			{ 
     				this.getForm( 
     					'title', 
@@ -454,7 +462,7 @@ class FormComponent extends Component {
         			12 
         		) 
         	}
-    		</Row>
+    		</Form.Row>
 
         	<Button type="submit" variant="primary" className="mr-3">
         		Enviar
@@ -466,6 +474,6 @@ class FormComponent extends Component {
   	);
 
   }
-}*/
+} */
 
 export default NewEventComponent;
