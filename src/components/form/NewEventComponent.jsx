@@ -25,7 +25,7 @@ class NewEventComponent extends Component {
 	}
 }
 
-
+// form-hooks
 const form = ( props ) => {
 	
 	const {
@@ -36,7 +36,7 @@ const form = ( props ) => {
 		errors
 	} = props;
 
-	const getInputText = ( title, name, value, change, columnSize, error )  => (
+	const getInputText = ( title, name, value, columnSize, error )  => (
 		
 		<Col sm={ columnSize }>
      <Form.Group>
@@ -46,7 +46,7 @@ const form = ( props ) => {
          type="text"
          name={ name }
          value={ value }
-         onChange={ change }
+         onChange={ handleChange }
          isInvalid={ !!error }
       />
      </Form.Group>
@@ -56,7 +56,7 @@ const form = ( props ) => {
     </Col>
 	);
 
-	const getInputTextarea = ( title, name, value, change, columnSize, error ) => (
+	const getInputTextarea = ( title, name, value,  columnSize, error ) => (
 
 		<Col sm={ columnSize }>
      <Form.Group>
@@ -75,16 +75,16 @@ const form = ( props ) => {
   	</Col>
 	);
 
-	const getInputDate = ( title, name, value, change, columnSize, error ) => (
+	const getInputDate = ( title, name, value, columnSize, error ) => (
 
 		 <Col sm={ columnSize }>
      <Form.Group>
        <Form.Label>{ title }</Form.Label>
        <Form.Control 
-         type="text"
+         type="date"
          name={ name }
          value={ value }
-         onChange={ change }
+         onChange={ handleChange }
          isInvalid={ !!error }
       />
      </Form.Group>
@@ -94,7 +94,7 @@ const form = ( props ) => {
     </Col>
 	);
 
-	const getInputHour = ( title, name, value, change, columnSize, error ) => (
+	const getInputHour = ( title, name, value, columnSize, error ) => (
 		
 		<Col sm={ columnSize }>
      <Form.Group>
@@ -103,7 +103,7 @@ const form = ( props ) => {
          type="time"
          name={ name }
          value={ value }
-         onChange={ change }
+         onChange={ handleChange }
          isInvalid={ !!error }
       />
      </Form.Group>
@@ -113,7 +113,7 @@ const form = ( props ) => {
     </Col>
 	);
 
-	const getInputSelect = ( title, name, value, change, columnSize, error ) => (
+	const getInputSelect = ( title, name, value, columnSize, error ) => (
 
 	 <Col sm={ columnSize }>
      <Form.Group>
@@ -122,7 +122,7 @@ const form = ( props ) => {
         as="select"
         name={ name }
         value={ value }
-        onChange={ change }
+        onChange={ handleChange }
         isInvalid={ !!error }
       >
         <option value={ 0 }>Seleccione</option>
@@ -139,23 +139,21 @@ const form = ( props ) => {
 	return (
 
 		<Form onSubmit={ handleSubmit } noValidate>
-			<Form.Row>
+      <Form.Row>
 				{	
 					getInputText( 
 						'Titulo del evento', 
 						'title', 
 						values.title, 
-						handleChange, 
 						12,
 						errors.title 
 					) 
 				}
-				{ 
+				{
 					getInputSelect( 
 						'Servicio a solicitar', 
 						'idService', 
-						values.idService, 
-						handleChange, 
+						values.idService,  
 						12,
 						errors.idService 
 					) 
@@ -165,7 +163,6 @@ const form = ( props ) => {
     					'Fecha del evento', 
     					'date', 
     					values.date, 
-    					handleChange,
     					12,
     					errors.date
     				) 
@@ -175,7 +172,6 @@ const form = ( props ) => {
     					'Hora de inicio', 
     					'startingTime', 
     					values.startingTime, 
-    					handleChange,
     					4,
     					errors.startingTime 
     				) 
@@ -184,8 +180,7 @@ const form = ( props ) => {
         		getInputHour(
         			'Hora Final', 
         			'finalHour', 
-        			values.finalHour,
-        			handleChange, 
+        			values.finalHour, 
         			4,
         			errors.finalHour 
         		) 
@@ -195,46 +190,48 @@ const form = ( props ) => {
         			'Total horas', 
         			'totalHours', 
         			values.totalHours, 
-        			handleChange, 
         			4,
         			errors.totalHours 
         		) 
         	}
-          <div className="col-sm-12 p-0">
-            { 
-            	getInputTextarea (
-            		'Direccion del evento', 
-            		'addressMeeting', 
-            		values.addressMeeting, 
-            		handleChange, 
-            		12,
-            	) 
-            }
-          </div>
+ 
+          { 
+          	getInputTextarea (
+          		'Direccion del evento', 
+          		'addressMeeting', 
+          		values.addressMeeting,  
+          		12,
+          	) 
+          }
+         
         	{ 
-        	getInputTextarea (
+        	  getInputTextarea (
         			'Description', 
         			'description', 
-        			values.description, 
-        			handleChange, 
+        			values.description,  
         			12,
         			errors.description 
-        		) 
-        	}
-			</Form.Row>
-			
-			<Button type="submit" variant="primary" className="mr-3">
-    		Enviar
-    	</Button>
-    	<Button type="reset" onClick={ handleReset } variant="secondary">
-    		Cancelar
-    	</Button>
+        		)
+          } 
+      </Form.Row>
+
+			<Form.Row className="mt-5 d-flex justify-content-around">
+  			<Button type="submit" variant="primary">
+      		Enviar
+      	</Button>
+      	<Button type="reset" onClick={ handleReset } variant="secondary">
+      		Cancelar
+      	</Button>
+      </Form.Row>
 
 		</Form>
 	);
 };
 
-  /*constructor( props ) {
+  /*
+class FormComponent extends Component { 
+  
+  constructor( props ) {
 
     super( props );
 
