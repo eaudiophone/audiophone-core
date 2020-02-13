@@ -79,6 +79,9 @@ hay que reiniciar los estilos cada vez que la aplicacion aplique una redirecció
 11.- la metodo bind vincula la funcion dentro de la clase para que pueda manipular
 el estado del componente. Sino lo colocas react te muestra que setState es undefined.
 
+12.- Cuando trabajes con formik junto con bootstrap asegurate de colocarlos dentro
+del formcontrol de bootstrap porque sino las validaciones no se muestran en pantalla
+
 | ---------------------------------------------------------------------------------- |
 
 Aplicacion: audiophone-core

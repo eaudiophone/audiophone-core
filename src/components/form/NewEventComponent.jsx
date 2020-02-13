@@ -20,6 +20,7 @@ class NewEventComponent extends Component {
 				initialValues={ new Event() }
 				validationSchema={ new NewEventSchema().getSchema() }
 				onSubmit={ this.getData }
+				validateOnChange={ true }
 			/>
 		);
 	}
@@ -49,10 +50,10 @@ const form = ( props ) => {
          onChange={ handleChange }
          isInvalid={ !!error }
       />
-     </Form.Group>
-		  <Form.Control.Feedback type="invalid">
+			<Form.Control.Feedback type="invalid">
 		    { error }
-		  </Form.Control.Feedback>
+			</Form.Control.Feedback>
+     </Form.Group>
     </Col>
 	);
 
@@ -68,10 +69,10 @@ const form = ( props ) => {
         onChange={ handleChange }
         isInvalid={ !!error }
       />
-     </Form.Group>
      <Form.Control.Feedback type="invalid">
 		    { error }
 		  </Form.Control.Feedback>
+     </Form.Group>
   	</Col>
 	);
 
@@ -87,10 +88,10 @@ const form = ( props ) => {
          onChange={ handleChange }
          isInvalid={ !!error }
       />
+			<Form.Control.Feedback type="invalid">
+					{ error }
+			</Form.Control.Feedback>
      </Form.Group>
-     <Form.Control.Feedback type="invalid">
-		    { error }
-		 </Form.Control.Feedback>
     </Col>
 	);
 
@@ -106,10 +107,10 @@ const form = ( props ) => {
          onChange={ handleChange }
          isInvalid={ !!error }
       />
+			<Form.Control.Feedback type="invalid">
+					{ error }
+			</Form.Control.Feedback>
      </Form.Group>
-     <Form.Control.Feedback type="invalid">
-		    { error }
-		 </Form.Control.Feedback>
     </Col>
 	);
 
@@ -129,10 +130,10 @@ const form = ( props ) => {
         <option value={ 1 }>Grabación</option>
         <option value={ 2 }>Alquiler</option>
       </Form.Control>
+			<Form.Control.Feedback type="invalid">
+					{ error }
+			</Form.Control.Feedback>
      </Form.Group>
-     <Form.Control.Feedback type="invalid">
-		    { error }
-		 </Form.Control.Feedback>
     </Col>
 	);
 

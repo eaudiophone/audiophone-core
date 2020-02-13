@@ -142,7 +142,7 @@ class LoginPage extends Component {
                 initialValues={ new Login( localStorage.getItem('email') ) }
                 validationSchema={ new LoginSchema().getSchema() }
                 onSubmit={ this.getFormData }
-                validateOnChange={ false }
+                validateOnChange={ true }
             >
               {({ handleSubmit, handleChange, handleReset, values, errors }) => (
 
