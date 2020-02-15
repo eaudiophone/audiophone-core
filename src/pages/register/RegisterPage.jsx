@@ -83,13 +83,17 @@ class RegisterPage extends Component {
 
 		return(
 
-			<Form.Row className="mt-5 d-flex flex-row justify-content-around">
-				<Button type="reset" variant="secondary" onClick={ handleReset }>
-					Cancelar
-				</Button>
-				<Button type="submit" variant="primary">
-					Registrar
-				</Button>
+			<Form.Row className="mt-5">
+				<Col sm={ 6 } className="d-flex flex-row justify-content-center">
+					<Button className="button-w80" block type="reset" variant="secondary" onClick={ handleReset }>
+						Cancelar
+					</Button>
+				</Col>
+				<Col sm={ 6 } className="d-flex flex-row justify-content-center">
+					<Button block type="submit" variant="primary" className="button-w80">
+						Registrar
+					</Button>
+				</Col>
 			</Form.Row>
 		);
 	}
@@ -119,10 +123,10 @@ class RegisterPage extends Component {
 								{ this.getInput( 'Nombre:', 'text', 'name', values.name, handleChange, errors.name ) }
 								
 								<Form.Row>
-									<Col sm={ 6 }>
+									<Col sm={ 12 }>
 										{ this.getInput( 'Correo:', 'email', 'email', values.email, handleChange, errors.email ) }
 									</Col>
-									<Col sm={ 6 }>
+									<Col sm={ 12 }>
 										{ this.getInputPassword( values.password, handleChange, errors.password ) }
 									</Col>
 								</Form.Row>
@@ -135,7 +139,10 @@ class RegisterPage extends Component {
 				</Formik>
 
 				<p className="mt-5 text-center">
-					<a href="/">Volver al login</a>
+					<a href="/">
+						<i className="fas fa-sign-in-alt mr-2"></i>
+						Volver al login
+					</a>
 				</p>
 
 				{ this.redirectTo() }

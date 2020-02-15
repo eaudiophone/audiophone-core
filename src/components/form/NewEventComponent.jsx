@@ -4,7 +4,6 @@ import { Form, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import NewEventSchema from './NewEventSchema';
 
-
 class NewEventComponent extends Component {
 
 	getData( values, actions ) {
@@ -232,13 +231,29 @@ const Formulario = ( props ) => {
           } 
       </Form.Row>
 
-			<Form.Row className="mt-5 d-flex justify-content-around">
-  			<Button type="submit" variant="primary">
-      		Enviar
-      	</Button>
-      	<Button type="reset" onClick={ handleReset } variant="secondary">
-      		Cancelar
-      	</Button>
+			<Form.Row className="mt-5">
+        <Col sm={ 6 } className=" d-flex flex-row justify-content-center">
+    			<Button 
+            block 
+            type="submit" 
+            variant="primary"
+            className="button-w80"
+          >
+        		Enviar
+        	</Button>
+        </Col>
+        <Col className="d-flex flex-row justify-content-center">
+        	<Button
+            className="button-w80" 
+            block 
+            type="reset" 
+            onClick={ handleReset } 
+            variant="secondary"
+          >
+        		Cancelar
+        	</Button>
+          
+        </Col>
       </Form.Row>
 
 		</Form>

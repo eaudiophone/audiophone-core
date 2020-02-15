@@ -7,6 +7,10 @@ body {
 	width: 80%;
 }
 
+.container-register a {
+	font-size: 18px;
+}
+
 .form-register h2 {
 	text-align: center;
 }
@@ -14,6 +18,7 @@ body {
 .form-register input[type="password"] {
 	margin-bottom: 40px;
 }
+
 
 p {
 	font-size: 16px;
