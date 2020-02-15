@@ -32,9 +32,9 @@ class LoginPage extends Component {
 
     redirectTo() {
         
-        if ( this.state.redirect ) {
-           return <RedirectService route="/home/event" />
-        }
+      if ( this.state.redirect ) {
+         return <RedirectService route="/home/event" />
+      }
     }
 
     getEmailInput( value, handleChange, error ) {
@@ -111,24 +111,24 @@ class LoginPage extends Component {
 
         return (
 
-            <div>
-                <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg" 
-                    block
-                >
-                    Iniciar sesión
-                </Button>
-                <Button
-                    onClick={ handleReset }
-                    variant="secondary"
-                    size="lg"
-                    block
-                >
-                    Cancelar
-                </Button>
-            </div>
+          <div>
+              <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg" 
+                  block
+              >
+                  Iniciar sesión
+              </Button>
+              <Button
+                  onClick={ handleReset }
+                  variant="secondary"
+                  size="lg"
+                  block
+              >
+                  Cancelar
+              </Button>
+          </div>
         );
     }
 
