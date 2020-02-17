@@ -1,7 +1,15 @@
 import  React, { Component } from 'react';
-import NewEventComponent from './../../components/form/NewEventComponent';
+import { Formik } from 'formik';
+import Event from './../../models/EventModels';
+import EventSchema from './../../components/form/EventSchema';
+import FormEventComponent from './../../components/form/FormEventComponent';
 
 class NewEventPage extends Component {
+
+	getData( values, actions ) {
+		console.log( values );
+		actions.setSubmitting( false );
+	}
 
 	render() {
 
@@ -13,7 +21,13 @@ class NewEventPage extends Component {
 					<h2>Nuevo evento</h2> 
 				</div>
 
-				<NewEventComponent />
+				<Formik 
+					component={ FormEventComponent }
+					initialValues={ new Event() }
+					validationSchema={ new EventSchema().getSchema() }
+					onSubmit={ this.getData }
+					validateOnChange={ true }
+				/>
 			</div>
 		);
 	}

@@ -1,39 +1,22 @@
 import  React, { Component } from 'react';
-import EditEventComponent from './../../components/form/EditEventComponent';
+import FormEventComponent from './../../components/form/FormEventComponent';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
-import Event from './../../models/EventModels';
+import { Formik } from 'formik';
+import EventSchema from './../../components/form/EventSchema';
 
 class EditEventPage extends Component {
-
-	constructor( props ) {
-		super( props );
-		this.event = this.getEvent();
-	}
 
 	getUrl() {
 		return parseInt( this.props.match.params.id );
 	}
 
 	getEvent() {
-		
-		const response = MEETINGS.find( ( element ) => element.id === this.getUrl() );
-
-		return new Event(
-			response.title,
-			this.setFormatDate( response.date ),
-			response.startingTime,
-			response.finalHour,
-			response.totalHours,
-			response.description,
-			response.addressMeeting,
-			response.idService
-		);		
+		return MEETINGS.find( ( element ) => element.id === this.getUrl() );
 	}
 
-	setFormatDate( date ) {
-
-		let newDate = date.split('/');
-		return `${ newDate[2] }/${ newDate[1] }/${ newDate[0] }`;
+	getData( values, actions ) {
+		console.log( values );
+		actions.setSubmitting( false );
 	}
 
 	render() {
@@ -46,7 +29,13 @@ class EditEventPage extends Component {
 					<h2>Editar evento</h2> 
 				</div>
 
-				<EditEventComponent event={ this.event }/>
+				<Formik 
+					component={ FormEventComponent }
+					initialValues={ this.getEvent() }
+					validationSchema={ new EventSchema().getSchema() }
+					onSubmit={ this.getData }
+					validateOnChange={ true }
+				/>
 			</div>
 		);
 	}

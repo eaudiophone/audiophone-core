@@ -85,7 +85,7 @@ const CardComponent = ( props ) => {
 		      <Button 
 		      	variant="dark" 
 		      	onClick={ () => setRedirect( true ) }>
-		          <i className="fas fa-edit mr-2"></i>
+		          <i className="fas fa-pen mr-2"></i>
 		          Ver detalles
 		      </Button>  
 		    </Row>

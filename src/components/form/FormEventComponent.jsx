@@ -1,55 +1,15 @@
-import React, { Component } from 'react';
-import Event from './../../models/EventModels';
+import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap'; 
-import { Formik } from 'formik';
-import NewEventSchema from './NewEventSchema';
 
-class NewEventComponent extends Component {
-
-	getData( values, actions ) {
-		
-    const event = new Event(
-     values.title,
-     values.date,
-     values.startingTime,
-     values.finalHour,
-     values.totalHours,
-     values.addressMeeting || 'Estudio principal',
-     values.description,
-     values.idService
-    );
-
-    console.log( event );
-
-    // enviar la data al servidor
-
-		actions.setSubmitting( false );
-	}
-
-	render() {
-
-		return (
-			<Formik
-				component={ Formulario }  
-				initialValues={ new Event() }
-				validationSchema={ new NewEventSchema().getSchema() }
-				onSubmit={ this.getData }
-				validateOnChange={ true }
-			/>
-		);
-	}
-}
-
-// form-hooks
-const Formulario = ( props ) => {
+const FormEventComponent = ( props ) => {
 
 	const {
 		handleSubmit,
 		handleChange,
 		handleReset,
-		values,
-		errors
-	} = props;
+		errors,
+		values
+	} = props
 
 	const getInputText = ( title, name, value, columnSize, error )  => (
 		
@@ -89,7 +49,6 @@ const Formulario = ( props ) => {
 		</Form.Group>
 		</Col>
 	);
-
 
 	const getInputDate = ( title, name, value, columnSize, error ) => (
 
@@ -153,9 +112,8 @@ const Formulario = ( props ) => {
 	);
 
 	return (
-
 		<Form onSubmit={ handleSubmit } noValidate>
-      <Form.Row>
+			<Form.Row>
 				{	
 					getInputText( 
 						'Titulo del evento', 
@@ -210,15 +168,16 @@ const Formulario = ( props ) => {
         			errors.totalHours 
         		) 
         	}
-					{ /* renderizando condicional */
-            values.idService === '2' &&
-						
-              getInputTextarea (
-  							'Direccion del evento', 
-  							'addressMeeting', 
-  							values.addressMeeting,  
-  							12,
-  						) 
+			    { /* Condicional */
+			    	values.idService === '2' &&    
+				  	
+				  	getInputTextarea (
+  						'Direccion del evento', 
+  						'addressMeeting', 
+  						values.addressMeeting,  
+  						12,
+                        errors.addressMeeting
+  					) 
 					}
         	{ 
         	  getInputTextarea (
@@ -229,8 +188,7 @@ const Formulario = ( props ) => {
         			errors.description 
         		)
           } 
-      </Form.Row>
-
+			</Form.Row>
 			<Form.Row className="mt-5">
         <Col sm={ 6 } className=" d-flex flex-row justify-content-center">
     			<Button 
@@ -255,9 +213,8 @@ const Formulario = ( props ) => {
           
         </Col>
       </Form.Row>
-
 		</Form>
 	);
-};
+}
 
-export default NewEventComponent;
+export default FormEventComponent;

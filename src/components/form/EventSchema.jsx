@@ -1,6 +1,6 @@
 import { string, object, number, mixed, date } from 'yup';
 
-class NewEventSchema {
+class EventSchema {
 
 	constructor() {
 
@@ -34,8 +34,7 @@ class NewEventSchema {
 			title: string()
 				.required( this.validationMessages.string.required )
 				.min( 2, this.validationMessages.string.min( 2 ) )
-				.max( 25, this.validationMessages.string.max( 25 ) )
-				.typeError( this.validationMessages.number.typeError ),
+				.max( 25, this.validationMessages.string.max( 25 ) ),
 
 			idService: string()
 				.required( this.validationMessages.number.required ),
@@ -52,14 +51,16 @@ class NewEventSchema {
 			totalHours: number()
 				.required( this.validationMessages.number.required )
 				.positive( this.validationMessages.number.positive )
-				.integer( this.validationMessages.number.integer )
-				.typeError( this.validationMessages.number.typeError ),
+				.integer( this.validationMessages.number.integer ),
 
 			description: string()
 				.required( this.validationMessages.string.required )
 				.min( 10, this.validationMessages.string.min( 10 ) )
-				.max( 255, this.validationMessages.string.max( 255 ))
-				.typeError( this.validationMessages.number.typeError ),
+				.max( 255, this.validationMessages.string.max( 255 )),
+
+			addressMeeting: string()
+				.min( 10, this.validationMessages.string.min( 10 ) )
+				.max( 255, this.validationMessages.string.max( 255 ) )
 		});
 	}
 
@@ -72,4 +73,4 @@ class NewEventSchema {
 	} 
 }
 
-export default NewEventSchema;
+export default EventSchema;
