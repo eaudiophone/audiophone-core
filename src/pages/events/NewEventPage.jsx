@@ -1,8 +1,8 @@
 import  React, { Component } from 'react';
 import { Formik } from 'formik';
-import Event from './../../models/EventModels';
-import EventSchema from './../../components/form/EventSchema';
-import FormEventComponent from './../../components/form/FormEventComponent';
+import Event from '../../models/EventModels';
+import EventSchema from '../../components/form/events-form/EventSchema';
+import FormEventComponent from '../../components/form/events-form/FormEventComponent';
 
 class NewEventPage extends Component {
 

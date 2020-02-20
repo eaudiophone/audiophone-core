@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
-import { 
-	Form,
-	Button,
-	Row,
-	Col,
-	Image,
-	Nav
-} from 'react-bootstrap';
-
-import 'bootstrap/js/dist/tab';  // bootstrap-tabs
+import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
+import { Image, Nav } from 'react-bootstrap';
+import { Formik } from 'formik'
+import ProfileSchema from '../../components/form/profile-form/ProfileSchema';
+import Profile from '../../models/ProfileModels';
 import './ProfilePage.css';
+// import 'bootstrap/js/dist/tab';  // bootstrap-tabs
 
 class ProfilePage extends Component {
+
+	constructor( props ) {
+
+		super( props );
+
+		this.user = new Profile(
+			'Gabriel Martinez',
+			'gabmart1995@gmail.com'
+			);
+	}
 
 	getTabs() {
 		
 		return (
 			
-			<Nav variant="tabs">
+			<Nav variant="tabs" defaultActiveKey="#nav-profile">
 				<Nav.Item>
 					<Nav.Link 
-						className="nav-item nav-link" 
+					className="nav-item nav-link" 
     				id="nav-profile-tab" 
     				data-toggle="tab" 
     				href="#nav-profile" 
@@ -28,21 +34,8 @@ class ProfilePage extends Component {
     				aria-controls="nav-profile" 
     				aria-selected="false"
     			>
-    				Perfil
+    				Perfil de usuario
     			</Nav.Link>
-				</Nav.Item>
-				<Nav.Item>
-					<Nav.Link
-						className="nav-item nav-link" 
-    				id="nav-contact-tab" 
-    				data-toggle="tab" 
-    				href="#nav-security" 
-    				role="tab" 
-    				aria-controls="nav-contact" 
-    				aria-selected="false"
-					>
-						Seguridad
-					</Nav.Link>
 				</Nav.Item>
 			</Nav>
 		);
@@ -62,67 +55,7 @@ class ProfilePage extends Component {
 		); 
 	}
 
-	getDataUser() {
-
-		return (
-
-			<div 
-				className="tab-pane fade show active" 
-	  		id="nav-profile" 
-	  		role="tabpanel" 
-	  		aria-labelledby="nav-home-tab"
-	  	>
-				<Form className="form">
-					{ this.getInputText( 'Nombre', 'Gabriel Martínez' ) }
-					{ this.getInputText( 'Correo', 'gabmart1995@gmail.com' ) }
-					<Form.Row className="mt-4">
-						<Col className="d-flex flex-row justify-content-around">
-							<Button variant="secondary" type="reset">
-								Cancelar
-							</Button>
-							<Button variant="primary" type="submit">
-								Actualizar
-							</Button>
-						</Col>
-					</Form.Row>
-				</Form>
-				
-			</div>
-		); 
-	}
-
-	getInputPassword( label ) {
-
-		return (
-
-			<Form.Group as={ Row }>
-				<Form.Label 
-					className="form-label" 
-					column sm={ 2 }
-				>{ label }</Form.Label>
-				<Col sm="10">
-					<Form.Control type="password"></Form.Control>
-				</Col>
-			</Form.Group>
-		);
-	}
-
-	getInputText( label, value ) {
-
-		return (
-
-			<Form.Group as={ Row }>
-					<Form.Label 
-						className="form-label" 
-						column sm={ 2 }
-					>{ label }</Form.Label>
-					<Col sm="10">
-						<Form.Control defaultValue={ value }></Form.Control>
-					</Col>
-				</Form.Group>
-		);
-	}
-
+	
 	getHeader() {
 
 		return (
@@ -134,45 +67,26 @@ class ProfilePage extends Component {
 		);
 	}
 
-	getFormSecurity() {
-
-		return (
-
-			<div 
-					className="tab-pane fade show" 
-		  		id="nav-security" 
-		  		role="tabpanel" 
-		  		aria-labelledby="nav-security-tab"
-		  	>
-				<Form className="form">
-					{ this.getInputPassword( 'contraseña:' ) }
-					{ this.getInputPassword( 'confirmar contraseña:' ) }
-					<Form.Row>
-						<Col className="d-flex flex-row justify-content-around">
-							<Button variant="secondary" type="reset">
-								Cancelar
-							</Button>
-							<Button variant="primary" type="submit">
-								Actualizar
-							</Button>
-						</Col>
-					</Form.Row>
-				</Form>
-			</div>
-		);
+	getFormData( values, actions ) {
+		console.log( values );
+		actions.setSubmitting( false );
 	}
 
 	render() {
-
+		
 		return (
 
 			<div>
 				{ this.getHeader() }
 				{ this.getImage() }
 				{ this.getTabs() }
-				<div className="tab-content" id="nav-tabContent">
-						{ this.getDataUser() }
-						{ this.getFormSecurity() }
+				<div>
+					{ /* <Formik
+						component={ FormProfileComponent } 
+						onSubmit={ this.getFormData }
+						initialValues={ this.user }
+						validationSchema={ new ProfileSchema().getSchema() }
+					/> */}
 				</div>
 			</div>
 		);

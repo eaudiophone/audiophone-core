@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Container, Form, Button, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import RedirectService from './../../services/RedirectService';
-import User from './../../models/UserModels';
-import RegisterSchema from './RegisterSchema';
+import Profile from './../../models/ProfileModels';
+import RegisterSchema from './../../components/form/profile-form/ProfileSchema';
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -106,7 +106,7 @@ class RegisterPage extends Component {
 				
 				<Formik 
 					validationSchema={ new RegisterSchema().getSchema() }
-					initialValues={ new User() }
+					initialValues={ new Profile() }
 					onSubmit={ this.getFormData } 
 					validateOnChange={ true }
 				>

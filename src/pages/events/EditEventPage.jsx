@@ -1,8 +1,8 @@
 import  React, { Component } from 'react';
-import FormEventComponent from './../../components/form/FormEventComponent';
+import FormEventComponent from './../../components/form/events-form/FormEventComponent';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 import { Formik } from 'formik';
-import EventSchema from './../../components/form/EventSchema';
+import EventSchema from './../../components/form/events-form/EventSchema';
 
 class EditEventPage extends Component {
 
