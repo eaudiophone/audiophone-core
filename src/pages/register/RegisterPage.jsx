@@ -3,7 +3,8 @@ import { Container, Form, Button, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import RedirectService from './../../services/RedirectService';
 import Profile from './../../models/ProfileModels';
-import RegisterSchema from './../../components/form/profile-form/ProfileSchema';
+import ProfileSchema from './../../components/form/profile-form/ProfileSchema';
+import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -103,41 +104,18 @@ class RegisterPage extends Component {
 		return ( 
 
 			<Container className="container-register">
+
+				<h2 className="mb-5 text-center">
+					Registro de usuarios
+				</h2>
 				
 				<Formik 
-					validationSchema={ new RegisterSchema().getSchema() }
+					validationSchema={ new ProfileSchema().getSchema() }
 					initialValues={ new Profile() }
 					onSubmit={ this.getFormData } 
-					validateOnChange={ true }
-				>
-					{ ({ handleSubmit, handleChange, handleReset, values, errors }) => (
-							
-							<Form 
-								className="form-register" 
-								onSubmit={ handleSubmit }
-								noValidate
-							>
-								<h2 className="mb-5">
-									Registro de usuarios
-								</h2>
-								{ this.getInput( 'Nombre:', 'text', 'name', values.name, handleChange, errors.name ) }
-								
-								<Form.Row>
-									<Col sm={ 12 }>
-										{ this.getInput( 'Correo:', 'email', 'email', values.email, handleChange, errors.email ) }
-									</Col>
-									<Col sm={ 12 }>
-										{ this.getInputPassword( values.password, handleChange, errors.password ) }
-									</Col>
-								</Form.Row>
-
-								{ this.getButtons( handleReset ) }
-
-							</Form>
-						)
-					}
-				</Formik>
-
+					validateOnChange={ false }
+					component={ FormProfileComponent }
+				/>
 				<p className="mt-5 text-center">
 					<a href="/">
 						<i className="fas fa-sign-in-alt mr-2"></i>

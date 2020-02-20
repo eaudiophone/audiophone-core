@@ -152,7 +152,7 @@ const FormEventComponent = ( props ) => {
     			}
         	{ 
         		getInputHour(
-        			'Hora Final', 
+        			'Hora final', 
         			'finalHour', 
         			values.finalHour, 
         			4,
@@ -181,7 +181,7 @@ const FormEventComponent = ( props ) => {
 					}
         	{ 
         	  getInputTextarea (
-        			'Description', 
+        			'Descripción', 
         			'description', 
         			values.description,  
         			12,

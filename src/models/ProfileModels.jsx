@@ -1,11 +1,10 @@
 class Profile {
 
-	constructor( name, email, password, confirmPassword ) {
+	constructor( name, email, password ) {
 
 		this.name = name || '';
 		this.email = email || '';
 		this.password = password || '';
-		this.confirmPassword = confirmPassword || '';
 	}
 }
 

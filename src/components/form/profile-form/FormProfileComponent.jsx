@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Col, Button } from 'react-bootstrap';
 
 const FormProfileComponent = ( props ) => {
 
@@ -11,55 +11,45 @@ const FormProfileComponent = ( props ) => {
 		errors
 	} = props;
 
-	const getFormPassword = ( title, name, error ) => (
+	const getFormPassword = ( title, name, value, error ) => (
 
-		<Form.Group as={ Row }>
-			<Form.Label 
-				className="form-label" 
-				column sm={ 2 }
-			>{ title }</Form.Label>
-			<Col sm="10">
-				<Form.Control 
-					as="input"
-					type="password"
-					onChange={ handleChange }
-					name={ name }
-					isInvalid={ !!error }
-				>
-					<Form.Control.Feedback type="invalid">
-		    		{ error }
-					</Form.Control.Feedback>
-				</Form.Control>
-			</Col>
+		<Form.Group>
+			<Form.Label className="form-label">{ title }</Form.Label>
+			<Form.Control 
+				as="input"
+				value={ value }
+				type="password"
+				onChange={ handleChange }
+				name={ name }
+				isInvalid={ !!error }
+			/>
+			<Form.Control.Feedback type="invalid">
+			{ error }
+			</Form.Control.Feedback>
 		</Form.Group>
+
 	);
 
 	const getFormInput = ( title, name, value, error ) => (
 
-		<Form.Group as={ Row }>
-			<Form.Label 
-				className="form-label" 
-				column sm={ 2 }
-			>{ title }</Form.Label>
-			<Col sm="10">
-				<Form.Control 
-					as="input"
-					value={ value }
-					name={ name }
-					onChange={ handleChange }
-					isInvalid={ !!error }
-				>
-					<Form.Control.Feedback type="invalid">
-		    		{ error }
-					</Form.Control.Feedback>
-				</Form.Control>
-			</Col>
+		<Form.Group>
+			<Form.Label className="form-label">{ title }</Form.Label>
+			<Form.Control 
+				as="input"
+				value={ value }
+				name={ name }
+				onChange={ handleChange }
+				isInvalid={ !!error }
+			/>
+			<Form.Control.Feedback type="invalid">
+    		{ error }
+			</Form.Control.Feedback>
 		</Form.Group>
 	);
 
 	const getButtons = () => (
 		
-		<Form.Row>
+		<Form.Row className="mt-5">
 			<Col sm={ 6 } className="d-flex flex-row justify-content-center">
 				<Button 
 					block 
@@ -86,12 +76,11 @@ const FormProfileComponent = ( props ) => {
 
 	return (
 
-		<Form className="form" onSubmit={ handleSubmit }>
-			{ getFormInput( 'Nombre', 'name', values.name, errors.name ) }
-			{ getFormInput( 'Correo', 'email', values.email, errors.email ) }
-			{ getFormPassword( 'contraseña:', 'password', errors.password ) }
-			{ getFormPassword( 'confirmar contraseña:', 'confirmPassword', errors.confirmPassword ) }
-			{ getButtons() }
+		<Form className="form" onSubmit={ handleSubmit } noValidate>
+			{ getFormInput( 'Nombre:', 'name', values.name, errors.name ) }
+			{ getFormInput( 'Correo:', 'email', values.email, errors.email ) }
+			{ getFormPassword( 'Contraseña:', 'password', values.password,  errors.password ) }
+			{ getButtons() } 
 		</Form>
 	);
 };

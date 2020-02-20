@@ -81,12 +81,13 @@ class ProfilePage extends Component {
 				{ this.getImage() }
 				{ this.getTabs() }
 				<div>
-					{ /* <Formik
+					<Formik
 						component={ FormProfileComponent } 
 						onSubmit={ this.getFormData }
 						initialValues={ this.user }
 						validationSchema={ new ProfileSchema().getSchema() }
-					/> */}
+						validateOnChange={ false }
+					/> 
 				</div>
 			</div>
 		);
