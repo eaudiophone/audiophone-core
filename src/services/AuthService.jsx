@@ -30,7 +30,8 @@ class AuthService {
 	}
 
 	logOut() {
-		console.log( 'exit of application' );
+		// localStorage.removeItem('logged');
+		console.log('salida de la aplicación');
 	}
 }
 

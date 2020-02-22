@@ -23,17 +23,19 @@ class HomePage extends Component {
 
 	render() {
 
+		const ROLE = 'USER_ROLE'
+
 		return (
 
 			<Container fluid className="p-0">
 				
-				<NavbarComponent />
+				<NavbarComponent role={ ROLE } />
 
 				<Container>
 						<Row>
 							<Col sm={ 12 }>
 								<div id="content">
-									{ this.getContent( 'USER_ROLE' ) }
+									{ this.getContent( ROLE ) }
 								</div>
 							</Col>
 						</Row>

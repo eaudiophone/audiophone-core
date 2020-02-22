@@ -26,7 +26,7 @@ class NewEventPage extends Component {
 					initialValues={ new Event() }
 					validationSchema={ new EventSchema().getSchema() }
 					onSubmit={ this.getData }
-					validateOnChange={ true }
+					validateOnChange={ false }
 				/>
 			</div>
 		);
