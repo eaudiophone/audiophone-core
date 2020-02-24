@@ -28,9 +28,7 @@ class HomePage extends Component {
 		return (
 
 			<Container fluid className="p-0">
-				
 				<NavbarComponent role={ ROLE } />
-
 				<Container>
 						<Row>
 							<Col sm={ 12 }>
@@ -40,9 +38,7 @@ class HomePage extends Component {
 							</Col>
 						</Row>
 				</Container>	
-
 			</Container>
-
 		);
 	}
 }
