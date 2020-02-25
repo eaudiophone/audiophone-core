@@ -78,7 +78,6 @@ class ProfilePage extends Component {
 
 			<div>
 				{ this.getHeader() }
-				{ this.getImage() }
 				{ this.getTabs() }
 				<div>
 					<Formik
