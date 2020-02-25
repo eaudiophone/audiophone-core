@@ -3,12 +3,50 @@ import { Formik } from 'formik';
 import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
 import { USERS } from '../../hardcode/UsersHardcode';
 import { Table, Pagination } from 'react-bootstrap';
+import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
  
 class UserPage extends Component {
+
+	constructor( props ) {
+
+		super( props );
+
+		this.state = { 
+			showEditModal: false, 
+			showDeleteModal: false,
+			data: null
+		};
+
+		this.editProfile = this.editProfile.bind( this );
+		this.deleteUser = this.deleteUser.bind( this );
+		this.showModal = this.showModal.bind( this );
+	}
+
+	showModal( modal, data ) {
+		
+		if ( modal === 'edit' ) {
+			
+			this.setState({
+				showDeleteModal: false,
+				showEditModal: true,
+				data
+			});
+		
+		} else {
+			
+			this.setState({
+				showDeleteModal: true,
+				showEditModal: false,
+				data
+			});
+		}
+
+	}
 
 	getHeader() {
 
 		return (
+
 			<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 						align-items-center pb-2 mb-3 border-bottom">
 				<h2>Gestion de usuarios</h2>	
@@ -17,14 +55,29 @@ class UserPage extends Component {
 	}
 
 	editProfile( user ) {
-		console.log( user );
+
+		if ( user !== null ) {
+			console.log( 'edicion exitosa', user );
+		}
+
+		// cierra el modal
+		this.setState({ showEditModal: false });
 	}
 
-	deleteUser( idUser ) {
-		console.log( idUser );
+	deleteUser( confirm, idUser ) {
+
+		console.log( confirm );
+
+		if ( confirm ) {
+			console.log( 'Eliminación exitosa', idUser );
+		}
+
+		// cierra el modal
+		this.setState({ showDeleteModal: false });
 	}
 
 	setSearch( values, actions ) {
+
 		console.log( values.search );
 		actions.setSubmitting( false );
 	}
@@ -34,6 +87,7 @@ class UserPage extends Component {
 		let arrayUsers = USERS.data.filter( ( user ) => user.state === true );
 
 		return arrayUsers.map( ( user ) => (
+
 				<tr key={ user.id }>
 					<td>{ user.id }</td>
 					<td>{ user.name }</td>
@@ -43,11 +97,11 @@ class UserPage extends Component {
 					<td className="d-flex flex-row justify-content-around">
 						<i 
 							className="fas fa-pen"
-							onClick={ () => this.editProfile( user ) }
+							onClick={ () => this.showModal( 'edit', user ) }
 						></i>
 						<i 
 							className="fas fa-trash"
-							onClick={ () => this.deleteUser( user.id ) }
+							onClick={ () => this.showModal( 'delete', user.id ) }
 						></i>
 					</td>
 				</tr> 
@@ -63,12 +117,43 @@ class UserPage extends Component {
 		);
 	}
 
+	getTableUsers() {
+
+		return (
+
+			<Table className="mt-4" striped responsive hover>
+				<thead className="thead-dark">
+					<tr>
+						{ this.setHeaderTable() }
+					</tr>
+				</thead>
+				<tbody>
+					{ this.setData() }
+				</tbody>
+			</Table>
+		);
+	}
+
 	render() {
 		
 		return ( 
 			
 			<div>
+				
+				<ModalProfileComponent.DeleteProfileModal 
+					showModal={ this.state.showDeleteModal }  
+					deleteUser={ ( confirm, id ) => this.deleteUser( confirm, id ) }
+					id={ this.state.data }
+				/>
+
+				<ModalProfileComponent.EditProfileModal 
+					showModal={ this.state.showEditModal }
+					editUser={ ( user ) => this.editProfile( user ) }
+					user={ this.state.data }
+				/>
+
 				{ this.getHeader() }
+
 				<div className="mt-4">
 					<Formik 
 						component={ SearchBarComponent } 
@@ -76,27 +161,21 @@ class UserPage extends Component {
 						initialValues={ { search: '' } }
 					/>
 				</div>
-				<Table className="mt-4" striped responsive hover>
-					<thead className="thead-dark">
-						<tr>
-							{ this.setHeaderTable() }
-						</tr>
-					</thead>
-					<tbody>
-						{ this.setData() }
-					</tbody>
-				</Table>
+
+				{ this.getTableUsers() }
+				
 				<div className="d-flex flex-row justify-content-center mt-4"> 
 					<PaginationComponent />
 				</div>
+
 			</div>
 		);
 	}
 }
 
-class PaginationComponent extends Component {
-	
-	setPagination() {
+const PaginationComponent = () => {
+
+	const setPagination = () => {
 
 		let active = 1;
 		let items = [];
@@ -113,19 +192,16 @@ class PaginationComponent extends Component {
 		}
 
 		return items;
-	}
+	};
 
+	return (
 
-	render() {
-		
-		return(
-			<Pagination>
-				<Pagination.Prev />
-					{ this.setPagination() }
-				<Pagination.Next />
-			</Pagination>
-		);
-	}
-}
+		<Pagination>
+			<Pagination.Prev />
+				{ setPagination() }
+			<Pagination.Next />
+		</Pagination>
+	);
+};
 
 export default UserPage;
