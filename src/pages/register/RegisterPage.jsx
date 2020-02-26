@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Form, Button, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Formik } from 'formik';
 import RedirectService from './../../services/RedirectService';
 import Profile from './../../models/ProfileModels';
@@ -35,70 +35,6 @@ class RegisterPage extends Component {
 		}
 	}
 
-	getInput( title, type, name, value, handleChange, error ) {
-
-		return (
-
-			<Form.Group>
-				<Form.Label>{ title }</Form.Label>
-				<Form.Control
-					as="input" 
-					type={ type }
-					name={ name }
-					value={ value }
-					onChange={ handleChange }
-					isInvalid={ !!error }
-				/>
-				<Form.Control.Feedback type="invalid">
-					{ error }
-				</Form.Control.Feedback>
-			</Form.Group>
-		);
-
-	}
-
-	getInputPassword(  value, handleChange, error ) {
-
-		return ( 
-
-			<Form.Group>
-				<Form.Label>Contraseña:</Form.Label>
-				<Form.Control
-					className="mb-0"
-					as="input" 
-					type="password"
-					name="password"
-					value={ value }
-					onChange={ handleChange }
-					isInvalid={ !!error }
-				/>
-				<Form.Control.Feedback type="invalid">
-					{ error }
-				</Form.Control.Feedback>
-			</Form.Group>
-		);
-
-	}
-
-	getButtons( handleReset ) {
-
-		return(
-
-			<Form.Row className="mt-5">
-				<Col sm={ 6 } className="d-flex flex-row justify-content-center">
-					<Button className="button-w80" block type="reset" variant="secondary" onClick={ handleReset }>
-						Cancelar
-					</Button>
-				</Col>
-				<Col sm={ 6 } className="d-flex flex-row justify-content-center">
-					<Button block type="submit" variant="primary" className="button-w80">
-						Registrar
-					</Button>
-				</Col>
-			</Form.Row>
-		);
-	}
-
 	render() {
 		
 		return ( 
@@ -114,7 +50,7 @@ class RegisterPage extends Component {
 					initialValues={ new Profile() }
 					onSubmit={ this.getFormData } 
 					validateOnChange={ false }
-					component={ FormProfileComponent }
+					component={ FormProfileComponent.FormProfileComponent }
 				/>
 				<p className="mt-5 text-center">
 					<a href="/">

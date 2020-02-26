@@ -81,7 +81,7 @@ class ProfilePage extends Component {
 				{ this.getTabs() }
 				<div>
 					<Formik
-						component={ FormProfileComponent } 
+						component={ FormProfileComponent.FormProfileComponent } 
 						onSubmit={ this.getFormData }
 						initialValues={ this.user }
 						validationSchema={ new ProfileSchema().getSchema() }
