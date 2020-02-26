@@ -5,3 +5,7 @@
 .form-label {
 	font-weight: bold;
 }
+
+.point {
+	cursor: pointer;
+}

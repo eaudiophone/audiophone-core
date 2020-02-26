@@ -31,7 +31,7 @@ class RegisterSchema {
 			
 			password: string()
 				.required( this.validationMessages.string.required  )
-				.min( 8, this.validationMessages.string.min( 8 ) )
+				.min( 8, this.validationMessages.string.min( 8 ) ),
 		});
 
 	}

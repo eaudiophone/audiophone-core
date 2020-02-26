@@ -66,19 +66,19 @@ const DeleteProfileModal = ( props ) => {
 
 			<Modal.Footer>
 	    	<Button 
-	    		variant="secondary"
-	    		type="reset" 
-	    		onClick={ () => handleClose( false ) }
-	    	>
-	      	Close
-	    	</Button>
-	    	<Button 
-	    		variant="primary" 
-	    		type="submit"
-	    		onClick={ () => handleClose( true ) }
-	    	>
-	      	Save Changes
-	    	</Button>
+		    		variant="secondary"
+		    		type="reset" 
+		    		onClick={ () => handleClose( false ) }
+		    	>
+		      	Close
+		    	</Button>
+		    	<Button 
+		    		variant="primary" 
+		    		type="submit"
+		    		onClick={ () => handleClose( true ) }
+		    	>
+		      	Save Changes
+		    	</Button>
 	  	</Modal.Footer>
 		</Modal>
 	);

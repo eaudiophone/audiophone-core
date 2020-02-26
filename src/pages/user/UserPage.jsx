@@ -66,10 +66,8 @@ class UserPage extends Component {
 
 	deleteUser( confirm, idUser ) {
 
-		console.log( confirm );
-
 		if ( confirm ) {
-			console.log( 'Eliminación exitosa', idUser );
+			console.log( 'Eliminación exitosa' );
 		}
 
 		// cierra el modal
@@ -96,11 +94,11 @@ class UserPage extends Component {
 					<td>{ user.registrationDate }</td>
 					<td className="d-flex flex-row justify-content-around">
 						<i 
-							className="fas fa-pen"
+							className="fas fa-pen point"
 							onClick={ () => this.showModal( 'edit', user ) }
 						></i>
 						<i 
-							className="fas fa-trash"
+							className="fas fa-trash point"
 							onClick={ () => this.showModal( 'delete', user.id ) }
 						></i>
 					</td>
