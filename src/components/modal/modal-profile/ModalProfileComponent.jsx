@@ -1,11 +1,18 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
+import FormProfileComponent from './../../form/profile-form/FormProfileComponent';
+import { Formik } from 'formik';
 
 const EditProfileModal = ( props ) => {
 
 	const user = props.user;
 
-	const handleClose = ( user ) => props.editUser( user || null );
+	const handleClose = ( values, actions ) => {
+		
+		console.log( values );
+		actions.setSubmitting( false );
+		props.editUser( user || null )
+	};
 
 	return (
 		
@@ -14,34 +21,82 @@ const EditProfileModal = ( props ) => {
 			onHide={ () => handleClose() }
 			size="lg"
 		>
-			
+			<Formik 
+				initialValues={ user }
+				component={ FormEdit }
+				onSubmit={ handleClose }
+			/>
+		</Modal>
+	);	
+}
+
+
+const FormEdit = ( props ) => {
+
+	const {
+		handleSubmit,
+		handleReset,
+		handleChange,
+		values,
+		errors
+	} = props;
+
+	return (
+		
+		<Form onSubmit={ handleSubmit }>
 			<Modal.Header closeButton>
 				<Modal.Title>Editar usuario:</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
-				Modal de edición
+				<FormProfileComponent.FormInput 
+					data={{
+						title: 'Nombre',
+						name: 'name',
+						value: values.name,
+						error: errors.name,
+						change: handleChange
+					}}
+				/>
+				<FormProfileComponent.FormInput 
+					data={{
+						title: 'Correo',
+						name: 'email',
+						value: values.email,
+						error: errors.email,
+						change: handleChange
+					}}
+				/>
+				<FormProfileComponent.FormInputDate 
+					data={{
+						title: "Fecha de registro:",
+						name: "registrationDate",
+						value: values.registrationDate,
+						error: errors.registrationDate,
+						change: handleChange
+					}}
+				/>		
 			</Modal.Body>
 
 			<Modal.Footer>
 	    	<Button 
 	    		variant="secondary"
 	    		type="reset" 
-	    		onClick={ () => handleClose() }
+	    		onClick={ handleReset }
 	    	>
 	      	Close
 	    	</Button>
 	    	<Button 
 	    		variant="primary" 
 	    		type="submit"
-	    		onClick={ () => handleClose( user ) }
+	    		onClick={ handleSubmit }
 	    	>
 	      	Save Changes
 	    	</Button>
 	  	</Modal.Footer>
-		</Modal>
-	);	
-}
+		</Form>
+	);
+};
 
 const DeleteProfileModal = ( props ) => {
 

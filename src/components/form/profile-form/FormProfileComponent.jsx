@@ -75,6 +75,27 @@ const FormInput = props => {
   );
 };
 
+const FormInputDate = ( props ) => {
+  const { title, value, change, name, error } = props.data;
+
+  return (
+    <Form.Group>
+      <Form.Label className="form-label">{title}</Form.Label>
+      <Form.Control
+        type="date"
+        as="input"
+        value={value}
+        name={name}
+        onChange={change}
+        isInvalid={!!error}
+        readOnly
+      />
+      <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+    </Form.Group>
+
+  );
+};
+
 const FormButtons = props => {
   const reset = props.data.reset;
 
@@ -104,5 +125,6 @@ export default {
   FormProfileComponent,
   FormPassword,
   FormButtons,
-  FormInput
+  FormInput,
+  FormInputDate
 };
