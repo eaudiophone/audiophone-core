@@ -29,7 +29,7 @@ const EditProfileModal = ( props ) => {
 				initialValues={ user }
 				component={ FormEdit }
 				onSubmit={ handleClose }
-				validateOnChange={ false }
+				validateOnChange={ true }
 			/>
 		</Modal>
 	);	
@@ -96,6 +96,7 @@ const FormEdit = ( props ) => {
 								label="Usuario"
 								onChange={ handleChange }
 								checked={ user }
+								isInvalid={ !!errors.role }
 							/>
 							<Form.Check 
 								type="radio"
@@ -105,6 +106,7 @@ const FormEdit = ( props ) => {
 								label="Administrador"
 								onChange={ handleChange }
 								checked={ admin }
+								isInvalid={ !!errors.role }
 							/>
 						</div>	
 					</Form-Group>
@@ -118,14 +120,14 @@ const FormEdit = ( props ) => {
 	    		type="reset" 
 	    		onClick={ handleReset }
 	    	>
-	      	Close
+	      	Cerrar
 	    	</Button>
 	    	<Button 
 	    		variant="primary" 
 	    		type="submit"
 	    		onClick={ handleSubmit }
 	    	>
-	      	Save Changes
+	      	Actualizar
 	    	</Button>
 	  	</Modal.Footer>
 		</Form>

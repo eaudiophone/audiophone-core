@@ -57,7 +57,7 @@ class UserPage extends Component {
 	editProfile( user ) {
 
 		if ( user !== null ) {
-			console.log( 'edicion exitosa', user );
+			console.log( user );
 		}
 
 		// cierra el modal
