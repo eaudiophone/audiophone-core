@@ -1,7 +1,9 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import FormProfileComponent from './../../form/profile-form/FormProfileComponent';
+// import ProfileSchema from './../../../components/form/profile-form/ProfileSchema';
 import { Formik } from 'formik';
+import './ModalProfileComponent.css';
 
 const EditProfileModal = ( props ) => {
 
@@ -9,9 +11,11 @@ const EditProfileModal = ( props ) => {
 
 	const handleClose = ( values, actions ) => {
 		
-		console.log( values );
-		actions.setSubmitting( false );
-		props.editUser( user || null )
+			if ( actions !== undefined ) {
+				actions.setSubmitting( false );
+			}
+
+			props.editUser( values || null );
 	};
 
 	return (
@@ -25,11 +29,11 @@ const EditProfileModal = ( props ) => {
 				initialValues={ user }
 				component={ FormEdit }
 				onSubmit={ handleClose }
+				validateOnChange={ false }
 			/>
 		</Modal>
 	);	
 }
-
 
 const FormEdit = ( props ) => {
 
@@ -40,6 +44,9 @@ const FormEdit = ( props ) => {
 		values,
 		errors
 	} = props;
+
+	let user = values.role === 'USER_ROLE' ? true : false;
+	let admin = values.role === 'USER_ROLE' ? false: true;
 
 	return (
 		
@@ -75,7 +82,34 @@ const FormEdit = ( props ) => {
 						error: errors.registrationDate,
 						change: handleChange
 					}}
-				/>		
+				/>	
+
+				<Form.Row>
+					<Form-Group>
+						<Form.Label>Perfil de usuario</Form.Label>
+						<div className="d-flex justify-content-around flex-row width">
+							<Form.Check 
+								type="radio"
+								value="USER_ROLE"
+								name="role"
+								id="user"
+								label="Usuario"
+								onChange={ handleChange }
+								checked={ user }
+							/>
+							<Form.Check 
+								type="radio"
+								value="ADMIN_ROLE"
+								name="role"
+								id="admin"
+								label="Administrador"
+								onChange={ handleChange }
+								checked={ admin }
+							/>
+						</div>	
+					</Form-Group>
+				</Form.Row>
+
 			</Modal.Body>
 
 			<Modal.Footer>
@@ -125,14 +159,14 @@ const DeleteProfileModal = ( props ) => {
 		    		type="reset" 
 		    		onClick={ () => handleClose( false ) }
 		    	>
-		      	Close
+		      	Cerrar
 		    	</Button>
 		    	<Button 
 		    		variant="primary" 
 		    		type="submit"
 		    		onClick={ () => handleClose( true ) }
 		    	>
-		      	Save Changes
+		      	Confirmar
 		    	</Button>
 	  	</Modal.Footer>
 		</Modal>
