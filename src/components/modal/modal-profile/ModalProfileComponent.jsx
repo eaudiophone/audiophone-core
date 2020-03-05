@@ -1,22 +1,28 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import FormProfileComponent from './../../form/profile-form/FormProfileComponent';
-// import ProfileSchema from './../../../components/form/profile-form/ProfileSchema';
+import ProfileSchema from './../../../components/form/profile-form/ProfileSchema';
 import { Formik } from 'formik';
-import './ModalProfileComponent.css';
 
 const EditProfileModal = ( props ) => {
 
 	const user = props.user;
 
-	const handleClose = ( values, actions ) => {
-		
-			if ( actions !== undefined ) {
-				actions.setSubmitting( false );
-			}
+	const getForm = async ( values, actions ) => {
 
-			props.editUser( values || null );
+		const validator = new ProfileSchema();
+
+		console.log('aqui');
+
+		console.log( await validator.testData( values ) );
+
+		actions.setSubmitting( false );
 	};
+
+	const handleClose = () => {
+	
+		props.editUser( null );
+};
 
 	return (
 		
@@ -28,8 +34,7 @@ const EditProfileModal = ( props ) => {
 			<Formik 
 				initialValues={ user }
 				component={ FormEdit }
-				onSubmit={ handleClose }
-				validateOnChange={ true }
+				onSubmit={ getForm }
 			/>
 		</Modal>
 	);	
@@ -83,35 +88,33 @@ const FormEdit = ( props ) => {
 						change: handleChange
 					}}
 				/>	
-
-				<Form.Row>
-					<Form-Group>
-						<Form.Label>Perfil de usuario</Form.Label>
-						<div className="d-flex justify-content-around flex-row width">
-							<Form.Check 
-								type="radio"
-								value="USER_ROLE"
-								name="role"
-								id="user"
-								label="Usuario"
-								onChange={ handleChange }
-								checked={ user }
-								isInvalid={ !!errors.role }
-							/>
-							<Form.Check 
-								type="radio"
-								value="ADMIN_ROLE"
-								name="role"
-								id="admin"
-								label="Administrador"
-								onChange={ handleChange }
-								checked={ admin }
-								isInvalid={ !!errors.role }
-							/>
-						</div>	
-					</Form-Group>
-				</Form.Row>
-
+	
+				<Form-Group>
+					<Form.Label>Perfil de usuario</Form.Label>
+					<div className="d-flex justify-content-around flex-row">
+						<Form.Check 
+							type="radio"
+							value="USER_ROLE"
+							name="role"
+							id="user"
+							label="Usuario"
+							onChange={ handleChange }
+							checked={ user }
+							isInvalid={ !!errors.role }
+						/>
+						<Form.Check 
+							type="radio"
+							value="ADMIN_ROLE"
+							name="role"
+							id="admin"
+							label="Administrador"
+							onChange={ handleChange }
+							checked={ admin }
+							isInvalid={ !!errors.role }
+						/>
+					</div>	
+				</Form-Group>
+			
 			</Modal.Body>
 
 			<Modal.Footer>
@@ -125,7 +128,6 @@ const FormEdit = ( props ) => {
 	    	<Button 
 	    		variant="primary" 
 	    		type="submit"
-	    		onClick={ handleSubmit }
 	    	>
 	      	Actualizar
 	    	</Button>

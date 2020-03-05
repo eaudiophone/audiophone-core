@@ -67,7 +67,7 @@ class UserPage extends Component {
 	deleteUser( confirm, idUser ) {
 
 		if ( confirm ) {
-			console.log( 'Eliminación exitosa' );
+			console.log( 'Eliminación exitosa id: ', idUser );
 		}
 
 		// cierra el modal
