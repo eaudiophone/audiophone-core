@@ -1,13 +1,7 @@
 import React from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap';
-
-const SearchBarComponent = ( props ) => {
-
-	const {
-		handleChange,
-		handleSubmit,
-		values
-	} = props;
+ 
+const SearchBarComponent = ({ handleChange, handleSubmit, values, errors }) => {
 
 	return (
 
@@ -29,6 +23,9 @@ const SearchBarComponent = ( props ) => {
 						<i className="fas fa-search" />
 					</Button>
 				</InputGroup.Append>
+				<Form.Control.Feedback type="invalid">
+					{ !!errors.search }
+				</Form.Control.Feedback>
 			</InputGroup>
 		</Form>
 	);

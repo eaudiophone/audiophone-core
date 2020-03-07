@@ -23,7 +23,7 @@ class HomePage extends Component {
 
 	render() {
 
-		const ROLE = 'ADMIN_ROLE'
+		const ROLE = 'USER_ROLE'
 
 		return (
 

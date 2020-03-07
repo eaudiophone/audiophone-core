@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Formik } from 'formik';
 import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
 import { USERS } from '../../hardcode/UsersHardcode';
-import { Table, Pagination } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
- 
+import PaginationComponent from '../../components/pagination/PaginationComponent'; 
+
 class UserPage extends Component {
 
 	constructor( props ) {
@@ -14,7 +15,7 @@ class UserPage extends Component {
 		this.state = { 
 			showEditModal: false, 
 			showDeleteModal: false,
-			data: null
+			data: {},  // data to modal
 		};
 
 		this.editProfile = this.editProfile.bind( this );
@@ -79,6 +80,7 @@ class UserPage extends Component {
 				resolve( idUser );
 			
 			} else {
+
 				reject('no se ejecuto ninguna acción');
 			}
 
@@ -88,8 +90,9 @@ class UserPage extends Component {
 
 	setSearch( values, actions ) {
 
-		console.log( values.search );
 		actions.setSubmitting( false );
+
+		console.log( values.search );
 	}
 
 	setData() {
@@ -182,36 +185,5 @@ class UserPage extends Component {
 		);
 	}
 }
-
-const PaginationComponent = () => {
-
-	const setPagination = () => {
-
-		let active = 1;
-		let items = [];
-
-		for ( let number = 1; number <= 5; number++ ) {
-			items.push(
-				<Pagination.Item 
-					key={ number }
-					active={ number === active }
-				>
-					{ number }
-				</Pagination.Item>
-			);
-		}
-
-		return items;
-	};
-
-	return (
-
-		<Pagination>
-			<Pagination.Prev />
-				{ setPagination() }
-			<Pagination.Next />
-		</Pagination>
-	);
-};
 
 export default UserPage;

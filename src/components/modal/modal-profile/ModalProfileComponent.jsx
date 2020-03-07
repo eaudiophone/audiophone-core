@@ -4,9 +4,7 @@ import FormProfileComponent from './../../form/profile-form/FormProfileComponent
 import ProfileSchema from './ModalProfileSchema';
 import { Formik } from 'formik';
 
-const EditProfileModal = ( props ) => {
-
-	const user = props.user;
+const EditProfileModal = ({ user, editUser, showModal }) => {
 
 	const handleClose = async ( values, actions ) => {
 
@@ -15,7 +13,7 @@ const EditProfileModal = ( props ) => {
 		}
 
 		// Promises
-		props.editUser( values )
+		editUser( values )
 			.then( ( data ) => console.log( data ))
 			.catch( ( error ) => console.log( error ));
 	};
@@ -23,7 +21,7 @@ const EditProfileModal = ( props ) => {
 	return (
 		
 		<Modal 
-			show={ props.showModal } 
+			show={ showModal } 
 			onHide={ () => handleClose( null, null ) }
 			size="lg"
 		>
@@ -53,7 +51,7 @@ const FormEdit = ( props ) => {
 
 	return (
 		
-		<Form onSubmit={ handleSubmit }>
+		<Form onSubmit={ handleSubmit } noValidate>
 			<Modal.Header closeButton>
 				<Modal.Title>Editar usuario:</Modal.Title>
 			</Modal.Header>
@@ -98,7 +96,6 @@ const FormEdit = ( props ) => {
 							label="Usuario"
 							onChange={ handleChange }
 							checked={ user }
-							isInvalid={ !!errors.role }
 						/>
 						<Form.Check 
 							type="radio"
@@ -108,7 +105,6 @@ const FormEdit = ( props ) => {
 							label="Administrador"
 							onChange={ handleChange }
 							checked={ admin }
-							isInvalid={ !!errors.role }
 						/>
 					</div>	
 				</Form-Group>
@@ -134,14 +130,12 @@ const FormEdit = ( props ) => {
 	);
 };
 
-const DeleteProfileModal = ( props ) => {
-
-	const id = props.id;
+const DeleteProfileModal = ({ id, showModal, deleteUser }) => {
 
 	const handleClose = async ( confirm ) => {
 
 		// Promises
-		props.deleteUser( confirm, id )
+		deleteUser( confirm, id )
 			.then( ( data ) => console.log( 'Eliminacion exitosa', data ) )
 			.catch( ( error ) => console.log( error )  );
 	};
@@ -149,7 +143,7 @@ const DeleteProfileModal = ( props ) => {
 	return (
 		
 		<Modal 
-			show={ props.showModal } 
+			show={ showModal } 
 			onHide={ () => handleClose( false ) }
 		>
 			
