@@ -1,19 +1,24 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const ModalComponent = ( props ) => {
+const ModalComponent = ( { showModal, idEvent, deleteModal } ) => {
 
-	const handleClose = () => props.closeModal(); 
-  
+	const handleClose = async ( confirm ) => {
+
+    deleteModal( confirm, idEvent )
+     .then( ( data ) => console.log( data ) )
+     .catch( ( error ) => console.log( error ) ); 
+  } 
+
 	return (
 		
     <Modal 
-      show={ props.showModal } 
-      onHide={ handleClose }
+      show={ showModal } 
+      onHide={ () => handleClose( false ) }
     >
       
     		<Modal.Header closeButton>
-        	<Modal.Title>Confirmar:</Modal.Title>
+        	<Modal.Title>Evento { idEvent }:</Modal.Title>
       	</Modal.Header>
 
       	<Modal.Body>¿Desea cancelar el evento?</Modal.Body>
@@ -23,16 +28,16 @@ const ModalComponent = ( props ) => {
         	<Button 
         		variant="secondary"
         		type="reset" 
-        		onClick={ handleClose }
+        		onClick={ () => handleClose( false ) }
         	>
-          	Close
+          	Cancelar
         	</Button>
         	<Button 
         		variant="primary" 
         		type="submit"
-        		onClick={ handleClose }
+        		onClick={ () => handleClose( true ) }
         	>
-          	Save Changes
+          	Confirmar
         	</Button>
 
       	</Modal.Footer>
