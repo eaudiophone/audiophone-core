@@ -56,22 +56,34 @@ class UserPage extends Component {
 
 	editProfile( user ) {
 
-		if ( user !== null ) {
-			console.log( user );
-		}
+		return new Promise( ( resolve, reject ) => {
 
-		// cierra el modal
-		this.setState({ showEditModal: false });
+			if ( user !== null ) {
+				
+				resolve( user );
+			
+			} else {
+
+				reject( 'no se ejecuto ninguna accion' );
+			}
+
+			this.setState({ showEditModal: false });
+		});
 	}
 
 	deleteUser( confirm, idUser ) {
 
-		if ( confirm ) {
-			console.log( 'Eliminación exitosa id: ', idUser );
-		}
+		return new Promise( ( resolve, reject ) => {
+ 
+			if ( confirm ) {
+				resolve( idUser );
+			
+			} else {
+				reject('no se ejecuto ninguna acción');
+			}
 
-		// cierra el modal
-		this.setState({ showDeleteModal: false });
+			this.setState({ showDeleteModal: false });
+		});
 	}
 
 	setSearch( values, actions ) {
@@ -82,7 +94,7 @@ class UserPage extends Component {
 
 	setData() {
 
-		let arrayUsers = USERS.data.filter( ( user ) => user.state === true );
+		let arrayUsers = USERS.data.filter( ( user ) => user.state );
 
 		return arrayUsers.map( ( user ) => (
 

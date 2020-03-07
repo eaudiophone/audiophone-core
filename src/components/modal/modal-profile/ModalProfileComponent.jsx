@@ -1,40 +1,38 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import FormProfileComponent from './../../form/profile-form/FormProfileComponent';
-import ProfileSchema from './../../../components/form/profile-form/ProfileSchema';
+import ProfileSchema from './ModalProfileSchema';
 import { Formik } from 'formik';
 
 const EditProfileModal = ( props ) => {
 
 	const user = props.user;
 
-	const getForm = async ( values, actions ) => {
+	const handleClose = async ( values, actions ) => {
 
-		const validator = new ProfileSchema();
+		if ( actions !== null ) {
+			actions.setSubmitting( false );
+		}
 
-		console.log('aqui');
-
-		console.log( await validator.testData( values ) );
-
-		actions.setSubmitting( false );
+		// Promises
+		props.editUser( values )
+			.then( ( data ) => console.log( data ))
+			.catch( ( error ) => console.log( error ));
 	};
-
-	const handleClose = () => {
-	
-		props.editUser( null );
-};
 
 	return (
 		
 		<Modal 
 			show={ props.showModal } 
-			onHide={ () => handleClose() }
+			onHide={ () => handleClose( null, null ) }
 			size="lg"
 		>
 			<Formik 
 				initialValues={ user }
 				component={ FormEdit }
-				onSubmit={ getForm }
+				onSubmit={ handleClose }
+				validationSchema={ new ProfileSchema().getSchema() }
+				validateOnChange={ false }
 			/>
 		</Modal>
 	);	
@@ -140,7 +138,13 @@ const DeleteProfileModal = ( props ) => {
 
 	const id = props.id;
 
-	const handleClose = ( confirm ) => props.deleteUser( confirm, id );
+	const handleClose = async ( confirm ) => {
+
+		// Promises
+		props.deleteUser( confirm, id )
+			.then( ( data ) => console.log( 'Eliminacion exitosa', data ) )
+			.catch( ( error ) => console.log( error )  );
+	};
 
 	return (
 		
