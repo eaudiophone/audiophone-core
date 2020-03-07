@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
-import ModalComponent from './../modal/ModalComponent';
 import './CardComponent.css';
 
 // react Hooks
 const CardComponent = ( props ) => {
 
 	const [ redirect, setRedirect ] = useState( false );
-	const [ show, showModal ] = useState( false )
 
 	const redirectTo = () => {
 
@@ -30,7 +28,7 @@ const CardComponent = ( props ) => {
 				<h5 className="card-title">{ props.meeting.title }</h5>
 				<i 
 					className="fas fa-times pointer" 
-					onClick={ () => showModal( true ) }>
+					onClick={ () => props.showModal( props.meeting.id ) }>
 				</i>
 			</Col>
 
@@ -106,8 +104,6 @@ const CardComponent = ( props ) => {
 		    	{ CardBody() }
 		    </Card.Body>
 		  </Card>
-
-		  <ModalComponent showModal={ show } closeModal={ () => showModal( false ) } />
 
 		</div>
 	);

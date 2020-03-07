@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import CardComponent from './../../components/card/CardComponent';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
+import ModalEventComponent from '../../components/modal/modal-events/ModalEventsComponent';
 
 class IndexEventPage extends Component {
 
@@ -14,9 +15,17 @@ class IndexEventPage extends Component {
 
 		super( props );
 
+		this.state = { 
+			showModal: false, 
+			idEvent: 0 
+		}
+
 		// crea referencias para nodos HTML
 		this.rental = React.createRef();
 		this.record = React.createRef();
+
+		this.showModal = this.showModal.bind( this );
+		this.deleteEvent = this.deleteEvent.bind( this );
 	}
 
 	componentDidMount() {
@@ -73,7 +82,11 @@ class IndexEventPage extends Component {
 				<Row>
 					{ 	
 						events.map( ( element ) => (
-							<CardComponent meeting={ element } color="#fbf096" key={ element.id }/>
+							<CardComponent 
+								meeting={ element } 
+								color="#fbf096" key={ element.id }
+								showModal={ ( id ) => this.showModal( id ) }
+							/>
 						)) 
 				}
 				</Row>
@@ -90,7 +103,11 @@ class IndexEventPage extends Component {
 				<Row>
 					{ 	
 						events.map( ( element ) => (
-							<CardComponent meeting={ element } color="#c7e5ec" key={ element.id }/>
+							<CardComponent 
+								meeting={ element } 
+								color="#c7e5ec" key={ element.id }
+								showModal={ ( id ) => this.showModal( id ) }
+							/>
 						)) 
 				}
 				</Row>
@@ -113,6 +130,24 @@ class IndexEventPage extends Component {
 		}
 	}
 
+	deleteEvent( confirm, id ) {
+
+		return new Promise( ( resolve, reject ) => {
+
+			if ( confirm ) {
+				resolve({ confirm, id });
+			} else {
+				reject('no se realiza ninguna acción');
+			}
+
+			this.setState({ showModal: false });
+		});
+	}
+
+	showModal( id ) {
+		this.setState({ showModal: true, idEvent: id });
+	}
+
 	render() {
 		return (
 			
@@ -124,6 +159,11 @@ class IndexEventPage extends Component {
 				<div ref={ this.rental }>
 					{ this.showMeetings('rental') }
 				</div>
+				<ModalEventComponent 
+					showModal={ this.state.showModal }
+					idEvent={ this.state.idEvent }
+					deleteModal={ ( confirm, id ) => this.deleteEvent( confirm, id ) }
+				/>
 			</div>
 		);
 	}

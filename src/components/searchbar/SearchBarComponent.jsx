@@ -1,7 +1,8 @@
 import React from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap';
- 
-const SearchBarComponent = ({ handleChange, handleSubmit, values, errors }) => {
+// import { object, string } from 'yup';
+
+const SearchBar = ({ handleChange, handleSubmit, values, errors }) => {
 
 	return (
 
@@ -31,4 +32,6 @@ const SearchBarComponent = ({ handleChange, handleSubmit, values, errors }) => {
 	);
 };
 
-export default SearchBarComponent;
+export default {
+	SearchBar,
+}

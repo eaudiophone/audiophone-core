@@ -169,7 +169,7 @@ class UserPage extends Component {
 
 				<div className="mt-4">
 					<Formik 
-						component={ SearchBarComponent } 
+						component={ SearchBarComponent.SearchBarComponent } 
 						onSubmit={ this.setSearch }
 						initialValues={ { search: '' } }
 					/>
