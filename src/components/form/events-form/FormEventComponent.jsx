@@ -159,7 +159,7 @@ const InputDate = ({ title, name, value, change, columnSize, error }) => (
   </Col>
 );
 
-  const InputHour = ({ title, name, value, change, columnSize, error }) => (
+const InputHour = ({ title, name, value, change, columnSize, error }) => (
     
   <Col sm={ columnSize }>
    <Form.Group>
