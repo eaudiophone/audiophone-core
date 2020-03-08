@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Formik } from 'formik';
 import 'bootstrap/js/dist/tab'; 
+import FormTermsComponent from '../../components/form/terms-form/FormsTermsComponent';
+import TermsSchema from '../../components/form/terms-form/TermsSchema';
+import Terms from '../../models/TermsModels';
 
 class DayPage extends Component {
 
@@ -57,7 +60,13 @@ class DayPage extends Component {
 				id="nav-records"
 				aria-labelledby="record-tab"
 			>
-				tab-records
+				<Formik 
+					component={ FormTermsComponent.FormTermsRecords }
+					validateOnChange={ false }
+					onSubmit={ this.getDataForm }
+					validationSchema={ new TermsSchema().getSchema() }
+					initialValues={ new Terms() }
+				/>
 			</div>
 		);
 	}
@@ -74,6 +83,11 @@ class DayPage extends Component {
 				tab-rental
 			</div>
 		);
+	}
+
+	getDataForm( values, actions ) {
+		console.log( values );
+		actions.setSubmitting( false );
 	}
 
 	render() {

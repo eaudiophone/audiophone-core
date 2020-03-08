@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Button } from 'react-booststrap';
+import { Form, Col, Button } from 'react-bootstrap';
 
 const FormTermsRecords = ( props ) => {
 
@@ -13,15 +13,15 @@ const FormTermsRecords = ( props ) => {
 
 	return (
 
-		<Form noValidate onSubmit={ handleSubmit }>
+		<Form noValidate className="m-3" onSubmit={ handleSubmit }>
 			<Form.Row>
 				<InputNumber 
 					columnSize={ 6 }
-					title="Cantdad de citas por semana:"
+					title="Cantidad de citas por semana:"
 					name="quantityMeetingWeekly"
 					value={ values.quantityMeetingWeekly }
 					error={ errors.quantityMeetingWeekly }
-					onChange={ handleChange }
+					change={ handleChange }
 				/>
 				<InputNumber 
 					columnSize={ 6 }
@@ -29,8 +29,32 @@ const FormTermsRecords = ( props ) => {
 					name="quantityMeetingMonthly"
 					value={ values.quantityMeetingMonthly }
 					error={ errors.quantityMeetingMonthly }
-					onChange={ handleChange }
+					change={ handleChange }
 				/>
+        <InputSelect 
+          columnSize={ 12 }
+          title="Rango de citas"
+          name="daysMeeting"
+          value={ values.daysMeeting }
+          error={ errors.daysMeeting }
+          change={ handleChange }
+        />
+        <InputHour 
+          columnSize={ 6 }
+          title="Hora de inicio"
+          name="beginTime"
+          value={ values.beginTime }
+          error={ errors.beginTime }
+          change={ handleChange }
+        />
+        <InputHour 
+          columnSize={ 6 }
+          title="Hora final"
+          name="finalHour"
+          value={ values.finalHour }
+          error={ errors.finalHour }
+          change={ handleChange }
+        />
 			</Form.Row>
 			<Buttons reset={ handleReset } />
 		</Form>
