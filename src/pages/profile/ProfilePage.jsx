@@ -32,7 +32,7 @@ class ProfilePage extends Component {
     				href="#nav-profile" 
     				role="tab" 
     				aria-controls="nav-profile" 
-    				aria-selected="false"
+    				aria-selected="true"
     			>
     				Perfil de usuario
     			</Nav.Link>
