@@ -80,7 +80,13 @@ class DayPage extends Component {
 				id="nav-rental"
 				aria-labelledby="rental-tab"
 			>
-				tab-rental
+				<Formik 
+					component={ FormTermsComponent.FormTermsRental }
+					validateOnChange={ false }
+					onSubmit={ this.getDataForm }
+					validationSchema={ new TermsSchema().getSchema() }
+					initialValues={ new Terms() }
+				/>
 			</div>
 		);
 	}

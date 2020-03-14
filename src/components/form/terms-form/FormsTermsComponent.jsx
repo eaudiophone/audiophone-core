@@ -1,6 +1,65 @@
 import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 
+const FormTermsRental = ( props ) => {
+
+  const {
+    handleSubmit,
+    handleChange,
+    handleReset,
+    values,
+    errors,
+  } = props;
+
+  return (
+    <Form noValidate className="m-3" onSubmit={ handleSubmit }>
+      <Form.Row>
+        <InputNumber 
+          columnSize={ 6 }
+          title="Cantidad de alquiler por semana:"
+          name="quantityMeetingWeekly"
+          value={ values.quantityMeetingWeekly }
+          error={ errors.quantityMeetingWeekly }
+          change={ handleChange }
+        />
+        <InputNumber 
+          columnSize={ 6 }
+          title="Cantidad de alquileres al mes:"
+          name="quantityMeetingMonthly"
+          value={ values.quantityMeetingMonthly }
+          error={ errors.quantityMeetingMonthly }
+          change={ handleChange }
+        />
+         <InputSelect 
+          columnSize={ 12 }
+          title="Rango de citas"
+          name="daysMeeting"
+          value={ values.daysMeeting }
+          error={ errors.daysMeeting }
+          change={ handleChange }
+        />
+        <InputHour 
+          columnSize={ 6 }
+          title="Hora de inicio:"
+          name="beginTime"
+          value={ values.beginTime }
+          error={ errors.beginTime }
+          change={ handleChange }
+        />
+        <InputHour 
+          columnSize={ 6 }
+          title="Hora de culminación:"
+          name="finalHour"
+          value={ values.finalHour }
+          error={ errors.finalHour }
+          change={ handleChange }
+        />
+      </Form.Row>
+      <Buttons reset={ handleReset } />
+    </Form>
+  );
+}
+
 const FormTermsRecords = ( props ) => {
 
 	const {
@@ -17,7 +76,7 @@ const FormTermsRecords = ( props ) => {
 			<Form.Row>
 				<InputNumber 
 					columnSize={ 6 }
-					title="Cantidad de citas por semana:"
+					title="Cantidad de grabaciones por semana:"
 					name="quantityMeetingWeekly"
 					value={ values.quantityMeetingWeekly }
 					error={ errors.quantityMeetingWeekly }
@@ -25,7 +84,7 @@ const FormTermsRecords = ( props ) => {
 				/>
 				<InputNumber 
 					columnSize={ 6 }
-					title="Cantidad de citas al mes:"
+					title="Cantidad de grabaciones al mes:"
 					name="quantityMeetingMonthly"
 					value={ values.quantityMeetingMonthly }
 					error={ errors.quantityMeetingMonthly }
@@ -153,5 +212,6 @@ const Buttons = ({ reset }) => (
 );
 
 export default {
-	FormTermsRecords
+	FormTermsRecords,
+  FormTermsRental
 };
