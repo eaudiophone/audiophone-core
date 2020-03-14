@@ -45,7 +45,9 @@ class TermsSchema {
 				.required( this.validationMessages.mixed.required ),
 
 			beginTime: mixed()
-				.required( this.validationMessages.mixed.required )
+				.required( this.validationMessages.mixed.required ),
+
+			daysWeek: mixed()
 		});
 	}
 

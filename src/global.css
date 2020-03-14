@@ -9,3 +9,7 @@
 .point {
 	cursor: pointer;
 }
+
+.form-check > label {
+	margin-left: 10px;
+}

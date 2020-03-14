@@ -1,17 +1,10 @@
 import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 
-const FormTermsRental = ( props ) => {
-
-  const {
-    handleSubmit,
-    handleChange,
-    handleReset,
-    values,
-    errors,
-  } = props;
+const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, errors, }) => {
 
   return (
+
     <Form noValidate className="m-3" onSubmit={ handleSubmit }>
       <Form.Row>
         <InputNumber 
@@ -38,6 +31,30 @@ const FormTermsRental = ( props ) => {
           error={ errors.daysMeeting }
           change={ handleChange }
         />
+         { values.daysMeeting === 'range' && 
+
+          <CheckboxDays 
+            columnSize={ 6 }
+            title="días de semana"
+            name="daysWeek"
+            value={ values.daysWeek }
+            change={ handleChange } 
+            start={ 0 }
+            limit={ 3 }
+          />  
+        }
+        { values.daysMeeting === 'range' &&  
+
+          <CheckboxDays 
+            columnSize={ 6 }
+            title="días de semana"
+            name="daysWeek"
+            value={ values.daysWeek }
+            change={ handleChange } 
+            start={ 4 }
+            limit={ 6 }
+          />
+        }
         <InputHour 
           columnSize={ 6 }
           title="Hora de inicio:"
@@ -60,15 +77,7 @@ const FormTermsRental = ( props ) => {
   );
 }
 
-const FormTermsRecords = ( props ) => {
-
-	const {
-		handleSubmit,
-		handleChange,
-		handleReset,
-		values,
-		errors,
-	} = props;
+const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, errors, }) => {
 
 	return (
 
@@ -98,6 +107,30 @@ const FormTermsRecords = ( props ) => {
           error={ errors.daysMeeting }
           change={ handleChange }
         />
+        { values.daysMeeting === 'range' && 
+
+          <CheckboxDays 
+            columnSize={ 6 }
+            title="días de semana"
+            name="daysWeek"
+            value={ values.daysWeek }
+            change={ handleChange } 
+            start={ 0 }
+            limit={ 3 }
+          />  
+        }
+        { values.daysMeeting === 'range' &&  
+
+          <CheckboxDays 
+            columnSize={ 6 }
+            title="días de semana"
+            name="daysWeek"
+            value={ values.daysWeek }
+            change={ handleChange } 
+            start={ 4 }
+            limit={ 6 }
+          />
+        }
         <InputHour 
           columnSize={ 6 }
           title="Hora de inicio"
@@ -182,6 +215,49 @@ const InputHour = ({ title, name, value, change, columnSize, error }) => (
    </Form.Group>
   </Col>
 );
+
+const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) => {
+
+  const DAYSWEEK = [
+   'lunes', 
+   'martes', 
+   'miercoles', 
+   'jueves',
+   'viernes',
+   'sábado',
+   'domingo'
+  ];
+
+  const renderWeek = () => {
+
+    let checks = [];
+
+    for ( let i = start; i <= limit; i++ ) {
+      
+      checks.push(
+        
+        <Form.Check
+          key={ i } 
+          name={ name }
+          label={ DAYSWEEK[i] }
+          type="checkbox"
+          value={ DAYSWEEK[i] }
+          onChange={ change }
+          id={ DAYSWEEK[i] }
+        />
+      );            
+    }
+
+    return checks;
+  } 
+
+  return (
+
+    <Col sm={ columnSize } className="mb-2">
+      { renderWeek() }
+    </Col>
+  );
+}
 
 const Buttons = ({ reset }) => (
   
