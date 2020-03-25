@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-const RedirectService = ( props ) => ( <Redirect to={ props.route } /> );
+const RedirectService = ({ route }) => ( <Redirect to={ route } /> );
 
 export default RedirectService;

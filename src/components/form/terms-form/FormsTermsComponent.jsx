@@ -9,7 +9,7 @@ const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, erro
       <Form.Row>
         <InputNumber 
           columnSize={ 6 }
-          title="Cantidad de alquiler por semana:"
+          title="Cantidad de alquileres por semana:"
           name="quantityMeetingWeekly"
           value={ values.quantityMeetingWeekly }
           error={ errors.quantityMeetingWeekly }

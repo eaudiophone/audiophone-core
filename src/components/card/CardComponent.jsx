@@ -3,8 +3,20 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 import './CardComponent.css';
 
-// react Hooks
 const CardComponent = ( props ) => {
+
+	const {
+		icon,
+		id,
+		title,
+		date,
+		totalHours,
+		startingTime,
+		finalHour,
+		description,
+	} = props.meeting;
+
+	const { color } = props;
 
 	const [ redirect, setRedirect ] = useState( false );
 
@@ -12,7 +24,7 @@ const CardComponent = ( props ) => {
 
 		if ( redirect ) {
 			return ( 
-				<RedirectService route={ `/home/event/${ props.meeting.id }` } /> 
+				<RedirectService route={ `/home/event/${ id }` } /> 
 			);
 		}
 	};
@@ -24,11 +36,11 @@ const CardComponent = ( props ) => {
 				sm={ 12 } 
 				className="d-flex justify-content-between flex-row mt-1"
 			>
-				<i className={ props.meeting.icon }></i>
-				<h5 className="card-title">{ props.meeting.title }</h5>
+				<i className={ icon }></i>
+				<h5 className="card-title">{ title }</h5>
 				<i 
 					className="fas fa-times pointer" 
-					onClick={ () => props.showModal( props.meeting.id ) }>
+					onClick={ () => props.showModal( id ) }>
 				</i>
 			</Col>
 
@@ -46,7 +58,7 @@ const CardComponent = ( props ) => {
 					</label>
 
 					<label className="card-subtitle mb-2 text-muted text-left pt-2">
-		        { props.meeting.date }
+		        { date }
 		      </label>
 							
 				</Row>
@@ -54,7 +66,7 @@ const CardComponent = ( props ) => {
 				<Row className="pt-2 d-flex justify-content-center">
 			     <h6>
 			        <i className="mr-1 fas fa-clock"></i>
-			        Total: { props.meeting.totalHours } horas
+			        Total: { totalHours } horas
 			    </h6>        
 		   	</Row> 
 
@@ -63,20 +75,20 @@ const CardComponent = ( props ) => {
 					<h5>
 			      <span className="badge badge-secondary">
 			          <i className="mr-1 fas fa-clock"></i>
-			          Inicio: { props.meeting.startingTime }
+			          Inicio: { startingTime }
 			       </span>
 			    </h5>
 
 			    <h5>
 			        <span className="badge badge-secondary">
 			            <i className="mr-1 fas fa-clock"></i>
-			            Cierre: { props.meeting.finalHour }
+			            Cierre: { finalHour }
 			        </span>
 			    </h5> 
 		    </Row>
 
 		    <Row className=" pt-2 text-justify">
-		        <p>{ props.meeting.description }</p>       
+		        <p>{ description }</p>       
 		    </Row>
 		    
 		    <Row className="d-flex justify-content-center pt-2">
@@ -93,18 +105,15 @@ const CardComponent = ( props ) => {
 	return (
 
 		<div className="col-sm-6 mb-3">
-		  
 		  { redirectTo() }
-
 		  <Card>
-		  	<Card.Header style={{ backgroundColor: props.color }}>
-		  		{ CardHeader() }
+		  	<Card.Header style={{ backgroundColor: color }}>
+		  		<CardHeader/>
 		  	</Card.Header>
 		    <Card.Body>
-		    	{ CardBody() }
+		    	<CardBody />
 		    </Card.Body>
 		  </Card>
-
 		</div>
 	);
 };

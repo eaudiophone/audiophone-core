@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Col, Button } from "react-bootstrap";
 
-const FormProfileComponent = props => {
+const FormProfileComponent = ( props ) => {
+  
   const { handleSubmit, handleChange, handleReset, values, errors } = props;
 
   return (
@@ -38,7 +39,8 @@ const FormProfileComponent = props => {
   );
 };
 
-const FormPassword = props => {
+const FormPassword = ( props ) => {
+
   const { title, value, change, name, error } = props.data;
 
   return (
@@ -57,7 +59,8 @@ const FormPassword = props => {
   );
 };
 
-const FormInput = props => {
+const FormInput = ( props ) => {
+
   const { title, value, change, name, error } = props.data;
 
   return (
@@ -96,7 +99,8 @@ const FormInputDate = ( props ) => {
   );
 };
 
-const FormButtons = props => {
+const FormButtons = ( props )  => {
+
   const reset = props.data.reset;
 
   return (

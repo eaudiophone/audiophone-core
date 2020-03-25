@@ -1,18 +1,17 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import FormProfileComponent from './../../form/profile-form/FormProfileComponent';
+import FormProfileComponent from '../../form/profile-form/FormProfileComponent';
 import ProfileSchema from './ModalProfileSchema';
 import { Formik } from 'formik';
 
 const EditProfileModal = ({ user, editUser, showModal }) => {
 
-	const handleClose = async ( values, actions ) => {
+	const handleClose = ( values, actions ) => {
 
 		if ( actions !== null ) {
 			actions.setSubmitting( false );
 		}
-
-		// Promises
+		
 		editUser( values )
 			.then( ( data ) => console.log( data ))
 			.catch( ( error ) => console.log( error ));
