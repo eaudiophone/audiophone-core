@@ -6,42 +6,34 @@ const FormProfileComponent = ( props ) => {
   const { handleSubmit, handleChange, handleReset, values, errors } = props;
 
   return (
-    <Form className="form" onSubmit={handleSubmit} noValidate>
+    <Form className="form" onSubmit={ handleSubmit } noValidate>
       <FormInput
-        data={{
-          title: "Nombre:",
-          name: "name",
-          value: values.name,
-          error: errors.name,
-          change: handleChange
-        }}
+        title="Nombre:"
+        name="name"
+        value={ values.name }
+        change={ handleChange }
+        error={ errors.name }
       />
       <FormInput
-        data={{
-          title: "Email:",
-          name: "email",
-          value: values.email,
-          error: errors.email,
-          change: handleChange
-        }}
+        title="Email:"
+        name="email"
+        value={ values.email }
+        error={ errors.email }
+        change={ handleChange }
       />
       <FormPassword
-        data={{
-          title: "Contraseña:",
-          name: "password",
-          value: values.password,
-          error: errors.password,
-          change: handleChange
-        }}
+        title="Contraseña:"
+        name="password"
+        value={ values.password }
+        error={ errors.password }
+        change={ handleChange }
       />
-      <FormButtons data={{ reset: handleReset }} />
+      <FormButtons reset={ handleReset } />
     </Form>
   );
 };
 
-const FormPassword = ( props ) => {
-
-  const { title, value, change, name, error } = props.data;
+const FormPassword = ({ title, value, change, name, error }) => {
 
   return (
     <Form.Group>
@@ -59,9 +51,7 @@ const FormPassword = ( props ) => {
   );
 };
 
-const FormInput = ( props ) => {
-
-  const { title, value, change, name, error } = props.data;
+const FormInput = ({  title, value, change, name, error }) => {
 
   return (
     <Form.Group>
@@ -78,9 +68,8 @@ const FormInput = ( props ) => {
   );
 };
 
-const FormInputDate = ( props ) => {
-  const { title, value, change, name, error } = props.data;
-
+const FormInputDate = ({ title, value, change, name, error }) => {
+ 
   return (
     <Form.Group>
       <Form.Label className="form-label">{title}</Form.Label>
@@ -99,9 +88,7 @@ const FormInputDate = ( props ) => {
   );
 };
 
-const FormButtons = ( props )  => {
-
-  const reset = props.data.reset;
+const FormButtons = ({ reset })  => {
 
   return (
     <Form.Row className="mt-5">

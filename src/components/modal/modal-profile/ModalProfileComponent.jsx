@@ -57,31 +57,25 @@ const FormEdit = ( props ) => {
 
 			<Modal.Body>
 				<FormProfileComponent.FormInput 
-					data={{
-						title: 'Nombre',
-						name: 'name',
-						value: values.name,
-						error: errors.name,
-						change: handleChange
-					}}
+					title='Nombre'
+					name='name'
+					value={ values.name }
+					error={ errors.name }
+					change={ handleChange }
 				/>
 				<FormProfileComponent.FormInput 
-					data={{
-						title: 'Correo',
-						name: 'email',
-						value: values.email,
-						error: errors.email,
-						change: handleChange
-					}}
+					title='Correo'
+					name='email'
+					value={ values.email }
+					error={ errors.email }
+					change={ handleChange }
 				/>
 				<FormProfileComponent.FormInputDate 
-					data={{
-						title: "Fecha de registro:",
-						name: "registrationDate",
-						value: values.registrationDate,
-						error: errors.registrationDate,
-						change: handleChange
-					}}
+					title="Fecha de registro:"
+					name="registrationDate"
+					value={ values.registrationDate }
+					error={ errors.registrationDate }
+					change={ handleChange }
 				/>	
 	
 				<Form-Group>

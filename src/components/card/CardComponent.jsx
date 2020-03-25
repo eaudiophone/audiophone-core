@@ -52,7 +52,6 @@ const CardComponent = ( props ) => {
 		<div className="container-fluid">
 					
 				<Row className="d-flex justify-content-between">
-
 					<label className="card-subtitle mb-2 text-muted text-left pt-2">
 						Fecha del evento:
 					</label>
@@ -60,7 +59,6 @@ const CardComponent = ( props ) => {
 					<label className="card-subtitle mb-2 text-muted text-left pt-2">
 		        { date }
 		      </label>
-							
 				</Row>
 
 				<Row className="pt-2 d-flex justify-content-center">
@@ -71,14 +69,12 @@ const CardComponent = ( props ) => {
 		   	</Row> 
 
 				<Row className="d-flex justify-content-between pt-2">
-
 					<h5>
 			      <span className="badge badge-secondary">
 			          <i className="mr-1 fas fa-clock"></i>
 			          Inicio: { startingTime }
 			       </span>
 			    </h5>
-
 			    <h5>
 			        <span className="badge badge-secondary">
 			            <i className="mr-1 fas fa-clock"></i>
@@ -99,13 +95,16 @@ const CardComponent = ( props ) => {
 		          Ver detalles
 		      </Button>  
 		    </Row>
+
 			</div>
 	);
 
 	return (
 
 		<div className="col-sm-6 mb-3">
+		  
 		  { redirectTo() }
+
 		  <Card>
 		  	<Card.Header style={{ backgroundColor: color }}>
 		  		<CardHeader/>
@@ -114,6 +113,7 @@ const CardComponent = ( props ) => {
 		    	<CardBody />
 		    </Card.Body>
 		  </Card>
+
 		</div>
 	);
 };

@@ -6,12 +6,12 @@ import EventSchema from './../../components/form/events-form/EventSchema';
 
 class EditEventPage extends Component {
 
-	getUrl() {
+	getId() {
 		return parseInt( this.props.match.params.id );
 	}
 
 	getEvent() {
-		return MEETINGS.find( ( element ) => element.id === this.getUrl() );
+		return MEETINGS.find( ( element ) => element.id === this.getId() );
 	}
 
 	getData( values, actions ) {
