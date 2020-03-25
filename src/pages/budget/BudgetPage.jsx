@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ModalBudgetComponent from './../../components/modal/modal-budget/ModalBudgetComponent';
+
 import { Button } from 'react-bootstrap';
 
 class BudgetPage extends Component {
@@ -8,6 +10,7 @@ class BudgetPage extends Component {
 		super( props );
 		this.state = { showModal: false };
 		this.addItem = this.addItem.bind( this );
+		this.handleClose = this.handleClose.bind( this );
 	}
 
 	addItem() {
@@ -35,10 +38,15 @@ class BudgetPage extends Component {
 		);
 	}
 
+	handleClose() {
+		this.setState({ showModal: false });
+	}
+
 	render() {
 
 		return (
 			<div>
+				<ModalBudgetComponent showModal={ this.state.showModal } closeModal={ this.handleClose } />
 				{ this.getHeader() }
 			</div>
 		);

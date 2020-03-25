@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useFormik } from 'Formik';
+import React from 'react';
+import { useFormik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import FormBudgetComponent from  '../../form/budget-form/FormBudgetComponent';
 
-const ModalBudgetComponent = ({ showModal }) => {
+const ModalBudgetComponent = ({ showModal, closeModal }) => {
 
 	const FormNewItem = () => {
 
@@ -23,15 +23,10 @@ const ModalBudgetComponent = ({ showModal }) => {
 					actions.setSubmitting( false );
 				}
 
-
+				console.log( values );
+				closeModal();
 			},
-
-			onChange: ( $event ) => {
-				console.log( event );
-			}
 		});
-
-		console.log( formik );
 
 		return (
 			
@@ -42,7 +37,8 @@ const ModalBudgetComponent = ({ showModal }) => {
 				</Modal.Header>
 
 				<Modal.Body>
-					
+					<Form.Row>
+
 					<FormBudgetComponent.InputText 
 						change={ formik.handleChange }
 						name="item"
@@ -55,7 +51,7 @@ const ModalBudgetComponent = ({ showModal }) => {
 					<FormBudgetComponent.InputTextArea 
 						columnSize={ 12 }
 						name="description"
-						error={ formik.errors,item }
+						error={ formik.errors.description }
 						value={ formik.values.description }
 						title="Descripcion del articulo"
 						change={ formik.handleChange }
@@ -87,8 +83,25 @@ const ModalBudgetComponent = ({ showModal }) => {
 						title="Cantidad del articulo:"
 						change={ formik.handleChange }
 					/>
+					</Form.Row>
 
 				</Modal.Body>
+
+				<Modal.Footer>
+		    	<Button 
+		    		variant="secondary"
+		    		type="reset" 
+		    		onClick={ formik.handleReset }
+		    	>
+		      	Cerrar
+		    	</Button>
+		    	<Button 
+		    		variant="primary" 
+		    		type="submit"
+		    	>
+		      	Actualizar
+		    	</Button>
+		  	</Modal.Footer>
 
 			</Form>
 		);
@@ -96,12 +109,10 @@ const ModalBudgetComponent = ({ showModal }) => {
 
 	return (
 		
-		<Modal show={ showModal }>
+		<Modal show={ showModal } onHide={ closeModal } size="lg">
 			<FormNewItem />
 		</Modal>
 	);
 };
-
-
 
 export default ModalBudgetComponent;
