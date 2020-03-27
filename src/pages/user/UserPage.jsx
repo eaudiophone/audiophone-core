@@ -15,10 +15,10 @@ class UserPage extends Component {
 		this.state = { 
 			showEditModal: false, 
 			showDeleteModal: false,
-			data: {},  // data to modal
+			data: {},  // user
 		};
 
-		this.editProfile = this.editProfile.bind( this );
+		this.editUser = this.editUser.bind( this );
 		this.deleteUser = this.deleteUser.bind( this );
 		this.showModal = this.showModal.bind( this );
 	}
@@ -55,37 +55,25 @@ class UserPage extends Component {
 		);
 	}
 
-	editProfile( user ) {
+	editUser( user ) {
 
-		return new Promise( ( resolve, reject ) => {
+		if ( user !== null ) {
+			console.log( user );
+		}
 
-			if ( user !== null ) {
-				
-				resolve( user );
-			
-			} else {
-
-				reject( 'no se ejecuto ninguna accion' );
-			}
-
-			this.setState({ showEditModal: false });
-		});
+		this.setState({ showEditModal: false });
 	}
 
 	deleteUser( confirm, idUser ) {
 
-		return new Promise( ( resolve, reject ) => {
- 
-			if ( confirm ) {
-				resolve( idUser );
-			
-			} else {
-
-				reject('no se ejecuto ninguna acción');
-			}
-
-			this.setState({ showDeleteModal: false });
-		});
+		if ( confirm ) {
+			console.log( idUser );
+		
+		} else {
+			console.log('no se ejecuta ninguna acción');
+		}
+		
+		this.setState({ showDeleteModal: false });
 	}
 
 	setSearch( values, actions ) {
@@ -161,7 +149,7 @@ class UserPage extends Component {
 
 				<ModalProfileComponent.EditProfileModal 
 					showModal={ this.state.showEditModal }
-					editUser={ ( user ) => this.editProfile( user ) }
+					editUser={ ( user ) => this.editUser( user ) }
 					user={ this.state.data }
 				/>
 

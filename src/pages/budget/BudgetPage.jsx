@@ -38,15 +38,22 @@ class BudgetPage extends Component {
 		);
 	}
 
-	handleClose() {
+	handleClose( data ) {
 		this.setState({ showModal: false });
+		
+		if ( data !== null ) {
+			console.log( data );
+		}
 	}
 
 	render() {
 
 		return (
 			<div>
-				<ModalBudgetComponent showModal={ this.state.showModal } closeModal={ this.handleClose } />
+				<ModalBudgetComponent 
+					showModal={ this.state.showModal } 
+					closeModal={ ( data ) => this.handleClose( data ) } 
+				/>
 				{ this.getHeader() }
 			</div>
 		);

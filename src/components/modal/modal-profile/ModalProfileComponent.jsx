@@ -4,36 +4,30 @@ import FormProfileComponent from '../../form/profile-form/FormProfileComponent';
 import ProfileSchema from './ModalProfileSchema';
 import { Formik } from 'formik';
 
-const EditProfileModal = ({ user, editUser, showModal }) => {
+const EditProfileModal = ({ user, editUser, showModal }) => (
+	
+	<Modal 
+		show={ showModal } 
+		onHide={ () => editUser( null ) }
+		size="lg"
+	>
+		<Formik 
+			initialValues={ user }
+			component={ FormEdit }
+			validationSchema={ new ProfileSchema().getSchema() }
+			validateOnChange={ false }
 
-	const handleClose = ( values, actions ) => {
-
-		if ( actions !== null ) {
-			actions.setSubmitting( false );
-		}
-		
-		editUser( values )
-			.then( ( data ) => console.log( data ))
-			.catch( ( error ) => console.log( error ));
-	};
-
-	return (
-		
-		<Modal 
-			show={ showModal } 
-			onHide={ () => handleClose( null, null ) }
-			size="lg"
-		>
-			<Formik 
-				initialValues={ user }
-				component={ FormEdit }
-				onSubmit={ handleClose }
-				validationSchema={ new ProfileSchema().getSchema() }
-				validateOnChange={ false }
-			/>
-		</Modal>
-	);	
-}
+			onSubmit={ ( values, actions ) => {
+					
+				if ( actions !== null ) {
+					actions.setSubmitting( false );
+				}
+	
+				editUser( values || null );
+			} }
+		/>
+	</Modal>
+);
 
 const FormEdit = ( props ) => {
 
@@ -123,50 +117,40 @@ const FormEdit = ( props ) => {
 	);
 };
 
-const DeleteProfileModal = ({ id, showModal, deleteUser }) => {
-
-	const handleClose = async ( confirm ) => {
-
-		// Promises
-		deleteUser( confirm, id )
-			.then( ( data ) => console.log( 'Eliminacion exitosa', data ) )
-			.catch( ( error ) => console.log( error )  );
-	};
-
-	return (
+const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
+	
+	<Modal 
+		show={ showModal } 
+		onHide={ () => deleteUser( false ) }
+	>
 		
-		<Modal 
-			show={ showModal } 
-			onHide={ () => handleClose( false ) }
-		>
-			
-			<Modal.Header closeButton>
-				<Modal.Title>Eliminar usuario { id }:</Modal.Title>
-			</Modal.Header>
+		<Modal.Header closeButton>
+			<Modal.Title>Eliminar usuario { id }:</Modal.Title>
+		</Modal.Header>
 
-			<Modal.Body>
-				¿Desea remover el acceso a este usuario?
-			</Modal.Body>
+		<Modal.Body>
+			¿Desea remover el acceso a este usuario?
+		</Modal.Body>
 
-			<Modal.Footer>
+		<Modal.Footer>
+    	<Button 
+	    		variant="secondary"
+	    		type="reset" 
+	    		onClick={ () => deleteUser( false ) }
+	    	>
+	      	Cerrar
+	    	</Button>
 	    	<Button 
-		    		variant="secondary"
-		    		type="reset" 
-		    		onClick={ () => handleClose( false ) }
-		    	>
-		      	Cerrar
-		    	</Button>
-		    	<Button 
-		    		variant="primary" 
-		    		type="submit"
-		    		onClick={ () => handleClose( true ) }
-		    	>
-		      	Confirmar
-		    	</Button>
-	  	</Modal.Footer>
-		</Modal>
-	);
-}
+	    		variant="primary" 
+	    		type="submit"
+	    		onClick={ () => deleteUser( true, id ) }
+	    	>
+	      	Confirmar
+	    	</Button>
+  	</Modal.Footer>
+	</Modal>		
+);
+
 
 export default { 
 	EditProfileModal, 
