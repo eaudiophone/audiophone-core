@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ModalBudgetComponent from './../../components/modal/modal-budget/ModalBudgetComponent';
-
 import { Button } from 'react-bootstrap';
 
 class BudgetPage extends Component {
@@ -9,11 +8,11 @@ class BudgetPage extends Component {
 
 		super( props );
 		this.state = { showModal: false };
-		this.addItem = this.addItem.bind( this );
-		this.handleClose = this.handleClose.bind( this );
+		this.showModalItem = this.showModalItem.bind( this );
+		this.closeModalItem = this.closeModalItem.bind( this );
 	}
 
-	addItem() {
+	showModalItem() {
 		this.setState({ showModal: true });
 	}
 
@@ -28,7 +27,7 @@ class BudgetPage extends Component {
 					className="mb-2 mb-md-0"
 					variant="primary" 
 					size="sm"
-					onClick={ () => this.addItem() }
+					onClick={ () => this.showModalItem() }
 				>
 					<i className="mr-2 fas fa-plus"></i>
 					Nuevo articulo
@@ -38,7 +37,8 @@ class BudgetPage extends Component {
 		);
 	}
 
-	handleClose( data ) {
+	closeModalItem( data ) {
+		
 		this.setState({ showModal: false });
 		
 		if ( data !== null ) {
@@ -52,7 +52,7 @@ class BudgetPage extends Component {
 			<div>
 				<ModalBudgetComponent 
 					showModal={ this.state.showModal } 
-					closeModal={ ( data ) => this.handleClose( data ) } 
+					closeModal={ ( data ) => this.closeModalItem( data ) } 
 				/>
 				{ this.getHeader() }
 			</div>
