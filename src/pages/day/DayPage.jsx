@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Formik } from 'formik';
-import 'bootstrap/js/dist/tab'; 
 import FormTermsComponent from '../../components/form/terms-form/FormsTermsComponent';
 import TermsSchema from '../../components/form/terms-form/TermsSchema';
 import Terms from '../../models/TermsModels';

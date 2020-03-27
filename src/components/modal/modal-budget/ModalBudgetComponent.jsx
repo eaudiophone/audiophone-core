@@ -12,6 +12,7 @@ const ModalBudgetComponent = ({ showModal, closeModal }) => (
 			component={ FormNewItem }
 			initialValues={ new ItemModel() }
 			validationSchema={ new FormItemSchema().getSchema() }
+			validateOnChange={ false }
 			
 			onSubmit={ ( values, actions ) => {
 
@@ -21,7 +22,7 @@ const ModalBudgetComponent = ({ showModal, closeModal }) => (
 
 				closeModal( values || null );
 
-			} }
+			}}
 		/>
 	</Modal>
 );

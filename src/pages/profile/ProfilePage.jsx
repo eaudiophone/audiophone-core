@@ -26,7 +26,7 @@ class ProfilePage extends Component {
 			<Nav variant="tabs" defaultActiveKey="#nav-profile">
 				<Nav.Item>
 					<Nav.Link 
-					className="nav-item nav-link" 
+						className="nav-item nav-link" 
     				id="nav-profile-tab" 
     				data-toggle="tab" 
     				href="#nav-profile" 
