@@ -55,7 +55,7 @@ class DayPage extends Component {
 
 		return (
 			<div 
-				className="tab-pane fade show active"
+				className="tab-pane show active"
 				id="nav-records"
 				aria-labelledby="record-tab"
 			>
@@ -75,7 +75,7 @@ class DayPage extends Component {
 		return (
 
 			<div 
-				className="tab-pane fade"
+				className="tab-pane"
 				id="nav-rental"
 				aria-labelledby="rental-tab"
 			>

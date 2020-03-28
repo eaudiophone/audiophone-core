@@ -9,20 +9,18 @@ class BudgetPage extends Component {
 
 		super( props );
 
+		// state: No confiar en el state utilizar para obtener datos
 		this.state = { 
 			showModal: false,
-			items: [] 
+			items: JSON.parse( localStorage.getItem('items') ) || [],
 		};
 
 		// DOM References
-		this.button = null;
+		this.newItemButton = null;
+		this.totalButton = null;
 
 		this.showModalItem = this.showModalItem.bind( this );
 		this.closeModalItem = this.closeModalItem.bind( this );
-	}
-
-	setRef( element ) {
-		this.button = element;
 	}
 
 	checkItems() {
@@ -30,8 +28,8 @@ class BudgetPage extends Component {
 		if ( this.state.items.length > 0 ) {
 
 			return this.state.items.map( ( element, index ) => (
-					<BudgetRentalComponent item={ element }  key={ index } />
-				));
+				<BudgetRentalComponent item={ element }  key={ index } />
+			));
 
 		} else {
 
@@ -49,23 +47,28 @@ class BudgetPage extends Component {
 	}
 
 	closeModalItem( data ) {
-		
-		this.setState({ showModal: false });
-		
+			
 		if ( data !== null ) {
 
 			// crea una copia del array que es usado para mantener la inmutabilidad
 			const items = this.state.items.slice();
 			items.push( data );
+
+			localStorage.setItem('items', JSON.stringify( items ));
 			
 			this.setState({ items: items });
 		}
 
-		console.log( this.state.items );
+		this.setState({ showModal: false });
 	}
 
 	changeTab( number ) {
-		this.button.hidden = number === 1 ? false : true;
+
+		if ( this.totalButton !== null ) {
+			this.totalButton.hidden = number === 1 ? false : true;
+		}
+
+		this.newItemButton.hidden = number === 1 ? false : true;
 	}
 
 	getHeader() {
@@ -80,7 +83,7 @@ class BudgetPage extends Component {
 					variant="primary" 
 					size="sm"
 					onClick={ () => this.showModalItem() }
-					ref={ ( element ) => 	this.setRef( element ) }
+					ref={ ( element ) => 	this.newItemButton = element }
 				>
 					<i className="mr-2 fas fa-plus"></i>
 					Nuevo articulo
@@ -129,7 +132,7 @@ class BudgetPage extends Component {
 
 		return (
 			<div 
-				className="tab-pane fade show active"
+				className="tab-pane show active"
 				id="nav-rental"
 				aria-labelledby="rental-tab"
 			>
@@ -142,7 +145,7 @@ class BudgetPage extends Component {
 
 		return (
 			<div 
-				className="tab-pane fade"
+				className="tab-pane"
 				id="nav-record"
 				aria-labelledby="record-tab"
 			>
@@ -152,7 +155,15 @@ class BudgetPage extends Component {
 	}	
 
 	getTotalBudget() {
-		console.log('fino');
+		
+		let sum = 0;
+		let array = JSON.parse( localStorage.getItem('items') );
+
+		array.forEach(( element ) => {
+			sum += parseInt( element.itemMount );
+		});
+
+		console.log( sum );
 	}
 
 	render() {
@@ -179,6 +190,7 @@ class BudgetPage extends Component {
 						<Button 
 							variant="success"
 							onClick={ () => this.getTotalBudget() }
+							ref={ ( element ) => this.totalButton = element }
 						>Obtener total presupuesto</Button>
 					</div>
 				}

@@ -23,7 +23,9 @@ class BudgetRentalContent extends Component {
 		let name = $event.target.name;
 		let value = $event.target.value;
 
-		this.setState({ [name]: value });
+		if ( value > 0 ) {
+			this.setState({ [name]: value });
+		}
 	}
 
 	calculateItem() {
@@ -31,6 +33,41 @@ class BudgetRentalContent extends Component {
 		this.setState( ( state ) => {
 			return { itemMount: state.costUnit * state.itemQuantity };
 		});
+
+		const itemBudget = {
+			...this.item,
+			costUnit: this.state.costUnit,
+			itemQuantity: this.state.itemQuantity,
+			itemMount: this.state.costUnit * this.state.itemQuantity
+		};
+
+		this.setLocalStorage( itemBudget );
+	}
+
+	setLocalStorage( itemBudget ) {
+
+		let arrayLocalStorage = JSON.parse( localStorage.getItem('items') ) || [];
+
+		if ( arrayLocalStorage.length > 0 ) {
+
+			let found = arrayLocalStorage.find( ( element ) => element.item === itemBudget.item );
+
+			if ( found ) {
+
+				let index = arrayLocalStorage.indexOf( found );
+				arrayLocalStorage[index] = itemBudget;
+
+			} else {
+
+				arrayLocalStorage.push( itemBudget );
+			}
+
+		} else {
+
+			arrayLocalStorage.push( itemBudget );
+		}
+		
+		localStorage.setItem('items', JSON.stringify( arrayLocalStorage ));
 	}
 
 	render() {
@@ -52,6 +89,7 @@ class BudgetRentalContent extends Component {
 							onChange={ this.handleChange }
 							value={ this.state.costUnit }
 							name="costUnit"
+							min="0"
 						/>
 					</Col>
 
@@ -62,6 +100,7 @@ class BudgetRentalContent extends Component {
 							onChange={ this.handleChange }
 							value={ this.state.itemQuantity }
 							name="itemQuantity"
+							min="0"
 						/>
 					</Col>
 

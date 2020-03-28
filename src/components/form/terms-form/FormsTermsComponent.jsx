@@ -25,7 +25,7 @@ const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, erro
         />
          <InputSelect 
           columnSize={ 12 }
-          title="Rango de citas"
+          title="Rango de citas:"
           name="daysMeeting"
           value={ values.daysMeeting }
           error={ errors.daysMeeting }
@@ -77,81 +77,76 @@ const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, erro
   );
 }
 
-const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, errors, }) => {
+const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, errors, }) => (
 
-	return (
+	<Form noValidate className="m-3" onSubmit={ handleSubmit }>
+		<Form.Row>
+			<InputNumber 
+				columnSize={ 6 }
+				title="Cantidad de grabaciones por semana:"
+				name="quantityMeetingWeekly"
+				value={ values.quantityMeetingWeekly }
+				error={ errors.quantityMeetingWeekly }
+				change={ handleChange }
+			/>
+			<InputNumber 
+				columnSize={ 6 }
+				title="Cantidad de grabaciones al mes:"
+				name="quantityMeetingMonthly"
+				value={ values.quantityMeetingMonthly }
+				error={ errors.quantityMeetingMonthly }
+				change={ handleChange }
+			/>
+      <InputSelect 
+        columnSize={ 12 }
+        title="Rango de citas"
+        name="daysMeeting"
+        value={ values.daysMeeting }
+        error={ errors.daysMeeting }
+        change={ handleChange }
+      />
+      { values.daysMeeting === 'range' && 
 
-		<Form noValidate className="m-3" onSubmit={ handleSubmit }>
-			<Form.Row>
-				<InputNumber 
-					columnSize={ 6 }
-					title="Cantidad de grabaciones por semana:"
-					name="quantityMeetingWeekly"
-					value={ values.quantityMeetingWeekly }
-					error={ errors.quantityMeetingWeekly }
-					change={ handleChange }
-				/>
-				<InputNumber 
-					columnSize={ 6 }
-					title="Cantidad de grabaciones al mes:"
-					name="quantityMeetingMonthly"
-					value={ values.quantityMeetingMonthly }
-					error={ errors.quantityMeetingMonthly }
-					change={ handleChange }
-				/>
-        <InputSelect 
-          columnSize={ 12 }
-          title="Rango de citas"
-          name="daysMeeting"
-          value={ values.daysMeeting }
-          error={ errors.daysMeeting }
-          change={ handleChange }
-        />
-        { values.daysMeeting === 'range' && 
-
-          <CheckboxDays 
-            columnSize={ 6 }
-            title="días de semana"
-            name="daysWeek"
-            value={ values.daysWeek }
-            change={ handleChange } 
-            start={ 0 }
-            limit={ 3 }
-          />  
-        }
-        { values.daysMeeting === 'range' &&  
-
-          <CheckboxDays 
-            columnSize={ 6 }
-            title="días de semana"
-            name="daysWeek"
-            value={ values.daysWeek }
-            change={ handleChange } 
-            start={ 4 }
-            limit={ 6 }
-          />
-        }
-        <InputHour 
+        <CheckboxDays 
           columnSize={ 6 }
-          title="Hora de inicio"
-          name="beginTime"
-          value={ values.beginTime }
-          error={ errors.beginTime }
-          change={ handleChange }
-        />
-        <InputHour 
+          name="daysWeek"
+          value={ values.daysWeek }
+          change={ handleChange } 
+          start={ 0 }
+          limit={ 3 }
+        />  
+      }
+      { values.daysMeeting === 'range' &&  
+
+        <CheckboxDays 
           columnSize={ 6 }
-          title="Hora final"
-          name="finalHour"
-          value={ values.finalHour }
-          error={ errors.finalHour }
-          change={ handleChange }
+          name="daysWeek"
+          value={ values.daysWeek }
+          change={ handleChange } 
+          start={ 4 }
+          limit={ 6 }
         />
-			</Form.Row>
-			<Buttons reset={ handleReset } />
-		</Form>
-	);
-};
+      }
+      <InputHour 
+        columnSize={ 6 }
+        title="Hora de inicio:"
+        name="beginTime"
+        value={ values.beginTime }
+        error={ errors.beginTime }
+        change={ handleChange }
+      />
+      <InputHour 
+        columnSize={ 6 }
+        title="Hora de culminación"
+        name="finalHour"
+        value={ values.finalHour }
+        error={ errors.finalHour }
+        change={ handleChange }
+      />
+		</Form.Row>
+		<Buttons reset={ handleReset } />
+	</Form>
+);
 
 const InputNumber = ({ columnSize, title, name, value, change, error }) => (
 
