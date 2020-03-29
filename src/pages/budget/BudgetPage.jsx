@@ -9,9 +9,9 @@ class BudgetPage extends Component {
 
 		super( props );
 
-		// state: No confiar en el state utilizar para obtener datos
 		this.state = { 
 			showModal: false,
+			item: null,  // edit item
 			items: JSON.parse( localStorage.getItem('items') ) || [],
 		};
 
@@ -28,7 +28,11 @@ class BudgetPage extends Component {
 		if ( this.state.items.length > 0 ) {
 
 			return this.state.items.map( ( element, index ) => (
-				<BudgetRentalComponent item={ element }  key={ index } />
+				<BudgetRentalComponent 
+					item={ element }  
+					key={ index } 
+					id={ index + 1 }
+				/>
 			));
 
 		} else {
@@ -160,7 +164,7 @@ class BudgetPage extends Component {
 		let array = JSON.parse( localStorage.getItem('items') );
 
 		array.forEach(( element ) => {
-			sum += parseInt( element.itemMount );
+			sum += Number( element.itemMount );
 		});
 
 		console.log( sum );
@@ -171,7 +175,7 @@ class BudgetPage extends Component {
 		return (
 			<div>
 
-				<ModalBudgetComponent 
+				<ModalBudgetComponent.ModalNewBudgetComponent 
 					showModal={ this.state.showModal } 
 					closeModal={ ( data ) => this.closeModalItem( data ) } 
 				/>

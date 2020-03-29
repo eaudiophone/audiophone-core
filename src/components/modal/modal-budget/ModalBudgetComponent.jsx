@@ -5,11 +5,11 @@ import FormBudgetComponent from  '../../form/budget-form/FormBudgetComponent';
 import ItemModel from '../../../models/ItemModels';
 import FormItemSchema from './../../form/budget-form/FormItemSchema';
 
-const ModalBudgetComponent = ({ showModal, closeModal }) => (
+const ModalNewBudgetComponent = ({ showModal, closeModal }) => (
 	
 	<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg">
 		<Formik 
-			component={ FormNewItem }
+			component={ FormItem }
 			initialValues={ new ItemModel() }
 			validationSchema={ new FormItemSchema().getSchema() }
 			validateOnChange={ false }
@@ -27,7 +27,7 @@ const ModalBudgetComponent = ({ showModal, closeModal }) => (
 	</Modal>
 );
 
-const FormNewItem = ( props ) => {
+const FormItem = ( props ) => {
 
 	const {
 		handleChange,
@@ -88,6 +88,34 @@ const FormNewItem = ( props ) => {
 
 		</Form>
 	);
-}
+};
 
-export default ModalBudgetComponent;
+const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => {
+
+	return (
+
+		<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg"> 
+			<Formik 
+				component={ FormItem }
+				initialValues={ item }
+				validationSchema={ new FormItemSchema().getSchema() }
+				validateOnChange={ false }
+				
+				onSubmit={ ( values, actions ) => {
+
+					if ( actions !== undefined ) {
+						actions.setSubmitting( false );
+					}
+
+					closeModal( values || null );
+
+				}}
+			/>
+		</Modal>	
+	)
+};
+
+export default {
+	ModalNewBudgetComponent,
+	ModalEditBudgetComponent
+};

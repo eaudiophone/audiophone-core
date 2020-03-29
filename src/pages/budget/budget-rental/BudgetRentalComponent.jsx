@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Col, Form, Row, Button } from 'react-bootstrap';
+import ModalBudgetComponent from './../../../components/modal/modal-budget/ModalBudgetComponent';
 
 class BudgetRentalContent extends Component {
 
 	constructor( props ) {
+		
 		super( props );
 
-		this.state = {	
+		this.state = {
+			id: props.id,
+			item: props.item || '',
+			description: props.description || '',
 			costUnit: 0,
 			itemQuantity: 0,
-			itemMount: 0
+			itemMount: 0,
+			showModal: false
 		};
 
 		this.item = props.item;
+		this.props = props;
 
 		this.calculateItem = this.calculateItem.bind( this );
 		this.handleChange = this.handleChange.bind( this );
@@ -35,9 +42,7 @@ class BudgetRentalContent extends Component {
 		});
 
 		const itemBudget = {
-			...this.item,
-			costUnit: this.state.costUnit,
-			itemQuantity: this.state.itemQuantity,
+			...this.state,
 			itemMount: this.state.costUnit * this.state.itemQuantity
 		};
 
@@ -70,15 +75,47 @@ class BudgetRentalContent extends Component {
 		localStorage.setItem('items', JSON.stringify( arrayLocalStorage ));
 	}
 
+	showModal( item ) {
+		this.setState({ showModal: true });
+	}
+
+	closeModal( data ) {
+		this.setState({ showModal: false });
+	}
+
 	render() {
 
 		return (
 
 			<div className="mt-4">
+
+				<ModalBudgetComponent.ModalEditBudgetComponent 
+						showModal={ this.state.showModal }
+						closeModal={ ( data ) => this.closeModal( data ) }
+						item={{
+							id: this.props.id,
+							item: this.item.item,
+							description: this.item.description
+						}}
+				/>
+
 				<Row>
 
 					<Col sm={ 12 }>
-						<h4>Nombre de articulo: { this.item.item }</h4>
+						<div className="w-100 d-flex flex-row justify-content-between">
+							<h4>{ this.props.id }.- Nombre de articulo: { this.item.item }</h4>
+							<Button 
+								variant="dark" 
+								size="sm"
+								onClick={ () => this.showModal({  
+									item: this.item.item,
+									description: this.item.description
+								}, this.props.id ) }
+							>	
+								<i className="fas fa-pen mr-2"></i>
+								Editar
+							</Button>
+						</div>
 						<p>{ this.item.description }</p>
 					</Col>
 
