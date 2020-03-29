@@ -10,8 +10,8 @@ class BudgetRentalContent extends Component {
 
 		this.state = {
 			id: props.id,
-			item: props.item || '',
-			description: props.description || '',
+			item: props.item.item || '',
+			description: props.item.description || '',
 			costUnit: 0,
 			itemQuantity: 0,
 			itemMount: 0,
@@ -23,6 +23,19 @@ class BudgetRentalContent extends Component {
 
 		this.calculateItem = this.calculateItem.bind( this );
 		this.handleChange = this.handleChange.bind( this );
+	}
+
+	componentDidMount() {
+
+		// asignación de ID
+		let arrayLocalStorage = JSON.parse( localStorage.getItem('items'));
+
+		let find = arrayLocalStorage.find( element => element.item === this.item.item );
+		find.id = this.props.id; 
+
+		arrayLocalStorage[ arrayLocalStorage.indexOf( find ) ] = find;
+
+		localStorage.setItem('items', JSON.stringify( arrayLocalStorage ))
 	}
 
 	handleChange( $event ) {
@@ -42,8 +55,12 @@ class BudgetRentalContent extends Component {
 		});
 
 		const itemBudget = {
-			...this.state,
-			itemMount: this.state.costUnit * this.state.itemQuantity
+			id: this.props.id,
+			itemQuantity: this.state.itemQuantity,
+			item: this.item.item,
+			description: this.item.description,
+			costUnit: this.state.costUnit,
+			itemMount: this.state.costUnit * this.state.itemQuantity,
 		};
 
 		this.setLocalStorage( itemBudget );
@@ -55,7 +72,9 @@ class BudgetRentalContent extends Component {
 
 		if ( arrayLocalStorage.length > 0 ) {
 
-			let found = arrayLocalStorage.find( ( element ) => element.item === itemBudget.item );
+			let found = arrayLocalStorage.find( ( element ) => element.id === itemBudget.id );
+
+			console.log( found );
 
 			if ( found ) {
 
@@ -80,6 +99,31 @@ class BudgetRentalContent extends Component {
 	}
 
 	closeModal( data ) {
+
+		if ( data !== null ) {
+
+			let cloneItem = {
+				...this.state,
+				item: data.item,
+				description: data.description
+			};
+
+			let arrayLocalStorage = JSON.parse( localStorage.getItem('items') );
+
+			let elementFound = arrayLocalStorage.find( element => element.id === data.id );
+			console.log( elementFound );
+
+			arrayLocalStorage[ arrayLocalStorage.indexOf( elementFound ) ] = cloneItem;
+
+			localStorage.setItem('items', JSON.stringify( arrayLocalStorage ));
+
+			return this.setState({ 
+				showModal: false, 
+				item: data.item,
+				description: data.description
+			});
+		}
+
 		this.setState({ showModal: false });
 	}
 
@@ -94,8 +138,8 @@ class BudgetRentalContent extends Component {
 						closeModal={ ( data ) => this.closeModal( data ) }
 						item={{
 							id: this.props.id,
-							item: this.item.item,
-							description: this.item.description
+							item: this.state.item,
+							description: this.state.description
 						}}
 				/>
 
@@ -103,7 +147,7 @@ class BudgetRentalContent extends Component {
 
 					<Col sm={ 12 }>
 						<div className="w-100 d-flex flex-row justify-content-between">
-							<h4>{ this.props.id }.- Nombre de articulo: { this.item.item }</h4>
+							<h4>{ this.props.id }.- Nombre de articulo: { this.state.item }</h4>
 							<Button 
 								variant="dark" 
 								size="sm"
@@ -116,7 +160,7 @@ class BudgetRentalContent extends Component {
 								Editar
 							</Button>
 						</div>
-						<p>{ this.item.description }</p>
+						<p>{ this.state.description }</p>
 					</Col>
 
 					<Col sm={ 6 }>

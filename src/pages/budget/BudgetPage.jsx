@@ -63,7 +63,9 @@ class BudgetPage extends Component {
 			this.setState({ items: items });
 		}
 
-		this.setState({ showModal: false });
+		this.setState({ 
+			showModal: false,
+		});
 	}
 
 	changeTab( number ) {
