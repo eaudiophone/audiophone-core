@@ -12,14 +12,11 @@ class BudgetRentalContent extends Component {
 			id: props.id,
 			item: props.item.item || '',
 			description: props.item.description || '',
-			costUnit: 0,
-			itemQuantity: 0,
-			itemMount: 0,
+			costUnit: props.item.costUnit || 0,
+			itemQuantity: props.item.itemQuantity || 0,
+			itemMount: props.item.itemMount || 0,
 			showModal: false
 		};
-
-		this.item = props.item;
-		this.props = props;
 
 		this.calculateItem = this.calculateItem.bind( this );
 		this.handleChange = this.handleChange.bind( this );
@@ -28,10 +25,11 @@ class BudgetRentalContent extends Component {
 	componentDidMount() {
 
 		// asignación de ID
+		
 		let arrayLocalStorage = JSON.parse( localStorage.getItem('items'));
 
-		let find = arrayLocalStorage.find( element => element.item === this.item.item );
-		find.id = this.props.id; 
+		let find = arrayLocalStorage.find( element => element.item === this.state.item );
+		find.id = this.state.id; 
 
 		arrayLocalStorage[ arrayLocalStorage.indexOf( find ) ] = find;
 
@@ -55,10 +53,10 @@ class BudgetRentalContent extends Component {
 		});
 
 		const itemBudget = {
-			id: this.props.id,
+			id: this.state.id,
 			itemQuantity: this.state.itemQuantity,
-			item: this.item.item,
-			description: this.item.description,
+			item: this.state.item,
+			description: this.state.description,
 			costUnit: this.state.costUnit,
 			itemMount: this.state.costUnit * this.state.itemQuantity,
 		};
@@ -137,7 +135,7 @@ class BudgetRentalContent extends Component {
 						showModal={ this.state.showModal }
 						closeModal={ ( data ) => this.closeModal( data ) }
 						item={{
-							id: this.props.id,
+							id: this.state.id,
 							item: this.state.item,
 							description: this.state.description
 						}}
@@ -147,14 +145,14 @@ class BudgetRentalContent extends Component {
 
 					<Col sm={ 12 }>
 						<div className="w-100 d-flex flex-row justify-content-between">
-							<h4>{ this.props.id }.- Nombre de articulo: { this.state.item }</h4>
+							<h4>{ this.state.id }.- Nombre de articulo: { this.state.item }</h4>
 							<Button 
 								variant="dark" 
 								size="sm"
 								onClick={ () => this.showModal({  
-									item: this.item.item,
-									description: this.item.description
-								}, this.props.id ) }
+									item: this.state.item,
+									description: this.state.description
+								}, this.state.id ) }
 							>	
 								<i className="fas fa-pen mr-2"></i>
 								Editar
