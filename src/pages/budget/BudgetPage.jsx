@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ModalBudgetComponent from './../../components/modal/modal-budget/ModalBudgetComponent';
 import BudgetRentalComponent from './budget-rental/BudgetRentalComponent';
+import BudgetRecordComponent from './budget-record/BudgetRecordComponent';
 import { Button, Nav } from 'react-bootstrap';
 
 class BudgetPage extends Component {
@@ -172,7 +173,7 @@ class BudgetPage extends Component {
 				id="nav-record"
 				aria-labelledby="record-tab"
 			>
-				record-works
+				<BudgetRecordComponent />
 			</div>
 		);
 	}	

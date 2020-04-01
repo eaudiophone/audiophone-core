@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import { Image, Nav } from 'react-bootstrap';
-import { Formik } from 'formik'
+import { Formik } from 'formik';
 import ProfileSchema from '../../components/form/profile-form/ProfileSchema';
 import Profile from '../../models/ProfileModels';
 import './ProfilePage.css';
