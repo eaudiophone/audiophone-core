@@ -11,7 +11,6 @@ class BudgetPage extends Component {
 
 		this.state = { 
 			showModal: false,
-			item: null,  // edit item
 			items: JSON.parse( localStorage.getItem('items') ) || [],
 		};
 
@@ -29,9 +28,8 @@ class BudgetPage extends Component {
 
 			return this.state.items.map( ( element, index ) => (
 				<BudgetRentalComponent 
-					item={ element }  
+					item={{ ...element, id: index + 1 }}  
 					key={ index } 
-					id={ index + 1 }
 				/>
 			));
 
@@ -54,13 +52,15 @@ class BudgetPage extends Component {
 			
 		if ( data !== null ) {
 
-			// crea una copia del array que es usado para mantener la inmutabilidad
-			const items = this.state.items.slice();
-			items.push( data );
+			const arrayLocalStorage = JSON.parse( localStorage.getItem('items') ) || [];
+			arrayLocalStorage.push( data );
 
-			localStorage.setItem('items', JSON.stringify( items ));
+			localStorage.setItem('items', JSON.stringify( arrayLocalStorage ));
 			
-			this.setState({ items: items });
+			return this.setState({ 
+				items: arrayLocalStorage,
+				showModal: false
+			});
 		}
 
 		this.setState({ 
