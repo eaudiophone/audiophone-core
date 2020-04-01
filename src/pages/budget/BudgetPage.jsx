@@ -27,8 +27,9 @@ class BudgetPage extends Component {
 		if ( this.state.items.length > 0 ) {
 
 			return this.state.items.map( ( element, index ) => (
-				<BudgetRentalComponent 
-					item={{ ...element, id: index + 1 }}  
+				<BudgetRentalComponent
+					deleteItemPage={ ( newArray ) => this.deleteItemPage( newArray ) } 
+					item={ element }  
 					key={ index } 
 				/>
 			));
@@ -75,6 +76,22 @@ class BudgetPage extends Component {
 		}
 
 		this.newItemButton.hidden = number === 1 ? false : true;
+	}
+
+	getTotalBudget() {
+		
+		let sum = 0;
+		let arrayLocalStorage = JSON.parse( localStorage.getItem('items') );
+
+		arrayLocalStorage.forEach(( element ) => {
+			sum += element.itemMount;
+		});
+
+		console.log( sum );
+	}
+
+	deleteItemPage( newArray ) {
+		this.setState({ items: newArray });
 	}
 
 	getHeader() {
@@ -159,18 +176,6 @@ class BudgetPage extends Component {
 			</div>
 		);
 	}	
-
-	getTotalBudget() {
-		
-		let sum = 0;
-		let array = JSON.parse( localStorage.getItem('items') );
-
-		array.forEach(( element ) => {
-			sum += Number( element.itemMount );
-		});
-
-		console.log( sum );
-	}
 
 	render() {
 

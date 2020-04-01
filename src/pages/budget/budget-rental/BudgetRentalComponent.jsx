@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Form, Row, Button } from 'react-bootstrap';
+import { Col, Form, Row, Button, ButtonGroup } from 'react-bootstrap';
 import ModalBudgetComponent from './../../../components/modal/modal-budget/ModalBudgetComponent';
 
 class BudgetRentalContent extends Component {
@@ -13,37 +13,16 @@ class BudgetRentalContent extends Component {
 			showModal: false,
 		};
 
+		this.props = props;
+
 		this.calculateItem = this.calculateItem.bind( this );
 		this.handleChange = this.handleChange.bind( this );
-	}
-
-	componentDidMount() {
-
-		// asignación de ID
-		const arrayLocalStorage = JSON.parse( localStorage.getItem('items'));
-
-		// se mantiene la inmutabilidad
-		let newArray = arrayLocalStorage.map( ( element ) => {
-			
-			if ( element.item === this.state.item ) {
-
-				return {
-					...element,
-					id: this.state.id
-				};
-
-			} else {
-				return element;
-			}
-		});
-
-		localStorage.setItem('items', JSON.stringify( newArray ));
 	}
 
 	handleChange( $event ) {
 		
 		let name = $event.target.name;
-		let value = $event.target.value;
+		let value = Number( $event.target.value );
 
 		if ( value > 0 ) {
 			this.setState({ [name]: value });
@@ -119,6 +98,17 @@ class BudgetRentalContent extends Component {
 		this.setState({ showModal: false });
 	}
 
+	deleteItemLocal() {
+
+		const arrayLocalStorage = JSON.parse( localStorage.getItem('items') );
+
+		let newArray = arrayLocalStorage.filter( ( element ) => element.id !== this.state.id );
+
+		localStorage.setItem('items', JSON.stringify( newArray ));
+
+		this.props.deleteItemPage( newArray );
+	}
+
 	render() {
 
 		return (
@@ -139,15 +129,24 @@ class BudgetRentalContent extends Component {
 
 					<Col sm={ 12 }>
 						<div className="w-100 d-flex flex-row justify-content-between">
-							<h4>{ this.state.id }.- Nombre de articulo: { this.state.item }</h4>
-							<Button 
-								variant="dark" 
-								size="sm"
-								onClick={ () => this.showModal() }
-							>	
-								<i className="fas fa-pen mr-2"></i>
-								Editar
-							</Button>
+							<h4>Nombre de articulo: { this.state.item }</h4>
+							<ButtonGroup size="sm">
+								<Button 
+									variant="info" 
+									className="m-0"
+									onClick={ () => this.showModal() }
+								>	
+									<i className="fas fa-pen mr-2"></i>
+									Editar
+								</Button>
+								<Button 
+									variant="danger" 
+									onClick={ () => this.deleteItemLocal() }
+								>	
+									<i className="fas fa-trash mr-2"></i>
+									Eliminar
+								</Button>
+							</ButtonGroup>
 						</div>
 						<p>{ this.state.description }</p>
 					</Col>
@@ -188,7 +187,7 @@ class BudgetRentalContent extends Component {
 					<Col sm={ 12 } className="mt-3">
 						<Button 
 							onClick={ this.calculateItem }
-							variant="info"
+							variant="dark"
 						>Calcular SubTotal</Button>
 					</Col>
 

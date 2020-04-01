@@ -8,6 +8,9 @@ import FormItemSchema from './../../form/budget-form/FormItemSchema';
 const ModalNewBudgetComponent = ({ showModal, closeModal }) => (
 	
 	<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg">
+		<Modal.Header closeButton>
+			<Modal.Title>Nuevo Articulo</Modal.Title>
+		</Modal.Header>
 		<Formik 
 			component={ FormItem }
 			initialValues={ new ItemModel() }
@@ -19,7 +22,7 @@ const ModalNewBudgetComponent = ({ showModal, closeModal }) => (
 				if ( actions !== undefined ) {
 					actions.setSubmitting( false );
 				}
-
+				
 				closeModal( values || null );
 
 			}}
@@ -40,10 +43,6 @@ const FormItem = ( props ) => {
 	return (
 		
 		<Form onSubmit={ handleSubmit } noValidate>
-			
-			<Modal.Header closeButton>
-				<Modal.Title>Nuevo Articulo</Modal.Title>
-			</Modal.Header>
 
 			<Modal.Body>
 				<Form.Row>
@@ -90,30 +89,30 @@ const FormItem = ( props ) => {
 	);
 };
 
-const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => {
+const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => (
 
-	return (
+	<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg"> 
+		<Modal.Header closeButton>
+			<Modal.Title>Editar Articulo</Modal.Title>
+		</Modal.Header>
+		<Formik 
+			component={ FormItem }
+			initialValues={ item }
+			validationSchema={ new FormItemSchema().getSchema() }
+			validateOnChange={ false }
+			
+			onSubmit={ ( values, actions ) => {
 
-		<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg"> 
-			<Formik 
-				component={ FormItem }
-				initialValues={ item }
-				validationSchema={ new FormItemSchema().getSchema() }
-				validateOnChange={ false }
-				
-				onSubmit={ ( values, actions ) => {
+				if ( actions !== undefined ) {
+					actions.setSubmitting( false );
+				}
 
-					if ( actions !== undefined ) {
-						actions.setSubmitting( false );
-					}
+				closeModal( values || null );
 
-					closeModal( values || null );
-
-				}}
-			/>
-		</Modal>	
-	)
-};
+			}}
+		/>
+	</Modal>	
+);
 
 export default {
 	ModalNewBudgetComponent,

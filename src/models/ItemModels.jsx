@@ -8,7 +8,7 @@ class Item {
 		itemQuantity,
 		itemMount
 	) {
-		this.id = id || 0;
+		this.id = id || new Date().getTime();
 		this.item = item || '';
 		this.description = description || '';
 		this.costUnit = costUnit || 0;
