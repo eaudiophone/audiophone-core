@@ -24,7 +24,7 @@ class BudgetRentalContent extends Component {
 		let name = $event.target.name;
 		let value = Number( $event.target.value );
 
-		if ( value > 0 ) {
+		if ( value > 0 && Number.isInteger( value ) ) {
 			this.setState({ [name]: value });
 		}
 	}
