@@ -6,6 +6,7 @@ import RedirectService  from './../../services/RedirectService';
 import LoginSchema from './LoginSchema';
 import Login from './../../models/LoginModels';
 import './LoginPage.css';
+import BackendService from './../../services/BackendService';
 
 class LoginPage extends Component {
 
@@ -17,6 +18,7 @@ class LoginPage extends Component {
       redirect: false
 		};
 
+    this.backendService = new BackendService();
 		this.getFormData = this.getFormData.bind( this ); 
 	}
 
