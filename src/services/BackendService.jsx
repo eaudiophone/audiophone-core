@@ -1,28 +1,30 @@
 // aqui se realizan todas las peticiones al API:
-// import URL_SERVER from './../enviroment';
+import URL_SERVER from './../enviroment';
 import axios from 'axios';
 
 class BackendService {
 
-	getClient() {
+	getClient( url ) {
+		console.log( url );
 	}
 
-	postClient( request ) {
+	postClient( url, request ) {
 		console.log( request );
 	}
 
-	putClient() {
-
+	putClient( url, request, id ) {
+		console.log( request, id );
 	}
 
-	deleteClient() {
-
+	deleteClient( url, request, id ) {
+		console.log( request, id )
 	}
 
 	async testData() {
 
-		
 		// open whether map
+
+		console.log( URL_SERVER.enviroment );
 
 		const options = {
 			
