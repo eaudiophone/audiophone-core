@@ -7,9 +7,19 @@ import interactionPlugin from "@fullcalendar/interaction";
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/core/main.css';
 
+import ModalCalendarComponent from './../modal/modal-calendar/ModalCalendarComponent';
+
 import { MEETINGS } from '../../hardcode/MeetigsHardcode';
 
 class CalendarComponent extends Component {
+
+	constructor( props ) {
+		super( props );
+		this.state = { showModal: false };
+
+		this.handleClickDay = this.handleClickDay.bind( this );
+		this.handleClickEvent = this.handleClickEvent.bind( this );
+	}
 
 	getArrayEvents() {
 		
@@ -43,25 +53,32 @@ class CalendarComponent extends Component {
 
 	// javascript events fullcalendar
 	handleClickDay( $event ) {
-		console.log( $event );
+		this.setState({ showModal: true });
 	}
 
 	handleClickEvent( $event ) {
-		console.log( $event );
+		this.setState({ showModal: true });
 	}
 
 	render() {
 
 		return (
 
-			<FullCalendar 
-				defaultView="dayGridMonth" 
-				plugins={[ dayGridPlugin, interactionPlugin ]} 
-				events={ this.getArrayEvents() }
-				locale={ esLocale }
-				dateClick={ this.handleClickDay }
-				eventClick={ this.handleClickEvent }
-			/>
+			<div>
+				<FullCalendar 
+					defaultView="dayGridMonth" 
+					plugins={[ dayGridPlugin, interactionPlugin ]} 
+					events={ this.getArrayEvents() }
+					locale={ esLocale }
+					dateClick={ this.handleClickDay }
+					eventClick={ this.handleClickEvent }
+				/>
+				<ModalCalendarComponent 
+					showModal={ this.state.showModal }
+					closeModal={ () => this.setState({ showModal: false }) }
+				/>
+			</div>
+
 		);
 	}
 }
