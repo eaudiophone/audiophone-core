@@ -8,15 +8,15 @@ class BackendService {
 		console.log( url );
 	}
 
-	postClient( url, request ) {
+	postClient( request ) {
 		console.log( request );
 	}
 
-	putClient( url, request, id ) {
+	putClient( request, id ) {
 		console.log( request, id );
 	}
 
-	deleteClient( url, request, id ) {
+	deleteClient( request, id ) {
 		console.log( request, id )
 	}
 

@@ -46,7 +46,7 @@ class LoginPage extends Component {
     		<Form.Group>
     			<Form.Label>email:</Form.Label>
     			<Form.Control
-            name="email"
+            name="audiophoneusers_email"
             type="email"
             value={ value }  
     				onChange={ handleChange }
@@ -66,7 +66,7 @@ class LoginPage extends Component {
   		<Form.Group>
         <Form.Label>password:</Form.Label>
   			<Form.Control
-          name="password"
+          name="audiophoneusers_password"
   				type="password"
           onChange={ handleChange }
           value={ value } 
@@ -159,18 +159,17 @@ class LoginPage extends Component {
                       Sign In
                     </h3>
 
-                    { this.getEmailInput( values.email, handleChange, errors.email ) }
-                    { this.getPasswordInput( values.password, handleChange, errors.password ) }
+                    { this.getEmailInput( values.audiophoneusers_email, handleChange, errors.audiophoneusers_email ) }
+                    { this.getPasswordInput( values.audiophoneusers_password, handleChange, errors.audiophoneusers_password ) }
                     { this.getCheckboxInput( values.remember, handleChange ) }
                     { this.getButtons( handleReset ) }
                     { this.getRegister() }
 
-                <p className="mt-3 mb-3 text-muted text-center">
-                    &copy; Audiophone 2018
-                </p>
+                    <p className="mt-3 mb-3 text-muted text-center">
+                      &copy; Audiophone 2018
+                    </p>
                       
-            </Form>
-                 
+                   </Form>
               )}
             </Formik>
 

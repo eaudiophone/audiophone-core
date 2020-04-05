@@ -34,8 +34,8 @@ class IndexEventsAdminPage extends Component {
 					ref={ ( element ) => this.info = element }
 					hidden={ true }
 				>
-					Este es el calendario de evento del administrador puedes observar las
-					solicitudes que realizan los clientes y acceptar o rechazar el evento.
+					Este es el calendario de eventos del administrador puedes observar las
+					solicitudes que realizan los clientes y acceptar, posponer o rechazar el evento.
 				</p>
 				<CalendarComponent />
 			</div>

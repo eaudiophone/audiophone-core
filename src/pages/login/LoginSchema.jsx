@@ -19,11 +19,11 @@ class LoginSchema {
 
 		this.schema = object().shape({
 
-			email: string()
+			audiophoneusers_email: string()
 				.required( this.validationMessages.string.required )
 				.email( this.validationMessages.string.email ),
 
-			password: string()
+			audiophoneusers_password: string()
 				.required( this.validationMessages.string.required )
 				.min( 8, this.validationMessages.string.min( 8 ) )
 		});

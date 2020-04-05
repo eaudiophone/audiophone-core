@@ -21,13 +21,7 @@ class RegisterPage extends Component {
 		
 		actions.setSubmitting( false );
 		
-		const data = {
-			audiophoneusers_fullname: values.name,
-			audiophoneusers_email: values.email,
-			audiophoneusers_password: values.password
-		};
-		
-		console.log( data );
+		console.log( values );
 
 		alert( 'usuario registrado' );
 

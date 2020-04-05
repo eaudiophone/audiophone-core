@@ -1,10 +1,14 @@
 class Profile {
 
-	constructor( name, email, password ) {
+	constructor( 
+		audiophoneusers_fullname, 
+		audiophoneusers_email, 
+		audiophoneusers_password 
+	) {
 
-		this.name = name || '';
-		this.email = email || '';
-		this.password = password || '';
+		this.audiophoneusers_fullname = audiophoneusers_fullname || '';
+		this.audiophoneusers_email = audiophoneusers_fullname || '';
+		this.audiophoneusers_password = audiophoneusers_password || '';
 	}
 }
 

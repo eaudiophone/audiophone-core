@@ -2,29 +2,26 @@ import BackendService from './BackendService';
 
 class AuthService {
 
-	constructor() {
-		this.backendService = new BackendService();
-	}
+	backendService = new BackendService();
 
 	logIn( login, rememberMe ) {
 
 		if ( rememberMe ) { 		
-			localStorage.setItem( 'email', login.email ); 
+			
+			localStorage.setItem( 'email', login.audiophoneusers_email ); 
+
 		} else {
+
 			localStorage.removeItem( 'email' );
+			
 		}
 
 		let request = {
-			audiophoneusers_email: login.email,
-			audiophoneusers_password: login.password
+			audiophoneusers_email: login.audiophoneusers_email,
+			audiophoneusers_password: login.audiophoneusers_password
 		}
 
 		this.backendService.postClient( request );
-		
-		// here petition http to api
-		// ---------------------------------------------------
-		// console.log( 'datos enviados al servidor: ', login );
-		// -----------------------------------------------------
 	}
 
 	logOut() {

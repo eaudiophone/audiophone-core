@@ -6,6 +6,9 @@ import { Button, Nav } from 'react-bootstrap';
 
 class BudgetPage extends Component {
 
+	newItemButton = null;	
+	totalButton =  null;
+
 	constructor( props ) {
 
 		super( props );
@@ -14,10 +17,6 @@ class BudgetPage extends Component {
 			showModal: false,
 			items: JSON.parse( localStorage.getItem('items') ) || [],
 		};
-
-		// DOM References
-		this.newItemButton = null;
-		this.totalButton = null;
 
 		this.showModalItem = this.showModalItem.bind( this );
 		this.closeModalItem = this.closeModalItem.bind( this );

@@ -1,8 +1,8 @@
 class Login {
 
-	constructor( email ) {
-		this.email = email || '';
-		this.password = '';
+	constructor( audiophoneusers_email ) {
+		this.audiophoneusers_email = audiophoneusers_email || '';
+		this.audiophoneusers_password = '';
 		this.remember = false;
 	}
 }
