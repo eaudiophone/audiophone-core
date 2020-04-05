@@ -4,6 +4,7 @@ import UserPage from './../pages/user/UserPage';
 import DayPage from './../pages/day/DayPage';
 import BudgetPage from './../pages/budget/BudgetPage';
 import ProfilePage from './../pages/profile/ProfilePage';
+import EventsAdminPage from './../pages/events-admin/IndexEventsAdminPage';
 
 const getInfo = () => ( <h2>Info works</h2> );
 
@@ -15,6 +16,7 @@ const AdminRoutes = () => (
 		<Route path="/home/budget" component={ BudgetPage } />
 		<Route path="/home/info" component={ getInfo } />
 		<Route path="/home/profile" component={ ProfilePage } />
+		<Route path="/home/events-admin" component={ EventsAdminPage }/>
 	</Switch>
 ); 
 

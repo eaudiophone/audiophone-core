@@ -9,7 +9,6 @@ class NavbarComponent extends Component {
 		if ( this.props.role === 'ADMIN_ROLE' ) {
 
 			return (
-
 				<NavDropdown title="Gestion">
 					<NavDropdown.Item href="/home/budget">Presupuesto</NavDropdown.Item>
 	        <NavDropdown.Item href="/home/day">Dias de servicios</NavDropdown.Item>
@@ -36,6 +35,10 @@ class NavbarComponent extends Component {
 			id="responsive-navbar-nav"
 		>
 			<Nav className="w-100 justify-content-end">
+
+				{ this.props.role === 'ADMIN_ROLE' &&  
+					<Nav.Link href="/home/events-admin">Eventos</Nav.Link>
+				}
 				{ this.validateProfile() }
 				<Nav.Link href="/home/profile">Perfil</Nav.Link>
 				<Nav.Link href="/">Salir</Nav.Link>

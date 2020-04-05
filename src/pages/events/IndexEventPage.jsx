@@ -11,6 +11,9 @@ import ModalEventComponent from '../../components/modal/modal-events/ModalEvents
 
 class IndexEventPage extends Component {
 
+	rental = null;
+	record = null;
+
 	constructor( props ) {
 
 		super( props );
@@ -19,10 +22,6 @@ class IndexEventPage extends Component {
 			showModal: false, 
 			idEvent: 0 
 		}
-
-		// crea referencias para nodos HTML
-		this.rental = React.createRef();
-		this.record = React.createRef();
 
 		this.showModal = this.showModal.bind( this );
 		this.deleteEvent = this.deleteEvent.bind( this );
@@ -118,16 +117,8 @@ class IndexEventPage extends Component {
 
 	changeView( view ) {
 
-		if ( view === 'record' ) {
-
-			this.record.current.style.display = 'block';
-			this.rental.current.style.display = 'none';
-	
-		} else {
-
-			this.record.current.style.display = 'none';
-			this.rental.current.style.display = 'block';
-		}
+		this.record.hidden = view === 'record' ? false : true;
+		this.rental.hidden = view === 'record' ? true : false;
 	}
 
 	deleteEvent( confirm, id ) {
@@ -153,10 +144,10 @@ class IndexEventPage extends Component {
 			
 			<div>
 				{ this.getHeader() }
-				<div ref={ this.record }>
+				<div ref={ ( element ) => this.record = element }>
 					{ this.showMeetings('record') }
 				</div>
-				<div ref={ this.rental }>
+				<div ref={ ( element ) => this.rental = element }>
 					{ this.showMeetings('rental') }
 				</div>
 				<ModalEventComponent 

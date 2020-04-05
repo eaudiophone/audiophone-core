@@ -240,7 +240,7 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
           onChange={ change }
           id={ DAYSWEEK[i] }
         />
-      );            
+      );          
     }
 
     return checks;
