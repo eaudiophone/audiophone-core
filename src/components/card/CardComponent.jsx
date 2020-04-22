@@ -24,7 +24,7 @@ const CardComponent = ( props ) => {
 
 		if ( redirect ) {
 			return ( 
-				<RedirectService route={ `/home/event/${ id }` } /> 
+				<RedirectService route={ `/event/${ id }` } /> 
 			);
 		}
 	};

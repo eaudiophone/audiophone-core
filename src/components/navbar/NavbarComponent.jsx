@@ -11,8 +11,8 @@ class NavbarComponent extends Component {
 			return (
 				<NavDropdown title="Gestion">
 					<NavDropdown.Item href="/home/budget">Presupuesto</NavDropdown.Item>
-	        <NavDropdown.Item href="/home/day">Dias de servicios</NavDropdown.Item>
-	        <NavDropdown.Item href="/home/users">Usuarios</NavDropdown.Item> 
+	        <NavDropdown.Item href="/day">Dias de servicios</NavDropdown.Item>
+	        <NavDropdown.Item href="/users">Usuarios</NavDropdown.Item> 
 				</NavDropdown>
 			);
 
@@ -21,8 +21,8 @@ class NavbarComponent extends Component {
 			return (
 
 				<NavDropdown title="Eventos">
-		      <NavDropdown.Item href="/home/event/new">Nuevo evento</NavDropdown.Item>
-		      <NavDropdown.Item href="/home/event">Ver eventos</NavDropdown.Item> 
+		      <NavDropdown.Item href="/event/new">Nuevo evento</NavDropdown.Item>
+		      <NavDropdown.Item href="/event">Ver eventos</NavDropdown.Item> 
 		    </NavDropdown>
 			);
 		}
@@ -37,11 +37,11 @@ class NavbarComponent extends Component {
 			<Nav className="w-100 justify-content-end">
 
 				{ this.props.role === 'ADMIN_ROLE' &&  
-					<Nav.Link href="/home/events-admin">Eventos</Nav.Link>
+					<Nav.Link href="/events-admin">Eventos</Nav.Link>
 				}
 				{ this.validateProfile() }
-				<Nav.Link href="/home/profile">Perfil</Nav.Link>
-				<Nav.Link href="/">Salir</Nav.Link>
+				<Nav.Link href="/profile">Perfil</Nav.Link>
+				<Nav.Link href="/login">Salir</Nav.Link>
 			</Nav>
 		</Navbar.Collapse>
 		);

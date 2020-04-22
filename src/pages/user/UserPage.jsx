@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Formik } from 'formik';
 import { USERS } from '../../hardcode/UsersHardcode';
 import { Table } from 'react-bootstrap';
 import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';

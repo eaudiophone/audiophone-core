@@ -5,7 +5,6 @@ import { Formik } from 'formik';
 import ProfileSchema from '../../components/form/profile-form/ProfileSchema';
 import Profile from '../../models/ProfileModels';
 import './ProfilePage.css';
-// import 'bootstrap/js/dist/tab';  // bootstrap-tabs
 
 class ProfilePage extends Component {
 

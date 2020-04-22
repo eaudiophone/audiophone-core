@@ -7,7 +7,7 @@ class Profile {
 	) {
 
 		this.audiophoneusers_fullname = audiophoneusers_fullname || '';
-		this.audiophoneusers_email = audiophoneusers_fullname || '';
+		this.audiophoneusers_email = audiophoneusers_email || '';
 		this.audiophoneusers_password = audiophoneusers_password || '';
 	}
 }

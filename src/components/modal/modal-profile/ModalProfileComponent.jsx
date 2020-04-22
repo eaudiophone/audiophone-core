@@ -5,7 +5,7 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	
 	<Modal show={ showModal } onHide={ () => editUser( null, null ) }>
 		<Modal.Header closeButton>
-			<Modal.Title>Modicar acceso a { user.name }:</Modal.Title>
+			<Modal.Title>Modicar acceso al usuario { user.id }:</Modal.Title>
 		</Modal.Header>
 
 	<Modal.Body>

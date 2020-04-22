@@ -1,6 +1,5 @@
 import React from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap';
-// import { object, string } from 'yup';
 
 const SearchBar = ({ handleChange, handleSubmit, values, errors }) => {
 

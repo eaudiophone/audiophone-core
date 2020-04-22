@@ -5,26 +5,28 @@ import NewEventPage from './../pages/events/NewEventPage';
 import EditEventPage from './../pages/events/EditEventPage';
 import IndexEventPage from './../pages/events/IndexEventPage';
 import ProfilePage from './../pages/profile/ProfilePage';
+import NotFoundPage from './../pages/notfound/NotFoundPage';
 
 const UserRoutes = () => (
 
 	<Switch>
 		<Route 
-			path="/home/event/new"
+			exact path="event/new"
 			component={ NewEventPage }
 		/>
 		<Route 
-			path="/home/event/:id"
+			exact path="/event/:id"
 			component={ EditEventPage }
 		/>
 		<Route 
-			path="/home/event"
+			exact path="/event"
 			component={ IndexEventPage }
 		/>
 		<Route
-			path="/home/profile"
+			exact path="/profile"
 			component={ ProfilePage }
 		/>
+		<Route path="**" component={ NotFoundPage } />
 	</Switch>
 ); 
 

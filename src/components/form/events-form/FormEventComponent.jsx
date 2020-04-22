@@ -11,6 +11,10 @@ const FormEventComponent = ( props ) => {
 		values
 	} = props
 
+  console.log( values );
+
+  debugger;
+
 	return (
 
 		<Form onSubmit={ handleSubmit } noValidate>
