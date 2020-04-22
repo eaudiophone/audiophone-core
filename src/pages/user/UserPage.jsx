@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
-import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
 import { USERS } from '../../hardcode/UsersHardcode';
 import { Table } from 'react-bootstrap';
 import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
@@ -18,7 +17,7 @@ class UserPage extends Component {
 			data: {},  // user
 		};
 
-		this.editUser = this.editUser.bind( this );
+		this.editUserRole = this.editUserRole.bind( this );
 		this.deleteUser = this.deleteUser.bind( this );
 		this.showModal = this.showModal.bind( this );
 	}
@@ -50,15 +49,21 @@ class UserPage extends Component {
 
 			<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 						align-items-center pb-2 mb-3 border-bottom">
-				<h2>Gestion de usuarios</h2>	
+				<h2>Gestión de usuarios</h2>	
 			</div>
 		);
 	}
 
-	editUser( user ) {
+	editUserRole( response, user ) {
 
-		if ( user !== null ) {
-			console.log( user );
+		if ( response ) {
+			
+			const request = {
+				...user,
+				role: user.role === 'ADMIN_ROLE' ? 'USER_ROLE' : 'ADMIN_ROLE'
+			};
+
+			console.log( request );
 		}
 
 		this.setState({ showEditModal: false });
@@ -68,10 +73,7 @@ class UserPage extends Component {
 
 		if ( confirm ) {
 			console.log( idUser );
-		
-		} else {
-			console.log('no se ejecuta ninguna acción');
-		}
+		} 
 		
 		this.setState({ showDeleteModal: false });
 	}
@@ -85,11 +87,9 @@ class UserPage extends Component {
 
 	setData() {
 
-		let arrayUsers = USERS.data.filter( ( user ) => user.state );
+		return USERS.data.map( ( user ) => (
 
-		return arrayUsers.map( ( user ) => (
-
-				<tr key={ user.id }>
+				<tr className="text-center" key={ user.id }>
 					<td>{ user.id }</td>
 					<td>{ user.name }</td>
 					<td>{ user.email }</td>
@@ -97,13 +97,13 @@ class UserPage extends Component {
 					<td>{ user.registrationDate }</td>
 					<td className="d-flex flex-row justify-content-around">
 						<i 
-							className="fas fa-pen point"
+							className="fas fa-user point" 
 							onClick={ () => this.showModal( 'edit', user ) }
-						></i>
+						></i> 
 						<i 
 							className="fas fa-trash point"
 							onClick={ () => this.showModal( 'delete', user.id ) }
-						></i>
+						></i>	
 					</td>
 				</tr> 
 			)	
@@ -113,7 +113,7 @@ class UserPage extends Component {
 	setHeaderTable() {
 
 		return USERS.header.map( ( element, index ) => (
-				<th key={ index }>{ element }</th>
+				<th className="text-center" key={ index }>{ element }</th>
 			) 
 		);
 	}
@@ -147,22 +147,13 @@ class UserPage extends Component {
 					id={ this.state.data }
 				/>
 
-				<ModalProfileComponent.EditProfileModal 
+				<ModalProfileComponent.ChangeRoleModal 
 					showModal={ this.state.showEditModal }
-					editUser={ ( user ) => this.editUser( user ) }
+					editUser={ ( resp, user ) => this.editUserRole( resp, user ) }
 					user={ this.state.data }
 				/>
 
 				{ this.getHeader() }
-
-				<div className="mt-4">
-					<Formik 
-						component={ SearchBarComponent.SearchBarComponent } 
-						onSubmit={ this.setSearch }
-						initialValues={ { search: '' } }
-					/>
-				</div>
-
 				{ this.getTableUsers() }
 				
 				<div className="d-flex flex-row justify-content-center mt-4"> 
