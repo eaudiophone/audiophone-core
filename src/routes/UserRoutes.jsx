@@ -5,6 +5,7 @@ import NewEventPage from './../pages/events/NewEventPage';
 import EditEventPage from './../pages/events/EditEventPage';
 import IndexEventPage from './../pages/events/IndexEventPage';
 import ProfilePage from './../pages/profile/ProfilePage';
+import NotPageFound from './../pages/notfound/NotFoundPage';
 
 const UserRoutes = () => (
 
@@ -13,6 +14,7 @@ const UserRoutes = () => (
 		<Route path="/event/:id" component={ EditEventPage } />
 		<Route path="/event" component={ IndexEventPage } />
 		<Route path="/profile" component={ ProfilePage } />
+		<Route path="*" component={ NotPageFound } />
 	</Switch>
 ); 
 

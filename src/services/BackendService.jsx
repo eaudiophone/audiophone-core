@@ -1,5 +1,5 @@
 // aqui se realizan todas las peticiones al API:
-import URL_SERVER from './../enviroment';
+// import URL_SERVER from './../enviroment';
 import axios from 'axios';
 
 class BackendService {
@@ -24,7 +24,7 @@ class BackendService {
 
 		// open whether map
 
-		console.log( URL_SERVER.enviroment );
+		// console.log( URL_SERVER.enviroment );
 
 		const options = {
 			
