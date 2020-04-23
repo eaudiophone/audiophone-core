@@ -10,7 +10,7 @@ class NavbarComponent extends Component {
 
 			return (
 				<NavDropdown title="Gestion">
-					<NavDropdown.Item href="/home/budget">Presupuesto</NavDropdown.Item>
+					<NavDropdown.Item href="/budget">Presupuesto</NavDropdown.Item>
 	        <NavDropdown.Item href="/day">Dias de servicios</NavDropdown.Item>
 	        <NavDropdown.Item href="/users">Usuarios</NavDropdown.Item> 
 				</NavDropdown>
