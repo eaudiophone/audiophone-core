@@ -13,7 +13,6 @@ const AdminRoutes = () => (
 		<Route path="/users" component={ UserPage } />
 		<Route path="/day" component={ DayPage } />
 		<Route path="/budget" component={ BudgetPage } />
-		<Route path="/info" component={ getInfo } />
 		<Route path="/profile" component={ ProfilePage } />
 		<Route path="/events-admin" component={ EventsAdminPage }/>
 	</Switch>
