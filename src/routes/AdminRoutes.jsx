@@ -7,8 +7,6 @@ import BudgetPage from './../pages/budget/BudgetPage';
 import ProfilePage from './../pages/profile/ProfilePage';
 import EventsAdminPage from './../pages/events-admin/IndexEventsAdminPage';
 
-const getInfo = () => ( <h2>Info works</h2> );
-
 const AdminRoutes = () => (
 
 	<Switch>
