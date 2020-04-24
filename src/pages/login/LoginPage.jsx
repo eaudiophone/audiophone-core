@@ -35,7 +35,7 @@ class LoginPage extends Component {
     redirectTo() {
         
       if ( this.state.redirect ) {
-         return <RedirectService route="/home/event" />
+         return <RedirectService route="/profile" />
       }
     }
 

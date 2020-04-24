@@ -31,7 +31,7 @@ class RegisterPage extends Component {
 	redirectTo() {
 
 		if ( this.state.redirect ) {
-			return ( <RedirectService route="/" /> );
+			return ( <RedirectService route="/login" /> );
 		}
 	}
 
@@ -53,7 +53,7 @@ class RegisterPage extends Component {
 					component={ FormProfileComponent.FormProfileComponent }
 				/>
 				<p className="mt-5 text-center">
-					<a href="/">
+					<a href="/login">
 						<i className="fas fa-sign-in-alt mr-2"></i>
 						Volver al login
 					</a>
