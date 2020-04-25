@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { Formik } from 'formik';
+import BackendService from './../../services/BackendService';
 import RedirectService from './../../services/RedirectService';
 import Profile from './../../models/ProfileModels';
 import ProfileSchema from './../../components/form/profile-form/ProfileSchema';
@@ -9,23 +10,28 @@ import './RegisterPage.css';
 
 class RegisterPage extends Component {
 
+	backendService = new BackendService();
+
 	constructor( props ) {
 
 		super( props );
 
 		this.state = { redirect: false };
 		this.getFormData = this.getFormData.bind( this );
+
 	}
 
 	getFormData( values, actions ) {
 		
 		actions.setSubmitting( false );
-		
-		console.log( values );
+	
+		this.backendService.postClient( 'apiaudiophoneuser/store',  values )
+			.then( resp => {
+				console.log( resp );
+				this.setState({ redirect: true });
+			})
+			.catch( error => console.error( error ) );
 
-		alert( 'usuario registrado' );
-
-		this.setState({ redirect: true });
 	}
 
 	redirectTo() {

@@ -10,6 +10,8 @@ import BackendService from './../../services/BackendService';
 
 class LoginPage extends Component {
 
+  backendService = new BackendService();
+
 	constructor( props ) {
 		
 		super( props );
@@ -18,7 +20,6 @@ class LoginPage extends Component {
       redirect: false
 		};
 
-    this.backendService = new BackendService();
 		this.getFormData = this.getFormData.bind( this ); 
 	}
 

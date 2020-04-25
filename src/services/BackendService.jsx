@@ -1,15 +1,32 @@
 // aqui se realizan todas las peticiones al API:
-// import URL_SERVER from './../enviroment';
+import URL_SERVER from './../enviroment';
 import axios from 'axios';
 
 class BackendService {
 
-	getClient( url ) {
-		console.log( url );
+	request = null;
+
+	async getClient( url ) {
+		
+		this.request = {
+			method: 'GET',
+			url,
+			responseType: 'json',
+		}
+
+		return await axios( this.request );
 	}
 
-	postClient( request ) {
-		console.log( request );
+	async postClient( apiUrl, data ) {
+
+	 this.request = {
+			method: 'POST',
+			url: URL_SERVER.enviroment + apiUrl,
+			data,
+			responseType: 'json',
+		};
+		
+		return await axios( request );
 	}
 
 	putClient( request, id ) {

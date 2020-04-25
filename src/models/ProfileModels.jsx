@@ -1,14 +1,14 @@
 class Profile {
 
 	constructor( 
-		audiophoneusers_fullname, 
-		audiophoneusers_email, 
-		audiophoneusers_password 
+		apiaudiophoneusers_fullname, 
+		apiaudiophoneusers_email, 
+		apiaudiophoneusers_password 
 	) {
 
-		this.audiophoneusers_fullname = audiophoneusers_fullname || '';
-		this.audiophoneusers_email = audiophoneusers_email || '';
-		this.audiophoneusers_password = audiophoneusers_password || '';
+		this.apiaudiophoneusers_fullname = apiaudiophoneusers_fullname || '';
+		this.apiaudiophoneusers_email = apiaudiophoneusers_email || '';
+		this.apiaudiophoneusers_password = apiaudiophoneusers_password || '';
 	}
 }
 

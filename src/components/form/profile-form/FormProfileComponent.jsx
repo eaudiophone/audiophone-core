@@ -9,23 +9,23 @@ const FormProfileComponent = ( props ) => {
     <Form className="form" onSubmit={ handleSubmit } noValidate>
       <FormInput
         title="Nombre:"
-        name="audiophoneusers_fullname"
-        value={ values.audiophoneusers_fullname }
-        error={ errors.audiophoneusers_fullname }
+        name="apiaudiophoneusers_fullname"
+        value={ values.apiaudiophoneusers_fullname }
+        error={ errors.apiaudiophoneusers_fullname }
         change={ handleChange }
       />
       <FormInput
         title="Email:"
-        name="audiophoneusers_email"
-        value={ values.audiophoneusers_email }
-        error={ errors.audiophoneusers_email }
+        name="apiaudiophoneusers_email"
+        value={ values.apiaudiophoneusers_email }
+        error={ errors.apiaudiophoneusers_email }
         change={ handleChange }
       />
       <FormPassword
         title="Contraseña:"
-        name="audiophoneusers_password"
-        value={ values.audiophoneusers_password }
-        error={ errors.audiophoneusers_password }
+        name="apiaudiophoneusers_password"
+        value={ values.apiaudiophoneusers_password }
+        error={ errors.apiaudiophoneusers_password }
         change={ handleChange }
       />
       <FormButtons reset={ handleReset } />

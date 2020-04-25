@@ -20,16 +20,16 @@ class RegisterSchema {
 
 		this.schema = object().shape({
 			
-			audiophoneusers_fullname: string()
+			apiaudiophoneusers_fullname: string()
 				.required( this.validationMessages.string.required )
 				.min( 2, this.validationMessages.string.min( 2 ) )
 				.max( 20, this.validationMessages.string.max( 20 ) ),
 			
-			audiophoneusers_email: string()
+			apiaudiophoneusers_email: string()
 				.required( this.validationMessages.string.required )
 				.email( this.validationMessages.string.email ),
 			
-			audiophoneusers_password: string()
+			apiaudiophoneusers_password: string()
 				.required( this.validationMessages.string.required  )
 				.min( 8, this.validationMessages.string.min( 8 ) )
 
