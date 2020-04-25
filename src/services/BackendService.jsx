@@ -26,7 +26,7 @@ class BackendService {
 			responseType: 'json',
 		};
 		
-		return await axios( request );
+		return await axios( this.request );
 	}
 
 	putClient( request, id ) {
