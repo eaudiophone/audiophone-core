@@ -13,3 +13,19 @@
 .form-check > label {
 	margin-left: 10px;
 }
+
+.toast-style {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.success-toast {
+	background-color: #4caf50;
+	color: white;
+}
+
+.fail-toast {
+	background-color: #fe5d40;
+	color: white;
+}

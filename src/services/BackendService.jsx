@@ -6,11 +6,11 @@ class BackendService {
 
 	request = null;
 
-	async getClient( url ) {
+	async getClient( apiUrl ) {
 		
 		this.request = {
 			method: 'GET',
-			url,
+			url: apiUrl,
 			responseType: 'json',
 		}
 
