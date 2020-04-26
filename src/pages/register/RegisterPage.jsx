@@ -17,18 +17,24 @@ class RegisterPage extends Component {
 
 	backendService = new BackendService();
 
-	message = 'Creacion de usuario exitosa';
-	action = 'success';
+	message = '';
+	action = '';
 
 	constructor( props ) {
 
 		super( props );
 
 		this.state = { 
-			redirect: false, 
+			redirect: false,
+			toast: false 
 		};
 
 		this.getFormData = this.getFormData.bind( this );
+		this.setToast = this.setToast.bind( this );
+	}
+
+	setToast() {
+		this.setState({ toast: false })
 	}
 
 	getFormData( values, actions ) {
@@ -37,11 +43,28 @@ class RegisterPage extends Component {
 	
 		this.backendService.postClient( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
-				// this.message = 'Creación de usuario exitosa';
-				// this.action = 'success';
-				this.setState({ redirect: true });
+
+				// console.log( resp )
+				
+				this.message = 'Creación de usuario exitosa';
+				this.action = 'success';
+				
+				this.setState({ toast: true });
+
+				setTimeout( () => {
+					this.setState({ redirect: true });
+				}, 2000 );
+
 			})
-			.catch( error => console.error( error ) );
+			.catch( error => {
+
+				// console.error( error );
+
+				this.message = 'Ha ocurrido un imprevisto';
+				this.action = 'Error'
+
+				this.setState({ toast: true });
+			});
 
 	}
 
@@ -78,7 +101,12 @@ class RegisterPage extends Component {
 
 				{ this.redirectTo() }
 				
-				<ToastComponent   context={ this.action } content={ this.message } />
+				<ToastComponent 
+					showToast={ this.state.toast }    
+					context={ this.action } 
+					content={ this.message }
+					onHide={ () => this.setToast() } 
+				/>
 
 			</Container>
 		);

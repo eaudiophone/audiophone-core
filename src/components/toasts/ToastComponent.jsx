@@ -1,31 +1,42 @@
-import React, { useState } from 'react';
-import { Toast, Button } from 'react-bootstrap';
+import React from 'react';
+import { Toast } from 'react-bootstrap';
 
-const ToastComponent = ({ content, context }) => {
+const ToastComponent = ({ showToast, content, context, onHide }) => {
 
-	const [ show, setShow ] = useState( false );
-	
-	return (
-		
-		<div>
+	if ( context === 'success' ) {
+
+		return (
 			<Toast 
-				className="toast-style success-toast" 
-				delay={ 2000 }
-				onClose={ () => setShow( false ) }
-				show={ show }
-				autohide
+					className="toast-style success-toast" 
+					delay={ 2000 }
+					onClose={ () => onHide() }
+					show={ showToast }
+					autohide
 			>
-					<Toast.Body>
-						<span>{ context }</span>
-						<div className="text-center">{ content }</div>
-					</Toast.Body>
-				</Toast>
-				<Button onClick={ () => setShow( true ) }>Mostrar</Button>
-		</div>
-	);
+				<Toast.Body>
+					<span>{ context }</span>
+					<div className="text-center">{ content }</div>
+				</Toast.Body>
+			</Toast>		
+		);
+
+	} else {
+
+		return (
+			<Toast 
+					className="toast-style fail-toast" 
+					delay={ 2000 }
+					onClose={ () => onHide() }
+					show={ showToast }
+					autohide
+			>
+				<Toast.Body>
+					<span>{ context }</span>
+					<div className="text-center">{ content }</div>
+				</Toast.Body>
+			</Toast>
+		);
+	}
 };
-
-
-
 
 export default ToastComponent;

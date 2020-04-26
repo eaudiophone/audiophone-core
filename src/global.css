@@ -20,12 +20,13 @@
 	right: 0;
 }
 
+/* toast */
 .success-toast {
 	background-color: #4caf50;
 	color: white;
 }
 
 .fail-toast {
-	background-color: #fe5d40;
+	background-color: red;
 	color: white;
 }
