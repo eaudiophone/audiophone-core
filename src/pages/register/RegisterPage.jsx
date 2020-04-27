@@ -68,18 +68,20 @@ class RegisterPage extends Component {
 
 	}
 
-	redirectTo() {
-
-		if ( this.state.redirect ) {
-			return ( <RedirectService route="/login" /> );
-		}
-	}
-
 	render() {
 		
 		return ( 
 
 			<Container className="container-register">
+
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+
+				<ToastComponent 
+					showToast={ this.state.toast }    
+					context={ this.action } 
+					content={ this.message }
+					onHide={ () => this.setToast() } 
+				/>
 
 				<h2 className="mb-5 text-center">
 					Registro de usuarios
@@ -92,22 +94,13 @@ class RegisterPage extends Component {
 					validateOnChange={ false }
 					component={ FormProfileComponent.FormProfileComponent }
 				/>
-				
+
 				<p className="mt-5 text-center">
 					<a href="/login">
 						<i className="fas fa-sign-in-alt mr-2"></i>
 						Volver al login
 					</a>
 				</p>
-
-				{ this.redirectTo() }
-				
-				<ToastComponent 
-					showToast={ this.state.toast }    
-					context={ this.action } 
-					content={ this.message }
-					onHide={ () => this.setToast() } 
-				/>
 
 			</Container>
 		);

@@ -12,7 +12,7 @@ class BackendService {
 			method: 'GET',
 			url: apiUrl,
 			responseType: 'json',
-		}
+		};
 
 		return await axios( this.request );
 	}
