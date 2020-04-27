@@ -1,9 +1,9 @@
 import React from 'react';
-import { Toast } from 'react-bootstrap';
+import { Toast, Row, Col } from 'react-bootstrap';
 
 const ToastComponent = ({ showToast, content, context, onHide }) => {
 
-	if ( context === 'success' ) {
+	if ( context !== 'Error' ) {
 
 		return (
 			<Toast 
@@ -14,8 +14,17 @@ const ToastComponent = ({ showToast, content, context, onHide }) => {
 					autohide
 			>
 				<Toast.Body>
-					<span>{ context }</span>
-					<div className="text-center">{ content }</div>
+					
+					<Row className="p-2">
+						<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
+							<i className="fas fa-check-circle fa-2x"></i>
+						</Col>
+						<Col sm={ 10 } className="text-center">
+							<h5 className="font-weight-bold">{ context }</h5>
+							<p>{ content }</p>
+						</Col>
+					</Row>
+					
 				</Toast.Body>
 			</Toast>		
 		);
@@ -31,8 +40,17 @@ const ToastComponent = ({ showToast, content, context, onHide }) => {
 					autohide
 			>
 				<Toast.Body>
-					<span>{ context }</span>
-					<div className="text-center">{ content }</div>
+
+					<Row className="p-2">
+						<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
+							<i className="fas fa-times-circle fa-2x"></i>
+						</Col>
+						<Col sm={ 10 } className="text-center">
+							<h5 className="font-weight-bold">{ context }</h5>
+							<p>{ content }</p>
+						</Col>
+					</Row>
+
 				</Toast.Body>
 			</Toast>
 		);

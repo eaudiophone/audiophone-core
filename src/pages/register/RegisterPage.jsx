@@ -47,7 +47,7 @@ class RegisterPage extends Component {
 				// console.log( resp )
 				
 				this.message = 'Creación de usuario exitosa';
-				this.action = 'success';
+				this.action = 'Éxito';
 				
 				this.setState({ toast: true });
 
@@ -92,6 +92,7 @@ class RegisterPage extends Component {
 					validateOnChange={ false }
 					component={ FormProfileComponent.FormProfileComponent }
 				/>
+				
 				<p className="mt-5 text-center">
 					<a href="/login">
 						<i className="fas fa-sign-in-alt mr-2"></i>
