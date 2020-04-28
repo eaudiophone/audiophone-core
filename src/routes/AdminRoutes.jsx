@@ -6,7 +6,7 @@ import DayPage from './../pages/day/DayPage';
 import BudgetPage from './../pages/budget/BudgetPage';
 import ProfilePage from './../pages/profile/ProfilePage';
 import EventsAdminPage from './../pages/events-admin/IndexEventsAdminPage';
-import NotPageFound from './../pages/notfound/NotFoundPage';
+// import NotPageFound from './../pages/notfound/NotFoundPage';
 
 const AdminRoutes = () => (
 
@@ -16,7 +16,7 @@ const AdminRoutes = () => (
 		<Route path="/budget" component={ BudgetPage } />
 		<Route path="/profile" component={ ProfilePage } />
 		<Route path="/events-admin" component={ EventsAdminPage }/>
-		<Route path="*" component={ NotPageFound } />
+		{ /*<Route path="*" component={ NotPageFound } />*/ }
 	</Switch>
 ); 
 
