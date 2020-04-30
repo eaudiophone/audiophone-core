@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { USERS } from '../../hardcode/UsersHardcode';
 import { Table } from 'react-bootstrap';
 
-import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
-import PaginationComponent from '../../components/pagination/PaginationComponent'; 
-import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
+import TableComponent from '../../components/tables/TableComponent';
+
+// import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
 
 class UserPage extends Component {
 
@@ -141,10 +141,11 @@ class UserPage extends Component {
 		return ( 
 			
 			<div>
+				{ this.getHeader() }
 
+				<TableComponent />
 
-				
-				<ModalProfileComponent.DeleteProfileModal 
+				{/*<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
 					deleteUser={ ( confirm, id ) => this.deleteUser( confirm, id ) }
 					id={ this.state.data }
@@ -154,18 +155,7 @@ class UserPage extends Component {
 					showModal={ this.state.showEditModal }
 					editUser={ ( resp, user ) => this.editUserRole( resp, user ) }
 					user={ this.state.data }
-				/>
-
-				{ this.getHeader() }
-
-
-				<SearchBarComponent />
-
-				{ this.getTableUsers() }
-				
-				<div className="d-flex flex-row justify-content-center mt-4"> 
-					<PaginationComponent />
-				</div>
+				/> */}
 
 			</div>
 		);

@@ -10,7 +10,7 @@ class BackendService {
 		
 		this.request = {
 			method: 'GET',
-			url: apiUrl,
+			url:  URL_SERVER.enviroment + apiUrl,
 			responseType: 'json',
 		};
 
