@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { USERS } from '../../hardcode/UsersHardcode';
 import { Table } from 'react-bootstrap';
+
 import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
+import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
 
 class UserPage extends Component {
 
@@ -139,6 +141,8 @@ class UserPage extends Component {
 		return ( 
 			
 			<div>
+
+
 				
 				<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
@@ -153,6 +157,10 @@ class UserPage extends Component {
 				/>
 
 				{ this.getHeader() }
+
+
+				<SearchBarComponent />
+
 				{ this.getTableUsers() }
 				
 				<div className="d-flex flex-row justify-content-center mt-4"> 

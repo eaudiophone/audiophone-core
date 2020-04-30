@@ -1,36 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap';
 
-const SearchBar = ({ handleChange, handleSubmit, values, errors }) => {
+const SearchBarComponent = () => {
+
+	const [ search, setSearch ] = useState('');
+
+	const send = () => {
+		console.log( search );
+	}
 
 	return (
 
-		<Form onSubmit={ handleSubmit }>
+		<Form.Row>
 			<InputGroup>
-				<Form.Control 
-					placeholder="Buscar usuario ..."
-					aria-label="search-form"
-					onChange={ handleChange }
-					value={ values.search }
-					name="search"
+				<Form.Control
+					type="text"  
+					value={ search }
+					onChange={ ( $event ) => setSearch( $event.target.value ) }
+					placeholder="Busqueda por correo o nombre"
 				/>
 				<InputGroup.Append>
-					<Button 
-						variant="dark" 
-						className="m-0"
-						type="submit"
+					<Button
+						variant="primary"
+						onClick={ () => send() }
 					>
-						<i className="fas fa-search" />
+						<i className="fas fa-search"></i>
 					</Button>
 				</InputGroup.Append>
-				<Form.Control.Feedback type="invalid">
-					{ !!errors.search }
-				</Form.Control.Feedback>
-			</InputGroup>
-		</Form>
-	);
+			</InputGroup>	
+		</Form.Row>
+	);	
 };
 
-export default {
-	SearchBar,
-}
+export default SearchBarComponent;
