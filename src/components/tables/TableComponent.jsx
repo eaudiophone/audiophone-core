@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
+
 import { USERS } from '../../hardcode/UsersHardcode';
 
 import BackendService from '../../services/BackendService';
+
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
 import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
 
@@ -39,6 +41,10 @@ class TableComponent extends Component {
 			.catch( error => console.error( error ) );
 	}
 
+	sendSearch( search ) {
+		console.log( search );
+	}
+
 	setHeaderTable() {
 		return USERS.header.map( ( element, index ) => (
 			<th className="text-center" key={ index }>{ element }</th>
@@ -70,7 +76,9 @@ class TableComponent extends Component {
 		return (
 
 			<div>
-				<SearchBarComponent />
+				<SearchBarComponent 
+					sendSearch={ ( search ) => this.sendSearch( search ) } 
+				/>	
 				<Table className="mt-4" striped responsive hover>
 					<thead className="thead-dark">
 						<tr>
