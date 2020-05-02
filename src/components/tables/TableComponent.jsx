@@ -17,8 +17,10 @@ class TableComponent extends Component {
 
 		this.state = {
 			users: [],
-			usersTotal: 0
+			totalUsers: 0
 		}
+
+		this.getPagination = this.getPagination.bind( this );
 	}
 
 	componentDidMount() {
@@ -33,7 +35,7 @@ class TableComponent extends Component {
 				
 				this.setState({ 
 					users: this.state.users.concat( apiaudiophoneuserdata ),
-					usersTotal: bduserstotal 
+					totalUsers: bduserstotal 
 				});
 
 				console.log( this.state.users );
@@ -43,6 +45,20 @@ class TableComponent extends Component {
 
 	sendSearch( search ) {
 		console.log( search );
+	}
+
+	getPagination({ start, end }) {
+
+		const url = `apiaudiophoneuser/show?start=${ start }&end=${ end }`;
+
+		this.backendService.getClient( url )
+			.then( resp => {
+				
+				const { apiaudiophoneuserdata } = resp.data;
+				this.setState({ users: apiaudiophoneuserdata });
+
+			})
+			.catch( error => console.error( error ) );
 	}
 
 	setHeaderTable() {
@@ -71,27 +87,50 @@ class TableComponent extends Component {
 		))
 	}
 
+	getTable() {
+
+		if ( this.state.users.length > 0 ) {
+
+			return (
+				<div>
+					<SearchBarComponent 
+						sendSearch={ ( search ) => this.sendSearch( search ) } 
+					/>
+					<Table className="mt-4" striped responsive hover>
+						<thead className="thead-dark">
+							<tr>
+								{ this.setHeaderTable() }
+							</tr>
+						</thead>
+						<tbody>
+							{ this.setData() }
+						</tbody>
+					</Table>
+					<div className="mt-3 d-flex flex-row justify-content-center">
+						<PaginationComponent 
+							totalRegisters={ this.state.totalUsers } 
+							send={ ( params ) => this.getPagination( params ) }
+						/>
+					</div>
+				</div>
+			);
+
+		} else {
+
+			return (
+				<p className="text-danger text-center">
+					No hallaron resultados
+				</p>
+			);
+		}
+	}
+
 	render() {
 
 		return (
 
 			<div>
-				<SearchBarComponent 
-					sendSearch={ ( search ) => this.sendSearch( search ) } 
-				/>	
-				<Table className="mt-4" striped responsive hover>
-					<thead className="thead-dark">
-						<tr>
-							{ this.setHeaderTable() }
-						</tr>
-					</thead>
-					<tbody>
-						{ this.setData() }
-					</tbody>
-				</Table>
-				<div className="d-flex flex-row justify-content-center">
-					<PaginationComponent />
-				</div>
+				{ this.getTable() }
 			</div>
 		);
 	}
