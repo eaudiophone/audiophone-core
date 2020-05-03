@@ -4,14 +4,17 @@ import axios from 'axios';
 
 class BackendService {
 
-	request = null;
+	request = {
+		baseURL: URL_SERVER.enviroment,
+		responseType: 'json',
+	};
 
 	async getClient( apiUrl ) {
 		
 		this.request = {
+			...this.request,
 			method: 'GET',
-			url:  URL_SERVER.enviroment + apiUrl,
-			responseType: 'json',
+			url: apiUrl,
 		};
 
 		return await axios( this.request );
@@ -20,11 +23,11 @@ class BackendService {
 	async postClient( apiUrl, data ) {
 
 	 this.request = {
-			method: 'POST',
-			url: URL_SERVER.enviroment + apiUrl,
-			data,
-			responseType: 'json',
-		};
+	 	...this.request,
+		method: 'POST',
+		url: apiUrl,
+		data,
+	};
 		
 		return await axios( this.request );
 	}
@@ -32,10 +35,10 @@ class BackendService {
 	async putClient( apiUrl, data ) {
 		
 		this.request = {
+			...this.request,
 			method: 'PUT',
-			url: URL_SERVER.enviroment + apiUrl,
+			url: apiUrl,
 			data,
-			responseType: 'json'
 		}
 
 		return await axios( this.request );
@@ -44,9 +47,9 @@ class BackendService {
 	async deleteClient( apiUrl ) {
 		
 		this.request = {
+			...this.request,
 			method: 'DELETE',
-			url: URL_SERVER.enviroment + apiUrl,
-			responseType: 'json',
+			url: apiUrl,		
 		};
 
 		return await axios( this.request );

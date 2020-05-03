@@ -36,7 +36,6 @@ const PaginationComponent = ({ totalRegisters, pagination = 5, send }) => {
 		let end = index * pagination;
 		let start = index > 1 ? end - ( pagination - 1 ): 1;
 
-
 		setPaginationNumber( index );
 		send({ start, end });
 	};

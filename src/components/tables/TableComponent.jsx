@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 
-import { USERS } from '../../hardcode/UsersHardcode';
-
 import BackendService from '../../services/BackendService';
+import ToastComponent from '../../components/toasts/ToastComponent';
 
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
 import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
@@ -13,8 +12,12 @@ import  ModalProfileComponent from '../../components/modal/modal-profile/ModalPr
 class TableComponent extends Component {
 
 	backendService = new BackendService();
+	message = '';
+	action = '';
+	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Acciones' ];
 
 	constructor( props ) {
+
 		super( props );
 
 		this.state = {
@@ -22,10 +25,38 @@ class TableComponent extends Component {
 			totalUsers: 0,
 			showEditModal: false, 
 			showDeleteModal: false,
+			showToast: false,
 			data: {},  // user
 		}
 
 		this.getPagination = this.getPagination.bind( this );
+	}
+
+	componentDidMount() {
+
+		this.backendService.postClient('apiaudiophoneuser/show')
+			.then( resp => {
+
+				const { 
+					apiaudiophoneuserdata, 
+					bduserstotal
+				} = resp.data;
+				
+				this.setState({ 
+					users: apiaudiophoneuserdata,
+					totalUsers: bduserstotal 
+				});
+
+			})
+			.catch( error => {
+				
+				// console.error( error );
+
+				this.message = 'Comprueba tu conexion a internet';
+				this.action = 'Error';
+
+				this.setState({ showToast: true });
+			});
 	}
 
 	showModal( modal, data ) {
@@ -72,59 +103,66 @@ class TableComponent extends Component {
 	deleteUser( confirm, idUser ) {
 
 		if ( confirm ) {
+
 			this.backendService.deleteClient(`apiaudiophoneuser/destroy/${ idUser }`)
 				.then( resp => {
 
 					let result = this.state.users.filter( ( user ) => idUser !== user.apiaudiophoneusers_id  );
 
-					this.setState({
+					this.message = 'Estado del usuario actualizado';
+					this.action = 'Success';
+					
+					this.setState({ 
+						showToast: true, 
 						users: result,
-						totalUsers: this.state.totalUsers - 1
+						totalUsers: this.state.totalUsers - 1,
+						showDeleteModal: false
 					});
+
 				})
-				.catch( error => console.log( error ) );
+				.catch( error => {
+
+					// console.error( error );
+
+					this.message = 'ha ocurrido un imprevisto';
+					this.action = 'Error';
+
+					this.setState({ 
+						showDeleteModal: false, 
+						showToast: true
+					});
+
+				});
+		
+		} else {
+
+			this.setState({ showDeleteModal: false });
 		} 
 		
-		this.setState({ showDeleteModal: false });
 	}
 
-	componentDidMount() {
-
-		this.backendService.postClient('apiaudiophoneuser/show')
-			.then( resp => {
-
-				const { 
-					apiaudiophoneuserdata, 
-					bduserstotal
-				} = resp.data;
-				
-				this.setState({ 
-					users: apiaudiophoneuserdata,
-					totalUsers: bduserstotal 
-				});
-
-				console.log( this.state.users );
-			})
-			.catch( error => console.error( error ) );
-	}
-
+	
 	sendSearch( search ) {
 
 		this.backendService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
 			.then( resp => {
 				
-				const { 
-					apiaudiophoneuserdata, 
-					apiaudiophoneusercount 
-				} = resp.data;
+				const { apiaudiophoneuserdata } = resp.data;
 
 				this.setState({
-					users: apiaudiophoneuserdata,
-					totalUsers: apiaudiophoneusercount
+					users: apiaudiophoneuserdata
 				});
 
 			})
-			.catch( error => console.log( error ) );
+			.catch( error => {
+
+				// console.error( error );
+
+				this.message = 'Comprueba tu conexión a internet';
+				this.action = 'Error';
+
+				this.setState({ showToast: true });
+			});
 	}
 
 	getPagination({ start, end }) {
@@ -149,15 +187,14 @@ class TableComponent extends Component {
 	}
 
 	setHeaderTable() {
-		return USERS.header.map( ( element, index ) => (
-			<th className="text-center" key={ index }>{ element }</th>
+		return this.headerTable.map( ( element, index ) => (
+			<th className="text-center" key={ index }>{ element }:</th>
 		));
 	}
 
 	setData() {
 		return this.state.users.map( ( user, index ) => (
 			<tr className="text-center" key={ user.apiaudiophoneusers_id }>
-				<td>{ user.apiaudiophoneusers_id }</td>
 				<td>{ user.apiaudiophoneusers_fullname }</td>
 				<td>{ user.apiaudiophoneusers_email }</td>
 				<td>{ user.apiaudiophoneusers_role }</td>
@@ -229,6 +266,12 @@ class TableComponent extends Component {
 					showModal={ this.state.showEditModal }
 					editUser={ ( resp, user ) => this.editUserRole( resp, user ) }
 					user={ this.state.data }
+				/>
+				<ToastComponent
+					showToast={ this.state.showToast }
+					content={ this.message }
+					context={ this.action }
+					onHide={ () => this.setState({ showToast: false }) }
 				/>
 			</div>
 		);

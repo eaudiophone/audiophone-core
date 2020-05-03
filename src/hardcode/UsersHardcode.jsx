@@ -41,5 +41,5 @@ export  const USERS = {
 			registrationDate: '2020-02-13'
 		}
 	],
-	header: [ '#', 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Acciones' ]
+	header: [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Acciones' ]
 };

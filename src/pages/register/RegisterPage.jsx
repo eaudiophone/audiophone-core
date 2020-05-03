@@ -30,11 +30,6 @@ class RegisterPage extends Component {
 		};
 
 		this.getFormData = this.getFormData.bind( this );
-		this.setToast = this.setToast.bind( this );
-	}
-
-	setToast() {
-		this.setState({ toast: false })
 	}
 
 	getFormData( values, actions ) {
@@ -76,11 +71,11 @@ class RegisterPage extends Component {
 
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 
-				<ToastComponent 
+				<ToastComponent
 					showToast={ this.state.toast }    
 					context={ this.action } 
 					content={ this.message }
-					onHide={ () => this.setToast() } 
+					onHide={ () => this.setState({ toast: false }) } 
 				/>
 
 				<h2 className="mb-5 text-center">
