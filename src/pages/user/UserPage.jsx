@@ -4,8 +4,6 @@ import { Table } from 'react-bootstrap';
 
 import TableComponent from '../../components/tables/TableComponent';
 
-// import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
-
 class UserPage extends Component {
 
 	constructor( props ) {
@@ -142,21 +140,7 @@ class UserPage extends Component {
 			
 			<div>
 				{ this.getHeader() }
-
 				<TableComponent />
-
-				{/*<ModalProfileComponent.DeleteProfileModal 
-					showModal={ this.state.showDeleteModal }  
-					deleteUser={ ( confirm, id ) => this.deleteUser( confirm, id ) }
-					id={ this.state.data }
-				/>
-
-				<ModalProfileComponent.ChangeRoleModal 
-					showModal={ this.state.showEditModal }
-					editUser={ ( resp, user ) => this.editUserRole( resp, user ) }
-					user={ this.state.data }
-				/> */}
-
 			</div>
 		);
 	}

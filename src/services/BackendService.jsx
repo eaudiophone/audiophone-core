@@ -29,12 +29,27 @@ class BackendService {
 		return await axios( this.request );
 	}
 
-	putClient( request, id ) {
-		console.log( request, id );
+	async putClient( apiUrl, data ) {
+		
+		this.request = {
+			method: 'PUT',
+			url: URL_SERVER.enviroment + apiUrl,
+			data,
+			responseType: 'json'
+		}
+
+		return await axios( this.request );
 	}
 
-	deleteClient( request, id ) {
-		console.log( request, id )
+	async deleteClient( apiUrl ) {
+		
+		this.request = {
+			method: 'DELETE',
+			url: URL_SERVER.enviroment + apiUrl,
+			responseType: 'json',
+		};
+
+		return await axios( this.request );
 	}
 
 	async testData() {

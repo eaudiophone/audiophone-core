@@ -5,12 +5,14 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	
 	<Modal show={ showModal } onHide={ () => editUser( null, null ) }>
 		<Modal.Header closeButton>
-			<Modal.Title>Modicar acceso al usuario { user.id }:</Modal.Title>
+			<Modal.Title>
+				Modicar acceso al usuario { user.apiaudiophoneusers_id }:
+			</Modal.Title>
 		</Modal.Header>
 
 	<Modal.Body>
 		<p className="text-left">
-			¿Desea cambiar el rol  "{ user.role }" a este usuario 
+			¿Desea cambiar el rol  "{ user.apiaudiophoneusers_role }" a este usuario 
 			dentro de la aplicación?
 		</p>
 	</Modal.Body>
