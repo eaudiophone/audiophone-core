@@ -82,9 +82,9 @@ class TableComponent extends Component {
 
 	}
 
-	editUserRole( confirm, user ) {
+	editUserRole( user ) {
 
-		if ( confirm ) {
+		if ( user !== null ) {
 			
 			user = {
 				apiaudiophoneusers_role: user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'USER_ROLE' : 'ADMIN_ROLE'
@@ -101,9 +101,9 @@ class TableComponent extends Component {
 		this.setState({ showEditModal: false });
 	}
 
-	deleteUser( confirm, idUser ) {
+	deleteUser( idUser ) {
 
-		if ( confirm ) {
+		if ( idUser !== null ) {
 
 			this.backendService.deleteClient(`apiaudiophoneuser/destroy/${ idUser }`)
 				.then( resp => {
@@ -259,12 +259,12 @@ class TableComponent extends Component {
 				{ this.getTable() }
 				<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
-					deleteUser={ ( confirm, id = null ) => this.deleteUser( confirm, id ) }
+					deleteUser={ ( id = null ) => this.deleteUser( id ) }
 					id={ this.state.data }
 				/>
 				<ModalProfileComponent.ChangeRoleModal 
 					showModal={ this.state.showEditModal }
-					editUser={ ( resp, user = null ) => this.editUserRole( resp, user ) }
+					editUser={ ( user = null ) => this.editUserRole( user ) }
 					user={ this.state.data }
 				/>
 				<ToastComponent

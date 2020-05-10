@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
+
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
+
 import { Image, Nav } from 'react-bootstrap';
 import { Formik } from 'formik';
+
 import ProfileSchema from '../../components/form/profile-form/ProfileSchema';
 import Profile from '../../models/ProfileModels';
+
+import BackendService from './../../services/BackendService';
+
+import ToastComponent from './../../components/toasts/ToastComponent';
+
 import './ProfilePage.css';
 
 class ProfilePage extends Component {
 
+	backendService = new BackendService();
+	message = '';
+	action = '';
+
 	constructor( props ) {
 
 		super( props );
+
+		this.state = { showToast: false };
+
+		this.getFormData = this.getFormData.bind( this );
 
 		this.user = new Profile(
 			'Gabriel Martinez',
@@ -67,8 +83,24 @@ class ProfilePage extends Component {
 	}
 
 	getFormData( values, actions ) {
-		console.log( values );
+
 		actions.setSubmitting( false );
+
+		this.backendService.putClient(`apiaudiophoneuser/update/6`, values )
+			.then( resp => {
+				
+				this.action = 'Exito';
+				this.message = 'Usuario actualizado';
+
+				this.setState({ showToast: true });
+			})
+			.catch( error => {
+				
+				this.message = 'Error interno del servidor';
+				this.action = 'Error';
+
+				this.setState({ showToast: true });
+			});
 	}
 
 	render() {
@@ -87,6 +119,12 @@ class ProfilePage extends Component {
 						validateOnChange={ false }
 					/> 
 				</div>
+				<ToastComponent 
+					showToast={ this.state.showToast }
+					content={ this.message }
+					context={ this.action }
+					onHide={ () => this.setState({ showToast: false }) }
+				/>
 			</div>
 		);
 	}

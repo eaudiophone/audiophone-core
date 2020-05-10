@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	
-	<Modal show={ showModal } onHide={ () => editUser( false ) }>
+	<Modal show={ showModal } onHide={ () => editUser() }>
 		<Modal.Header closeButton>
 			<Modal.Title>
 				Modificar rol al usuario { user.apiaudiophoneusers_id }:
@@ -23,13 +23,13 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	<Modal.Footer>
   	<Button 
     		variant="secondary" 
-    		onClick={ () => editUser( false ) }
+    		onClick={ () => editUser() }
     	>
       	Cerrar
     	</Button>
     	<Button 
     		variant="primary" 
-    		onClick={ () => editUser( true, user ) }
+    		onClick={ () => editUser( user ) }
     	>
       	Confirmar
     	</Button>
@@ -43,7 +43,7 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 	
 	<Modal 
 		show={ showModal } 
-		onHide={ () => deleteUser( false ) }
+		onHide={ () => deleteUser() }
 	>
 		
 		<Modal.Header closeButton>
@@ -59,13 +59,13 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 		<Modal.Footer>
     	<Button 
 	    		variant="secondary" 
-	    		onClick={ () => deleteUser( false ) }
+	    		onClick={ () => deleteUser() }
 	    	>
 	      	Cerrar
 	    	</Button>
 	    	<Button 
 	    		variant="primary" 
-	    		onClick={ () => deleteUser( true, id ) }
+	    		onClick={ () => deleteUser( id ) }
 	    	>
 	      	Confirmar
 	    	</Button>

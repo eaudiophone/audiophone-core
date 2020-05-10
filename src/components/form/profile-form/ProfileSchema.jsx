@@ -30,7 +30,6 @@ class RegisterSchema {
 				.email( this.validationMessages.string.email ),
 			
 			apiaudiophoneusers_password: string()
-				.required( this.validationMessages.string.required  )
 				.min( 8, this.validationMessages.string.min( 8 ) )
 
 		});
