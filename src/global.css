@@ -30,3 +30,7 @@
 	background-color: red;
 	color: white;
 }
+
+table>tbody>tr>td {
+	font-size: 14px;
+}

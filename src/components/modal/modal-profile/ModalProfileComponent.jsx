@@ -3,24 +3,27 @@ import { Modal, Button } from 'react-bootstrap';
 
 const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	
-	<Modal show={ showModal } onHide={ () => editUser( null, null ) }>
+	<Modal show={ showModal } onHide={ () => editUser( false ) }>
 		<Modal.Header closeButton>
 			<Modal.Title>
-				Modicar acceso al usuario { user.apiaudiophoneusers_id }:
+				Modificar rol al usuario { user.apiaudiophoneusers_id }:
 			</Modal.Title>
 		</Modal.Header>
 
 	<Modal.Body>
 		<p className="text-left">
-			¿Desea cambiar el rol  "{ user.apiaudiophoneusers_role }" a este usuario 
-			dentro de la aplicación?
+			¿Desea cambiar el rol a   
+			<span className="font-bold mr-1 ml-1">
+				{ user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'usuario' : 'administrador' }
+			</span> 
+			a este usuario?
 		</p>
 	</Modal.Body>
 
 	<Modal.Footer>
   	<Button 
     		variant="secondary" 
-    		onClick={ () => editUser( false, null ) }
+    		onClick={ () => editUser( false ) }
     	>
       	Cerrar
     	</Button>
@@ -44,7 +47,7 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 	>
 		
 		<Modal.Header closeButton>
-			<Modal.Title>Eliminar usuario { id }:</Modal.Title>
+			<Modal.Title>Remover acceso al usuario { id }:</Modal.Title>
 		</Modal.Header>
 
 		<Modal.Body>

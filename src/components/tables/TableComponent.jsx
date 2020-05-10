@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+
 import { Table } from 'react-bootstrap';
 
 import BackendService from '../../services/BackendService';
-import ToastComponent from '../../components/toasts/ToastComponent';
 
+import ToastComponent from '../../components/toasts/ToastComponent';
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
 import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
+import ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
 
-import  ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
+import { getDateWithHour } from './../../util-functions/date-format';
 
 class TableComponent extends Component {
 
@@ -80,12 +82,11 @@ class TableComponent extends Component {
 
 	}
 
-	editUserRole( response, user ) {
+	editUserRole( confirm, user ) {
 
-		if ( response ) {
+		if ( confirm ) {
 			
 			user = {
-				...user,
 				apiaudiophoneusers_role: user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'USER_ROLE' : 'ADMIN_ROLE'
 			};
 
@@ -140,7 +141,6 @@ class TableComponent extends Component {
 		} 
 		
 	}
-
 	
 	sendSearch( search ) {
 
@@ -198,7 +198,7 @@ class TableComponent extends Component {
 				<td>{ user.apiaudiophoneusers_fullname }</td>
 				<td>{ user.apiaudiophoneusers_email }</td>
 				<td>{ user.apiaudiophoneusers_role }</td>
-				<td>{ user.created_at.substr( 0, 10 ) }</td>
+				<td>{  getDateWithHour(  user.created_at ) }</td>
 				<td className="d-flex flex-row justify-content-around">
 					<i 
 						className="fas fa-user point" 
@@ -259,12 +259,12 @@ class TableComponent extends Component {
 				{ this.getTable() }
 				<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
-					deleteUser={ ( confirm, id ) => this.deleteUser( confirm, id ) }
+					deleteUser={ ( confirm, id = null ) => this.deleteUser( confirm, id ) }
 					id={ this.state.data }
 				/>
 				<ModalProfileComponent.ChangeRoleModal 
 					showModal={ this.state.showEditModal }
-					editUser={ ( resp, user ) => this.editUserRole( resp, user ) }
+					editUser={ ( resp, user = null ) => this.editUserRole( resp, user ) }
 					user={ this.state.data }
 				/>
 				<ToastComponent
