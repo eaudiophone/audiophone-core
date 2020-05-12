@@ -16,7 +16,7 @@ class TableComponent extends Component {
 	backendService = new BackendService();
 	message = '';
 	action = '';
-	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Acciones' ];
+	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Status', 'Acciones' ];
 
 	constructor( props ) {
 
@@ -43,9 +43,15 @@ class TableComponent extends Component {
 					apiaudiophoneuserdata, 
 					bduserstotal
 				} = resp.data;
+
+				let users = apiaudiophoneuserdata.map( ( user ) => ({
+					...user,
+					apiaudiophoneusers_status: user.apiaudiophoneusers_status > 0 ? true : false,
+					created_at: getDateWithHour( user.created_at )
+				}));
 				
 				this.setState({ 
-					users: apiaudiophoneuserdata,
+					users,
 					totalUsers: bduserstotal 
 				});
 
@@ -105,26 +111,40 @@ class TableComponent extends Component {
 
 		if ( idUser !== null ) {
 
-			this.backendService.deleteClient(`apiaudiophoneuser/destroy/${ idUser }`)
-				.then( resp => {
+			let status = this.state.users.find( ( user ) => idUser === user.apiaudiophoneusers_id ).apiaudiophoneusers_status;
+			let method = status ? 'inactivate' : 'activate';
+			let data = { apiaudiophoneusers_status: !status };
 
-					let result = this.state.users.filter( ( user ) => idUser !== user.apiaudiophoneusers_id  );
+			console.log( status, method, data );
+
+			this.backendService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
+				.then( ({ data }) => {
+			
+					const user = method === 'inactivate' ? data.apiaudiophoneuserinactive : data.apiaudiophoneuseractivate;
+
+					const result = this.state.users.map( ( element ) => {
+						
+						if ( element.apiaudiophoneusers_id === user.apiaudiophoneusers_id  ) {
+							return {
+								...element,
+								apiaudiophoneusers_status: user.apiaudiophoneusers_status
+							}
+						}
+
+						return element;
+					});
 
 					this.message = 'Estado del usuario actualizado';
-					this.action = 'Success';
+					this.action = 'Exito';
 					
 					this.setState({ 
 						showToast: true, 
 						users: result,
-						totalUsers: this.state.totalUsers - 1,
 						showDeleteModal: false
 					});
-
 				})
 				.catch( error => {
-
-					// console.error( error );
-
+					
 					this.message = 'ha ocurrido un imprevisto';
 					this.action = 'Error';
 
@@ -198,7 +218,8 @@ class TableComponent extends Component {
 				<td>{ user.apiaudiophoneusers_fullname }</td>
 				<td>{ user.apiaudiophoneusers_email }</td>
 				<td>{ user.apiaudiophoneusers_role }</td>
-				<td>{  getDateWithHour(  user.created_at ) }</td>
+				<td>{  user.created_at }</td>
+				<td>{ user.apiaudiophoneusers_status ? 'activo' : 'inactivo' }</td>
 				<td className="d-flex flex-row justify-content-around">
 					<i 
 						className="fas fa-user point" 
