@@ -5,9 +5,9 @@
 	align-items: flex-end;
 }
 
-.searchBarComponent .input {
+/*.searchBarComponent .input {
 	width: 30%;
-}
+}*/
 
 .searchBarComponent .text-danger {
 	font-size: 12px;

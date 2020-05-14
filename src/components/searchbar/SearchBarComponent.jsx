@@ -9,7 +9,6 @@ const SearchBarComponent = ({ sendSearch }) => {
 
 	const validateText = () => {
 
-		// expresiones regulares
 		const string = /^[A-Za-z]+$/;
 		const email = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 		// const email = /^[A-Za-z0-9]+@[A-Za-z0-9]+(?:\.[A-Za-z]{2,3})$/;
@@ -52,4 +51,29 @@ const SearchBarComponent = ({ sendSearch }) => {
 	);	
 };
 
-export default SearchBarComponent;
+const SearchFilterComponent = ({ filterSearch }) => {
+
+	const options = ['Todos', 'activos', 'inactivos'];
+
+	return (
+		<Form.Row>
+			<Form.Label>Buscar por:</Form.Label>
+			<Form.Control 
+				as="select"
+				onChange={ ( $event ) => filterSearch( $event.target.value ) }
+				name="searchSelect"
+				defaultValue="Todos"
+			>
+				{ options.map( ( element, index ) => (
+						<option value={ element } key={ index }>{ element }</option> 
+					)) 
+				}
+			</Form.Control>
+		</Form.Row>
+	);
+};
+
+export default {
+	SearchFilterComponent,
+	SearchBarComponent
+};

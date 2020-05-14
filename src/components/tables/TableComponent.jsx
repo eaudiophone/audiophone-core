@@ -16,7 +16,8 @@ class TableComponent extends Component {
 	backendService = new BackendService();
 	message = '';
 	action = '';
-	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Status', 'Acciones' ];
+	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
+	history = [];
 
 	constructor( props ) {
 
@@ -32,6 +33,7 @@ class TableComponent extends Component {
 		}
 
 		this.getPagination = this.getPagination.bind( this );
+		this.filterSearch = this.filterSearch.bind( this );
 	}
 
 	componentDidMount() {
@@ -44,17 +46,18 @@ class TableComponent extends Component {
 					bduserstotal
 				} = resp.data;
 
-				let users = apiaudiophoneuserdata.map( ( user ) => ({
-					...user,
-					apiaudiophoneusers_status: user.apiaudiophoneusers_status > 0 ? true : false,
-					created_at: getDateWithHour( user.created_at )
-				}));
-				
-				this.setState({ 
-					users,
-					totalUsers: bduserstotal 
-				});
+				this.setState( ( state, props ) => {
 
+					this.setHistory({ 
+						users: apiaudiophoneuserdata,
+						totalUsers: bduserstotal 
+					});
+
+					return {
+						users: apiaudiophoneuserdata,
+						totalUsers: bduserstotal 
+					}
+				});
 			})
 			.catch( error => {
 				
@@ -65,6 +68,10 @@ class TableComponent extends Component {
 
 				this.setState({ showToast: true });
 			});
+	}
+
+	setHistory( action ) {
+		this.history = this.history.concat([ action ]);
 	}
 
 	showModal( modal, data ) {
@@ -112,8 +119,8 @@ class TableComponent extends Component {
 		if ( idUser !== null ) {
 
 			let status = this.state.users.find( ( user ) => idUser === user.apiaudiophoneusers_id ).apiaudiophoneusers_status;
-			let method = status ? 'inactivate' : 'activate';
-			let data = { apiaudiophoneusers_status: !status };
+			let method = status === 1 ? 'inactivate' : 'activate';
+			let data = { apiaudiophoneusers_status: status === 1 ? 0 : 1 };
 
 			console.log( status, method, data );
 
@@ -197,13 +204,62 @@ class TableComponent extends Component {
 					bduserstotal 
 				} = resp.data;
 
-				this.setState({ 
-					users: apiaudiophoneuserdata,
-					totalUsers: bduserstotal 
+
+
+				this.setState( () => {
+					
+					this.setHistory({ 
+						users: apiaudiophoneuserdata,
+						totalUsers: bduserstotal 
+					});
+
+					return {
+						users: apiaudiophoneuserdata,
+						totalUsers: bduserstotal 
+					}
+
 				});
 
 			})
 			.catch( error => console.error( error ) );
+	}
+
+	filterSearch( filter ) {
+		
+		let results = [];
+
+		switch ( filter ) {
+			
+			case 'activos': 
+
+				results = this.history[ this.history.length - 1 ].users.filter( 
+					( user ) => user.apiaudiophoneusers_status === 1 );
+				
+				this.setState({
+					users: results,
+					totalUsers: results.length
+				});
+				
+			break;
+
+			case 'inactivos':
+
+				results = this.history[ this.history.length - 1 ].users.filter( 
+					( user ) => user.apiaudiophoneusers_status === 0 );
+				
+				this.setState({
+					users: results,
+					totalUsers: results.length
+				});
+
+			break;
+
+			default: 
+				
+				this.setState( this.history[ this.history.length - 1 ] );
+
+			break;
+		}
 	}
 
 	setHeaderTable() {
@@ -218,8 +274,8 @@ class TableComponent extends Component {
 				<td>{ user.apiaudiophoneusers_fullname }</td>
 				<td>{ user.apiaudiophoneusers_email }</td>
 				<td>{ user.apiaudiophoneusers_role }</td>
-				<td>{  user.created_at }</td>
-				<td>{ user.apiaudiophoneusers_status ? 'activo' : 'inactivo' }</td>
+				<td>{  getDateWithHour( user.created_at ) }</td>
+				<td>{ user.apiaudiophoneusers_status === 1 ? 'activo' : 'inactivo' }</td>
 				<td className="d-flex flex-row justify-content-around">
 					<i 
 						className="fas fa-user point" 
@@ -240,9 +296,6 @@ class TableComponent extends Component {
 
 			return (
 				<div>
-					<SearchBarComponent 
-						sendSearch={ ( search ) => this.sendSearch( search ) } 
-					/>
 					<Table className="mt-4" striped responsive hover>
 						<thead className="thead-dark">
 							<tr>
@@ -265,8 +318,8 @@ class TableComponent extends Component {
 		} else {
 
 			return (
-				<p className="text-danger text-center">
-					No hallaron resultados
+				<p className="text-danger font-weight-bold text-center mt-4">
+					No se hallaron resultados
 				</p>
 			);
 		}
@@ -277,6 +330,14 @@ class TableComponent extends Component {
 		return (
 
 			<div>
+				<div className="d-flex flex-row justify-content-between">
+					<SearchBarComponent.SearchFilterComponent 
+						filterSearch={ ( filter ) => this.filterSearch( filter ) }
+					/>
+					<SearchBarComponent.SearchBarComponent 
+							sendSearch={ ( search ) => this.sendSearch( search ) } 
+					/>
+				</div>
 				{ this.getTable() }
 				<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
