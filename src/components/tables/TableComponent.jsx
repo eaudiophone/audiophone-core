@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Table } from 'react-bootstrap';
+import { Table, Row, Col } from 'react-bootstrap';
 
 import BackendService from '../../services/BackendService';
 
@@ -17,7 +17,7 @@ class TableComponent extends Component {
 	message = '';
 	action = '';
 	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
-	history = [];
+	history = [];  // array de navegacion
 
 	constructor( props ) {
 
@@ -121,8 +121,6 @@ class TableComponent extends Component {
 			let status = this.state.users.find( ( user ) => idUser === user.apiaudiophoneusers_id ).apiaudiophoneusers_status;
 			let method = status === 1 ? 'inactivate' : 'activate';
 			let data = { apiaudiophoneusers_status: status === 1 ? 0 : 1 };
-
-			console.log( status, method, data );
 
 			this.backendService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
 				.then( ({ data }) => {
@@ -254,7 +252,7 @@ class TableComponent extends Component {
 
 			break;
 
-			default: 
+			default: // todos
 				
 				this.setState( this.history[ this.history.length - 1 ] );
 
@@ -330,14 +328,18 @@ class TableComponent extends Component {
 		return (
 
 			<div>
-				<div className="d-flex flex-row justify-content-between">
-					<SearchBarComponent.SearchFilterComponent 
+				<Row>
+					<Col xs={ 12 } className="mb-10" sm={ 6 }>
+						<SearchBarComponent.SearchFilterComponent 
 						filterSearch={ ( filter ) => this.filterSearch( filter ) }
-					/>
-					<SearchBarComponent.SearchBarComponent 
-							sendSearch={ ( search ) => this.sendSearch( search ) } 
-					/>
-				</div>
+						/>
+					</Col>
+					<Col xs={ 12 } sm={ 6 }>
+						<SearchBarComponent.SearchBarComponent 
+								sendSearch={ ( search ) => this.sendSearch( search ) } 
+						/>
+					</Col>
+				</Row>
 				{ this.getTable() }
 				<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  

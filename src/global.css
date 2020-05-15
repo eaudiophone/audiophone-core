@@ -34,3 +34,14 @@
 table>tbody>tr>td {
 	font-size: 14px;
 }
+
+@media screen and ( max-width: 360px ) and ( max-width: 768px ) {
+	.flex-vertical {
+		flex-direction: column !important;
+		justify-content: center;
+	}
+
+	.mb-10 {
+		margin-bottom: 10px;
+	}
+}

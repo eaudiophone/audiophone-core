@@ -27,7 +27,8 @@ const SearchBarComponent = ({ sendSearch }) => {
 
 	return (
 
-		<Form.Row className="searchBarComponent">
+		<Form.Row>
+			<Form.Label>Búsqueda personalizada:</Form.Label>
 			<InputGroup className="input">
 				<Form.Control
 					type="text"  
@@ -53,7 +54,7 @@ const SearchBarComponent = ({ sendSearch }) => {
 
 const SearchFilterComponent = ({ filterSearch }) => {
 
-	const options = ['Todos', 'activos', 'inactivos'];
+	const options = ['todos', 'activos', 'inactivos'];
 
 	return (
 		<Form.Row>
