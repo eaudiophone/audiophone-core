@@ -13,7 +13,7 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	<Modal.Body>
 		<p className="text-left">
 			¿Desea cambiar el rol a   
-			<span className="font-bold mr-1 ml-1">
+			<span className="mr-1 ml-1">
 				{ user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'usuario' : 'administrador' }?
 			</span> 
 			
@@ -52,7 +52,7 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 
 		<Modal.Body>
 			<p className="text-left">
-				¿Desea remover el acceso a este usuario dentro de la aplicación?
+				¿Desea cambiar el acceso a este usuario dentro de la aplicación?
 			</p>
 		</Modal.Body>
 
