@@ -98,20 +98,57 @@ class TableComponent extends Component {
 	editUserRole( user ) {
 
 		if ( user !== null ) {
-			
-			user = {
+		
+			const data = {
 				apiaudiophoneusers_role: user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'USER_ROLE' : 'ADMIN_ROLE'
 			};
 
 			this.backendService.putClient(
 				`apiaudiophoneuser/update/${ user.apiaudiophoneusers_id }`,
-				user
+				data
 			)
-			.then( resp => console.log( resp ) )
-			.catch( error => console.log( error ) );
-		}
+			.then(({ data }) => {
 
-		this.setState({ showEditModal: false });
+				const result = this.state.users.map( ( element ) => {
+
+					if ( data.apiaudiophoneuserupdate.apiaudiophoneusers_id === element.apiaudiophoneusers_id ) {
+
+						return {
+							...element,
+							apiaudiophoneusers_role: data.apiaudiophoneuserupdate.apiaudiophoneusers_role
+						}
+					}
+
+					return element;
+				});
+
+				this.message = data.apiaudiophoneusermessage;
+				this.action = 'Éxito';
+
+				this.setState({
+					showEditModal: false,
+					showToast: true,
+					users: result
+				});
+			})
+			.catch( error => {
+
+				this.message = 'Ha ocurrido un imprevisto';
+				this.action = 'Error'
+
+				this.setState({
+					showEditModal: false,
+					showToast: true,
+				});
+
+			});
+		
+		} else {
+
+			this.setState({
+				showEditModal: false,
+			});
+		}
 	}
 
 	deleteUser( idUser ) {
@@ -139,7 +176,7 @@ class TableComponent extends Component {
 						return element;
 					});
 
-					this.message = 'Estado del usuario actualizado';
+					this.message = data.apiaudiophoneusermessage;
 					this.action = 'Exito';
 					
 					this.setState({ 
@@ -202,9 +239,7 @@ class TableComponent extends Component {
 					bduserstotal 
 				} = resp.data;
 
-
-
-				this.setState( () => {
+				this.setState( ( state, props ) => {
 					
 					this.setHistory({ 
 						users: apiaudiophoneuserdata,
@@ -219,7 +254,17 @@ class TableComponent extends Component {
 				});
 
 			})
-			.catch( error => console.error( error ) );
+			.catch( error => {
+
+				// console.log( error );
+
+				this.message = 'Comprueba tu conexion a Internet';
+				this.action = 'Error';
+
+				this.setState({
+					showToast: true
+				});
+			});
 	}
 
 	filterSearch( filter ) {

@@ -14,9 +14,9 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 		<p className="text-left">
 			¿Desea cambiar el rol a   
 			<span className="font-bold mr-1 ml-1">
-				{ user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'usuario' : 'administrador' }
+				{ user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'usuario' : 'administrador' }?
 			</span> 
-			a este usuario?
+			
 		</p>
 	</Modal.Body>
 
