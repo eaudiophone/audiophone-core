@@ -1,6 +1,9 @@
 import { string, object } from 'yup';
 
-class RegisterSchema {
+class PorfileSchema {
+
+	registerSchema = null;
+	profileSchema = null;
 
 	constructor() {
 
@@ -9,21 +12,24 @@ class RegisterSchema {
 				required: 'campo requerido',
 				min: ( min ) => `minimo ${ min } caracteres`,
 				max: ( max ) => `maximo ${ max } caracteres`,
-				email: 'debe ser un correo valido'
+				email: 'debe ser un correo valido',
+				pattern: 'Formato inválido'
 			}
 		};
 
-		this.setSchema();
+		this.setRegisterSchema();
+		this.setProfileSchema();
 	}
 
-	setSchema() {
+	setRegisterSchema() {
 
-		this.schema = object().shape({
+		this.registerSchema = object().shape({
 			
 			apiaudiophoneusers_fullname: string()
 				.required( this.validationMessages.string.required )
 				.min( 2, this.validationMessages.string.min( 2 ) )
-				.max( 20, this.validationMessages.string.max( 20 ) ),
+				.max( 20, this.validationMessages.string.max( 20 ) )
+				.matches( /^[\sA-Za-z]+$/, this.validationMessages.string.pattern ),
 			
 			apiaudiophoneusers_email: string()
 				.required( this.validationMessages.string.required )
@@ -31,13 +37,36 @@ class RegisterSchema {
 			
 			apiaudiophoneusers_password: string()
 				.min( 8, this.validationMessages.string.min( 8 ) )
-
+				.required( this.validationMessages.string.required )
 		});
 
 	}
 
-	getSchema() {
-		return this.schema;
+	setProfileSchema() {
+
+		this.profileSchema = object().shape({
+			
+			apiaudiophoneusers_fullname: string()
+				.required( this.validationMessages.string.required )
+				.min( 2, this.validationMessages.string.min( 2 ) )
+				.max( 20, this.validationMessages.string.max( 20 ) )
+				.matches( /^[\sA-Za-z]+$/, this.validationMessages.string.pattern ),
+			
+			apiaudiophoneusers_email: string()
+				.required( this.validationMessages.string.required )
+				.email( this.validationMessages.string.email ),
+			
+			apiaudiophoneusers_password: string()
+				.min( 8, this.validationMessages.string.min( 8 ) )
+		});
+	} 
+
+	getRegisterSchema() {
+		return this.registerSchema;
+	}
+
+	getProfileSchema() {
+		return this.profileSchema;
 	}
 
 	async testData( form ) {
@@ -46,4 +75,4 @@ class RegisterSchema {
 }
 
 
-export default RegisterSchema;
+export default PorfileSchema;

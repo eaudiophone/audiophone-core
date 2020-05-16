@@ -31,7 +31,7 @@ class ProfilePage extends Component {
 		this.user = new Profile(
 			'Gabriel Martinez',
 			'gabmart1995@gmail.com'
-			);
+		);
 	}
 
 	getTabs() {
@@ -90,7 +90,7 @@ class ProfilePage extends Component {
 			.then( resp => {
 				
 				this.action = 'Exito';
-				this.message = 'Usuario actualizado';
+				this.message = resp.data.apiaudiophoneusermessage;
 
 				this.setState({ showToast: true });
 			})
@@ -115,7 +115,7 @@ class ProfilePage extends Component {
 						component={ FormProfileComponent.FormProfileComponent } 
 						onSubmit={ this.getFormData }
 						initialValues={ this.user }
-						validationSchema={ new ProfileSchema().getSchema() }
+						validationSchema={ new ProfileSchema().getProfileSchema() }
 						validateOnChange={ false }
 					/> 
 				</div>

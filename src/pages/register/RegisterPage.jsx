@@ -41,7 +41,7 @@ class RegisterPage extends Component {
 
 				// console.log( resp )
 				
-				this.message = 'Creación de usuario exitosa';
+				this.message = resp.data.apiaudiophoneusermessage;
 				this.action = 'Éxito';
 				
 				this.setState({ toast: true });
@@ -83,7 +83,7 @@ class RegisterPage extends Component {
 				</h2>
 				
 				<Formik 
-					validationSchema={ new ProfileSchema().getSchema() }
+					validationSchema={ new ProfileSchema().getRegisterSchema() }
 					initialValues={ new Profile() }
 					onSubmit={ this.getFormData } 
 					validateOnChange={ false }
