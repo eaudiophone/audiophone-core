@@ -31,9 +31,6 @@ class TableComponent extends Component {
 			showToast: false,
 			data: {},  // user
 		}
-
-		this.getPagination = this.getPagination.bind( this );
-		this.filterSearch = this.filterSearch.bind( this );
 	}
 
 	componentDidMount() {

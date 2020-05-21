@@ -91,6 +91,8 @@ class ProfilePage extends Component {
 				
 				this.action = 'Exito';
 				this.message = resp.data.apiaudiophoneusermessage;
+				
+				actions.resetForm();
 
 				this.setState({ showToast: true });
 			})
@@ -98,6 +100,8 @@ class ProfilePage extends Component {
 				
 				this.message = 'Error interno del servidor';
 				this.action = 'Error';
+				
+				actions.resetForm();
 
 				this.setState({ showToast: true });
 			});

@@ -2,11 +2,12 @@ import React from "react";
 import { Form, Col, Button } from "react-bootstrap";
 
 const FormProfileComponent = ( props ) => {
-  
+
   const { handleSubmit, handleChange, handleReset, values, errors } = props;
 
   return (
-    <Form className="form" onSubmit={ handleSubmit } noValidate>
+    <Form className="form" onSubmit={ handleSubmit } noValidate
+     >
       <FormInput
         title="Nombre:"
         name="apiaudiophoneusers_fullname"
@@ -104,7 +105,7 @@ const FormButtons = ({ reset })  => {
         </Button>
       </Col>
       <Col sm={6} className="d-flex flex-row justify-content-center">
-        <Button block className="button-w80" variant="primary" type="submit">
+        <Button  block className="button-w80" variant="primary" type="submit">
           Enviar
         </Button>
       </Col>
