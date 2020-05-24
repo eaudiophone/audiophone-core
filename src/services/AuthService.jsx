@@ -23,15 +23,27 @@ class AuthService {
 			password: login.audiophoneusers_password
 		};
 
-		return this.backendService.logIn('oauth/token', login );
+		return this.backendService.logIn('oauth/token', login )
+			.then( resp => {
+
+				const { access_token, token_type } = resp.data;
+
+				sessionStorage.setItem('token', JSON.stringify({ 
+					token: access_token, 
+					type: token_type 
+				}));
+
+				return true;
+			})
+			.catch( error => false );
 	}
 
 	logOut() {
-		return localStorage.removeItem('token');
+		return sessionStorage.removeItem('token');
 	}
 
 	isLogged() {
-		return localStorage.getItem('token') ? true : false;
+		return sessionStorage.getItem('token') ? true : false;
 	}
 }
 

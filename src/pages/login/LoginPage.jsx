@@ -6,11 +6,9 @@ import RedirectService  from './../../services/RedirectService';
 import LoginSchema from './LoginSchema';
 import Login from './../../models/LoginModels';
 import './LoginPage.css';
-import BackendService from './../../services/BackendService';
 
 class LoginPage extends Component {
 
-  backendService = new BackendService();
   authService =  new AuthService();
 
 	constructor( props ) {
@@ -28,19 +26,17 @@ class LoginPage extends Component {
 
 	  actions.setSubmitting( false );
 
-    this.authService.logIn( value )
-      .then( resp => console.log( resp ) )
-      .catch( error => console.log( error ))
-        
-    // this.setState({ redirect: true });
-	}
+    this.authService.logIn( value ).then( resp => {
 
-    redirectTo() {
+        if ( resp ) {
+          this.setState({ redirect: true }); 
         
-      if ( this.state.redirect ) {
-         return <RedirectService route="/profile" />
-      }
-    }
+        } else {
+          console.log('credenciales incorrectas');
+        
+        }
+      }); 
+	}
 
     getEmailInput( value, handleChange, error ) {
     	
@@ -143,6 +139,8 @@ class LoginPage extends Component {
 
         <Container className="container-login">
 
+          { this.state.redirect && <RedirectService route="/profile" /> }
+
             <Formik
                 initialValues={ new Login( localStorage.getItem('email') ) }
                 validationSchema={ new LoginSchema().getSchema() }
@@ -175,8 +173,6 @@ class LoginPage extends Component {
                    </Form>
               )}
             </Formik>
-
-            { this.redirectTo() } 
 
         </Container>
      	);
