@@ -1,18 +1,30 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// pages
-const HomePage = lazy(() => import('./../pages/home/HomePage') );
-const LoginPage = lazy(() => import('./../pages/login/LoginPage'));
-const RegisterPage = lazy(() => import('./../pages/register/RegisterPage'));
+import { rootRoutes } from './RoutesList';
+// import AuthService from './../services/AuthService';
+// import RedirectService from './../services/RedirectService';
 
 const AppRoutes = () => (
 
 	<Suspense fallback={ <div>Loading...</div> }>
 		<Switch>
-			<Route path="/register" component={ RegisterPage } />
-			<Route path="/login" component={ LoginPage } />
-			<Route path="/" component={ HomePage } />
+			{ 
+				rootRoutes.map( ( route, index ) => (
+					<Route key={ index } path={ route.path } component={ route.component } />
+				 /* 
+				 		<Route key={ index } path={ route.path } render={ () => {
+					
+						if ( new !AuthService().isLogged() ) {
+							return route.component
+						} else {
+							<RedirectService route="/profile" />
+						}
+					}} /> 
+
+				*/ 
+				)) 
+			}
 		</Switch>
 	</Suspense>
 );

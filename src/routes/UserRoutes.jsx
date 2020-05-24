@@ -1,20 +1,25 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import NewEventPage from './../pages/events/NewEventPage';
-import EditEventPage from './../pages/events/EditEventPage';
-import IndexEventPage from './../pages/events/IndexEventPage';
-import ProfilePage from './../pages/profile/ProfilePage';
-// import NotPageFound from './../pages/notfound/NotFoundPage';
+import { routesApp } from './RoutesList';
 
 const UserRoutes = () => (
 
 	<Switch>
-		<Route path="/event/new" component={ NewEventPage } />
-		<Route path="/event/:id" component={ EditEventPage } />
-		<Route path="/event" component={ IndexEventPage } />
-		<Route path="/profile" component={ ProfilePage } />
-		{ /* <Route path="*" component={ NotPageFound } /> */}
+		{ 
+			routesApp.filter( ( route ) => !route.admin ).map(( route, index ) => (
+				<Route path={ route.path } component={ route.component } key={ index } />
+				/* <Route key={ index } path={ route.path } render={ () => {
+					
+						if ( new AuthService().isLogged() ) {
+							return route.component
+						} else {
+							<RedirectService route="/login" />
+						}
+					}} /> 
+				*/
+			)) 
+		}
 	</Switch>
 ); 
 

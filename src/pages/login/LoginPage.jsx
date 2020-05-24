@@ -11,6 +11,7 @@ import BackendService from './../../services/BackendService';
 class LoginPage extends Component {
 
   backendService = new BackendService();
+  authService =  new AuthService();
 
 	constructor( props ) {
 		
@@ -27,10 +28,11 @@ class LoginPage extends Component {
 
 	  actions.setSubmitting( false );
 
-    let authService = new AuthService();
-    authService.logIn( value, value.remember );
+    this.authService.logIn( value )
+      .then( resp => console.log( resp ) )
+      .catch( error => console.log( error ))
         
-    this.setState({ redirect: true });
+    // this.setState({ redirect: true });
 	}
 
     redirectTo() {

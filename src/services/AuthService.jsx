@@ -4,9 +4,9 @@ class AuthService {
 
 	backendService = new BackendService();
 
-	logIn( login, rememberMe ) {
+	logIn( login ) {
 
-		if ( rememberMe ) { 		
+		if ( login.remember ) { 		
 			
 			localStorage.setItem( 'email', login.audiophoneusers_email ); 
 
@@ -16,17 +16,22 @@ class AuthService {
 			
 		}
 
-		let request = {
-			audiophoneusers_email: login.audiophoneusers_email,
-			audiophoneusers_password: login.audiophoneusers_password
-		}
+		delete login.remember;
 
-		this.backendService.postClient( request );
+		login = {
+			username: login.audiophoneusers_email,
+			password: login.audiophoneusers_password
+		};
+
+		return this.backendService.logIn('oauth/token', login );
 	}
 
 	logOut() {
-		// localStorage.removeItem('logged');
-		console.log('salida de la aplicación');
+		return localStorage.removeItem('token');
+	}
+
+	isLogged() {
+		return localStorage.getItem('token') ? true : false;
 	}
 }
 

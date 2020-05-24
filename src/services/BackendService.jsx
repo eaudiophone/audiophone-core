@@ -1,5 +1,5 @@
 // aqui se realizan todas las peticiones al API:
-import URL_SERVER from './../enviroment';
+import { URL_SERVER, CLIENT_SECRET } from './../enviroment';
 import axios from 'axios';
 
 class BackendService {
@@ -51,6 +51,24 @@ class BackendService {
 			method: 'DELETE',
 			url: apiUrl,		
 		};
+
+		return await axios( this.request );
+	}
+
+	async logIn( apiUrl, data ) {
+
+		this.request = {
+			...this.request,
+			baseURL: 'http://localhost:8000/',
+			method: 'POST',
+			url: apiUrl,
+			data: {
+				...data,
+				...CLIENT_SECRET
+			}
+		}
+
+		console.log( this.request );
 
 		return await axios( this.request );
 	}
