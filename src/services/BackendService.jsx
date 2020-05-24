@@ -59,7 +59,6 @@ class BackendService {
 
 		this.request = {
 			...this.request,
-			baseURL: 'http://localhost:8000/',
 			method: 'POST',
 			url: apiUrl,
 			data: {
