@@ -7,11 +7,11 @@ const ToastComponent = ({ showToast, content, context, onHide }) => {
 
 		return (
 			<Toast 
-					className="toast-style success-toast" 
-					delay={ 2000 }
-					onClose={ () => onHide() }
-					show={ showToast }
-					autohide
+				className="toast-style success-toast" 
+				delay={ 2000 }
+				onClose={ () => onHide() }
+				show={ showToast }
+				autohide
 			>
 				<Toast.Body>
 					

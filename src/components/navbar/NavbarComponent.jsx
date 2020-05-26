@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
+
+import AuthService from './../../services/AuthService';
+ 
 import './NavbarComponent.css';
 
 class NavbarComponent extends Component {
+
+	authService = new AuthService();
 
 	validateProfile() {
 
@@ -41,7 +46,9 @@ class NavbarComponent extends Component {
 				}
 				{ this.validateProfile() }
 				<Nav.Link href="/profile">Perfil</Nav.Link>
-				<Nav.Link href="/login">Salir</Nav.Link>
+				<Nav.Link 
+					href="/login" 
+					onSelect={ () => this.authService.logOut() }>Salir</Nav.Link>
 			</Nav>
 		</Navbar.Collapse>
 		);

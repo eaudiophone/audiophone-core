@@ -4,10 +4,15 @@ import axios from 'axios';
 
 class BackendService {
 
-	request = {
-		baseURL: URL_SERVER.enviroment,
-		responseType: 'json',
-	};
+	constructor() {
+		
+		this.token = sessionStorage.getItem('token') || '';
+		
+		this.request = {
+			baseURL: URL_SERVER.enviroment,
+			responseType: 'json',
+		};
+	}
 
 	async getClient( apiUrl ) {
 		
@@ -20,16 +25,21 @@ class BackendService {
 		return await axios( this.request );
 	}
 
-	async postClient( apiUrl, data ) {
+	async postClient( apiUrl, data = null ) {
 
-	 this.request = {
-	 	...this.request,
-		method: 'POST',
-		url: apiUrl,
-		data,
-	};
+		this.request = {
+ 			...this.request,
+			method: 'POST',
+			url: apiUrl,
+			data: data !== null ? data : null,
+			headers: { 
+				authorization: 'Bearer ' + this.token
+			}
+		};
 		
 		return await axios( this.request );
+
+	
 	}
 
 	async putClient( apiUrl, data ) {

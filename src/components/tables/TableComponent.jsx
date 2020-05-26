@@ -11,7 +11,7 @@ import ModalProfileComponent from '../../components/modal/modal-profile/ModalPro
 
 import { getDateWithHour } from './../../util-functions/date-format';
 
-class TableComponent extends Component {
+class TableComponent extends Component { 
 
 	backendService = new BackendService();
 	message = '';

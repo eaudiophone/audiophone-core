@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
+
 import AuthService from './../../services/AuthService'; 
 import RedirectService  from './../../services/RedirectService';
+
 import LoginSchema from './LoginSchema';
 import Login from './../../models/LoginModels';
+
+import ToastComponent from './../../components/toasts/ToastComponent';
+
 import './LoginPage.css';
 
 class LoginPage extends Component {
 
   authService =  new AuthService();
+  message = '';
+  action = '';
 
 	constructor( props ) {
 		
 		super( props );
 
 		this.state = {  
-      redirect: false
+      redirect: false,
+      showToast: false
 		};
 
 		this.getFormData = this.getFormData.bind( this ); 
@@ -32,8 +40,11 @@ class LoginPage extends Component {
           this.setState({ redirect: true }); 
         
         } else {
-          console.log('credenciales incorrectas');
-        
+          
+          this.message = 'credenciales incorrectas';
+          this.action = 'Error';
+
+          this.setState({ showToast: true })
         }
       }); 
 	}
@@ -114,18 +125,18 @@ class LoginPage extends Component {
 
           <div>
               <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg" 
-                  block
+                type="submit"
+                variant="primary"
+                size="lg" 
+                block
               >
                   Iniciar sesión
               </Button>
               <Button
-                  onClick={ handleReset }
-                  variant="secondary"
-                  size="lg"
-                  block
+                onClick={ handleReset }
+                variant="secondary"
+                size="lg"
+                block
               >
                   Cancelar
               </Button>
@@ -139,7 +150,14 @@ class LoginPage extends Component {
 
         <Container className="container-login">
 
-          { this.state.redirect && <RedirectService route="/profile" /> }
+          { this.state.redirect && ( <RedirectService route="/profile" /> ) }
+          
+          <ToastComponent 
+            showToast={ this.state.showToast } 
+            content={ this.message } 
+            context={ this.action }
+            onHide={ () => this.setState({ showToast: false }) }
+           />
 
             <Formik
                 initialValues={ new Login( localStorage.getItem('email') ) }
@@ -158,7 +176,7 @@ class LoginPage extends Component {
                     <h2 className="mb-3">Estudio Audiophone</h2>
                     <h3 className="mb-3 text-center">
                       Sign In
-                    </h3>
+                    </h3>                  
 
                     { this.getEmailInput( values.audiophoneusers_email, handleChange, errors.audiophoneusers_email ) }
                     { this.getPasswordInput( values.audiophoneusers_password, handleChange, errors.audiophoneusers_password ) }

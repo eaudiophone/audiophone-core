@@ -26,12 +26,9 @@ class AuthService {
 		return this.backendService.logIn('oauth/token', login )
 			.then( resp => {
 
-				const { access_token, token_type } = resp.data;
+				const { access_token } = resp.data;
 
-				sessionStorage.setItem('token', JSON.stringify({ 
-					token: access_token, 
-					type: token_type 
-				}));
+				sessionStorage.setItem('token', access_token );
 
 				return true;
 			})
