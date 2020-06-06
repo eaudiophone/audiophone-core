@@ -7,7 +7,7 @@ class BackendService {
 	constructor() {
 		
 		this.token = sessionStorage.getItem('token') || '';
-		
+
 		this.request = {
 			baseURL: URL_SERVER.enviroment,
 			responseType: 'json',
@@ -78,9 +78,6 @@ class BackendService {
 		}
 
 		return await axios( this.request );
-	}
-
-	async testData() {
 	}
 }
 
