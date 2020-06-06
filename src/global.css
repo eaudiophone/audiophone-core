@@ -31,6 +31,13 @@
 	color: white;
 }
 
+/* loading */
+.loading {
+	position: absolute;
+	top: 42vh;
+	left: 50vw;
+}
+
 table>tbody>tr>td {
 	font-size: 14px;
 }

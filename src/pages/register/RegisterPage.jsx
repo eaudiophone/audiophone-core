@@ -26,7 +26,8 @@ class RegisterPage extends Component {
 
 		this.state = { 
 			redirect: false,
-			toast: false 
+			toast: false,
+			loading: false 
 		};
 
 		this.getFormData = this.getFormData.bind( this );
@@ -35,7 +36,9 @@ class RegisterPage extends Component {
 	getFormData( values, actions ) {
 		
 		actions.setSubmitting( false );
-	
+
+		this.setState({ loading: true });
+
 		this.backendService.postClient( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
 
@@ -44,10 +47,10 @@ class RegisterPage extends Component {
 				this.message = resp.data.apiaudiophoneusermessage;
 				this.action = 'Éxito';
 				
-				this.setState({ toast: true });
+				this.setState({ toast: true, loading: false });
 
 				setTimeout( () => {
-					this.setState({ redirect: true });
+					this.setState({ redirect: true, });
 				}, 2000 );
 
 			})
@@ -58,7 +61,7 @@ class RegisterPage extends Component {
 				this.message = 'Ha ocurrido un imprevisto';
 				this.action = 'Error'
 
-				this.setState({ toast: true });
+				this.setState({ toast: true, loading: false });
 			});
 
 	}
@@ -70,6 +73,7 @@ class RegisterPage extends Component {
 			<Container className="container-register">
 
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				{ this.state.loading && ( <i className="loading fa-spin fa-2x fas fa-spinner"></i> ) }
 
 				<ToastComponent
 					showToast={ this.state.toast }    

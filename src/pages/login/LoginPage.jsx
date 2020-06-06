@@ -24,7 +24,8 @@ class LoginPage extends Component {
 
 		this.state = {  
       redirect: false,
-      showToast: false
+      showToast: false,
+      loading: false
 		};
 
 		this.getFormData = this.getFormData.bind( this ); 
@@ -34,19 +35,25 @@ class LoginPage extends Component {
 
 	  actions.setSubmitting( false );
 
-    this.authService.logIn( value ).then( resp => {
+    this.setState({ loading: true });
+
+    setTimeout( () => {
+
+      this.authService.logIn( value ).then( resp => {
 
         if ( resp ) {
-          this.setState({ redirect: true }); 
+          this.setState({ redirect: true, loading: false }); 
         
         } else {
           
           this.message = 'credenciales incorrectas';
           this.action = 'Error';
 
-          this.setState({ showToast: true })
+          this.setState({ showToast: true, loading: false });
         }
       }); 
+
+    }, 1000 );
 	}
 
     getEmailInput( value, handleChange, error ) {
@@ -124,14 +131,8 @@ class LoginPage extends Component {
         return (
 
           <div>
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg" 
-                block
-              >
-                  Iniciar sesión
-              </Button>
+            { this.showButton() }
+              
               <Button
                 onClick={ handleReset }
                 variant="secondary"
@@ -142,6 +143,25 @@ class LoginPage extends Component {
               </Button>
           </div>
         );
+    }
+
+    showButton() {
+
+      if ( !this.state.loading ) {
+        return (
+          <Button type="submit" variant="primary" size="lg" block>
+            Iniciar sesión
+          </Button>
+        );
+      }
+
+      return (
+        <Button variant="primary" size="lg" block disabled>
+          <i className="fas fa-spinner fa-spin mr-2"></i>
+          Iniciar sesión
+        </Button>
+      );
+
     }
 
   	render() {
