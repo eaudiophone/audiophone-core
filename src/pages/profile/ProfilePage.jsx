@@ -3,13 +3,9 @@ import React, { Component } from 'react';
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 
 import { Image, Nav } from 'react-bootstrap';
-import { Formik } from 'formik';
 
-import ProfileSchema from '../../components/form/profile-form/ProfileSchema';
 import Profile from '../../models/ProfileModels';
-
 import BackendService from './../../services/BackendService';
-
 import ToastComponent from './../../components/toasts/ToastComponent';
 
 import './ProfilePage.css';
@@ -24,7 +20,10 @@ class ProfilePage extends Component {
 
 		super( props );
 
-		this.state = { showToast: false };
+		this.state = { 
+			showToast: false, 
+			loading: false
+		};
 
 		this.getFormData = this.getFormData.bind( this );
 
@@ -86,7 +85,11 @@ class ProfilePage extends Component {
 
 		actions.setSubmitting( false );
 
-		this.backendService.putClient(`apiaudiophoneuser/update/6`, values )
+		this.setState({ loading: true })
+
+		setTimeout( () => {
+
+			this.backendService.putClient(`apiaudiophoneuser/update/11`, values )
 			.then( resp => {
 				
 				this.action = 'Exito';
@@ -94,7 +97,7 @@ class ProfilePage extends Component {
 				
 				actions.resetForm();
 
-				this.setState({ showToast: true });
+				this.setState({ showToast: true, loading: false });
 			})
 			.catch( error => {
 				
@@ -103,8 +106,10 @@ class ProfilePage extends Component {
 				
 				actions.resetForm();
 
-				this.setState({ showToast: true });
+				this.setState({ showToast: true, loading: false });
 			});
+
+		}, 1000 );
 	}
 
 	render() {
@@ -115,13 +120,11 @@ class ProfilePage extends Component {
 				{ this.getHeader() }
 				{ this.getTabs() }
 				<div>
-					<Formik
-						component={ FormProfileComponent.FormProfileComponent } 
-						onSubmit={ this.getFormData }
-						initialValues={ this.user }
-						validationSchema={ new ProfileSchema().getProfileSchema() }
-						validateOnChange={ false }
-					/> 
+					<FormProfileComponent.FormProfileComponent 
+						profile={ this.user }
+						getFormData={ this.getFormData }
+						loading={ this.state.loading }
+					/>
 				</div>
 				<ToastComponent 
 					showToast={ this.state.showToast }

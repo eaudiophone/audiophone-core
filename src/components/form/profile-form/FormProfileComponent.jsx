@@ -5,13 +5,13 @@ import { Formik } from 'formik';
 import Profile from './../../../models/ProfileModels';
 import ProfileSchema from './ProfileSchema';
 
-const FormProfileComponent = ({ loading, getFormData }) => {
+const FormProfileComponent = ({ loading, getFormData, profile = null }) => {
 
   return (
 
     <Formik 
       validationSchema={ new ProfileSchema().getRegisterSchema() }
-      initialValues={ new Profile() }
+      initialValues={ profile === null ? new Profile() : profile }
       onSubmit={ getFormData } 
       validateOnChange={ false }
     >
