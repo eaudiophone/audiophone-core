@@ -1,36 +1,49 @@
 import React from "react";
 import { Form, Col, Button } from "react-bootstrap";
+import { Formik } from 'formik';
 
-const FormProfileComponent = ( props ) => {
+import Profile from './../../../models/ProfileModels';
+import ProfileSchema from './ProfileSchema';
 
-  const { handleSubmit, handleChange, handleReset, values, errors } = props;
+const FormProfileComponent = ({ loading, getFormData }) => {
 
   return (
-    <Form className="form" onSubmit={ handleSubmit } noValidate
-     >
-      <FormInput
-        title="Nombre:"
-        name="apiaudiophoneusers_fullname"
-        value={ values.apiaudiophoneusers_fullname }
-        error={ errors.apiaudiophoneusers_fullname }
-        change={ handleChange }
-      />
-      <FormInput
-        title="Email:"
-        name="apiaudiophoneusers_email"
-        value={ values.apiaudiophoneusers_email }
-        error={ errors.apiaudiophoneusers_email }
-        change={ handleChange }
-      />
-      <FormPassword
-        title="Contraseña:"
-        name="apiaudiophoneusers_password"
-        value={ values.apiaudiophoneusers_password }
-        error={ errors.apiaudiophoneusers_password }
-        change={ handleChange }
-      />
-      <FormButtons reset={ handleReset } />
-    </Form>
+
+    <Formik 
+      validationSchema={ new ProfileSchema().getRegisterSchema() }
+      initialValues={ new Profile() }
+      onSubmit={ getFormData } 
+      validateOnChange={ false }
+    >
+      { ({ handleSubmit, handleChange, handleReset, values, errors }) => (
+
+          <Form className="form" onSubmit={ handleSubmit } noValidate>
+            <FormInput
+              title="Nombre:"
+              name="apiaudiophoneusers_fullname"
+              value={ values.apiaudiophoneusers_fullname }
+              error={ errors.apiaudiophoneusers_fullname }
+              change={ handleChange }
+            />
+            <FormInput
+              title="Email:"
+              name="apiaudiophoneusers_email"
+              value={ values.apiaudiophoneusers_email }
+              error={ errors.apiaudiophoneusers_email }
+              change={ handleChange }
+            />
+            <FormPassword
+              title="Contraseña:"
+              name="apiaudiophoneusers_password"
+              value={ values.apiaudiophoneusers_password }
+              error={ errors.apiaudiophoneusers_password }
+              change={ handleChange }
+            />
+            <FormButtons reset={ handleReset } loading={ loading } />
+          </Form>
+        ) 
+      }     
+    </Formik>
   );
 };
 
@@ -89,7 +102,7 @@ const FormInputDate = ({ title, value, change, name, error }) => {
   );
 };
 
-const FormButtons = ({ reset })  => {
+const FormButtons = ({ reset, loading = false })  => {
 
   return (
     <Form.Row className="mt-5">
@@ -105,9 +118,20 @@ const FormButtons = ({ reset })  => {
         </Button>
       </Col>
       <Col sm={6} className="d-flex flex-row justify-content-center">
-        <Button  block className="button-w80" variant="primary" type="submit">
-          Enviar
-        </Button>
+        { !loading && (
+          <Button  block className="button-w80" variant="primary" type="submit">
+            Enviar
+          </Button>
+          ) 
+        }
+
+        { loading && (
+          <Button  block disabled className="button-w80" variant="primary">
+            <i className="fas fa-spinner fa-spin mr-2"></i>
+            Enviar
+          </Button>
+          ) 
+        }
       </Col>
     </Form.Row>
   );

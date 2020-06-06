@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import { Formik } from 'formik';
 
 import BackendService from './../../services/BackendService';
 import RedirectService from './../../services/RedirectService';
-
-import Profile from './../../models/ProfileModels';
-import ProfileSchema from './../../components/form/profile-form/ProfileSchema';
 
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import ToastComponent from '../../components/toasts/ToastComponent'; 
@@ -51,7 +47,7 @@ class RegisterPage extends Component {
 
 				setTimeout( () => {
 					this.setState({ redirect: true, });
-				}, 2000 );
+				}, 1000 );
 
 			})
 			.catch( error => {
@@ -73,7 +69,6 @@ class RegisterPage extends Component {
 			<Container className="container-register">
 
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
-				{ this.state.loading && ( <i className="loading fa-spin fa-2x fas fa-spinner"></i> ) }
 
 				<ToastComponent
 					showToast={ this.state.toast }    
@@ -86,12 +81,9 @@ class RegisterPage extends Component {
 					Registro de usuarios
 				</h2>
 				
-				<Formik 
-					validationSchema={ new ProfileSchema().getRegisterSchema() }
-					initialValues={ new Profile() }
-					onSubmit={ this.getFormData } 
-					validateOnChange={ false }
-					component={ FormProfileComponent.FormProfileComponent }
+				<FormProfileComponent.FormProfileComponent
+					loading={ this.state.loading } 
+					getFormData={ this.getFormData } 
 				/>
 
 				<p className="mt-5 text-center">
