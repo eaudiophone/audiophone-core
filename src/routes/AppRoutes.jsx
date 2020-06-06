@@ -2,8 +2,9 @@ import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { rootRoutes } from './RoutesList';
-// import AuthService from './../services/AuthService';
-// import RedirectService from './../services/RedirectService';
+
+// import { LoginGuard } from '../services/LoginGuard';
+
 
 const AppRoutes = () => (
 
@@ -13,15 +14,7 @@ const AppRoutes = () => (
 				rootRoutes.map( ( route, index ) => (
 					<Route key={ index } path={ route.path } component={ route.component } />
 				 /* 
-				 		<Route key={ index } path={ route.path } render={ () => {
-					
-						if ( new !AuthService().isLogged() ) {
-							return route.component
-						} else {
-							<RedirectService route="/profile" />
-						}
-					}} /> 
-
+				 	<Route key={ index } path={ route.path } render={ () => LoginGuard( route.component ) }  /> 
 				*/ 
 				)) 
 			}
