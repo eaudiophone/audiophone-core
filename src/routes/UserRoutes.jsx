@@ -7,19 +7,14 @@ const UserRoutes = () => (
 
 	<Switch>
 		{ 
-			routesApp.filter( ( route ) => !route.admin ).map(( route, index ) => (
+			routesApp.filter( ( route ) => route.admin === false ).map(( route, index ) => (
 				<Route path={ route.path } component={ route.component } key={ index } />
-				/* <Route key={ index } path={ route.path } render={ () => {
-					
-						if ( new AuthService().isLogged() ) {
-							return route.component
-						} else {
-							<RedirectService route="/login" />
-						}
-					}} /> 
-				*/
 			)) 
 		}
+		<Route 
+			path={ routesApp[routesApp.length - 1].path } 
+			component={ routesApp[ routesApp.length - 1 ].component } 
+		/>
 	</Switch>
 ); 
 

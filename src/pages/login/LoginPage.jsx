@@ -15,12 +15,16 @@ class LoginPage extends Component {
   message = '';
   action = '';
 
+  componentDidMount() {
+    this.setState({ logged: this.authService.isLogged() })
+  }
+
 	constructor( props ) {
 		
 		super( props );
 
-		this.state = {  
-      redirect: false,
+		this.state = {
+      redirect: false,  
       showToast: false,
       loading: false
 		};

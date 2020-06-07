@@ -7,14 +7,18 @@ import RedirectService from './../../services/RedirectService';
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import ToastComponent from '../../components/toasts/ToastComponent'; 
 
+import AuthService from './../../services/AuthService';
+
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
 
 	backendService = new BackendService();
+	authService = new AuthService();
 
 	message = '';
 	action = '';
+
 
 	constructor( props ) {
 
@@ -23,7 +27,7 @@ class RegisterPage extends Component {
 		this.state = { 
 			redirect: false,
 			toast: false,
-			loading: false 
+			loading: false,
 		};
 
 		this.getFormData = this.getFormData.bind( this );

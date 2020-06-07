@@ -9,13 +9,14 @@ const AdminRoutes = () => (
 
 	<Switch>
 		{ 
-			routesApp.filter( ( route ) => route.admin ).map(( route, index ) => (
+			routesApp.filter( ( route ) => route.admin === true ).map(( route, index ) => (
 				<Route path={ route.path } component={ route.component } key={ index } />
-				/*
-					<Route key={ index } path={ route.path } render={ () => NoLoginGuard( route.component ) } /> 
-				*/
 			)) 
 		}
+		<Route 
+			path={ routesApp[routesApp.length - 1].path } 
+			component={ routesApp[ routesApp.length - 1 ].component } 
+		/>
 	</Switch>
 ); 
 
