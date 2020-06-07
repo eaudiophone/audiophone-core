@@ -6,7 +6,7 @@ class BackendService {
 
 	constructor() {
 		
-		this.token = sessionStorage.getItem('token') || '';
+		this.token = JSON.parse( sessionStorage.getItem('token'));
 
 		this.request = {
 			baseURL: URL_SERVER.enviroment,
@@ -33,7 +33,7 @@ class BackendService {
 			url: apiUrl,
 			data: data !== null ? data : null,
 			headers: { 
-				authorization: 'Bearer ' + this.token
+				authorization: 'Bearer ' + this.token.access_token
 			}
 		};
 		
