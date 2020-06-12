@@ -15,6 +15,7 @@ class ProfilePage extends Component {
 	backendService = new BackendService();
 	message = '';
 	action = '';
+	id = null;
 
 	constructor( props ) {
 
@@ -28,9 +29,11 @@ class ProfilePage extends Component {
 		this.getFormData = this.getFormData.bind( this );
 
 		this.user = new Profile(
-			'Gabriel Martinez',
-			'gabmart1995@gmail.com'
+			JSON.parse( sessionStorage.getItem('logged')).fullname,
+			JSON.parse( sessionStorage.getItem('logged')).email
 		);
+
+		this.id = JSON.parse( sessionStorage.getItem('logged')).id;
 	}
 
 	getTabs() {
@@ -89,7 +92,7 @@ class ProfilePage extends Component {
 
 		setTimeout( () => {
 
-			this.backendService.putClient(`apiaudiophoneuser/update/11`, values )
+			this.backendService.putClient(`apiaudiophoneuser/update/${ this.id }`, values )
 			.then( resp => {
 				
 				this.action = 'Exito';

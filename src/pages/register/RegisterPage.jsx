@@ -39,7 +39,7 @@ class RegisterPage extends Component {
 
 		this.setState({ loading: true });
 
-		this.backendService.postClient( 'apiaudiophoneuser/store',  values )
+		this.backendService.post( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
 
 				// console.log( resp )

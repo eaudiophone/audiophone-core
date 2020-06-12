@@ -6,7 +6,7 @@ class BackendService {
 
 	constructor() {
 		
-		this.token = JSON.parse( sessionStorage.getItem('token'));
+		this.token = JSON.parse( sessionStorage.getItem('logged'));
 
 		this.request = {
 			baseURL: URL_SERVER.enviroment,
@@ -20,6 +20,9 @@ class BackendService {
 			...this.request,
 			method: 'GET',
 			url: apiUrl,
+			headers: {
+				authorization: 'Bearer ' + this.token.access_token
+			}
 		};
 
 		return await axios( this.request );
@@ -49,6 +52,9 @@ class BackendService {
 			method: 'PUT',
 			url: apiUrl,
 			data,
+			headers: {
+				authorization: 'Bearer ' + this.token.access_token
+			}
 		}
 
 		return await axios( this.request );
@@ -59,7 +65,10 @@ class BackendService {
 		this.request = {
 			...this.request,
 			method: 'DELETE',
-			url: apiUrl,		
+			url: apiUrl,
+			headers: {
+				authorization: 'Bearer ' + this.token.access_token
+			}		
 		};
 
 		return await axios( this.request );
@@ -75,6 +84,18 @@ class BackendService {
 				...data,
 				...CLIENT_SECRET
 			}
+		}
+
+		return await axios( this.request );
+	}
+
+	async post( apiUrl, data = null ) {
+
+		this.request = {
+			...this.request,
+			method: 'POST',
+			url: apiUrl,
+			data: data !== null ? data : null
 		}
 
 		return await axios( this.request );

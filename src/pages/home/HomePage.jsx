@@ -11,7 +11,7 @@ class HomePage extends Component {
 
 	render() {
 
-		const ROLE = 'ADMIN_ROLE';
+		const ROLE = JSON.parse( sessionStorage.getItem('logged') ).role;
 
 		return (
 

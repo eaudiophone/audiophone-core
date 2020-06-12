@@ -23,12 +23,23 @@ class AuthService {
 			password: login.audiophoneusers_password
 		};
 
-		return this.backendService.logIn('oauth/token', login )
+		return this.backendService.logIn('login', login )
 			.then( resp => {
 
-				const { access_token, refresh_token } = resp.data;
+				console.log( resp );
 
-				sessionStorage.setItem('token', JSON.stringify({  access_token, refresh_token }) );
+				const logged = {
+					email: resp.data.apiaudiophoneusers_email,
+					fullname: resp.data.apiaudiophoneusers_fullname,
+					id: resp.data.apiaudiophoneusers_id,
+					role: resp.data.apiaudiophoneusers_role,
+					access_token: resp.data.apiToken.access_token,
+					expires_in: resp.data.apiToken.expires_in,
+					refresh_token: resp.data.apiToken.access_token 
+				};
+
+	
+				sessionStorage.setItem('logged', JSON.stringify( logged ) );
 
 				return true;
 			})
@@ -36,11 +47,11 @@ class AuthService {
 	}
 
 	logOut() {
-		return sessionStorage.removeItem('token');
+		return sessionStorage.removeItem('logged');
 	}
 
 	isLogged() {
-		return sessionStorage.getItem('token') ? true : false;
+		return sessionStorage.getItem('logged') ? true : false;
 	}
 }
 
