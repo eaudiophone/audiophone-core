@@ -23,15 +23,14 @@ class ProfilePage extends Component {
 
 		this.state = { 
 			showToast: false, 
-			loading: false
+			loading: false,
+			user: new Profile(
+				JSON.parse( sessionStorage.getItem('logged')).fullname,
+				JSON.parse( sessionStorage.getItem('logged')).email
+			)
 		};
 
 		this.getFormData = this.getFormData.bind( this );
-
-		this.user = new Profile(
-			JSON.parse( sessionStorage.getItem('logged')).fullname,
-			JSON.parse( sessionStorage.getItem('logged')).email
-		);
 
 		this.id = JSON.parse( sessionStorage.getItem('logged')).id;
 	}
@@ -88,6 +87,8 @@ class ProfilePage extends Component {
 
 		actions.setSubmitting( false );
 
+		// console.log( actions );
+
 		this.setState({ loading: true })
 
 		setTimeout( () => {
@@ -95,12 +96,33 @@ class ProfilePage extends Component {
 			this.backendService.putClient(`apiaudiophoneuser/update/${ this.id }`, values )
 			.then( resp => {
 				
+				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
+			
 				this.action = 'Exito';
-				this.message = resp.data.apiaudiophoneusermessage;
-				
-				actions.resetForm();
+				this.message = apiaudiophoneusermessage;
 
-				this.setState({ showToast: true, loading: false });
+				let logged = JSON.parse( sessionStorage.getItem('logged'));
+
+				logged = {
+					...logged,
+					email: apiaudiophoneuserupdate.apiaudiophoneusers_email,
+					fullname: apiaudiophoneuserupdate.apiaudiophoneusers_fullname,
+				}
+
+				sessionStorage.setItem('logged', JSON.stringify( logged ) );
+				
+				actions.setFieldValue( 'apiaudiophoneusers_password', '' );
+
+				this.setState({ 
+					showToast: true, 
+					loading: false, 
+					user: new Profile(
+						JSON.parse( sessionStorage.getItem('logged')).fullname,
+						JSON.parse( sessionStorage.getItem('logged')).email
+					) 
+				});
+
+				// actions.resetForm();
 			})
 			.catch( error => {
 				
@@ -124,9 +146,10 @@ class ProfilePage extends Component {
 				{ this.getTabs() }
 				<div>
 					<FormProfileComponent.FormProfileComponent 
-						profile={ this.user }
+						profile={ this.state.user }
 						getFormData={ this.getFormData }
 						loading={ this.state.loading }
+						register={ false }
 					/>
 				</div>
 				<ToastComponent 

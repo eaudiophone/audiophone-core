@@ -1,6 +1,6 @@
 import { string, object } from 'yup';
 
-class PorfileSchema {
+class ProfileSchema {
 
 	registerSchema = null;
 	profileSchema = null;
@@ -59,7 +59,7 @@ class PorfileSchema {
 			apiaudiophoneusers_password: string()
 				.min( 8, this.validationMessages.string.min( 8 ) )
 		});
-	} 
+	}
 
 	getRegisterSchema() {
 		return this.registerSchema;
@@ -75,4 +75,4 @@ class PorfileSchema {
 }
 
 
-export default PorfileSchema;
+export default ProfileSchema;

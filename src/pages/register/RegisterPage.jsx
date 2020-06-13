@@ -88,6 +88,7 @@ class RegisterPage extends Component {
 				<FormProfileComponent.FormProfileComponent
 					loading={ this.state.loading } 
 					getFormData={ this.getFormData } 
+					register={ true }
 				/>
 
 				<p className="mt-5 text-center">
