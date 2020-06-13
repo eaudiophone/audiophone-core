@@ -26,7 +26,13 @@ class AuthService {
 		return this.backendService.logIn('login', login )
 			.then( resp => {
 
-				console.log( resp );
+				if ( resp.data.status >= 400 && resp.data.status < 500 ) {
+					
+					return {
+						ok: false,
+						message: resp.data.message
+					};
+				}
 
 				const logged = {
 					email: resp.data.apiaudiophoneusers_email,
@@ -41,7 +47,11 @@ class AuthService {
 	
 				sessionStorage.setItem('logged', JSON.stringify( logged ) );
 
-				return true;
+				return {
+					ok: true,
+					message: null
+				};
+
 			})
 			.catch( error => false );
 	}

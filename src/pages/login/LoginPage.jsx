@@ -42,12 +42,12 @@ class LoginPage extends Component {
 
       this.authService.logIn( value ).then( resp => {
 
-        if ( resp ) {
+        if ( resp.ok === true ) {
           this.setState({ redirect: true, loading: false }); 
         
         } else {
           
-          this.message = 'credenciales incorrectas';
+          this.message = resp.message;
           this.action = 'Error';
 
           this.setState({ showToast: true, loading: false });
