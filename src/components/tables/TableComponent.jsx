@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import { Table, Row, Col } from 'react-bootstrap';
+import { Table, Row, Col, Button } from 'react-bootstrap';
 
 import BackendService from '../../services/BackendService';
+import AuthService from '../../services/AuthService';
 
 import ToastComponent from '../../components/toasts/ToastComponent';
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
@@ -18,6 +19,9 @@ class TableComponent extends Component {
 	action = '';
 	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
 	history = [];  // array de navegacion
+
+	AuthService = new AuthService();
+
 
 	constructor( props ) {
 
@@ -309,6 +313,7 @@ class TableComponent extends Component {
 	}
 
 	setData() {
+		
 		return this.state.users.map( ( user, index ) => (
 			<tr className="text-center" key={ user.apiaudiophoneusers_id }>
 				<td>{ user.apiaudiophoneusers_fullname }</td>
@@ -316,15 +321,23 @@ class TableComponent extends Component {
 				<td>{ user.apiaudiophoneusers_role }</td>
 				<td>{  getDateWithHour( user.created_at ) }</td>
 				<td>{ user.apiaudiophoneusers_status === 1 ? 'activo' : 'inactivo' }</td>
+
 				<td className="d-flex flex-row justify-content-around">
-					<i 
-						className="fas fa-user point" 
+					<Button 
+						variant="warning"
 						onClick={ () => this.showModal( 'edit', user ) }
-					></i> 
-					<i 
-						className="fas fa-trash point"
+						disabled={ user.apiaudiophoneusers_id === this.AuthService.getLogged().id }
+					>
+						<i className="fas fa-user point" ></i> 
+					</Button>
+
+					<Button
+						variant="danger"
 						onClick={ () => this.showModal( 'delete', user.apiaudiophoneusers_id ) }
-					></i>	
+						disabled={ user.apiaudiophoneusers_id === this.AuthService.getLogged().id }
+					>
+						<i className="fas fa-trash point"></i>		
+					</Button>
 				</td>
 			</tr> 
 		))

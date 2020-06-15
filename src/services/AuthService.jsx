@@ -63,6 +63,10 @@ class AuthService {
 	isLogged() {
 		return sessionStorage.getItem('logged') ? true : false;
 	}
+
+	getLogged() {
+		return JSON.parse( sessionStorage.getItem('logged') );
+	}
 }
 
 export default AuthService;
