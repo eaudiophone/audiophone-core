@@ -43,7 +43,7 @@ class LoginPage extends Component {
 
       this.authService.logIn( value ).then( resp => {
 
-        if ( resp.ok === true ) {
+        if ( resp.status === 200 ) { // ok
           this.setState({ redirect: true, loading: false }); 
         
         } else {

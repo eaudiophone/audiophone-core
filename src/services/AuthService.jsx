@@ -26,11 +26,12 @@ class AuthService {
 		return this.backendService.logIn('login', login )
 			.then( resp => {
 
-				if ( resp.data.status >= 400 && resp.data.status < 500 ) {
+				if ( this.verifyStatusServerError( resp ) ) {
 					
 					return {
 						ok: false,
-						message: resp.data.message
+						message: resp.data.message,
+						status: resp.data.status
 					};
 				}
 
@@ -44,16 +45,16 @@ class AuthService {
 					refresh_token: resp.data.apiToken.access_token 
 				};
 
-	
 				sessionStorage.setItem('logged', JSON.stringify( logged ) );
 
-				return {
+				return { // OK
 					ok: true,
-					message: null
+					message: null,
+					status: resp.data.status,
 				};
 
 			})
-			.catch( error => false );
+			.catch( error => ({ ok: false, message: 'problemas internos del servidor' }) );
 	}
 
 	logOut() {
@@ -66,6 +67,19 @@ class AuthService {
 
 	getLogged() {
 		return JSON.parse( sessionStorage.getItem('logged') );
+	}
+
+	verifyStatusServerError( resp ) {
+		
+		if ( resp.data.status >= 400 && resp.data.status < 500 ) {
+			return true;
+		
+		} else if ( resp.data.status >= 500 ) {
+			return true;
+
+		} else {
+			return false;
+		} 
 	}
 }
 
