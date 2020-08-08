@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Toast, Row, Col } from 'react-bootstrap';
 
 const ToastComponent = ({ showToast, content, context, onHide }) => {
@@ -54,6 +55,13 @@ const ToastComponent = ({ showToast, content, context, onHide }) => {
 			</Toast.Body>
 		</Toast>
 	);
+};
+
+ToastComponent.propTypes = {
+	content: PropTypes.string.isRequired,
+	context: PropTypes.string.isRequired,
+	onHide: PropTypes.func.isRequired,
+	showToast: PropTypes.bool.isRequired
 };
 
 export default ToastComponent;

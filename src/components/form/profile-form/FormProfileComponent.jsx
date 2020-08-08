@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import { Form, Col, Button } from "react-bootstrap";
 import { Formik } from 'formik';
 
@@ -49,6 +51,13 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
   );
 };
 
+FormProfileComponent.propTypes = {
+  register: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  getFormData: PropTypes.func.isRequired,
+  profile: PropTypes.instanceOf( Profile )
+};
+
 const FormPassword = ({ title, value, change, name, error }) => {
 
   return (
@@ -67,6 +76,14 @@ const FormPassword = ({ title, value, change, name, error }) => {
   );
 };
 
+FormPassword.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  error: PropTypes.string
+};
+
 const FormInput = ({  title, value, change, name, error }) => {
 
   return (
@@ -82,6 +99,14 @@ const FormInput = ({  title, value, change, name, error }) => {
       <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
     </Form.Group>
   );
+};
+
+FormInput.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  error: PropTypes.string
 };
 
 const FormInputDate = ({ title, value, change, name, error }) => {
@@ -102,6 +127,14 @@ const FormInputDate = ({ title, value, change, name, error }) => {
     </Form.Group>
 
   );
+};
+
+FormInputDate.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  error: PropTypes.string
 };
 
 const FormButtons = ({ reset, loading = false })  => {
@@ -137,6 +170,11 @@ const FormButtons = ({ reset, loading = false })  => {
       </Col>
     </Form.Row>
   );
+};
+
+FormButtons.propTypes = {
+  reset: PropTypes.func.isRequired,
+  loading: PropTypes.bool
 };
 
 export default {

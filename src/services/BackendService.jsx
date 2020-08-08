@@ -41,8 +41,6 @@ class BackendService {
 		};
 		
 		return await axios( this.request );
-
-	
 	}
 
 	async putClient( apiUrl, data ) {

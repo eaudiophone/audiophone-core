@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import { Form, Button } from "react-bootstrap";
 import { Formik } from 'formik';
 
@@ -58,6 +60,11 @@ const LoginForm = ({ loading = false, getFormData }) => {
 	);
 }
 
+LoginForm.propTypes = {
+  loading: PropTypes.bool,
+  getFormData: PropTypes.func.isRequired
+};
+
 const Register = () =>  {
   
   return (
@@ -87,6 +94,12 @@ const EmailInput = ({ value, handleChange, error }) => (
     </Form.Control.Feedback>
 	</Form.Group>
 );
+
+EmailInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  handleChange: PropTypes.func,
+  error: PropTypes.string
+};
     
 
 const PasswordInput = ({ value, handleChange, error }) => (
@@ -105,6 +118,12 @@ const PasswordInput = ({ value, handleChange, error }) => (
     </Form.Control.Feedback>
   </Form.Group>
 );
+
+PasswordInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
     
 
 const CheckboxInput = ({ value, handleChange }) => (
@@ -120,6 +139,11 @@ const CheckboxInput = ({ value, handleChange }) => (
     /> 
    </Form.Group>
 );
+
+CheckboxInput.propTypes = {
+  value: PropTypes.bool,
+  handleChange: PropTypes.func.isRequired
+};
     
 const Buttons = ({ handleReset, loading = false }) => (
 
@@ -149,6 +173,11 @@ const Buttons = ({ handleReset, loading = false }) => (
     </Button>
   </div>
 );
+
+Buttons.propTypes = {
+  handleReset: PropTypes.func.isRequired,
+  loading: PropTypes.bool
+};
    
 
 export default LoginForm;
