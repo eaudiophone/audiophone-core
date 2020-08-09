@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
-import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
-
 import { Image, Nav } from 'react-bootstrap';
 
 import Profile from '../../models/ProfileModels';
+
 import AuthService from './../../services/AuthService';
 import RedirectService from '../../services/RedirectService';
+
+import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import ToastComponent from './../../components/toasts/ToastComponent';
 
 import './ProfilePage.css';
@@ -26,15 +27,15 @@ class ProfilePage extends Component {
 			showToast: false, 
 			loading: false,
 			user: new Profile(
-				JSON.parse( sessionStorage.getItem('logged')).fullname,
-				JSON.parse( sessionStorage.getItem('logged')).email
+				this.AuthService.getLogged().fullname,
+				this.AuthService.getLogged().email
 			),
 			redirect: false
 		};
 
 		this.getFormData = this.getFormData.bind( this );
 
-		this.id = JSON.parse( sessionStorage.getItem('logged')).id;
+		this.id = this.AuthService.getLogged().id;
 	}
 
 	getTabs() {

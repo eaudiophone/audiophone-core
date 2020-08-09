@@ -161,6 +161,7 @@ const InputNumber = ({ columnSize, title, name, value, change, error }) => (
 				onChange={ change }
 				isInvalid={ !!error }
 				type="number"
+        min="1"
 			/> 
 			<Form.Control.Feedback type="invalid">
 				{ error }
@@ -281,12 +282,12 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
 
 CheckboxDays.propTypes = {
   name: PropTypes.string.isRequired,
-  values: PropTypes.array.isRequired,
+  values: PropTypes.array,
   change: PropTypes.func.isRequired,
   columnSize: PropTypes.number.isRequired,
   error: PropTypes.string,
   start: PropTypes.number.isRequired,
-  end: PropTypes.number.isRequired
+  limit: PropTypes.number.isRequired
 };
 
 const Buttons = ({ reset }) => (

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { Table, Row, Col, Button } from 'react-bootstrap';
 
-import AuthService from '../../services/AuthService';
 import RedirectService from '../../services/RedirectService';
+import { UserService } from '../../services/UserService';
 
 import ToastComponent from '../../components/toasts/ToastComponent';
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
@@ -18,7 +18,7 @@ class TableComponent extends Component {
 	action = '';
 	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
 	history = [];  // array de navegacion
-	AuthService = new AuthService();
+	UserService = new UserService();
 
 	constructor( props ) {
 
@@ -37,40 +37,23 @@ class TableComponent extends Component {
 
 	componentDidMount() {
 
-		this.AuthService.postClient('apiaudiophoneuser/show')
-			.then( resp => {
-
-				if ( resp.data.status === 401 ) {
+		this.UserService.getUsers()
+			.then(( resp ) => {
+				this.setState( ( state, props ) => {
+					this.setHistory( resp );
+					return resp
+				});
+			})
+			.catch( ( error ) => {
+				console.log( error )
+				if ( error.status === 401 ) {
 					return this.setState({ redirect: true });
 				}
 
-				const { 
-					apiaudiophoneuserdata, 
-					bduserstotal
-				} = resp.data;
-
-				this.setState( ( state, props ) => {
-
-					this.setHistory({ 
-						users: apiaudiophoneuserdata,
-						totalUsers: bduserstotal 
-					});
-
-					return {
-						users: apiaudiophoneuserdata,
-						totalUsers: bduserstotal 
-					}
-				});
-			})
-			.catch( error => {
-				
-				// console.error( error );
-
-				this.message = 'Comprueba tu conexion a internet';
-				this.action = 'Error';
-
+				this.message = error.message;
+				this.action = error.action;
 				this.setState({ showToast: true });
-			});
+			})
 	}
 
 	setHistory( action ) {
@@ -101,55 +84,33 @@ class TableComponent extends Component {
 	editUserRole( user ) {
 
 		if ( user !== null ) {
-		
-			const data = {
-				apiaudiophoneusers_role: user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'USER_ROLE' : 'ADMIN_ROLE'
-			};
 
-			this.AuthService.putClient(
-				`apiaudiophoneuser/update/${ user.apiaudiophoneusers_id }`,
-				data
-			)
-			.then(({ data }) => {
+			this.UserService.editUserRole( user, this.state.users )
+				.then(( resp ) => {
 
-				if ( data.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
+					this.message = resp.message;
+					this.action = resp.action;
 
-				const result = this.state.users.map( ( element ) => {
-
-					if ( data.apiaudiophoneuserupdate.apiaudiophoneusers_id === element.apiaudiophoneusers_id ) {
-
-						return {
-							...element,
-							apiaudiophoneusers_role: data.apiaudiophoneuserupdate.apiaudiophoneusers_role
-						}
+					this.setState({
+						showEditModal: false,
+						showToast: true,
+						users: resp.users
+					}); 
+				})
+				.catch( error => {
+					
+					// console.log( error )
+					
+					if ( error.status === 401 ) {
+						return this.setState({ redirect: true });
 					}
 
-					return element;
+					this.message = error.message;
+					this.action = error.action;
+					this.setState({ showToast: true, showEditModal: false });
+			
 				});
 
-				this.message = data.apiaudiophoneusermessage;
-				this.action = 'Éxito';
-
-				this.setState({
-					showEditModal: false,
-					showToast: true,
-					users: result
-				});
-			})
-			.catch( error => {
-
-				this.message = 'Ha ocurrido un imprevisto';
-				this.action = 'Error'
-
-				this.setState({
-					showEditModal: false,
-					showToast: true,
-				});
-
-			});
-		
 		} else {
 
 			this.setState({
@@ -162,50 +123,27 @@ class TableComponent extends Component {
 
 		if ( idUser !== null ) {
 
-			let status = this.state.users.find( ( user ) => idUser === user.apiaudiophoneusers_id ).apiaudiophoneusers_status;
-			let method = status === 1 ? 'inactivate' : 'activate';
-			let data = { apiaudiophoneusers_status: status === 1 ? 0 : 1 };
+			this.UserService.deleteUser( idUser, this.state.users )
+				.then( resp => {
 
-			this.AuthService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
-				.then( ({ data }) => {
-
-					if ( data.status === 401 ) {
-						return this.setState({ redirect: true });
-					}
-			
-					const user = method === 'inactivate' ? data.apiaudiophoneuserinactive : data.apiaudiophoneuseractivate;
-
-					const result = this.state.users.map( ( element ) => {
-						
-						if ( element.apiaudiophoneusers_id === user.apiaudiophoneusers_id  ) {
-							return {
-								...element,
-								apiaudiophoneusers_status: user.apiaudiophoneusers_status
-							}
-						}
-
-						return element;
-					});
-
-					this.message = data.apiaudiophoneusermessage;
-					this.action = 'Exito';
+					this.message = resp.message;
+					this.action = resp.action;
 					
 					this.setState({ 
 						showToast: true, 
-						users: result,
+						users: resp.users,
 						showDeleteModal: false
 					});
 				})
 				.catch( error => {
-					
-					this.message = 'ha ocurrido un imprevisto';
-					this.action = 'Error';
 
-					this.setState({ 
-						showDeleteModal: false, 
-						showToast: true
-					});
+					if ( error.status === 401 ) {
+						return this.setState({ redirect: true });
+					}
 
+					this.message = error.message;
+					this.action = error.action;
+					this.setState({ showToast: true, showEditModal: false });
 				});
 		
 		} else {
@@ -215,29 +153,18 @@ class TableComponent extends Component {
 		
 	}
 	
-	sendSearch( search ) {
+	sendSearch( search = '' ) {
 
-		this.AuthService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
-			.then( resp => {
-
-				if ( resp.data.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-				
-				const { apiaudiophoneuserdata } = resp.data;
-
-				this.setState({
-					users: apiaudiophoneuserdata
-				});
-
-			})
+		return this.UserService.searchUser( search )
+			.then( resp => this.setState( resp ) )
 			.catch( error => {
 
-				// console.error( error );
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
 
-				this.message = 'Comprueba tu conexión a internet';
-				this.action = 'Error';
-
+				this.message = error.message;
+				this.action = error.action;
 				this.setState({ showToast: true });
 			});
 	}
@@ -246,43 +173,22 @@ class TableComponent extends Component {
 
 		const url = `apiaudiophoneuser/show?start=${ start }&end=${ end }`;
 
-		this.AuthService.postClient( url )
+		this.UserService.paginationUsers( url )
 			.then( resp => {
-				
-				if ( resp.data.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-
-				const { 
-					apiaudiophoneuserdata, 
-					bduserstotal 
-				} = resp.data;
-
 				this.setState( ( state, props ) => {
-					
-					this.setHistory({ 
-						users: apiaudiophoneuserdata,
-						totalUsers: bduserstotal 
-					});
-
-					return {
-						users: apiaudiophoneuserdata,
-						totalUsers: bduserstotal 
-					}
-
+					this.setHistory( resp );
+					return resp;
 				});
-
 			})
 			.catch( error => {
 
-				// console.log( error );
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
 
-				this.message = 'Comprueba tu conexion a Internet';
-				this.action = 'Error';
-
-				this.setState({
-					showToast: true
-				});
+				this.message = error.message;
+				this.action = error.action;
+				this.setState({ showToast: true });
 			});
 	}
 
@@ -344,7 +250,7 @@ class TableComponent extends Component {
 					<Button 
 						variant="warning"
 						onClick={ () => this.showModal( 'edit', user ) }
-						disabled={ user.apiaudiophoneusers_id === this.AuthService.getLogged().id }
+						disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
 					>
 						<i className="fas fa-user point" ></i> 
 					</Button>
@@ -352,7 +258,7 @@ class TableComponent extends Component {
 					<Button
 						variant="danger"
 						onClick={ () => this.showModal( 'delete', user ) }
-						disabled={ user.apiaudiophoneusers_id === this.AuthService.getLogged().id }
+						disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
 					>
 						<i className="fas fa-trash point"></i>		
 					</Button>
