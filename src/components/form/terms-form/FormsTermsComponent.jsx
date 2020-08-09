@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Col, Button } from 'react-bootstrap';
 
 const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, errors, }) => {
@@ -168,6 +169,14 @@ const InputNumber = ({ columnSize, title, name, value, change, error }) => (
 	</Col>
 );
 
+InputNumber.propTypes = {
+  columnSize: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  change: PropTypes.func.isRequired,
+  error: PropTypes.string
+}
+
 const InputSelect = ({ title, name, value, change, columnSize, error }) => (
 
   <Col sm={ columnSize }>
@@ -192,6 +201,14 @@ const InputSelect = ({ title, name, value, change, columnSize, error }) => (
   </Col>
 );
 
+InputSelect.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  columnSize: PropTypes.number.isRequired,
+  change: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
+
 const InputHour = ({ title, name, value, change, columnSize, error }) => (
     
   <Col sm={ columnSize }>
@@ -210,6 +227,14 @@ const InputHour = ({ title, name, value, change, columnSize, error }) => (
    </Form.Group>
   </Col>
 );
+
+InputHour.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  columnSize: PropTypes.number.isRequired,
+  change: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
 
 const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) => {
 
@@ -254,6 +279,16 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
   );
 }
 
+CheckboxDays.propTypes = {
+  name: PropTypes.string.isRequired,
+  values: PropTypes.array.isRequired,
+  change: PropTypes.func.isRequired,
+  columnSize: PropTypes.number.isRequired,
+  error: PropTypes.string,
+  start: PropTypes.number.isRequired,
+  end: PropTypes.number.isRequired
+};
+
 const Buttons = ({ reset }) => (
   
   <Form.Row className="mt-5">
@@ -281,6 +316,10 @@ const Buttons = ({ reset }) => (
     </Col>
   </Form.Row>
 );
+
+Buttons.propTypes = {
+  reset: PropTypes.func.isRequired
+};
 
 export default {
 	FormTermsRecords,

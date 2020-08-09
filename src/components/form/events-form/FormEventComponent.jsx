@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Col, Button } from 'react-bootstrap'; 
 
 const FormEventComponent = ( props ) => {
@@ -121,6 +122,15 @@ const InputText = ({ columnSize, name, change, value, error, title })  => (
   </Col>
 );
 
+InputText.propTypes = {
+  columnSize: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  title: PropTypes.string.isRequired
+};
+
 const InputTextarea = ({ title, name, value, change, columnSize, error }) => (
 
   <Col sm={ columnSize }>
@@ -139,6 +149,15 @@ const InputTextarea = ({ title, name, value, change, columnSize, error }) => (
   </Form.Group>
   </Col>
 );
+
+InputTextarea.propTypes = {
+  columnSize: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  title: PropTypes.string.isRequired
+};
 
 const InputDate = ({ title, name, value, change, columnSize, error }) => (
 
@@ -159,6 +178,15 @@ const InputDate = ({ title, name, value, change, columnSize, error }) => (
   </Col>
 );
 
+InputDate.propTypes = {
+  columnSize: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  title: PropTypes.string.isRequired
+};
+
 const InputHour = ({ title, name, value, change, columnSize, error }) => (
     
   <Col sm={ columnSize }>
@@ -177,6 +205,15 @@ const InputHour = ({ title, name, value, change, columnSize, error }) => (
    </Form.Group>
   </Col>
 );
+
+InputHour.propTypes = {
+  columnSize: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  title: PropTypes.string.isRequired
+};
 
 const InputSelect = ({ title, name, value, change, columnSize, error }) => (
 
@@ -200,6 +237,15 @@ const InputSelect = ({ title, name, value, change, columnSize, error }) => (
    </Form.Group>
   </Col>
 );
+
+InputSelect.propTypes = {
+  columnSize: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  title: PropTypes.string.isRequired
+};
 
 const Buttons = ({ reset }) => (
   
@@ -228,5 +274,9 @@ const Buttons = ({ reset }) => (
     </Col>
   </Form.Row>
 );
+
+Buttons.propTypes = {
+  reset: PropTypes.func.isRequired
+};
 
 export default FormEventComponent;
