@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 
 const ChangeRoleModal = ({ user, editUser, showModal }) => (
@@ -16,7 +17,6 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 			<span className="mr-1 ml-1">
 				{ user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'usuario' : 'administrador' }?
 			</span> 
-			
 		</p>
 	</Modal.Body>
 
@@ -38,8 +38,14 @@ const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	</Modal>
 );
 
+ChangeRoleModal.propTypes = {
+	user: PropTypes.object.isRequired,
+	showModal: PropTypes.bool.isRequired,
+	editUser: PropTypes.func.isRequired
+};
 
-const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
+
+const DeleteProfileModal = ({ user, showModal, deleteUser }) => (
 	
 	<Modal 
 		show={ showModal } 
@@ -47,7 +53,7 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 	>
 		
 		<Modal.Header closeButton>
-			<Modal.Title>Remover acceso al usuario { id }:</Modal.Title>
+			<Modal.Title>Remover acceso al usuario { user.apiaudiophoneusers_id }:</Modal.Title>
 		</Modal.Header>
 
 		<Modal.Body>
@@ -65,7 +71,7 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 	    	</Button>
 	    	<Button 
 	    		variant="primary" 
-	    		onClick={ () => deleteUser( id ) }
+	    		onClick={ () => deleteUser( user.apiaudiophoneusers_id ) }
 	    	>
 	      	Confirmar
 	    	</Button>
@@ -73,6 +79,11 @@ const DeleteProfileModal = ({ id, showModal, deleteUser }) => (
 	</Modal>		
 );
 
+DeleteProfileModal.propTypes = {
+	user: PropTypes.object.isRequired,
+	showModal: PropTypes.bool.isRequired,
+	deleteUser: PropTypes.func.isRequired
+}
 
 export default { 
 	ChangeRoleModal, 

@@ -128,7 +128,7 @@ InputText.propTypes = {
   change: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.string.isRequired,
-    PropTypes.number.isRequired,
+    PropTypes.number.isRequired
   ]),
   error: PropTypes.string,
   title: PropTypes.string.isRequired

@@ -123,16 +123,13 @@ class IndexEventPage extends Component {
 
 	deleteEvent( confirm, id ) {
 
-		return new Promise( ( resolve, reject ) => {
+		if ( confirm ) {
+				console.log( confirm, id );
+		} else {
+			console.log('no se realiza ninguna acción');
+		}
 
-			if ( confirm ) {
-				resolve({ confirm, id });
-			} else {
-				reject('no se realiza ninguna acción');
-			}
-
-			this.setState({ showModal: false });
-		});
+		this.setState({ showModal: false });
 	}
 
 	showModal( id ) {

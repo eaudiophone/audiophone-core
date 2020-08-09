@@ -47,6 +47,8 @@ class TableComponent extends Component {
 					bduserstotal
 				} = resp.data;
 
+				console.log( apiaudiophoneuserdata );
+
 				this.setState( ( state, props ) => {
 
 					this.setHistory({ 
@@ -333,7 +335,7 @@ class TableComponent extends Component {
 
 					<Button
 						variant="danger"
-						onClick={ () => this.showModal( 'delete', user.apiaudiophoneusers_id ) }
+						onClick={ () => this.showModal( 'delete', user ) }
 						disabled={ user.apiaudiophoneusers_id === this.AuthService.getLogged().id }
 					>
 						<i className="fas fa-trash point"></i>		
@@ -399,7 +401,7 @@ class TableComponent extends Component {
 				<ModalProfileComponent.DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
 					deleteUser={ ( id = null ) => this.deleteUser( id ) }
-					id={ this.state.data }
+					user={ this.state.data }
 				/>
 				<ModalProfileComponent.ChangeRoleModal 
 					showModal={ this.state.showEditModal }
