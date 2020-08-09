@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { Table, Row, Col, Button } from 'react-bootstrap';
 
-import BackendService from '../../services/BackendService';
 import AuthService from '../../services/AuthService';
 
 import ToastComponent from '../../components/toasts/ToastComponent';
@@ -14,14 +13,11 @@ import { getDateWithHour } from './../../util-functions/date-format';
 
 class TableComponent extends Component { 
 
-	backendService = new BackendService();
 	message = '';
 	action = '';
 	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
 	history = [];  // array de navegacion
-
 	AuthService = new AuthService();
-
 
 	constructor( props ) {
 
@@ -39,7 +35,7 @@ class TableComponent extends Component {
 
 	componentDidMount() {
 
-		this.backendService.postClient('apiaudiophoneuser/show')
+		this.AuthService.postClient('apiaudiophoneuser/show')
 			.then( resp => {
 
 				const { 
@@ -106,7 +102,7 @@ class TableComponent extends Component {
 				apiaudiophoneusers_role: user.apiaudiophoneusers_role === 'ADMIN_ROLE' ? 'USER_ROLE' : 'ADMIN_ROLE'
 			};
 
-			this.backendService.putClient(
+			this.AuthService.putClient(
 				`apiaudiophoneuser/update/${ user.apiaudiophoneusers_id }`,
 				data
 			)
@@ -162,7 +158,7 @@ class TableComponent extends Component {
 			let method = status === 1 ? 'inactivate' : 'activate';
 			let data = { apiaudiophoneusers_status: status === 1 ? 0 : 1 };
 
-			this.backendService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
+			this.AuthService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
 				.then( ({ data }) => {
 			
 					const user = method === 'inactivate' ? data.apiaudiophoneuserinactive : data.apiaudiophoneuseractivate;
@@ -209,7 +205,7 @@ class TableComponent extends Component {
 	
 	sendSearch( search ) {
 
-		this.backendService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
+		this.AuthService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
 			.then( resp => {
 				
 				const { apiaudiophoneuserdata } = resp.data;
@@ -234,7 +230,7 @@ class TableComponent extends Component {
 
 		const url = `apiaudiophoneuser/show?start=${ start }&end=${ end }`;
 
-		this.backendService.postClient( url )
+		this.AuthService.postClient( url )
 			.then( resp => {
 				
 				const { 

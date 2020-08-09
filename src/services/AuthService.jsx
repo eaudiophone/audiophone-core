@@ -1,8 +1,6 @@
 import BackendService from './BackendService';
 
-class AuthService {
-
-	backendService = new BackendService();
+class AuthService extends BackendService {
 
 	logIn( login ) {
 
@@ -23,7 +21,7 @@ class AuthService {
 			password: login.audiophoneusers_password
 		};
 
-		return this.backendService.logIn('login', login )
+		return this.authenticate('login', login )
 			.then( resp => {
 
 				if ( this.verifyStatusServerError( resp ) ) {

@@ -72,7 +72,7 @@ class BackendService {
 		return await axios( this.request );
 	}
 
-	async logIn( apiUrl, data ) {
+	async authenticate( apiUrl, data ) {
 
 		this.request = {
 			...this.request,
