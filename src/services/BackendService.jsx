@@ -2,7 +2,7 @@
 import { URL_SERVER, CLIENT_SECRET } from './../enviroment';
 import axios from 'axios';
 
-class BackendService {
+export class BackendService {
 
 	constructor() {
 		
@@ -99,5 +99,3 @@ class BackendService {
 		return await axios( this.request );
 	}
 }
-
-export default BackendService;

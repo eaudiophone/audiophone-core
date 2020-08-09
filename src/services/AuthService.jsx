@@ -1,6 +1,6 @@
-import BackendService from './BackendService';
+import { BackendService } from './BackendService';
 
-class AuthService extends BackendService {
+export class AuthService extends BackendService {
 
 	logIn( login ) {
 
@@ -60,5 +60,3 @@ class AuthService extends BackendService {
 		return JSON.parse( sessionStorage.getItem('logged') );
 	}
 }
-
-export default AuthService;
