@@ -126,7 +126,10 @@ InputText.propTypes = {
   columnSize: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+  ]),
   error: PropTypes.string,
   title: PropTypes.string.isRequired
 };
@@ -242,7 +245,7 @@ InputSelect.propTypes = {
   columnSize: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   error: PropTypes.string,
   title: PropTypes.string.isRequired
 };
