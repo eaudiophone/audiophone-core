@@ -37,7 +37,7 @@ class BackendService {
 			data: data !== null ? data : null,
 			headers: { 
 				authorization: 'Bearer ' + this.token.access_token
-			}
+			},
 		};
 		
 		return await axios( this.request );

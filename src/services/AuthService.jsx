@@ -24,15 +24,6 @@ class AuthService extends BackendService {
 		return this.authenticate('login', login )
 			.then( resp => {
 
-				if ( this.verifyStatusServerError( resp ) ) {
-					
-					return {
-						ok: false,
-						message: resp.data.message,
-						status: resp.data.status
-					};
-				}
-
 				const logged = {
 					email: resp.data.apiaudiophoneusers_email,
 					fullname: resp.data.apiaudiophoneusers_fullname,
@@ -52,7 +43,9 @@ class AuthService extends BackendService {
 				};
 
 			})
-			.catch( error => ({ ok: false, message: 'problemas internos del servidor' }) );
+			.catch( error => {
+				return	{ ok: false, message: 'problemas internos del servidor' }
+			});
 	}
 
 	logOut() {
@@ -65,19 +58,6 @@ class AuthService extends BackendService {
 
 	getLogged() {
 		return JSON.parse( sessionStorage.getItem('logged') );
-	}
-
-	verifyStatusServerError( resp ) {
-		
-		if ( resp.data.status >= 400 && resp.data.status < 500 ) {
-			return true;
-		
-		} else if ( resp.data.status >= 500 ) {
-			return true;
-
-		} else {
-			return false;
-		} 
 	}
 }
 

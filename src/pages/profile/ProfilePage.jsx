@@ -5,14 +5,15 @@ import FormProfileComponent from '../../components/form/profile-form/FormProfile
 import { Image, Nav } from 'react-bootstrap';
 
 import Profile from '../../models/ProfileModels';
-import BackendService from './../../services/BackendService';
+import AuthService from './../../services/AuthService';
+import RedirectService from '../../services/RedirectService';
 import ToastComponent from './../../components/toasts/ToastComponent';
 
 import './ProfilePage.css';
 
 class ProfilePage extends Component {
 
-	backendService = new BackendService();
+	AuthService = new AuthService();
 	message = '';
 	action = '';
 	id = null;
@@ -27,7 +28,8 @@ class ProfilePage extends Component {
 			user: new Profile(
 				JSON.parse( sessionStorage.getItem('logged')).fullname,
 				JSON.parse( sessionStorage.getItem('logged')).email
-			)
+			),
+			redirect: false
 		};
 
 		this.getFormData = this.getFormData.bind( this );
@@ -87,14 +89,16 @@ class ProfilePage extends Component {
 
 		actions.setSubmitting( false );
 
-		// console.log( actions );
-
 		this.setState({ loading: true })
 
 		setTimeout( () => {
 
-			this.backendService.putClient(`apiaudiophoneuser/update/${ this.id }`, values )
+			this.AuthService.putClient(`apiaudiophoneuser/update/${ this.id }`, values )
 			.then( resp => {
+
+				if ( resp.data.status === 401 ) {
+					return this.setState({ redirect: true })
+				}
 				
 				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
 			
@@ -121,8 +125,6 @@ class ProfilePage extends Component {
 						JSON.parse( sessionStorage.getItem('logged')).email
 					) 
 				});
-
-				// actions.resetForm();
 			})
 			.catch( error => {
 				
@@ -142,6 +144,7 @@ class ProfilePage extends Component {
 		return (
 
 			<div>
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				{ this.getHeader() }
 				{ this.getTabs() }
 				<div>

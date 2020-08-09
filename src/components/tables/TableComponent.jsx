@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Table, Row, Col, Button } from 'react-bootstrap';
 
 import AuthService from '../../services/AuthService';
+import RedirectService from '../../services/RedirectService';
 
 import ToastComponent from '../../components/toasts/ToastComponent';
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
@@ -30,6 +31,7 @@ class TableComponent extends Component {
 			showDeleteModal: false,
 			showToast: false,
 			data: {},  // user
+			redirect: false
 		}
 	}
 
@@ -38,12 +40,14 @@ class TableComponent extends Component {
 		this.AuthService.postClient('apiaudiophoneuser/show')
 			.then( resp => {
 
+				if ( resp.data.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
 				const { 
 					apiaudiophoneuserdata, 
 					bduserstotal
 				} = resp.data;
-
-				console.log( apiaudiophoneuserdata );
 
 				this.setState( ( state, props ) => {
 
@@ -108,6 +112,10 @@ class TableComponent extends Component {
 			)
 			.then(({ data }) => {
 
+				if ( data.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
 				const result = this.state.users.map( ( element ) => {
 
 					if ( data.apiaudiophoneuserupdate.apiaudiophoneusers_id === element.apiaudiophoneusers_id ) {
@@ -160,6 +168,10 @@ class TableComponent extends Component {
 
 			this.AuthService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
 				.then( ({ data }) => {
+
+					if ( data.status === 401 ) {
+						return this.setState({ redirect: true });
+					}
 			
 					const user = method === 'inactivate' ? data.apiaudiophoneuserinactive : data.apiaudiophoneuseractivate;
 
@@ -207,6 +219,10 @@ class TableComponent extends Component {
 
 		this.AuthService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
 			.then( resp => {
+
+				if ( resp.data.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
 				
 				const { apiaudiophoneuserdata } = resp.data;
 
@@ -233,6 +249,10 @@ class TableComponent extends Component {
 		this.AuthService.postClient( url )
 			.then( resp => {
 				
+				if ( resp.data.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
 				const { 
 					apiaudiophoneuserdata, 
 					bduserstotal 
@@ -381,6 +401,7 @@ class TableComponent extends Component {
 		return (
 
 			<div>
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<Row>
 					<Col xs={ 12 } className="mb-10" sm={ 6 }>
 						<SearchBarComponent.SearchFilterComponent 
