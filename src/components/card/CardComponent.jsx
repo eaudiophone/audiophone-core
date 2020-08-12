@@ -4,7 +4,7 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 import './CardComponent.css';
 
-const CardComponent = ( props ) => {
+const CardComponent = ({ meeting, color, showModal }) => {
 
 	const {
 		icon,
@@ -15,9 +15,7 @@ const CardComponent = ( props ) => {
 		startingTime,
 		finalHour,
 		description,
-	} = props.meeting;
-
-	const { color } = props;
+	} = meeting;
 
 	const [ redirect, setRedirect ] = useState( false );
 
@@ -41,7 +39,7 @@ const CardComponent = ( props ) => {
 				<h5 className="card-title">{ title }</h5>
 				<i 
 					className="fas fa-times pointer" 
-					onClick={ () => props.showModal( id ) }>
+					onClick={ () => showModal( id ) }>
 				</i>
 			</Col>
 

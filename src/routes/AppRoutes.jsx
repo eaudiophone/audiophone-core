@@ -1,11 +1,7 @@
 import React, { Suspense } from 'react';
 import { Switch } from 'react-router-dom';
-
 import { rootRoutes, routesApp } from './RoutesList';
-
 import { NoLoginGuard, LoginGuard } from '../guards/LoginGuard';
-
-
 
 const AppRoutes = () => (
 

@@ -12,7 +12,7 @@ const UserRoutes = () => (
 			)) 
 		}
 		<Route 
-			path={ routesApp[routesApp.length - 1].path } 
+			path={ routesApp[ routesApp.length - 1 ].path } 
 			component={ routesApp[ routesApp.length - 1 ].component } 
 		/>
 	</Switch>
