@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 
-import BackendService from './../../services/BackendService';
 import RedirectService from './../../services/RedirectService';
 
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import ToastComponent from '../../components/toasts/ToastComponent'; 
 
-import AuthService from './../../services/AuthService';
+import { AuthService } from './../../services/AuthService';
 
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
 
-	backendService = new BackendService();
-	authService = new AuthService();
+	AuthService = new AuthService();
 
 	message = '';
 	action = '';
-
 
 	constructor( props ) {
 
@@ -39,7 +36,7 @@ class RegisterPage extends Component {
 
 		this.setState({ loading: true });
 
-		this.backendService.post( 'apiaudiophoneuser/store',  values )
+		this.AuthService.post( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
 
 				// console.log( resp )

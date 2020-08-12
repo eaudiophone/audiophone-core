@@ -100,7 +100,7 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
 			/>
       <InputSelect 
         columnSize={ 12 }
-        title="Rango de citas"
+        title="Rango de citas:"
         name="daysMeeting"
         value={ values.daysMeeting }
         error={ errors.daysMeeting }
@@ -138,7 +138,7 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
       />
       <InputHour 
         columnSize={ 6 }
-        title="Hora de culminación"
+        title="Hora de culminación:"
         name="finalHour"
         value={ values.finalHour }
         error={ errors.finalHour }

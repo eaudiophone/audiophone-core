@@ -124,10 +124,8 @@ class IndexEventPage extends Component {
 	deleteEvent( confirm, id ) {
 
 		if ( confirm ) {
-				console.log( confirm, id );
-		} else {
-			console.log('no se realiza ninguna acción');
-		}
+			console.log( confirm, id );
+		} 
 
 		this.setState({ showModal: false });
 	}

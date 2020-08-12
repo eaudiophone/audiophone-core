@@ -10,7 +10,7 @@ const FormEventComponent = ( props ) => {
 		handleReset,
 		errors,
 		values
-	} = props
+	} = props;
 
 	return (
 
@@ -30,7 +30,7 @@ const FormEventComponent = ( props ) => {
         <InputSelect 
           name="idService"
           title="Servicio a solicitar:"
-          value={ values.idService }
+          value={ values.idService.toString() }
           error={ errors.idService }
           columnSize={ 12 }
           change={ handleChange }
@@ -245,7 +245,7 @@ InputSelect.propTypes = {
   columnSize: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
   error: PropTypes.string,
   title: PropTypes.string.isRequired
 };

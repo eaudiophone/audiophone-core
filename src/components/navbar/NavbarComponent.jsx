@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 
-import AuthService from './../../services/AuthService';
+import { AuthService } from './../../services/AuthService';
  
 import './NavbarComponent.css';
 

@@ -7,6 +7,11 @@ import FormEventComponent from '../../components/form/events-form/FormEventCompo
 class NewEventPage extends Component {
 
 	getData( values, actions ) {
+		values = { 
+			...values, 
+			idService: Number( values.idService ), 
+			totalHours: Number( values.totalHours )
+		}; 
 		console.log( values );
 		actions.setSubmitting( false );
 	}

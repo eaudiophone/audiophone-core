@@ -84,5 +84,16 @@ del formcontrol de bootstrap porque sino las validaciones no se muestran en pant
 
 | ---------------------------------------------------------------------------------- |
 
+BITACORA DE PRUEBAS DE DESPLIEGUE CON REACT:
+
+1.- Modificar el package.json de la aplicacion, agregar el atributo "homepage": "."
+para localhost o "homepage" : "http://myname.github.io/myapp", para algún dominio en particular.
+
+2.- Para generar el proceso de compilacion usa el comando yarn build o npm build. Se generará 
+una carpeta llamada build para colocar en tu servidor.
+
+NOTA: si no tienes implementado react-router la aplicacion funcionará normalmente dentro de la servidor.
+
+
 Aplicacion: audiophone-core
 Nucleo: React.js

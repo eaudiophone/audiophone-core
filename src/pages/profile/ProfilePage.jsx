@@ -4,7 +4,7 @@ import { Image, Nav } from 'react-bootstrap';
 
 import Profile from '../../models/ProfileModels';
 
-import AuthService from './../../services/AuthService';
+import { AuthService } from './../../services/AuthService';
 import RedirectService from '../../services/RedirectService';
 
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';

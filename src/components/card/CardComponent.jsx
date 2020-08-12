@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 import './CardComponent.css';
@@ -116,6 +117,23 @@ const CardComponent = ( props ) => {
 
 		</div>
 	);
+};
+
+CardComponent.propTypes = {
+	meeting: PropTypes.shape({
+		icon: PropTypes.string.isRequired,
+		id: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		date: PropTypes.string.isRequired,
+		startingTime: PropTypes.string.isRequired,
+		totalHours: PropTypes.number.isRequired,
+		finalHour: PropTypes.string.isRequired,
+		description: PropTypes.string,
+		addressMeeting: PropTypes.string.isRequired,
+		idService: PropTypes.number.isRequired
+	}),
+	color: PropTypes.string.isRequired,
+	showModal: PropTypes.func.isRequired
 };
 
 
