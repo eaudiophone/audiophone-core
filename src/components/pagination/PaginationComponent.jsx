@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Pagination } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-const PaginationComponent = ({ totalRegisters, pagination = 5, send }) => {
+const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 	const [ paginationNumber, setPaginationNumber ] = useState( 1 );
 	
@@ -56,6 +57,12 @@ const PaginationComponent = ({ totalRegisters, pagination = 5, send }) => {
 			<Pagination.Next onClick={ () => setUrl( paginationNumber + 1 ) } />
 		</Pagination>
 	);
+};
+
+PaginationComponent.propTypes = {
+	totalRegisters: PropTypes.number.isRequired,
+	pagination: PropTypes.number,
+	send: PropTypes.func.isRequired
 };
 
 export default PaginationComponent;

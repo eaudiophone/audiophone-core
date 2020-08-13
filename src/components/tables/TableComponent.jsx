@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-
 import { Table, Row, Col, Button } from 'react-bootstrap';
-
 import RedirectService from '../../services/RedirectService';
 import { UserService } from '../../services/UserService';
-
 import ToastComponent from '../../components/toasts/ToastComponent';
 import PaginationComponent from '../../components/pagination/PaginationComponent'; 
 import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
 import ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
-
 import { getDateWithHour } from './../../util-functions/date-format';
 
 class TableComponent extends Component { 
@@ -39,10 +35,8 @@ class TableComponent extends Component {
 
 		this.UserService.getUsers()
 			.then(( resp ) => {
-				this.setState( ( state, props ) => {
-					this.setHistory( resp );
-					return resp
-				});
+				this.setHistory( resp );
+				this.setState( resp );
 			})
 			.catch( ( error ) => {
 				console.log( error )
@@ -175,10 +169,8 @@ class TableComponent extends Component {
 
 		this.UserService.paginationUsers( url )
 			.then( resp => {
-				this.setState( ( state, props ) => {
-					this.setHistory( resp );
-					return resp;
-				});
+				this.setHistory( resp );
+				this.setState( resp );
 			})
 			.catch( error => {
 
@@ -239,6 +231,7 @@ class TableComponent extends Component {
 	setData() {
 		
 		return this.state.users.map( ( user, index ) => (
+
 			<tr className="text-center" key={ user.apiaudiophoneusers_id }>
 				<td>{ user.apiaudiophoneusers_fullname }</td>
 				<td>{ user.apiaudiophoneusers_email }</td>
@@ -264,6 +257,7 @@ class TableComponent extends Component {
 					</Button>
 				</td>
 			</tr> 
+
 		))
 	}
 
@@ -287,6 +281,7 @@ class TableComponent extends Component {
 						<PaginationComponent 
 							totalRegisters={ this.state.totalUsers } 
 							send={ ( params ) => this.getPagination( params ) }
+							pagination={ 5 }
 						/>
 					</div>
 				</div>
