@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Pagination } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const PaginationComponent = ({ totalRegisters, pagination, send }) => {
+export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 	const [ paginationNumber, setPaginationNumber ] = useState( 1 );
 	
@@ -65,4 +65,3 @@ PaginationComponent.propTypes = {
 	send: PropTypes.func.isRequired
 };
 
-export default PaginationComponent;

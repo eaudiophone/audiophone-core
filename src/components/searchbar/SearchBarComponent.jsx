@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import './SearchBarComponent.css';
 
-const SearchBarComponent = ({ sendSearch }) => {
+export const SearchBarComponent = ({ sendSearch }) => {
 
 	const [ search, setSearch ] = useState('');
 	const [ validation, showValidation ] = useState( false );
@@ -52,7 +52,7 @@ const SearchBarComponent = ({ sendSearch }) => {
 	);	
 };
 
-const SearchFilterComponent = ({ filterSearch }) => {
+export const SearchFilterComponent = ({ filterSearch }) => {
 
 	const options = ['todos', 'activos', 'inactivos'];
 
@@ -72,9 +72,4 @@ const SearchFilterComponent = ({ filterSearch }) => {
 			</Form.Control>
 		</Form.Row>
 	);
-};
-
-export default {
-	SearchFilterComponent,
-	SearchBarComponent
 };

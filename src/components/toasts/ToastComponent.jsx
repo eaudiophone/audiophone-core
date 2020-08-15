@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Toast, Row, Col } from 'react-bootstrap';
 
-const ToastComponent = ({ showToast, content, context, onHide }) => {
+export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
 	if ( context !== 'Error' ) {
 
@@ -63,5 +63,3 @@ ToastComponent.propTypes = {
 	onHide: PropTypes.func.isRequired,
 	showToast: PropTypes.bool.isRequired
 };
-
-export default ToastComponent;

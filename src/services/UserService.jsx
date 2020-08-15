@@ -1,5 +1,6 @@
 import { AuthService } from './AuthService';
 
+
 export class UserService {
 
 	AuthService = new AuthService();
@@ -72,9 +73,9 @@ export class UserService {
 
 	deleteUser( idUser = 0, users = [] ) {
 		
-		let status = users.find( ( user ) => idUser === user.apiaudiophoneusers_id ).apiaudiophoneusers_status;
-		let method = status === 1 ? 'inactivate' : 'activate';
-		let data = { apiaudiophoneusers_status: status === 1 ? 0 : 1 };
+		const status = users.find( ( user ) => idUser === user.apiaudiophoneusers_id ).apiaudiophoneusers_status;
+		const method = status === 1 ? 'inactivate' : 'activate';
+		const data = { apiaudiophoneusers_status: status === 1 ? 0 : 1 };
 
 		return new Promise( ( resolve, reject ) => {
 
@@ -152,6 +153,57 @@ export class UserService {
 					action: 'Error',
 					status: error.response.status
 				}));
+		});
+	}
+
+	editUser( id, user ) {
+
+		return new Promise(( resolve, reject ) => {
+
+			setTimeout( () => {
+
+			this.AuthService.putClient(`apiaudiophoneuser/update/${ id }`, user )
+				.then( resp => {
+
+				if ( resp.data.status === 401 ) {
+					return reject({ redirect: true });
+				}
+				
+				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
+			
+				let logged = JSON.parse( sessionStorage.getItem('logged'));
+
+				logged = {
+					...logged,
+					email: apiaudiophoneuserupdate.apiaudiophoneusers_email,
+					fullname: apiaudiophoneuserupdate.apiaudiophoneusers_fullname,
+				}
+
+				sessionStorage.setItem('logged', JSON.stringify( logged ) );
+				
+				resolve({
+					state: {
+						showToast: true, 
+						loading: false, 
+						user: {
+							apiaudiophoneusers_fullname: this.AuthService.getLogged().fullname,
+							apiaudiophoneusers_email: this.AuthService.getLogged().email
+						}
+					},
+					message: apiaudiophoneusermessage,
+					action: 'Exito'
+				});
+			})
+			.catch( error => {
+	
+				reject({ 
+					message: 'Ha ocurrido un imprevisto',
+					action: 'Error',
+					status: error.response.status
+				});
+			});
+
+			}, 1000 );
 		});
 	}
 }

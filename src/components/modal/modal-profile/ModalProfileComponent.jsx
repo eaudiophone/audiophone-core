@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 
-const ChangeRoleModal = ({ user, editUser, showModal }) => (
+export const ChangeRoleModal = ({ user, editUser, showModal }) => (
 	
 	<Modal show={ showModal } onHide={ () => editUser() }>
 		<Modal.Header closeButton>
@@ -45,7 +45,7 @@ ChangeRoleModal.propTypes = {
 };
 
 
-const DeleteProfileModal = ({ user, showModal, deleteUser }) => (
+export const DeleteProfileModal = ({ user, showModal, deleteUser }) => (
 	
 	<Modal 
 		show={ showModal } 
@@ -84,8 +84,3 @@ DeleteProfileModal.propTypes = {
 	showModal: PropTypes.bool.isRequired,
 	deleteUser: PropTypes.func.isRequired
 }
-
-export default { 
-	ChangeRoleModal, 
-	DeleteProfileModal 
-};

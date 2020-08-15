@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Table, Row, Col, Button } from 'react-bootstrap';
 import RedirectService from '../../services/RedirectService';
 import { UserService } from '../../services/UserService';
-import ToastComponent from '../../components/toasts/ToastComponent';
-import PaginationComponent from '../../components/pagination/PaginationComponent'; 
-import SearchBarComponent from '../../components/searchbar/SearchBarComponent';
-import ModalProfileComponent from '../../components/modal/modal-profile/ModalProfileComponent';
+import { ToastComponent } from '../../components/toasts/ToastComponent';
+import { PaginationComponent } from '../../components/pagination/PaginationComponent'; 
+import { SearchBarComponent, SearchFilterComponent } from '../../components/searchbar/SearchBarComponent';
+import { DeleteProfileModal, ChangeRoleModal } from '../../components/modal/modal-profile/ModalProfileComponent';
 import { getDateWithHour } from './../../util-functions/date-format';
 
 class TableComponent extends Component { 
@@ -305,23 +305,19 @@ class TableComponent extends Component {
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<Row>
 					<Col xs={ 12 } className="mb-10" sm={ 6 }>
-						<SearchBarComponent.SearchFilterComponent 
-						filterSearch={ ( filter ) => this.filterSearch( filter ) }
-						/>
+						<SearchFilterComponent filterSearch={ ( filter ) => this.filterSearch( filter ) } />
 					</Col>
 					<Col xs={ 12 } sm={ 6 }>
-						<SearchBarComponent.SearchBarComponent 
-								sendSearch={ ( search ) => this.sendSearch( search ) } 
-						/>
+						<SearchBarComponent sendSearch={ ( search ) => this.sendSearch( search ) } />
 					</Col>
 				</Row>
 				{ this.getTable() }
-				<ModalProfileComponent.DeleteProfileModal 
+				<DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
 					deleteUser={ ( id = null ) => this.deleteUser( id ) }
 					user={ this.state.data }
 				/>
-				<ModalProfileComponent.ChangeRoleModal 
+				<ChangeRoleModal 
 					showModal={ this.state.showEditModal }
 					editUser={ ( user = null ) => this.editUserRole( user ) }
 					user={ this.state.data }

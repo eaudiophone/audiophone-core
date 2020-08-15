@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import RedirectService from './../../services/RedirectService';
 
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
-import ToastComponent from '../../components/toasts/ToastComponent'; 
+import { ToastComponent } from '../../components/toasts/ToastComponent'; 
 
 import { AuthService } from './../../services/AuthService';
 
