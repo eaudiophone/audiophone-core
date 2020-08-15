@@ -1,6 +1,5 @@
 import { AuthService } from './AuthService';
 
-
 export class UserService {
 
 	AuthService = new AuthService();
@@ -164,10 +163,6 @@ export class UserService {
 
 			this.AuthService.putClient(`apiaudiophoneuser/update/${ id }`, user )
 				.then( resp => {
-
-				if ( resp.data.status === 401 ) {
-					return reject({ redirect: true });
-				}
 				
 				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
 			

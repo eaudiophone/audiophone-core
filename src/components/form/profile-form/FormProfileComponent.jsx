@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-
 import { Form, Col, Button } from "react-bootstrap";
 import { Formik } from 'formik';
-
 import Profile from './../../../models/ProfileModels';
 import ProfileSchema from './ProfileSchema';
 

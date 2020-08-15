@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Row, Col, Button } from 'react-bootstrap';
-import RedirectService from './../../services/RedirectService';
+import { RedirectService } from './../../services/RedirectService';
 import './CardComponent.css';
 
 const CardComponent = ({ meeting, color, showModal }) => {

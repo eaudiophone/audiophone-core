@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-
 import { Container } from 'react-bootstrap';
-
 import { AuthService } from './../../services/AuthService'; 
-import RedirectService  from './../../services/RedirectService';
-
+import { RedirectService }  from './../../services/RedirectService';
 import { ToastComponent } from './../../components/toasts/ToastComponent';
 import LoginForm from '../../components/form/login-form/LoginForm';
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import Profile from '../../models/ProfileModels';
-import RedirectService from '../../services/RedirectService';
-import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
+import { RedirectService } from '../../services/RedirectService';
+import FormProfileModule from '../../components/form/profile-form/FormProfileComponent';
 import { ToastComponent } from './../../components/toasts/ToastComponent';
 import { UserService } from './../../services/UserService';
 import './ProfilePage.css';
@@ -85,7 +85,7 @@ class ProfilePage extends Component {
 				</Nav.Item>
 				</Nav>
 				<div>
-					<FormProfileComponent.FormProfileComponent 
+					<FormProfileModule.FormProfileComponent 
 						profile={ this.state.user }
 						getFormData={ this.getFormData }
 						loading={ this.state.loading }

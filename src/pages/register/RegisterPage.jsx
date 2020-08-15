@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-
-import RedirectService from './../../services/RedirectService';
-
-import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
+import { RedirectService } from './../../services/RedirectService';
+import FormProfileModule from '../../components/form/profile-form/FormProfileComponent';
 import { ToastComponent } from '../../components/toasts/ToastComponent'; 
-
 import { AuthService } from './../../services/AuthService';
-
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -82,7 +78,7 @@ class RegisterPage extends Component {
 					Registro de usuarios
 				</h2>
 				
-				<FormProfileComponent.FormProfileComponent
+				<FormProfileModule.FormProfileComponent
 					loading={ this.state.loading } 
 					getFormData={ this.getFormData } 
 					register={ true }

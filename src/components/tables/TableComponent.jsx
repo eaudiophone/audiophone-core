@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Button } from 'react-bootstrap';
-import RedirectService from '../../services/RedirectService';
+import { RedirectService } from '../../services/RedirectService';
 import { UserService } from '../../services/UserService';
 import { ToastComponent } from '../../components/toasts/ToastComponent';
 import { PaginationComponent } from '../../components/pagination/PaginationComponent'; 
