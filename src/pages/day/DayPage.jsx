@@ -4,8 +4,14 @@ import { Formik } from 'formik';
 import FormTermsComponent from '../../components/form/terms-form/FormsTermsComponent';
 import TermsSchema from '../../components/form/terms-form/TermsSchema';
 import Terms from '../../models/TermsModels';
+import { DAYSWEEK } from '../../hardcode/WeekHardcode';
 
 class DayPage extends Component {
+
+	constructor( props ) {
+		super( props );
+		this.getDataForm = this.getDataForm.bind( this );
+	}
 
 	getHeader() {
 
@@ -91,8 +97,62 @@ class DayPage extends Component {
 	}
 
 	getDataForm( values, actions ) {
-		console.log( values );
+		
 		actions.setSubmitting( false );
+
+		const { daysWeek, daysMeeting } = values;
+
+
+		if ( daysWeek.length === 7 && daysMeeting === 'range' ) { 
+			values = {
+				...values,
+				daysWeek: [],
+				daysMeeting: 'all-days'
+			}
+		}
+
+		if ( daysWeek.length > 1 && daysMeeting === 'range' && daysWeek.length < 7 ) {  
+
+			// si tiene al menos 2 elementos los ordena
+			values = {
+				...values,
+				daysWeek: this.sortArray( daysWeek ) 
+			};	
+		}
+
+		console.log( values );
+	}
+
+	sortArray( daysWeek = [] ) { // metodo para ordenar el arrglo
+
+		let result = [];
+
+		const comp = ( a, b ) => {
+
+			if ( a > b ) {
+				return 1;
+			}
+
+			if ( a < b ) {
+				return -1;
+			}
+
+			return 0;
+		};
+
+		daysWeek = daysWeek.map( ( x ) => parseInt( x ) );
+		daysWeek.sort( comp ).forEach(( index ) => {
+
+			for ( let day of DAYSWEEK ) {
+				
+				if ( day.id === index ) {
+					result.push( day.name );
+				}
+
+			}
+		});
+
+		return result;
 	}
 
 	render() {

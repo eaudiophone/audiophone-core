@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Col, Button } from 'react-bootstrap';
+import { DAYSWEEK } from './../../../hardcode/WeekHardcode';
 
 const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, errors, }) => {
 
@@ -239,16 +240,6 @@ InputHour.propTypes = {
 
 const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) => {
 
-  const DAYSWEEK = [
-   'lunes', 
-   'martes', 
-   'miercoles', 
-   'jueves',
-   'viernes',
-   'sábado',
-   'domingo'
-  ];
-
   const renderWeek = () => {
 
     let checks = [];
@@ -260,11 +251,11 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
         <Form.Check
           key={ i } 
           name={ name }
-          label={ DAYSWEEK[i] }
+          label={ DAYSWEEK[i].name }
           type="checkbox"
-          value={ DAYSWEEK[i] }
+          value={ DAYSWEEK[i].id }
           onChange={ change }
-          id={ DAYSWEEK[i] }
+          id={ DAYSWEEK[i].name }
         />
       );          
     }
