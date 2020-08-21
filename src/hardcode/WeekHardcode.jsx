@@ -5,5 +5,5 @@ export const DAYSWEEK = [
 	{ id: 3, name: 'miercoles' },
 	{ id: 4, name: 'jueves' },
 	{ id: 5, name: 'viernes' },
-	{ id: 6, name: 'sábado' }
+	{ id: 6, name: 'sabado' }
 ];

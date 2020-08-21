@@ -102,7 +102,6 @@ class DayPage extends Component {
 
 		const { daysWeek, daysMeeting } = values;
 
-
 		if ( daysWeek.length === 7 && daysMeeting === 'range' ) { 
 			values = {
 				...values,
@@ -116,7 +115,7 @@ class DayPage extends Component {
 			// si tiene al menos 2 elementos los ordena
 			values = {
 				...values,
-				daysWeek: this.sortArray( daysWeek ) 
+				daysWeek: this.sortArray( daysWeek.map(( x ) => parseInt( x ))) 
 			};	
 		}
 
@@ -140,7 +139,6 @@ class DayPage extends Component {
 			return 0;
 		};
 
-		daysWeek = daysWeek.map( ( x ) => parseInt( x ) );
 		daysWeek.sort( comp ).forEach(( index ) => {
 
 			for ( let day of DAYSWEEK ) {
