@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-const TIME = {
+const SECONDS = {
 	HOURS: 3600,
 	MINUTES: 60
 };
@@ -47,7 +47,7 @@ function calculateTotalSeconds( time ) {
 
 	let hour = parseInt( time.split(':')[0] );
 	let minutes = parseInt( time.split(':')[1] );
-	let totalSeconds = ( hour * TIME.HOURS ) + ( minutes * TIME.MINUTES );
+	let totalSeconds = ( hour * SECONDS.HOURS ) + ( minutes * SECONDS.MINUTES );
 
 	console.log( totalSeconds );
 
