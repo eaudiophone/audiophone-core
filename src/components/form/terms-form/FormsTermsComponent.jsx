@@ -136,6 +136,7 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
         value={ values.beginTime }
         error={ errors.beginTime }
         change={ handleChange }
+        max={ values.finalHour }
       />
       <InputHour 
         columnSize={ 6 }
@@ -235,7 +236,8 @@ InputHour.propTypes = {
   value: PropTypes.string.isRequired,
   columnSize: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
-  error: PropTypes.string
+  error: PropTypes.string,
+  max: PropTypes.string
 };
 
 const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) => {

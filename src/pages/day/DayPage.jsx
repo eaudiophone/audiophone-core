@@ -4,12 +4,19 @@ import { Formik } from 'formik';
 import FormTermsComponent from '../../components/form/terms-form/FormsTermsComponent';
 import TermsSchema from '../../components/form/terms-form/TermsSchema';
 import Terms from '../../models/TermsModels';
-import { DAYSWEEK } from '../../hardcode/WeekHardcode';
+import { DayService } from '../../services/DayService';
+import { verfyRangeHours } from '../../util-functions/date-format';
+import { ToastComponent } from '../../components/toasts/ToastComponent';
 
 class DayPage extends Component {
 
+	DayService = new DayService();
+	message = '';
+	action = '';
+
 	constructor( props ) {
 		super( props );
+		this.state = { showToast: false };
 		this.getDataForm = this.getDataForm.bind( this );
 	}
 
@@ -100,63 +107,28 @@ class DayPage extends Component {
 		
 		actions.setSubmitting( false );
 
-		const { daysWeek, daysMeeting } = values;
-
-		if ( daysWeek.length === 7 && daysMeeting === 'range' ) { 
-			values = {
-				...values,
-				daysWeek: [],
-				daysMeeting: 'all-days'
-			}
+		if ( !verfyRangeHours( values.beginTime, values.finalHour ).ok ) {
+		
+			const resp = verfyRangeHours( values.beginTime, values.finalHour );
+			this.message = resp.message;
+			this.action = 'Error'; 
+			
+			return this.setState({ showToast: true });
 		}
 
-		if ( daysWeek.length > 1 && daysMeeting === 'range' && daysWeek.length < 7 ) {  
-
-			// si tiene al menos 2 elementos los ordena
-			values = {
-				...values,
-				daysWeek: this.sortArray( daysWeek.map(( x ) => parseInt( x ))) 
-			};	
-		}
-
-		console.log( values );
-	}
-
-	sortArray( daysWeek = [] ) { // metodo para ordenar el arrglo
-
-		let result = [];
-
-		const comp = ( a, b ) => {
-
-			if ( a > b ) {
-				return 1;
-			}
-
-			if ( a < b ) {
-				return -1;
-			}
-
-			return 0;
-		};
-
-		daysWeek.sort( comp ).forEach(( index ) => {
-
-			for ( let day of DAYSWEEK ) {
-				
-				if ( day.id === index ) {
-					result.push( day.name );
-				}
-
-			}
-		});
-
-		return result;
+		this.DayService.validateTerms( values, 1 );
 	}
 
 	render() {
 		
 		return (
 			<div>
+				<ToastComponent 
+					showToast={ this.state.showToast } 
+					onHide={ () => this.setState({ showToast: false }) }  
+					content={ this.message }
+					context={ this.action }
+				/>
 				{ this.getHeader() }
 				{ this.getTabs() }
 				<div className="tab-content">

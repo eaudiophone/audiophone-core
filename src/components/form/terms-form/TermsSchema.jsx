@@ -19,7 +19,7 @@ class TermsSchema {
 			},
 
 			mixed: {
-				required: 'campo requerido'
+				required: 'campo requerido',
 			}
 		};
 

@@ -1,9 +1,9 @@
 export const DAYSWEEK = [
-	{ id: 0, name: 'domingo' },
-	{ id: 1, name: 'lunes' },
-	{ id: 2, name: 'martes' },
-	{ id: 3, name: 'miercoles' },
-	{ id: 4, name: 'jueves' },
-	{ id: 5, name: 'viernes' },
-	{ id: 6, name: 'sabado' }
+	{ id: 0, name: 'lunes' },
+	{ id: 1, name: 'martes' },
+	{ id: 2, name: 'miercoles' },
+	{ id: 3, name: 'jueves' },
+	{ id: 4, name: 'viernes' },
+	{ id: 5, name: 'sabado' },
+	{ id: 6, name: 'domingo' }
 ];
