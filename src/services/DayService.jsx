@@ -27,7 +27,7 @@ export class DayService {
 			for ( let day of DAYSWEEK ) {
 				
 				if ( day.id === index ) {
-					result.push( day.name );
+					result = result.concat([ day.name ]);
 				}
 
 			}

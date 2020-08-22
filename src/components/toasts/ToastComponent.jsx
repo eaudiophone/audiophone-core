@@ -9,7 +9,7 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 		return (
 			<Toast 
 				className="toast-style success-toast" 
-				delay={ 2000 }
+				delay={ 10000 }
 				onClose={ () => onHide() }
 				show={ showToast }
 				autohide
