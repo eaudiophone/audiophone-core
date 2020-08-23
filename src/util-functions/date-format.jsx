@@ -13,7 +13,7 @@ export function getDateWithHour( date ) {
 
 // time 
 
-export function verfyRangeHours( beginTime = '', finalHour = '' ) {
+export function verifyRangeHours( beginTime = '', finalHour = '' ) {
 	
 	const totalSecoundsBegin = calculateTotalSeconds( beginTime );
 	const totalSecoundsFinal = calculateTotalSeconds( finalHour );

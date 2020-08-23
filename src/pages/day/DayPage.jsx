@@ -5,7 +5,7 @@ import FormTermsComponent from '../../components/form/terms-form/FormsTermsCompo
 import TermsSchema from '../../components/form/terms-form/TermsSchema';
 import Terms from '../../models/TermsModels';
 import { DayService } from '../../services/DayService';
-import { verfyRangeHours } from '../../util-functions/date-format';
+import { verifyRangeHours } from '../../util-functions/date-format';
 import { ToastComponent } from '../../components/toasts/ToastComponent';
 
 class DayPage extends Component {
@@ -18,16 +18,6 @@ class DayPage extends Component {
 		super( props );
 		this.state = { showToast: false };
 		this.getDataForm = this.getDataForm.bind( this );
-	}
-
-	getHeader() {
-
-		return (
-			<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
-						align-items-center pb-2 mb-3 border-bottom">
-				<h2>Dias de servicios</h2>	
-			</div>
-		);
 	}
 
 	getTabs() {
@@ -107,16 +97,19 @@ class DayPage extends Component {
 		
 		actions.setSubmitting( false );
 
-		if ( !verfyRangeHours( values.beginTime, values.finalHour ).ok ) {
+		if ( !verifyRangeHours( values.beginTime, values.finalHour ).ok ) {
 		
-			const resp = verfyRangeHours( values.beginTime, values.finalHour );
+			const resp = verifyRangeHours( values.beginTime, values.finalHour );
 			this.message = resp.message;
 			this.action = 'Error'; 
 			
 			return this.setState({ showToast: true });
 		}
 
-		this.DayService.validateTerms( values, 1 );
+		this.DayService.validateTerms( 
+			values, 
+			JSON.parse( sessionStorage.getItem('logged').id ) 
+		);
 	}
 
 	render() {
@@ -129,7 +122,10 @@ class DayPage extends Component {
 					content={ this.message }
 					context={ this.action }
 				/>
-				{ this.getHeader() }
+				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
+						align-items-center pb-2 mb-3 border-bottom">
+					<h2>Dias de servicios</h2>	
+				</div>
 				{ this.getTabs() }
 				<div className="tab-content">
 					{ this.getTabRecord() }
