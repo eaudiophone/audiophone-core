@@ -67,4 +67,20 @@ export class DayService {
 
 		return form;
 	}
+
+	updateTerms( form ) {
+
+		return new Promise(( resolve, reject ) => {
+
+			const id = this.AuthService.getLogged().id;
+
+			this.AuthService.post(`apiaudiophoneterm/store/${ id }`, form )
+				.then(( resp ) => {
+					console.log( resp );
+				})
+				.catch(( error ) => {
+					console.log( error );
+				});
+		});
+	}
 }

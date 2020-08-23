@@ -111,11 +111,6 @@ class DayPage extends Component {
 			return this.setState({ showToast: true });
 		}
 
-		values = {
-			...values,
-			apiaudiophoneusers_id: JSON.parse( sessionStorage.getItem('logged') ).id  // foreign key del usuario
-		}
-
 		values = this.DayService.validateTerms( values );
 
 		console.log( values );
