@@ -36,29 +36,35 @@ export class DayService {
 		return result;
 	}
 
-	validateTerms( form, id ) {
+	validateTerms( form ) {
 
-		const { daysWeek, daysMeeting } = form;
+		const { apiaudiophoneterms_daysevents, apiaudiophoneterms_rankevents } = form;
 
-		// validaciones
-		if ( daysWeek.length === 7 && daysMeeting === 'range' ) { 
+		if ( 
+			apiaudiophoneterms_daysevents.length === 7 && 
+			apiaudiophoneterms_rankevents === 'range' 
+		) { 
+			
 			form = {
 				...form,
-				daysWeek: [],
-				daysMeeting: 'all-days'
+				apiaudiophoneterms_daysevents: [],
+				apiaudiophoneterms_rankevents: 'all-days'
 			}
 		}
 
-		if ( daysWeek.length > 1 && daysMeeting === 'range' && daysWeek.length < 7 ) {  
+		if ( 
+			apiaudiophoneterms_daysevents.length > 1 && 
+			apiaudiophoneterms_rankevents === 'range' && 
+			apiaudiophoneterms_daysevents.length < 7 ) 
+		{  
 
 			// si tiene al menos 2 elementos los ordena
 			form = {
 				...form,
-				daysWeek: this.getArrayDays( daysWeek.map(( x ) => parseInt( x ))) 
+				apiaudiophoneterms_daysevents: this.getArrayDays( apiaudiophoneterms_daysevents.map(( x ) => parseInt( x ))) 
 			};	
 		}
 
-		// enviar datos
-		console.log( form );
+		return form;
 	}
 }

@@ -30,24 +30,24 @@ class TermsSchema {
 
 		this.schema = object().shape({
 
-			quantityMeetingWeekly: number()
+			apiaudiophoneterms_quantityeventsweekly: number()
 				.min( 1, this.validationMessages.number.min( 1 ) )
 				.max( 24, this.validationMessages.number.max( 24 ) ),
 
-			quantityMeetingMonthly: number()
+			apiaudiophoneterms_quantityeventsmonthly: number()
 				.min( 1, this.validationMessages.number.min( 1 ) )
 				.max( 30, this.validationMessages.number.max( 30 ) ),
 
-			daysMeeting: string()
+			apiaudiophoneterms_rankevents: string()
 				.required( this.validationMessages.string.required ),
 
-			finalHour: mixed()
+			apiaudiophoneterms_finaltime: mixed()
 				.required( this.validationMessages.mixed.required ),
 
-			beginTime: mixed()
+			apiaudiophoneterms_begintime: mixed()
 				.required( this.validationMessages.mixed.required ),
 
-			daysWeek: mixed()
+			apiaudiophoneterms_daysevents: mixed()
 		});
 	}
 

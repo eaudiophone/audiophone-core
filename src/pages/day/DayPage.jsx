@@ -13,6 +13,7 @@ class DayPage extends Component {
 	DayService = new DayService();
 	message = '';
 	action = '';
+	tabSelected = 1;
 
 	constructor( props ) {
 		super( props );
@@ -33,6 +34,7 @@ class DayPage extends Component {
 						aria-controls="nav-records" 
     				aria-selected="true"
     				href="#nav-records"
+    				onSelect={ () => this.tabSelected = 1 } // records
 					>
 						Grabaciones
 					</Nav.Link>
@@ -45,6 +47,7 @@ class DayPage extends Component {
 						aria-controls="nav-records" 
     				aria-selected="false"
     				href="#nav-rental"
+    				onSelect={ () => this.tabSelected = 2 } // rental
 					>
 						Alquiler
 					</Nav.Link>
@@ -97,19 +100,25 @@ class DayPage extends Component {
 		
 		actions.setSubmitting( false );
 
-		if ( !verifyRangeHours( values.beginTime, values.finalHour ).ok ) {
+		const { apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime } = values;
+		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
+
+		if ( !ok && this.tabSelected === 1 ) {
 		
-			const resp = verifyRangeHours( values.beginTime, values.finalHour );
-			this.message = resp.message;
+			this.message = message;
 			this.action = 'Error'; 
 			
 			return this.setState({ showToast: true });
 		}
 
-		this.DayService.validateTerms( 
-			values, 
-			JSON.parse( sessionStorage.getItem('logged').id ) 
-		);
+		values = {
+			...values,
+			apiaudiophoneusers_id: JSON.parse( sessionStorage.getItem('logged') ).id  // foreign key del usuario
+		}
+
+		values = this.DayService.validateTerms( values );
+
+		console.log( values );
 	}
 
 	render() {

@@ -12,46 +12,46 @@ const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, erro
         <InputNumber 
           columnSize={ 6 }
           title="Cantidad de alquileres por semana:"
-          name="quantityMeetingWeekly"
-          value={ values.quantityMeetingWeekly }
-          error={ errors.quantityMeetingWeekly }
+          name="apiaudiophoneterms_quantityeventsweekly"
+          value={ values.apiaudiophoneterms_quantityeventsweekly }
+          error={ errors.apiaudiophoneterms_quantityeventsweekly }
           change={ handleChange }
         />
         <InputNumber 
           columnSize={ 6 }
           title="Cantidad de alquileres al mes:"
-          name="quantityMeetingMonthly"
-          value={ values.quantityMeetingMonthly }
-          error={ errors.quantityMeetingMonthly }
+          name="apiaudiophoneterms_quantityeventsmonthly"
+          value={ values.apiaudiophoneterms_quantityeventsmonthly }
+          error={ errors.apiaudiophoneterms_quantityeventsmonthly }
           change={ handleChange }
         />
          <InputSelect 
           columnSize={ 12 }
           title="Rango de citas:"
-          name="daysMeeting"
-          value={ values.daysMeeting }
-          error={ errors.daysMeeting }
+          name="apiaudiophoneterms_rankevents"
+          value={ values.apiaudiophoneterms_rankevents }
+          error={ errors.apiaudiophoneterms_rankevents }
           change={ handleChange }
         />
-         { values.daysMeeting === 'range' && 
+         { values.apiaudiophoneterms_rankevents === 'range' && 
 
           <CheckboxDays 
             columnSize={ 6 }
             title="días de semana"
-            name="daysWeek"
-            value={ values.daysWeek }
+            name="apiaudiophoneterms_daysevents"
+            value={ values.apiaudiophoneterms_daysevents }
             change={ handleChange } 
             start={ 0 }
             limit={ 3 }
           />  
         }
-        { values.daysMeeting === 'range' &&  
+        { values.apiaudiophoneterms_rankevents === 'range' &&  
 
           <CheckboxDays 
             columnSize={ 6 }
             title="días de semana"
-            name="daysWeek"
-            value={ values.daysWeek }
+            name="apiaudiophoneterms_daysevents"
+            value={ values.apiaudiophoneterms_daysevents }
             change={ handleChange } 
             start={ 4 }
             limit={ 6 }
@@ -60,17 +60,17 @@ const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, erro
         <InputHour 
           columnSize={ 6 }
           title="Hora de inicio:"
-          name="beginTime"
-          value={ values.beginTime }
-          error={ errors.beginTime }
+          name="apiaudiophoneterms_begintime"
+          value={ values.apiaudiophoneterms_begintime }
+          error={ errors.apiaudiophoneterms_begintime }
           change={ handleChange }
         />
         <InputHour 
           columnSize={ 6 }
           title="Hora de culminación:"
-          name="finalHour"
-          value={ values.finalHour }
-          error={ errors.finalHour }
+          name="apiaudiophoneterms_finaltime"
+          value={ values.apiaudiophoneterms_finaltime }
+          error={ errors.apiaudiophoneterms_finaltime }
           change={ handleChange }
         />
       </Form.Row>
@@ -86,44 +86,44 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
 			<InputNumber 
 				columnSize={ 6 }
 				title="Cantidad de grabaciones por semana:"
-				name="quantityMeetingWeekly"
-				value={ values.quantityMeetingWeekly }
-				error={ errors.quantityMeetingWeekly }
+				name="apiaudiophoneterms_quantityeventsweekly"
+				value={ values.apiaudiophoneterms_quantityeventsweekly }
+				error={ errors.apiaudiophoneterms_quantityeventsweekly }
 				change={ handleChange }
 			/>
 			<InputNumber 
 				columnSize={ 6 }
 				title="Cantidad de grabaciones al mes:"
-				name="quantityMeetingMonthly"
-				value={ values.quantityMeetingMonthly }
-				error={ errors.quantityMeetingMonthly }
+				name="apiaudiophoneterms_quantityeventsmonthly"
+				value={ values.apiaudiophoneterms_quantityeventsmonthly }
+				error={ errors.apiaudiophoneterms_quantityeventsmonthly }
 				change={ handleChange }
 			/>
       <InputSelect 
         columnSize={ 12 }
         title="Rango de citas:"
-        name="daysMeeting"
-        value={ values.daysMeeting }
-        error={ errors.daysMeeting }
+        name="apiaudiophoneterms_rankevents"
+        value={ values.apiaudiophoneterms_rankevents }
+        error={ errors.apiaudiophoneterms_rankevents }
         change={ handleChange }
       />
-      { values.daysMeeting === 'range' && 
+      { values.apiaudiophoneterms_rankevents === 'range' && 
 
         <CheckboxDays 
           columnSize={ 6 }
-          name="daysWeek"
-          value={ values.daysWeek }
+          name="apiaudiophoneterms_daysevents"
+          value={ values.apiaudiophoneterms_daysevents }
           change={ handleChange } 
           start={ 0 }
           limit={ 3 }
         />  
       }
-      { values.daysMeeting === 'range' &&  
+      { values.apiaudiophoneterms_rankevents === 'range' &&  
 
         <CheckboxDays 
           columnSize={ 6 }
-          name="daysWeek"
-          value={ values.daysWeek }
+          name="apiaudiophoneterms_daysevents"
+          value={ values.apiaudiophoneterms_daysevents }
           change={ handleChange } 
           start={ 4 }
           limit={ 6 }
@@ -132,18 +132,17 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
       <InputHour 
         columnSize={ 6 }
         title="Hora de inicio:"
-        name="beginTime"
-        value={ values.beginTime }
-        error={ errors.beginTime }
+        name="apiaudiophoneterms_begintime"
+        value={ values.apiaudiophoneterms_begintime }
+        error={ errors.apiaudiophoneterms_begintime }
         change={ handleChange }
-        max={ values.finalHour }
       />
       <InputHour 
         columnSize={ 6 }
         title="Hora de culminación:"
-        name="finalHour"
-        value={ values.finalHour }
-        error={ errors.finalHour }
+        name="apiaudiophoneterms_finaltime"
+        value={ values.apiaudiophoneterms_finaltime }
+        error={ errors.apiaudiophoneterms_finaltime }
         change={ handleChange }
       />
 		</Form.Row>
