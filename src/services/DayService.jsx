@@ -36,7 +36,7 @@ export class DayService {
 		return result;
 	}
 
-	validateTerms( form ) {
+	validateTerms( form = {} ) {
 
 		const { apiaudiophoneterms_daysevents, apiaudiophoneterms_rankevents } = form;
 
@@ -68,19 +68,26 @@ export class DayService {
 		return form;
 	}
 
-	updateTerms( form ) {
+	getTerms( id = 0 ) {
+		console.log( id );
+	}
+
+	createTerms( form ) {
 
 		return new Promise(( resolve, reject ) => {
 
 			const id = this.AuthService.getLogged().id;
 
-			this.AuthService.post(`apiaudiophoneterm/store/${ id }`, form )
-				.then(( resp ) => {
-					console.log( resp );
+			this.AuthService.postClient(`apiaudiophoneterm/store/${ id }`, form )
+				.then(({ data }) => {
+					resolve({
+						message: data.apiaudiophoneterm_mesaage,
+						ok: data.ok,
+						status: data.status,
+						apiaudiophonetermnew: data.apiaudiophonetermnew
+					});
 				})
-				.catch(( error ) => {
-					console.log( error );
-				});
+				.catch( error => reject( error ) );
 		});
 	}
 }

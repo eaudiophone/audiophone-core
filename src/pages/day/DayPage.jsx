@@ -10,7 +10,7 @@ import { ToastComponent } from '../../components/toasts/ToastComponent';
 
 class DayPage extends Component {
 
-	DayService = new DayService();
+	dayService = new DayService();
 	message = '';
 	action = '';
 	tabSelected = 1;
@@ -111,9 +111,19 @@ class DayPage extends Component {
 			return this.setState({ showToast: true });
 		}
 
-		values = this.DayService.validateTerms( values );
+		values = this.dayService.validateTerms( values );
 
-		console.log( values );
+		this.dayService.createTerms( values )
+			.then( resp => {
+				
+				this.message = resp.message;
+				this.action = 'Exito';
+
+				return this.setState({ showToast: true });
+
+			})
+			.catch( error => console.error( error ) );
+
 	}
 
 	render() {
