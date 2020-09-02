@@ -3,7 +3,7 @@ import { DAYSWEEK } from '../hardcode/WeekHardcode';
 
 export class DayService {
 	
-	AuthService = new AuthService();
+	authService = new AuthService();
 
 	getArrayDays( daysWeek = [] ) {
 
@@ -68,17 +68,39 @@ export class DayService {
 		return form;
 	}
 
-	getTerms( id = 0 ) {
-		console.log( id );
+	getTerms( idTerms = 0 ) {
+		
+		return new Promise(( resolve, reject ) => {
+
+			const id = this.authService.getLogged().id;
+
+			this.authService.postClient(`apiaudiophoneterm/show/${ id }`)
+				.then(({ data }) => {
+					resolve({
+						ok: data.ok,
+						status: data.status,
+						data: data.apiaudiophonetermshowdata
+					})
+				})
+				.catch( error => {
+					// console.log( error.response );
+
+					reject({ 
+						message: 'Ha ocurrido un imprevisto',
+						action: 'Error',
+						status: error.response.status
+				});
+			});
+		});
 	}
 
 	createTerms( form ) {
 
 		return new Promise(( resolve, reject ) => {
 
-			const id = this.AuthService.getLogged().id;
+			const id = this.authService.getLogged().id;
 
-			this.AuthService.postClient(`apiaudiophoneterm/store/${ id }`, form )
+			this.authService.postClient(`apiaudiophoneterm/store/${ id }`, form )
 				.then(({ data }) => {
 					resolve({
 						message: data.apiaudiophoneterm_mesaage,
@@ -87,7 +109,13 @@ export class DayService {
 						apiaudiophonetermnew: data.apiaudiophonetermnew
 					});
 				})
-				.catch( error => reject( error ) );
+				.catch( error => {
+					reject({ 
+						message: 'Ha ocurrido un imprevisto',
+						action: 'Error',
+						status: error.response.status
+					});
+			});
 		});
 	}
 }

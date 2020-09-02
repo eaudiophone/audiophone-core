@@ -21,6 +21,21 @@ class DayPage extends Component {
 		this.getDataForm = this.getDataForm.bind( this );
 	}
 
+	componentDidMount() {
+		return this.getTerms();
+	}
+
+	getTerms() {
+		this.dayService.getTerms()
+			.then( resp => console.log( resp ) )
+			.catch( error => {
+				this.message = error.message;
+				this.action = 'Error';
+				this.setState({ showToast: true });
+			});
+	}
+
+
 	getTabs() {
 		
 		return (

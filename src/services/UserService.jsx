@@ -2,13 +2,13 @@ import { AuthService } from './AuthService';
 
 export class UserService {
 
-	AuthService = new AuthService();
+	authService = new AuthService();
 
 	getUsers() {
 
 		return new Promise( ( resolve, reject ) => {
 
-			this.AuthService.postClient('apiaudiophoneuser/show')
+			this.authService.postClient('apiaudiophoneuser/show')
 			.then( resp => {
 
 				const { 
@@ -38,7 +38,7 @@ export class UserService {
 
 		return new Promise(( resolve, reject ) => {
 
-			this.AuthService.putClient( 
+			this.authService.putClient( 
 					`apiaudiophoneuser/update/${ user.apiaudiophoneusers_id }`,
 					role
 				)
@@ -78,7 +78,7 @@ export class UserService {
 
 		return new Promise( ( resolve, reject ) => {
 
-			this.AuthService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
+			this.authService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
 				.then( ({ data }) => {
 
 					const user = method === 'inactivate' ? data.apiaudiophoneuserinactive : data.apiaudiophoneuseractivate;
@@ -111,7 +111,7 @@ export class UserService {
 
 		return new Promise( ( resolve, reject ) => {
 
-			this.AuthService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
+			this.authService.postClient(`apiaudiophoneuser/show?stringsearch=${ search }`)
 				.then( resp => {
 
 					const { apiaudiophoneuserdata } = resp.data;
@@ -133,7 +133,7 @@ export class UserService {
 
 		return new Promise( ( resolve, reject ) => {
 
-			this.AuthService.postClient( url )
+			this.authService.postClient( url )
 				.then( resp => {
 					
 					const { 
@@ -161,7 +161,7 @@ export class UserService {
 
 			setTimeout( () => {
 
-			this.AuthService.putClient(`apiaudiophoneuser/update/${ id }`, user )
+			this.authService.putClient(`apiaudiophoneuser/update/${ id }`, user )
 				.then( resp => {
 				
 				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
