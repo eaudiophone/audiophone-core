@@ -9,6 +9,10 @@ export function getDateWithHour( date ) {
 	return moment( date ).format('DD-MM-YYYY kk:mm:ss');
 }
 
+export function getHour( hour = '00:00' ) {
+	return hour.slice( 0, 5 );
+}
+
 // ------------------------------------------------------ //
 
 // time 

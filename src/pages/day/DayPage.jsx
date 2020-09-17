@@ -22,11 +22,11 @@ class DayPage extends Component {
 	}
 
 	componentDidMount() {
-		return this.getTerms();
+		return this.getTerms( 2 );
 	}
 
-	getTerms() {
-		this.dayService.getTerms()
+	getTerms( idTerms ) {
+		this.dayService.getTerms( idTerms )
 			.then( resp => console.log( resp ) )
 			.catch( error => {
 				this.message = error.message;
@@ -49,7 +49,7 @@ class DayPage extends Component {
 						aria-controls="nav-records" 
     				aria-selected="true"
     				href="#nav-records"
-    				onSelect={ () => this.tabSelected = 1 } // records
+    				onSelect={ () => this.getTerms( 2 ) } // records
 					>
 						Grabaciones
 					</Nav.Link>
@@ -62,7 +62,7 @@ class DayPage extends Component {
 						aria-controls="nav-records" 
     				aria-selected="false"
     				href="#nav-rental"
-    				onSelect={ () => this.tabSelected = 2 } // rental
+    				onSelect={ () => this.getTerms( 1 ) } // rental
 					>
 						Alquiler
 					</Nav.Link>

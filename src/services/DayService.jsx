@@ -1,6 +1,7 @@
 import { AuthService } from './AuthService';
 import { DAYSWEEK } from '../hardcode/WeekHardcode';
-
+import { getHour, getDateWithHour } from './../util-functions/date-format';
+ 
 export class DayService {
 	
 	authService = new AuthService();
@@ -74,12 +75,38 @@ export class DayService {
 
 			const id = this.authService.getLogged().id;
 
-			this.authService.postClient(`apiaudiophoneterm/show/${ id }`)
+			this.authService.postClient(
+				`apiaudiophoneterm/show/${ id }`,
+				{ id_apiaudiophoneservices: idTerms }
+			)
 				.then(({ data }) => {
+
+					let { apiaudiophonetermshowdata } = data;
+
+					apiaudiophonetermshowdata = {
+						...apiaudiophonetermshowdata,
+						apiaudiophoneterms_begintime: getHour( apiaudiophonetermshowdata.apiaudiophoneterms_begintime ),
+						apiaudiophoneterms_finaltime: getHour( apiaudiophonetermshowdata.apiaudiophoneterms_finaltime ),
+						created_at: apiaudiophonetermshowdata.created_at ? getDateWithHour( apiaudiophonetermshowdata.created_at ) : '',
+						updated_at: apiaudiophonetermshowdata.updated_at ? getDateWithHour( apiaudiophonetermshowdata.updated_at ) : '',
+						apiaudiophoneterms_daysevents: apiaudiophonetermshowdata.apiaudiophoneterms_daysevents.split(" ")
+							.map(( day, index, array ) => {
+
+								if ( index === array.length - 1 ) {
+									return day;
+								}
+
+								return day.substr( 0, day.length - 1 );
+							})
+					};
+
+
+					console.log( apiaudiophonetermshowdata );
+
 					resolve({
 						ok: data.ok,
 						status: data.status,
-						data: data.apiaudiophonetermshowdata
+						data: apiaudiophonetermshowdata
 					})
 				})
 				.catch( error => {
