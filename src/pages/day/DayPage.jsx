@@ -13,43 +13,100 @@ class DayPage extends Component {
 	dayService = new DayService();
 	message = '';
 	action = '';
-	tabSelected = 1;
+	tabSelected = '#nav-records';
+
+	TERMS = {
+		RENTAL: 1,
+		RECORD: 2
+	}
 
 	constructor( props ) {
+
 		super( props );
-		this.state = { showToast: false };
+		
+		this.state = { 
+			showToast: false, 
+			loading: false
+		};
+
 		this.getDataForm = this.getDataForm.bind( this );
 	}
 
 	componentDidMount() {
-		return this.getTerms( 2 );
+		return this.getTerms( this.TERMS.RECORD );
 	}
 
 	getTerms( idTerms ) {
+
+		this.setState({ loading: true })
+
+
 		this.dayService.getTerms( idTerms )
-			.then( resp => console.log( resp ) )
+			.then( resp => { 
+				
+				// console.log( resp ); 
+
+				if ( idTerms === this.TERMS.RECORD ) {
+					this.tabSelected = '#nav-records';
+				
+				} else {
+					this.tabSelected = '#nav-rental'
+
+				}
+
+				this.setState({ loading: false })
+			})
 			.catch( error => {
+
 				this.message = error.message;
 				this.action = 'Error';
 				this.setState({ showToast: true });
 			});
 	}
 
+	getDataForm( values, actions ) {
+		
+		actions.setSubmitting( false );
+
+		const { apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime } = values;
+		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
+
+		if ( !ok && this.tabSelected === '#nav-records' ) {
+		
+			this.message = message;
+			this.action = 'Error'; 
+			
+			return this.setState({ showToast: true });
+		}
+
+		values = this.dayService.validateTerms( values );
+
+		console.log( values );
+
+		/*this.dayService.createTerms( values )
+			.then( resp => {
+				
+				this.message = resp.message;
+				this.action = 'Exito';
+
+				return this.setState({ showToast: true });
+
+			})
+			.catch( error => console.error( error ) );*/
+
+	}
 
 	getTabs() {
 		
 		return (
 
-			<Nav variant="tabs" defaultActiveKey="#nav-records">
+			<Nav variant="tabs" defaultActiveKey={ this.tabSelected }>
 
 				<Nav.Item>
 					<Nav.Link
-						data-toggle="tab"
 						id="nav-records-tab"
-						aria-controls="nav-records" 
-    				aria-selected="true"
     				href="#nav-records"
-    				onSelect={ () => this.getTerms( 2 ) } // records
+    				onSelect={ () => this.getTerms( this.TERMS.RECORD ) }
 					>
 						Grabaciones
 					</Nav.Link>
@@ -57,12 +114,9 @@ class DayPage extends Component {
 
 				<Nav.Item>
 					<Nav.Link
-						data-toggle="tab"
 						id="nav-rental-tab"
-						aria-controls="nav-records" 
-    				aria-selected="false"
     				href="#nav-rental"
-    				onSelect={ () => this.getTerms( 1 ) } // rental
+    				onSelect={ () => this.getTerms( this.TERMS.RENTAL ) }
 					>
 						Alquiler
 					</Nav.Link>
@@ -76,7 +130,7 @@ class DayPage extends Component {
 
 		return (
 			<div 
-				className="tab-pane show active"
+				className="tab-pane active"
 				id="nav-records"
 				aria-labelledby="record-tab"
 			>
@@ -111,34 +165,25 @@ class DayPage extends Component {
 		);
 	}
 
-	getDataForm( values, actions ) {
-		
-		actions.setSubmitting( false );
+	showContent() {
 
-		const { apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime } = values;
-		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
-
-		if ( !ok && this.tabSelected === 1 ) {
-		
-			this.message = message;
-			this.action = 'Error'; 
-			
-			return this.setState({ showToast: true });
+		if ( !this.state.loading ) {
+			return (
+				<div>
+					{ this.getTabs() }
+					<div className="tab-content">
+						{ this.getTabRecord() }
+						{ this.getTabRental() }
+					</div>
+				</div>
+			);
 		}
 
-		values = this.dayService.validateTerms( values );
-
-		this.dayService.createTerms( values )
-			.then( resp => {
-				
-				this.message = resp.message;
-				this.action = 'Exito';
-
-				return this.setState({ showToast: true });
-
-			})
-			.catch( error => console.error( error ) );
-
+		return (
+			<div className="d-flex justify-content-center align-items-center flex-row">
+				<i className="fas fa-spinner fa-spin fa-2x"></i>
+			</div>
+		);
 	}
 
 	render() {
@@ -155,11 +200,7 @@ class DayPage extends Component {
 						align-items-center pb-2 mb-3 border-bottom">
 					<h2>Dias de servicios</h2>	
 				</div>
-				{ this.getTabs() }
-				<div className="tab-content">
-					{ this.getTabRecord() }
-					{ this.getTabRental() }
-				</div>
+				{ this.showContent() }
 			</div>
 		);
 	}
