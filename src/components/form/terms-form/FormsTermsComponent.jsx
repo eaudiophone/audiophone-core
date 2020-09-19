@@ -243,6 +243,12 @@ InputHour.propTypes = {
 
 const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) => {
 
+  // let prueba = [];
+
+ /* value.forEach(( element ) => {
+    prueba.push( DAYSWEEK.filter( day => day.name === element ));
+  });*/
+
   const renderWeek = () => {
 
     let checks = [];
@@ -252,11 +258,11 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
       checks.push(
         
         <Form.Check
-          key={ i } 
+          key={ DAYSWEEK[i].id } 
           name={ name }
           label={ DAYSWEEK[i].name }
           type="checkbox"
-          value={ DAYSWEEK[i].name }
+          value={ DAYSWEEK[i].id }
           onChange={ change }
           id={ DAYSWEEK[i].id }
         />

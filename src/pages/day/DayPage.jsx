@@ -11,9 +11,12 @@ import { ToastComponent } from '../../components/toasts/ToastComponent';
 class DayPage extends Component {
 
 	dayService = new DayService();
+
 	message = '';
 	action = '';
 	tabSelected = '#nav-records';
+	
+	terms = null;
 
 	TERMS = Object.freeze({
 		RENTAL: 1,
@@ -44,8 +47,6 @@ class DayPage extends Component {
 		this.dayService.getTerms( idTerms )
 			.then( resp => { 
 				
-				// console.log( resp ); 
-
 				if ( idTerms === this.TERMS.RECORD ) {
 					this.tabSelected = '#nav-records';
 				
@@ -53,6 +54,8 @@ class DayPage extends Component {
 					this.tabSelected = '#nav-rental'
 
 				}
+
+				this.terms = resp.data;
 
 				this.setState({ loading: false })
 			})
@@ -80,13 +83,15 @@ class DayPage extends Component {
 		}
 
 		values = this.dayService.validateTerms( values );
+		
+		console.log( values );
 
 		values = {
 			...values,
 			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? 2 : 1 
 		};
 
-		console.log( values );
+		// console.log( values );
 
 		this.dayService.createTerms( values )
 			.then( resp => {
@@ -149,7 +154,7 @@ class DayPage extends Component {
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
 					validationSchema={ new TermsSchema().getSchema() }
-					initialValues={ new Terms() }
+					initialValues={ this.terms || new Terms() }
 				/>
 			</div>
 		);
@@ -169,7 +174,7 @@ class DayPage extends Component {
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
 					validationSchema={ new TermsSchema().getSchema() }
-					initialValues={ new Terms() }
+					initialValues={ this.terms || new Terms() }
 				/>
 			</div>
 		);

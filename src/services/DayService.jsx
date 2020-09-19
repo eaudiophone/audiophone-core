@@ -53,6 +53,7 @@ export class DayService {
 			}
 		}
 
+		// rango 2 al 7
 		if ( 
 			apiaudiophoneterms_daysevents.length > 1 && 
 			apiaudiophoneterms_rankevents === 'range' && 
@@ -64,6 +65,18 @@ export class DayService {
 				...form,
 				apiaudiophoneterms_daysevents: this.getArrayDays( apiaudiophoneterms_daysevents.map(( x ) => parseInt( x ))) 
 			};	
+		}
+
+		// rango igual a 1
+		if (
+			apiaudiophoneterms_daysevents.length === 1 && 
+			apiaudiophoneterms_rankevents === 'range'
+		) {
+
+			form = {
+				...form,
+				apiaudiophoneterms_daysevents: DAYSWEEK.filter(( day ) => day.id === form.apiaudiophoneterms_daysevents[0] ).name
+			};
 		}
 
 		return form;
@@ -102,7 +115,7 @@ export class DayService {
 					};
 
 
-					console.log( apiaudiophonetermshowdata );
+					// console.log( apiaudiophonetermshowdata );
 
 					resolve({
 						ok: data.ok,
