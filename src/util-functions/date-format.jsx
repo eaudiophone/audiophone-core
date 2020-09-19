@@ -5,7 +5,7 @@ const SECONDS = {
 	MINUTES: 60
 };
 
-export function getDateWithHour( date ) {
+export function getDateWithHour( date = '' ) {
 	return moment( date ).format('DD-MM-YYYY kk:mm:ss');
 }
 

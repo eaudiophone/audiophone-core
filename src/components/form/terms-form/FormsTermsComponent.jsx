@@ -5,6 +5,8 @@ import { DAYSWEEK } from './../../../hardcode/WeekHardcode';
 
 const FormTermsRental = ({ handleSubmit, handleChange, handleReset, values, errors, }) => {
 
+  console.log( values );
+
   return (
 
     <Form noValidate className="m-3" onSubmit={ handleSubmit }>
@@ -254,9 +256,9 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
           name={ name }
           label={ DAYSWEEK[i].name }
           type="checkbox"
-          value={ DAYSWEEK[i].id }
+          value={ DAYSWEEK[i].name }
           onChange={ change }
-          id={ DAYSWEEK[i].name }
+          id={ DAYSWEEK[i].id }
         />
       );          
     }

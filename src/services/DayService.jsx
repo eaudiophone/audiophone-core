@@ -89,15 +89,16 @@ export class DayService {
 						apiaudiophoneterms_finaltime: getHour( apiaudiophonetermshowdata.apiaudiophoneterms_finaltime ),
 						created_at: apiaudiophonetermshowdata.created_at ? getDateWithHour( apiaudiophonetermshowdata.created_at ) : '',
 						updated_at: apiaudiophonetermshowdata.updated_at ? getDateWithHour( apiaudiophonetermshowdata.updated_at ) : '',
-						apiaudiophoneterms_daysevents: apiaudiophonetermshowdata.apiaudiophoneterms_daysevents.split(" ")
-							.map(( day, index, array ) => {
+						apiaudiophoneterms_daysevents: apiaudiophonetermshowdata.apiaudiophoneterms_daysevents !== null ?  
+							apiaudiophonetermshowdata.apiaudiophoneterms_daysevents.split(" ") 
+								.map(( day, index, array ) => {
 
-								if ( index === array.length - 1 ) {
-									return day;
-								}
+									if ( index === array.length - 1 ) {
+										return day;
+									}
 
-								return day.substr( 0, day.length - 1 );
-							})
+									return day.substr( 0, day.length - 1 );
+								}) : []
 					};
 
 

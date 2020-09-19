@@ -15,10 +15,10 @@ class DayPage extends Component {
 	action = '';
 	tabSelected = '#nav-records';
 
-	TERMS = {
+	TERMS = Object.freeze({
 		RENTAL: 1,
 		RECORD: 2
-	}
+	});
 
 	constructor( props ) {
 
@@ -81,9 +81,14 @@ class DayPage extends Component {
 
 		values = this.dayService.validateTerms( values );
 
+		values = {
+			...values,
+			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? 2 : 1 
+		};
+
 		console.log( values );
 
-		/*this.dayService.createTerms( values )
+		this.dayService.createTerms( values )
 			.then( resp => {
 				
 				this.message = resp.message;
@@ -92,8 +97,13 @@ class DayPage extends Component {
 				return this.setState({ showToast: true });
 
 			})
-			.catch( error => console.error( error ) );*/
+			.catch( error => {
 
+				this.message = error.message;
+				this.action = error.action;
+				this.setState({ showToast: true })
+				console.error( error );
+			});
 	}
 
 	getTabs() {
