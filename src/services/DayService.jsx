@@ -79,6 +79,14 @@ export class DayService {
 			};
 		}
 
+		// vacia el arreglo si tiene alguno de los 2 campos
+		if ( apiaudiophoneterms_rankevents === 'all-days' || apiaudiophoneterms_rankevents === '5-days' ) {
+			form = {
+				...form,
+				apiaudiophoneterms_daysevents: [],
+			};
+		}
+
 		return form;
 	}
 

@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import { Form, Button } from "react-bootstrap";
-import { Formik } from 'formik';
+import { Button } from "react-bootstrap";
+import { Formik, Form, Field } from 'formik';
+
+import { EmailInput, PasswordInput, CheckboxInput } from '../FormComponent';
 
 import LoginSchema from './LoginSchema';
 import Login from './../../../models/LoginModels';
@@ -14,49 +16,54 @@ const LoginForm = ({ loading = false, getFormData }) => {
       initialValues={ new Login( localStorage.getItem('email') ) }
       validationSchema={ new LoginSchema().getSchema() }
       onSubmit={ getFormData }
-      validateOnChange={ false }
+      validateOnChange={ true }
   	>
-    	{({ handleSubmit, handleChange, handleReset, values, errors }) => (
+    	{ ({ values, handleReset, isValid }) => {
 
-       	<Form 
-         	className="form-signin" 
-         	onSubmit={ handleSubmit }
-         	noValidate
-        > 
+        return (
 
-          <h2 className="mb-3">Estudio Audiophone</h2>
-          <h3 className="mb-3 text-center">
-            Sign In
-          </h3>
+         	<Form 
+           	className="form-signin"
+            noValidate 
+          > 
 
-          <EmailInput 
-          	value={ values.audiophoneusers_email }
-          	handleChange={ handleChange }
-          	error={ errors.audiophoneusers_email }
-          />                  
+            <h2 className="mb-3">Estudio Audiophone</h2>
+            <h3 className="mb-3 text-center">
+              Sign In
+            </h3>
 
-        	 <PasswordInput 
-          	value={ values.audiophoneusers_password }
-          	handleChange={ handleChange }
-          	error={ errors.audiophoneusers_password }
-          />
+            <Field 
+              type="email" 
+              name="audiophoneusers_email" 
+              component={ EmailInput }
+            />
 
-          <CheckboxInput 
-          	value={ values.remember }
-          	handleChange={ handleChange }
-          />
+            <Field 
+              type="password"
+              name="audiophoneusers_password"
+              component={ PasswordInput }
+            />
 
-          <Buttons handleReset={ handleReset } loading={ loading } />
+            <Field 
+              type="checkbox"
+              name="remember"
+              component={ CheckboxInput }
+              label="remember me"
+            />
 
-          <Register />  
-          
-          <p className="mt-3 mb-3 text-muted text-center">
-            &copy; Audiophone 2018
-          </p>
+            <Buttons handleReset={ handleReset } disabled={ !isValid } loading={ loading } />
+
+            <Register />  
             
-         </Form>
-    )}
-  </Formik>
+            <p className="mt-3 mb-3 text-muted text-center">
+              &copy; Audiophone 2018
+            </p>
+              
+           </Form>
+          );
+        }
+      }
+    </Formik>
 	);
 }
 
@@ -76,80 +83,14 @@ const Register = () =>  {
     </div>
   );
 }
-
-
-const EmailInput = ({ value, handleChange, error }) => (
-
-	<Form.Group>
-		<Form.Label>email:</Form.Label>
-		<Form.Control
-      name="audiophoneusers_email"
-      type="email"
-      value={ value }  
-			onChange={ handleChange }
-      isInvalid={ !!error } 
-		/>
-    <Form.Control.Feedback type="invalid">
-      { error }
-    </Form.Control.Feedback>
-	</Form.Group>
-);
-
-EmailInput.propTypes = {
-  value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func,
-  error: PropTypes.string
-};
     
+const Buttons = ({ handleReset, loading = false, disabled = true }) => {
 
-const PasswordInput = ({ value, handleChange, error }) => (
-
-	<Form.Group>
-    <Form.Label>password:</Form.Label>
-		<Form.Control
-      name="audiophoneusers_password"
-			type="password"
-      onChange={ handleChange }
-      value={ value } 
-			isInvalid={ !!error } 
-	   />
-    <Form.Control.Feedback type="invalid">
-      { error }
-    </Form.Control.Feedback>
-  </Form.Group>
-);
-
-PasswordInput.propTypes = {
-  value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  error: PropTypes.string
-};
-    
-
-const CheckboxInput = ({ value, handleChange }) => (
-    		 
-	 <Form.Group>
-    <Form.Check
-      id="remember"
-      name="remember"
-      type="checkbox"
-      label="remember me"
-      onChange={ handleChange }
-      value={ value }
-    /> 
-   </Form.Group>
-);
-
-CheckboxInput.propTypes = {
-  value: PropTypes.bool,
-  handleChange: PropTypes.func.isRequired
-};
-    
-const Buttons = ({ handleReset, loading = false }) => (
+  return (
 
   <div>
   	{ !loading && (
-  			<Button type="submit" variant="primary" size="lg" block>
+  			<Button type="submit" variant="primary" disabled={ disabled } size="lg" block>
   				Iniciar sesión
 				</Button>
   		) 
@@ -172,11 +113,12 @@ const Buttons = ({ handleReset, loading = false }) => (
         Cancelar
     </Button>
   </div>
-);
+)};
 
 Buttons.propTypes = {
   handleReset: PropTypes.func.isRequired,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool
 };
    
 

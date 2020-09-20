@@ -243,8 +243,6 @@ InputHour.propTypes = {
 
 const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) => {
 
-  // let prueba = [];
-
  /* value.forEach(( element ) => {
     prueba.push( DAYSWEEK.filter( day => day.name === element ));
   });*/
@@ -255,6 +253,17 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
 
     for ( let i = start; i <= limit; i++ ) {
       
+      let found = false;
+
+      value.forEach(( day ) => {
+        
+        if ( DAYSWEEK[i].name === day ) {
+          found = true;
+        }
+      });
+
+      // console.log( found );
+
       checks.push(
         
         <Form.Check
@@ -265,6 +274,7 @@ const CheckboxDays = ({ name, value, change, columnSize, error, start, limit }) 
           value={ DAYSWEEK[i].id }
           onChange={ change }
           id={ DAYSWEEK[i].id }
+          checked={ found }
         />
       );          
     }
