@@ -41,7 +41,7 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
         component={ SelectInput }
       />
 
-      {/* values.apiaudiophoneterms_rankevents === 'range' && 
+      { values.apiaudiophoneterms_rankevents === 'range' && 
 
         <CheckboxDays 
           columnSize={ 6 }
@@ -58,7 +58,7 @@ const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, err
           start={ 4 }
           limit={ 6 }
         />
-      */}
+      }
       
       <Field 
         title="Hora de inicio:"
@@ -89,15 +89,6 @@ const CheckboxDays = ({ name, columnSize, error, start, limit, value }) => {
 
     for ( let i = start; i <= limit; i++ ) {
       
-      /*let found = false;
-
-      value.forEach(( day ) => {
-        
-        if ( DAYSWEEK[i].name === day ) {
-          found = true;
-        }
-      });*/
-
       checks.push(
         
         <Field 

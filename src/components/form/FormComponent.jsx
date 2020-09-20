@@ -35,16 +35,17 @@ export const PasswordInput = ({ field, form, type }) => (
   </Form.Group>
 );
 
-export const CheckboxInput = ({ field, form, label, id = '', type = 'checkbox' }) => {
+export const CheckboxInput = ({ field, form, label, id = '', type = 'checkbox', value = null, checked = false }) => {
 
 	return (
     		 
 	 <Form.Group className="m-0">
     <Form.Check
+      { ...field }
       id={ id.length === 0 ? field.name : id }
       type={ type }
       label={ label }
-      { ...field }
+      value={ value !== null ? value : '' }
     /> 
    </Form.Group>
 )};
