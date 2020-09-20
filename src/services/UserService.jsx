@@ -1,4 +1,5 @@
 import { AuthService } from './AuthService';
+import Profile from './../models/ProfileModels';
 
 export class UserService {
 
@@ -164,6 +165,7 @@ export class UserService {
 			this.authService.putClient(`apiaudiophoneuser/update/${ id }`, user )
 				.then( resp => {
 				
+
 				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
 			
 				let logged = JSON.parse( sessionStorage.getItem('logged'));
@@ -180,10 +182,10 @@ export class UserService {
 					state: {
 						showToast: true, 
 						loading: false, 
-						user: {
-							apiaudiophoneusers_fullname: this.AuthService.getLogged().fullname,
-							apiaudiophoneusers_email: this.AuthService.getLogged().email
-						}
+						user:  new Profile(
+							this.authService.getLogged().fullname,
+							this.authService.getLogged().email,
+						)
 					},
 					message: apiaudiophoneusermessage,
 					action: 'Exito'

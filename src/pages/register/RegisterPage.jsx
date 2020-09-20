@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { RedirectService } from './../../services/RedirectService';
-import FormProfileModule from '../../components/form/profile-form/FormProfileComponent';
+import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import { ToastComponent } from '../../components/toasts/ToastComponent'; 
 import { AuthService } from './../../services/AuthService';
+import Profile from './../../models/ProfileModels';
 import './RegisterPage.css';
 
 class RegisterPage extends Component {
@@ -78,7 +79,8 @@ class RegisterPage extends Component {
 					Registro de usuarios
 				</h2>
 				
-				<FormProfileModule.FormProfileComponent
+				<FormProfileComponent
+					profile={ new Profile() }
 					loading={ this.state.loading } 
 					getFormData={ this.getFormData } 
 					register={ true }

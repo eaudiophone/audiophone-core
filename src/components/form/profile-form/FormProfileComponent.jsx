@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Form, Col, Button } from "react-bootstrap";
-import { Formik } from 'formik';
+
+import { Formik, Form as FormFormik, Field } from 'formik';
+import { EmailInput, PasswordInput, FormInput, FormButtons } from './../FormComponent';
+
 import Profile from './../../../models/ProfileModels';
 import ProfileSchema from './ProfileSchema';
 
@@ -17,32 +19,32 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
       onSubmit={ getFormData } 
       validateOnChange={ false }
     >
-      { ({ handleSubmit, handleChange, handleReset, values, errors }) => (
+      { ({ handleReset, isValid }) => (
 
-          <Form className="form" onSubmit={ handleSubmit } noValidate>
-            <FormInput
-              title="Nombre:"
+          <FormFormik className="form" noValidate>
+             
+            <Field 
+              type="text"
               name="apiaudiophoneusers_fullname"
-              value={ values.apiaudiophoneusers_fullname }
-              error={ errors.apiaudiophoneusers_fullname }
-              change={ handleChange }
+              component={ FormInput }
+              title="nombre:"
             />
-            <FormInput
-              title="Email:"
-              name="apiaudiophoneusers_email"
-              value={ values.apiaudiophoneusers_email }
-              error={ errors.apiaudiophoneusers_email }
-              change={ handleChange }
+
+            <Field 
+              type="email" 
+              name="apiaudiophoneusers_email" 
+              component={ EmailInput }
             />
-            <FormPassword
-              title="Contraseña:"
+
+            <Field 
+              type="password"
               name="apiaudiophoneusers_password"
-              value={ values.apiaudiophoneusers_password }
-              error={ errors.apiaudiophoneusers_password }
-              change={ handleChange }
+              component={ PasswordInput }
             />
-            <FormButtons reset={ handleReset } loading={ loading } />
-          </Form>
+
+            <FormButtons reset={ handleReset } disabled={ !isValid } loading={ loading } />
+
+          </FormFormik>
         ) 
       }     
     </Formik>
@@ -53,132 +55,7 @@ FormProfileComponent.propTypes = {
   register: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   getFormData: PropTypes.func.isRequired,
-  profile: PropTypes.instanceOf( Profile )
+  profile: PropTypes.instanceOf( Profile ).isRequired
 };
 
-const FormPassword = ({ title, value, change, name, error }) => {
-
-  return (
-    <Form.Group>
-      <Form.Label className="form-label">{title}</Form.Label>
-      <Form.Control
-        as="input"
-        value={value}
-        type="password"
-        onChange={change}
-        name={name}
-        isInvalid={!!error}
-      />
-      <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
-    </Form.Group>
-  );
-};
-
-FormPassword.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  change: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  error: PropTypes.string
-};
-
-const FormInput = ({  title, value, change, name, error }) => {
-
-  return (
-    <Form.Group>
-      <Form.Label className="form-label">{title}</Form.Label>
-      <Form.Control
-        as="input"
-        value={value}
-        name={name}
-        onChange={change}
-        isInvalid={!!error}
-      />
-      <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
-    </Form.Group>
-  );
-};
-
-FormInput.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  change: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  error: PropTypes.string
-};
-
-const FormInputDate = ({ title, value, change, name, error }) => {
- 
-  return (
-    <Form.Group>
-      <Form.Label className="form-label">{title}</Form.Label>
-      <Form.Control
-        type="date"
-        as="input"
-        value={value}
-        name={name}
-        onChange={change}
-        isInvalid={!!error}
-        readOnly
-      />
-      <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
-    </Form.Group>
-
-  );
-};
-
-FormInputDate.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  change: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  error: PropTypes.string
-};
-
-const FormButtons = ({ reset, loading = false })  => {
-
-  return (
-    <Form.Row className="mt-5">
-      <Col sm={6} className="d-flex flex-row justify-content-center">
-        <Button
-          block
-          className="button-w80"
-          variant="secondary"
-          type="reset"
-          onClick={reset}
-        >
-          Cancelar
-        </Button>
-      </Col>
-      <Col sm={6} className="d-flex flex-row justify-content-center">
-        { !loading && (
-          <Button  block className="button-w80" variant="primary" type="submit">
-            Enviar
-          </Button>
-          ) 
-        }
-
-        { loading && (
-          <Button  block disabled className="button-w80" variant="primary">
-            <i className="fas fa-spinner fa-spin mr-2"></i>
-            Enviar
-          </Button>
-          ) 
-        }
-      </Col>
-    </Form.Row>
-  );
-};
-
-FormButtons.propTypes = {
-  reset: PropTypes.func.isRequired,
-  loading: PropTypes.bool
-};
-
-export default {
-  FormProfileComponent,
-  FormPassword,
-  FormButtons,
-  FormInput,
-  FormInputDate
-};
+export default FormProfileComponent;

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import Profile from '../../models/ProfileModels';
 import { RedirectService } from '../../services/RedirectService';
-import FormProfileModule from '../../components/form/profile-form/FormProfileComponent';
+import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
 import { ToastComponent } from './../../components/toasts/ToastComponent';
 import { UserService } from './../../services/UserService';
 import './ProfilePage.css';
 
 class ProfilePage extends Component {
 
-	UserService = new UserService();
+	userService = new UserService();
 	message = '';
 	action = '';
 	idUser = 0;
@@ -38,7 +38,9 @@ class ProfilePage extends Component {
 
 		this.setState({ loading: true })
 
-		this.UserService.editUser( this.idUser, values )
+		// console.log( values );
+
+		this.userService.editUser( this.idUser, values )
 			.then(({ state, message, action }) => {
 				
 				this.message = message;
@@ -85,7 +87,7 @@ class ProfilePage extends Component {
 				</Nav.Item>
 				</Nav>
 				<div>
-					<FormProfileModule.FormProfileComponent 
+					<FormProfileComponent 
 						profile={ this.state.user }
 						getFormData={ this.getFormData }
 						loading={ this.state.loading }
