@@ -7,7 +7,8 @@ class TermsSchema {
 		this.validationMessages = {
 			number: {
 				min: ( min ) => `debe ser mayor o igual a ${ min }`,
-				max: ( max ) => `debe ser menor o igual a ${ max }`
+				max: ( max ) => `debe ser menor o igual a ${ max }`,
+				required: 'Campo requerido'
 			},
 
 			string: {
@@ -32,11 +33,13 @@ class TermsSchema {
 
 			apiaudiophoneterms_quantityeventsweekly: number()
 				.min( 1, this.validationMessages.number.min( 1 ) )
-				.max( 24, this.validationMessages.number.max( 24 ) ),
+				.max( 24, this.validationMessages.number.max( 24 ) )
+				.required( this.validationMessages.number.required ),
 
 			apiaudiophoneterms_quantityeventsmonthly: number()
 				.min( 1, this.validationMessages.number.min( 1 ) )
-				.max( 30, this.validationMessages.number.max( 30 ) ),
+				.max( 30, this.validationMessages.number.max( 30 ) )
+				.required( this.validationMessages.number.required ),
 
 			apiaudiophoneterms_rankevents: string()
 				.required( this.validationMessages.string.required ),

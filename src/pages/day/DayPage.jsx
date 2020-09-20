@@ -71,6 +71,10 @@ class DayPage extends Component {
 		
 		actions.setSubmitting( false );
 
+		console.log( values );
+
+		return;
+
 		const { apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime } = values;
 		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
 
@@ -170,7 +174,7 @@ class DayPage extends Component {
 				aria-labelledby="rental-tab"
 			>
 				<Formik 
-					component={ FormTermsComponent.FormTermsRental }
+					component={ FormTermsComponent.FormTermsRecords }
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
 					validationSchema={ new TermsSchema().getSchema() }
