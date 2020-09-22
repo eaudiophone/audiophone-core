@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Col } from 'react-bootstrap';
+import { Form, Col, Row } from 'react-bootstrap';
 
 import { Form as FormFormik, Field } from 'formik';
 
@@ -8,80 +8,109 @@ import {
   NumberInput, 
   SelectInput,
   HourInput,
-  CheckboxInput,
   FormButtons
 } from '../FormComponent';
 
-import { DAYSWEEK } from './../../../hardcode/WeekHardcode';
+import { DAYSWEEK, OPTIONS } from './../../../hardcode/WeekHardcode';
 
-const FormTermsRecords = ({ handleSubmit, handleChange, handleReset, values, errors, isValid }) => (
 
-	<FormFormik noValidate className="m-3">
-		<Form.Row>
+const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, isValid }) => {
 
-      <Field 
-        title="Cantidad de eventos por semana:" 
-        columnSize={ 6 } 
-        name="apiaudiophoneterms_quantityeventsweekly"  
-        component={ NumberInput }
-        type="number"
-      />
+  // console.log( values );
 
-      <Field 
-        title="Cantidad de eventos al mes:" 
-        columnSize={ 6 } 
-        name="apiaudiophoneterms_quantityeventsmonthly"  
-        component={ NumberInput }
-        type="number"
-      />
+  const validateDays = ( $event ) => {
+    
+    let daysArray = values.apiaudiophoneterms_daysevents;
+    const { value, checked } = $event.target;
 
-      <Field 
-        title="Rango de eventos:"
-        name="apiaudiophoneterms_rankevents"
-        component={ SelectInput }
-      />
+    // console.log( daysArray.includes( value ), checked );
 
-      { values.apiaudiophoneterms_rankevents === 'range' && 
+    if ( !daysArray.includes( value ) && checked ) {
+      daysArray = daysArray.concat([ value ]);
 
-        <CheckboxDays 
-          columnSize={ 6 }
-          name="apiaudiophoneterms_daysevents"
-          start={ 0 }
-          limit={ 3 }
-        />  
-      }
-      { values.apiaudiophoneterms_rankevents === 'range' &&  
+    } else {
+      daysArray = daysArray.filter(( dayId ) => dayId !== value );
+    
+    }
 
-        <CheckboxDays 
-          columnSize={ 6 }
-          name="apiaudiophoneterms_daysevents"
-          start={ 4 }
-          limit={ 6 }
+    values.apiaudiophoneterms_daysevents = daysArray;
+
+    // console.log( values );
+  }
+
+  return (
+
+  	<FormFormik noValidate className="m-3">
+  		<Form.Row>
+
+        <Field 
+          title="Cantidad de eventos por semana:" 
+          columnSize={ 6 } 
+          name="apiaudiophoneterms_quantityeventsweekly"  
+          component={ NumberInput }
+          type="number"
         />
-      }
-      
-      <Field 
-        title="Hora de inicio:"
-        component={ HourInput }
-        type="time"
-        name="apiaudiophoneterms_begintime"
-        columnSize={ 6 } 
-      />
 
-      <Field 
-        title="Hora de culminación:"
-        component={ HourInput }
-        type="time"
-        name="apiaudiophoneterms_finaltime"
-        columnSize={ 6 } 
-      />
+        <Field 
+          title="Cantidad de eventos al mes:" 
+          columnSize={ 6 } 
+          name="apiaudiophoneterms_quantityeventsmonthly"  
+          component={ NumberInput }
+          type="number"
+        />
 
-		</Form.Row>
-    <FormButtons reset={ handleReset } disabled={ !isValid }  />
-	</FormFormik>
-);
+        <Field 
+          title="Rango de eventos:"
+          name="apiaudiophoneterms_rankevents"
+          component={ SelectInput }
+          options={ OPTIONS }
+        />
 
-const CheckboxDays = ({ name, columnSize, error, start, limit, value }) => {
+        { values.apiaudiophoneterms_rankevents === 'range'  && 
+          (
+            <Row className="w-100 mb-2 p-2">
+              { DAYSWEEK.map(( day, index, array ) => (
+                 <Col sm={ 6 } key={ day.id }>
+                    <input 
+                      type="checkbox" 
+                      id={ day.name } 
+                      onChange={ validateDays } 
+                      name="apiaudiophoneterms_daysevents"
+                      value={ day.id }
+                    />
+                    <label className="ml-2" htmlFor={ day.name }>{ day.name }</label> 
+                 </Col>
+              ))}
+            </Row>
+          )
+        }
+
+        <Field 
+          title="Hora de inicio:"
+          component={ HourInput }
+          type="time"
+          name="apiaudiophoneterms_begintime"
+          columnSize={ 6 } 
+        />
+
+        <Field 
+          title="Hora de culminación:"
+          component={ HourInput }
+          type="time"
+          name="apiaudiophoneterms_finaltime"
+          columnSize={ 6 } 
+        />
+       
+        <ShowLogs created_at={ values.created_at } updated_at="" />
+        
+  		</Form.Row>
+      <FormButtons reset={ handleReset } disabled={ !isValid }  />
+  	</FormFormik>
+  )
+};
+
+
+/*const CheckboxDays = ({ name, columnSize, error, start, limit, value }) => {
 
   const renderWeek = () => {
 
@@ -120,11 +149,32 @@ CheckboxDays.propTypes = {
   error: PropTypes.string,
   start: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired
+};*/
+
+const ShowLogs = ({ created_at = '', updated_at = '' }) => {
+
+  return (
+    <Row className="w-100">
+      <Col sm={6} className="text-center mt-3">
+        <p>
+          Fecha de creación: <br/> 
+           <span className="font-weight-bold">{ created_at.length > 0 ? created_at : 'No disponible' }</span>
+         </p>
+      </Col>
+      <Col sm={6} className="text-center mt-3">
+        <p>
+          Fecha de actualización: <br/> 
+          <span className="font-weight-bold">{ updated_at.length > 0 ? updated_at : 'No disponible' }</span>
+        </p>
+      </Col>  
+    </Row>
+  );
+}
+
+ShowLogs.propTypes = {
+  created_at: PropTypes.string,
+  updated_at: PropTypes.string
 };
 
 
-
-export default {
-	FormTermsRecords,
-  // FormTermsRental
-};
+export default FormTerms;

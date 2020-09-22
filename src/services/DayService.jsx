@@ -102,7 +102,11 @@ export class DayService {
 			)
 				.then(({ data }) => {
 
-					let { apiaudiophonetermshowdata } = data;
+
+
+					let { apiaudiophonetermshowdata, days_events_array } = data;
+
+					console.log( days_events_array );
 
 					apiaudiophonetermshowdata = {
 						...apiaudiophonetermshowdata,
@@ -111,19 +115,10 @@ export class DayService {
 						created_at: apiaudiophonetermshowdata.created_at ? getDateWithHour( apiaudiophonetermshowdata.created_at ) : '',
 						updated_at: apiaudiophonetermshowdata.updated_at ? getDateWithHour( apiaudiophonetermshowdata.updated_at ) : '',
 						apiaudiophoneterms_daysevents: apiaudiophonetermshowdata.apiaudiophoneterms_daysevents !== null ?  
-							apiaudiophonetermshowdata.apiaudiophoneterms_daysevents.split(" ") 
-								.map(( day, index, array ) => {
-
-									if ( index === array.length - 1 ) {
-										return day;
-									}
-
-									return day.substr( 0, day.length - 1 );
-								}) : []
+							this.changeDaybyId( days_events_array ) : []
 					};
 
-
-					// console.log( apiaudiophonetermshowdata );
+					console.log( apiaudiophonetermshowdata );
 
 					resolve({
 						ok: data.ok,
@@ -166,5 +161,26 @@ export class DayService {
 					});
 			});
 		});
+	}
+
+	changeDaybyId( arrayDays = [] ) {
+		
+		// console.log( arrayDays );
+
+		arrayDays = arrayDays.map( day => day.trim( day ) )
+
+		console.log( arrayDays );
+
+		return DAYSWEEK.map(( day ) => {
+
+			console.log(  );
+
+			if ( arrayDays.includes( day.name ) ) {
+				return day.id.toString();
+			}
+
+			return null;
+			
+		}).filter(( day ) => day !== null ) 
 	}
 }

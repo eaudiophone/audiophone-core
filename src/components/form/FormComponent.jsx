@@ -35,11 +35,11 @@ export const PasswordInput = ({ field, form, type }) => (
   </Form.Group>
 );
 
-export const CheckboxInput = ({ field, form, label, id = '', type = 'checkbox', value = null, checked = false }) => {
+export const CheckboxInput = ({ field, form, label, id = '', type = 'checkbox', value = null }) => {
 
 	return (
     		 
-	 <Form.Group className="m-0">
+	 <Form.Group>
     <Form.Check
       { ...field }
       id={ id.length === 0 ? field.name : id }
@@ -85,22 +85,24 @@ export const FormInputDate = ({ title, field, type, form }) => {
   );
 };
 
-export const HourInput = ({ title, field, form, type, columnSize = 12 }) => (
-    
-  <Col sm={ columnSize }>
-   <Form.Group>
-     <Form.Label>{ title }</Form.Label>
-     <Form.Control 
-       { ...field }
-       type={ type }
-       isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
-    />
-    <Form.Control.Feedback type="invalid">
-      { form.errors[ field.name ] }
-    </Form.Control.Feedback>
-   </Form.Group>
-  </Col>
-);
+export const HourInput = ({ title, field, form, type, columnSize = 12 }) => {
+
+  return (  
+    <Col sm={ columnSize }>
+     <Form.Group>
+       <Form.Label>{ title }</Form.Label>
+       <Form.Control 
+         { ...field }
+         type={ type }
+         isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+      />
+      <Form.Control.Feedback type="invalid">
+        { form.errors[ field.name ] }
+      </Form.Control.Feedback>
+     </Form.Group>
+    </Col>
+  )
+};
 
 
 export const NumberInput = ({ field, form, type, columnSize = 12, title }) => {
@@ -123,7 +125,7 @@ export const NumberInput = ({ field, form, type, columnSize = 12, title }) => {
    );
 }
 
-export const SelectInput = ({ title, columnSize = 12, field, form }) => (
+export const SelectInput = ({ title, columnSize = 12, field, form, options = [] }) => (
 
   <Col sm={ columnSize }>
    <Form.Group>
@@ -134,9 +136,10 @@ export const SelectInput = ({ title, columnSize = 12, field, form }) => (
       isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
     >
       <option value="">Seleccione</option>
-      <option value="all-days">Toda la semana</option>
-      <option value="5-days">Lunes a viernes</option>
-      <option value="range">Especificar días</option>
+      { options.map( ( option, index ) => ( 
+          <option value={ option.value } key={ index }>{ option.description }</option> 
+        )) 
+      }
     </Form.Control>
     <Form.Control.Feedback type="invalid">
       { form.errors[ field.name ] }

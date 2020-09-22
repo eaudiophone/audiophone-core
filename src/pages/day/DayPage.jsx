@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Formik } from 'formik';
-import FormTermsComponent from '../../components/form/terms-form/FormsTermsComponent';
+import FormTerms from '../../components/form/terms-form/FormsTermsComponent';
 import TermsSchema from '../../components/form/terms-form/TermsSchema';
 import Terms from '../../models/TermsModels';
 import { DayService } from '../../services/DayService';
@@ -58,6 +58,8 @@ class DayPage extends Component {
 				this.terms = resp.data;
 
 				this.setState({ loading: false })
+				
+				// console.log( this.terms );
 			})
 			.catch( error => {
 
@@ -71,10 +73,6 @@ class DayPage extends Component {
 		
 		actions.setSubmitting( false );
 
-		console.log( values );
-
-		return;
-
 		const { apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime } = values;
 		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
 
@@ -87,15 +85,14 @@ class DayPage extends Component {
 		}
 
 		values = this.dayService.validateTerms( values );
-		
-		console.log( values );
 
+		// foreign key
 		values = {
 			...values,
 			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? 2 : 1 
 		};
 
-		// console.log( values );
+		console.log( values );
 
 		this.dayService.createTerms( values )
 			.then( resp => {
@@ -154,7 +151,7 @@ class DayPage extends Component {
 				aria-labelledby="record-tab"
 			>
 				<Formik 
-					component={ FormTermsComponent.FormTermsRecords }
+					component={ FormTerms }
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
 					validationSchema={ new TermsSchema().getSchema() }
@@ -174,7 +171,7 @@ class DayPage extends Component {
 				aria-labelledby="rental-tab"
 			>
 				<Formik 
-					component={ FormTermsComponent.FormTermsRecords }
+					component={ FormTerms }
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
 					validationSchema={ new TermsSchema().getSchema() }
