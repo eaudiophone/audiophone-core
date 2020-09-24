@@ -102,8 +102,6 @@ export class DayService {
 			)
 				.then(({ data }) => {
 
-
-
 					let { apiaudiophonetermshowdata, days_events_array } = data;
 
 					console.log( days_events_array );
@@ -133,9 +131,9 @@ export class DayService {
 						message: 'Ha ocurrido un imprevisto',
 						action: 'Error',
 						status: error.response.status
+					});
 				});
 			});
-		});
 	}
 
 	createTerms( form ) {
@@ -173,14 +171,12 @@ export class DayService {
 
 		return DAYSWEEK.map(( day ) => {
 
-			console.log(  );
-
 			if ( arrayDays.includes( day.name ) ) {
 				return day.id.toString();
 			}
 
 			return null;
-			
+
 		}).filter(( day ) => day !== null ) 
 	}
 }
