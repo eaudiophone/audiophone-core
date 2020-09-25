@@ -24,7 +24,6 @@ class LoginPage extends Component {
 		this.state = {
       redirect: false,  
       showToast: false,
-      loading: false
 		};
 
 		this.getFormData = this.getFormData.bind( this ); 
@@ -32,7 +31,6 @@ class LoginPage extends Component {
 
 	getFormData( value, actions ) {
 
-	  actions.setSubmitting( false );
 
     this.setState({ loading: true });
 
@@ -41,10 +39,13 @@ class LoginPage extends Component {
       this.authService.logIn( value ).then( resp => {
 
         if ( resp.status === 200 ) { // ok
+	        
+          actions.setSubmitting( false );
           this.setState({ redirect: true, loading: false }); 
         
         } else {
-          
+           
+          actions.setSubmitting( false );
           this.message = resp.message;
           this.action = 'Error';
 
@@ -52,7 +53,7 @@ class LoginPage extends Component {
         }
       }); 
 
-    }, 1000 );
+    }, 2000 );
 	}
 
 	render() {
@@ -70,7 +71,7 @@ class LoginPage extends Component {
           onHide={ () => this.setState({ showToast: false }) }
         />
 
-        <LoginForm loading={ this.state.loading } getFormData={ this.getFormData } />
+        <LoginForm getFormData={ this.getFormData } />
 
       </Container>
    	);

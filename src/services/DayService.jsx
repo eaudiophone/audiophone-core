@@ -104,7 +104,7 @@ export class DayService {
 
 					let { apiaudiophonetermshowdata, days_events_array } = data;
 
-					console.log( days_events_array );
+					// console.log( days_events_array );
 
 					apiaudiophonetermshowdata = {
 						...apiaudiophonetermshowdata,
@@ -116,7 +116,7 @@ export class DayService {
 							this.changeDaybyId( days_events_array ) : []
 					};
 
-					console.log( apiaudiophonetermshowdata );
+					// console.log( apiaudiophonetermshowdata );
 
 					resolve({
 						ok: data.ok,
@@ -125,6 +125,7 @@ export class DayService {
 					})
 				})
 				.catch( error => {
+
 					// console.log( error.response );
 
 					reject({ 
@@ -167,7 +168,7 @@ export class DayService {
 
 		arrayDays = arrayDays.map( day => day.trim( day ) )
 
-		console.log( arrayDays );
+		// console.log( arrayDays );
 
 		return DAYSWEEK.map(( day ) => {
 

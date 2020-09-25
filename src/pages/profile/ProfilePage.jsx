@@ -20,7 +20,6 @@ class ProfilePage extends Component {
 
 		this.state = { 
 			showToast: false, 
-			loading: false,
 			user: new Profile(
 				JSON.parse( sessionStorage.getItem('logged') ).fullname,
 				JSON.parse( sessionStorage.getItem('logged') ).email
@@ -34,29 +33,28 @@ class ProfilePage extends Component {
 
 	getFormData( values, actions ) {
 
-		actions.setSubmitting( false );
-
-		this.setState({ loading: true })
-
 		// console.log( values );
 
 		this.userService.editUser( this.idUser, values )
 			.then(({ state, message, action }) => {
 				
+				actions.setSubmitting( false );
+				actions.setFieldValue( 'apiaudiophoneusers_password', '' );
 				this.message = message;
 				this.action = action;
-				actions.setFieldValue( 'apiaudiophoneusers_password', '' );
 				this.setState( state );
 			})
 			.catch(( error ) => {
 
+				actions.setSubmitting( false );
+				
 				if ( error.status === 401 ) {
-					return this.setState({ loading: false, redirect: true })
+					return this.setState({ redirect: true })
 				}
 
+				actions.resetForm();
 				this.message = 'Error interno del servidor';
 				this.action = 'Error';
-				actions.resetForm();
 				this.setState({ loading: false, showToast: true });
 			});
 	}
@@ -90,7 +88,6 @@ class ProfilePage extends Component {
 					<FormProfileComponent 
 						profile={ this.state.user }
 						getFormData={ this.getFormData }
-						loading={ this.state.loading }
 						register={ false }
 					/>
 				</div>

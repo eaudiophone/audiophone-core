@@ -9,7 +9,7 @@ import './RegisterPage.css';
 
 class RegisterPage extends Component {
 
-	AuthService = new AuthService();
+	authService = new AuthService();
 
 	message = '';
 	action = '';
@@ -21,7 +21,6 @@ class RegisterPage extends Component {
 		this.state = { 
 			redirect: false,
 			toast: false,
-			loading: false,
 		};
 
 		this.getFormData = this.getFormData.bind( this );
@@ -29,15 +28,14 @@ class RegisterPage extends Component {
 
 	getFormData( values, actions ) {
 		
-		actions.setSubmitting( false );
 
-		this.setState({ loading: true });
-
-		this.AuthService.post( 'apiaudiophoneuser/store',  values )
+		setTimeout(() => {
+			this.authService.post( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
 
 				// console.log( resp )
 				
+				actions.setSubmitting( false );
 				this.message = resp.data.apiaudiophoneusermessage;
 				this.action = 'Éxito';
 				
@@ -51,13 +49,13 @@ class RegisterPage extends Component {
 			.catch( error => {
 
 				// console.error( error );
-
+				actions.setSubmitting( false );
 				this.message = 'Ha ocurrido un imprevisto';
 				this.action = 'Error'
 
 				this.setState({ toast: true, loading: false });
 			});
-
+		}, 2000 );
 	}
 
 	render() {
@@ -81,7 +79,6 @@ class RegisterPage extends Component {
 				
 				<FormProfileComponent
 					profile={ new Profile() }
-					loading={ this.state.loading } 
 					getFormData={ this.getFormData } 
 					register={ true }
 				/>

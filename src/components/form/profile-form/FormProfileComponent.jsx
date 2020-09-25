@@ -19,7 +19,7 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
       onSubmit={ getFormData } 
       validateOnChange={ false }
     >
-      { ({ handleReset, isValid }) => (
+      { ({ handleReset, isValid, isSubmitting }) => (
 
           <FormFormik className="form" noValidate>
              
@@ -42,7 +42,7 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
               component={ PasswordInput }
             />
 
-            <FormButtons reset={ handleReset } disabled={ !isValid } loading={ loading } />
+            <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
 
           </FormFormik>
         ) 
@@ -53,7 +53,6 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
 
 FormProfileComponent.propTypes = {
   register: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
   getFormData: PropTypes.func.isRequired,
   profile: PropTypes.instanceOf( Profile ).isRequired
 };

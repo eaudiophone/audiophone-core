@@ -98,4 +98,8 @@ export class BackendService {
 
 		return await axios( this.request );
 	}
+
+	interceptResponse( resp ) {
+		return resp;
+	}
 }

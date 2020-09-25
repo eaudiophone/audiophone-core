@@ -70,8 +70,6 @@ class DayPage extends Component {
 	}
 
 	getDataForm( values, actions ) {
-		
-		actions.setSubmitting( false );
 
 		const { apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime } = values;
 		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
@@ -92,24 +90,34 @@ class DayPage extends Component {
 			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? 2 : 1 
 		};
 
-		console.log( values );
+		// console.log( values );
 
-		this.dayService.createTerms( values )
-			.then( resp => {
-				
-				this.message = resp.message;
-				this.action = 'Exito';
+		setTimeout(() => {
 
-				return this.setState({ showToast: true });
+			this.dayService.createTerms( values )
+				.then( resp => {
 
-			})
-			.catch( error => {
+					// variable que cambia el estado del botón
+					actions.setSubmitting( false );
+					
+					this.message = resp.message;
+					this.action = 'Exito';
 
-				this.message = error.message;
-				this.action = error.action;
-				this.setState({ showToast: true })
-				console.error( error );
-			});
+					return this.setState({ showToast: true });
+
+				})
+				.catch( error => {
+
+
+					actions.setSubmitting( false );
+
+					this.message = error.message;
+					this.action = error.action;
+					this.setState({ showToast: true })
+					console.error( error );
+				});
+		}, 2000 );
+
 	}
 
 	getTabs() {

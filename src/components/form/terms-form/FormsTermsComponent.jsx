@@ -15,7 +15,7 @@ import { DAYSWEEK, OPTIONS } from './../../../hardcode/WeekHardcode';
 
 let change = false;
 
-const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, isValid }) => {
+const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, isSubmitting, isValid }) => {
 
   let buttonsArray = [];
 
@@ -122,14 +122,12 @@ const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, is
         <ShowLogs created_at={ values.created_at } updated_at="" />
         
   		</Form.Row>
-      <FormButtons reset={ handleReset } disabled={ !isValid }  />
+      <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
   	</FormFormik>
   )
 };
 
 const changeStyle = ( element, change = false ) => {
-  
-  console.log( element, change );
 
   const rexp = /btn-primary|btn-secondary/g;
 
@@ -141,7 +139,7 @@ const changeStyle = ( element, change = false ) => {
 
   }
 
-  console.log( element.className );
+  // console.log( element.className );
 }
 
 const ShowLogs = ({ created_at = '', updated_at = '' }) => {

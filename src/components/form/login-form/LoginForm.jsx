@@ -18,7 +18,7 @@ const LoginForm = ({ loading = false, getFormData }) => {
       onSubmit={ getFormData }
       validateOnChange={ true }
   	>
-    	{ ({ values, handleReset, isValid }) => {
+    	{ ({ values, handleReset, isValid, isSubmitting }) => {
 
         return (
 
@@ -51,7 +51,7 @@ const LoginForm = ({ loading = false, getFormData }) => {
               label="remember me"
             />
 
-            <Buttons handleReset={ handleReset } disabled={ !isValid } loading={ loading } />
+            <Buttons handleReset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
 
             <Register />  
             
@@ -68,7 +68,6 @@ const LoginForm = ({ loading = false, getFormData }) => {
 }
 
 LoginForm.propTypes = {
-  loading: PropTypes.bool,
   getFormData: PropTypes.func.isRequired
 };
 
