@@ -7,6 +7,7 @@ import Terms from '../../models/TermsModels';
 import { DayService } from '../../services/DayService';
 import { verifyRangeHours } from '../../util-functions/date-format';
 import { ToastComponent } from '../../components/toasts/ToastComponent';
+import { LoadingComponent } from '../../components/loading/LoadingComponent';
 
 class DayPage extends Component {
 
@@ -203,11 +204,7 @@ class DayPage extends Component {
 			);
 		}
 
-		return (
-			<div className="d-flex justify-content-center align-items-center flex-row">
-				<i className="fas fa-spinner fa-spin fa-2x"></i>
-			</div>
-		);
+		return ( <LoadingComponent /> );
 	}
 
 	render() {
