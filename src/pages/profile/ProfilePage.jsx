@@ -53,8 +53,8 @@ class ProfilePage extends Component {
 				}
 
 				actions.resetForm();
-				this.message = 'Error interno del servidor';
-				this.action = 'Error';
+				this.message = error.message;
+				this.action = error.action;
 				this.setState({ loading: false, showToast: true });
 			});
 	}

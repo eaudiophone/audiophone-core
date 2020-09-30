@@ -189,16 +189,9 @@ export class UserService {
 					},
 					message: apiaudiophoneusermessage,
 					action: 'Exito'
-				});
-			})
-			.catch( error => {
-	
-				reject({ 
-					message: 'Ha ocurrido un imprevisto',
-					action: 'Error',
-					status: error.response.status
-				});
-			});
+					});
+				})
+				.catch( error => reject( this.authService.validateExceptionServer( error )));
 
 			}, 1000 );
 		});

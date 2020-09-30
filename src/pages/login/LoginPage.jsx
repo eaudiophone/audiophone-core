@@ -31,9 +31,6 @@ class LoginPage extends Component {
 
 	getFormData( value, actions ) {
 
-
-    this.setState({ loading: true });
-
     setTimeout( () => {
 
       this.authService.logIn( value ).then( resp => {
@@ -41,7 +38,7 @@ class LoginPage extends Component {
         if ( resp.status === 200 ) { // ok
 	        
           actions.setSubmitting( false );
-          this.setState({ redirect: true, loading: false }); 
+          this.setState({ redirect: true }); 
         
         } else {
            
@@ -49,9 +46,9 @@ class LoginPage extends Component {
           this.message = resp.message;
           this.action = 'Error';
 
-          this.setState({ showToast: true, loading: false });
+          this.setState({ showToast: true });
         }
-      }); 
+      });
 
     }, 2000 );
 	}

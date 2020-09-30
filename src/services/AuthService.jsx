@@ -43,9 +43,7 @@ export class AuthService extends BackendService {
 				};
 
 			})
-			.catch( error => {
-				return	{ ok: false, message: 'problemas internos del servidor' }
-			});
+			.catch( error => this.validateExceptionServer( error ) );
 	}
 
 	logOut() {
@@ -58,5 +56,56 @@ export class AuthService extends BackendService {
 
 	getLogged() {
 		return JSON.parse( sessionStorage.getItem('logged') );
+	}
+
+	validateExceptionServer({ response }) {
+		
+		// para acceder al objeto de la respuesta es error.response
+			
+		let payload = {
+			ok: false,
+			message: '',
+			status: null,
+			action: 'Error'
+		}
+
+		switch ( response.status ) {
+
+			case 401:	
+				
+				this.logOut();
+				payload = { ...payload, status: 401, message: 'Usuario no autorizado' };
+				return payload; 
+
+			case 403:
+
+				payload = { ...payload, message: 'prohibido el acceso', status: 403 };
+				return payload;
+
+			case 404:
+				
+				payload = { ...payload, status: 404, message: 'Recurso no encontrado' }
+				return payload;
+
+			case 405:
+	
+				payload = { ...payload, message: 'método no permitido', status: 405 };
+				return payload;
+
+			case 409:
+
+				payload = { ...payload, status: 409, message: 'Conficto de información' };	
+				return payload;
+
+			case 422:
+
+				payload = { ...payload, message: 'entidad inprocesable por el servidor', status: 422 };
+				return payload;
+
+			default: // 500
+
+				payload = { ...payload, message: 'problemas internos del servidor', status: 500 };
+				return payload;
+		}
 	}
 }
