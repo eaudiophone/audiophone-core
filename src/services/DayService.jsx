@@ -128,11 +128,7 @@ export class DayService {
 
 					// console.log( error.response );
 
-					reject({ 
-						message: 'Ha ocurrido un imprevisto',
-						action: 'Error',
-						status: error.response.status
-					});
+					reject( this.authService.validateExceptionServer( error ) );
 				});
 			});
 	}
@@ -153,11 +149,7 @@ export class DayService {
 					});
 				})
 				.catch( error => {
-					reject({ 
-						message: 'Ha ocurrido un imprevisto',
-						action: 'Error',
-						status: error.response.status
-					});
+					reject( this.authService.validateExceptionServer( error ) );
 			});
 		});
 	}

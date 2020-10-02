@@ -22,11 +22,7 @@ export class UserService {
 					totalUsers: bduserstotal 
 				});
 			})
-			.catch( error => reject({
-				message: 'Ha ocurrido un imprevisto',
-				action: 'Error',
-				status: error.response.status
-			}));
+			.catch( error => reject( this.authService.validateExceptionServer( error )) );
 
 		});
 	}
@@ -63,11 +59,7 @@ export class UserService {
 					})
 
 				})
-				.catch( error => reject({
-					message: 'Ha ocurrido un imprevisto',
-					action: 'Error',
-					status: error.response.status
-				}));
+				.catch( error => reject( this.authService.validateExceptionServer( error )) );
 		});
 	}
 
@@ -100,11 +92,7 @@ export class UserService {
 					action: 'Exito'
 				});
 			})
-			.catch( error => reject({
-					message: 'Ha ocurrido un imprevisto',
-					action: 'Error',
-					status: error.response.status
-				}));
+			.catch( error => reject( this.authService.validateExceptionServer( error )) );
 		});
 	}
 
@@ -121,11 +109,7 @@ export class UserService {
 						users: apiaudiophoneuserdata
 					});
 				})
-				.catch( error => reject({
-					message: 'Ha ocurrido un imprevisto',
-					action: 'Error',
-					status: error.response.status
-				}))	
+				.catch( error => reject( this.authService.validateExceptionServer( error )) );	
 			});
 	}
 	
@@ -148,11 +132,7 @@ export class UserService {
 					});
 
 				})
-				.catch( error => reject({
-					message: 'Ha ocurrido un imprevisto',
-					action: 'Error',
-					status: error.response.status
-				}));
+				.catch( error => reject( this.authService.validateExceptionServer( error )) );
 		});
 	}
 
@@ -165,16 +145,18 @@ export class UserService {
 			this.authService.putClient(`apiaudiophoneuser/update/${ id }`, user )
 				.then( resp => {
 				
+				const { apiaudiophoneusermessage, apiaudiophoneusernew } = resp.data; 
 
-				const { apiaudiophoneusermessage, apiaudiophoneuserupdate } = resp.data; 
-			
 				let logged = JSON.parse( sessionStorage.getItem('logged'));
 
+				console.log( resp.data );
+				
 				logged = {
 					...logged,
-					email: apiaudiophoneuserupdate.apiaudiophoneusers_email,
-					fullname: apiaudiophoneuserupdate.apiaudiophoneusers_fullname,
+					email: apiaudiophoneusernew.apiaudiophoneusers_email,
+					fullname: apiaudiophoneusernew.apiaudiophoneusers_fullname,
 				}
+
 
 				sessionStorage.setItem('logged', JSON.stringify( logged ) );
 				

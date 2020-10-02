@@ -79,7 +79,7 @@ export class AuthService extends BackendService {
 
 			case 403:
 
-				payload = { ...payload, message: 'prohibido el acceso', status: 403 };
+				payload = { ...payload, message: 'Prohibido el acceso', status: 403 };
 				return payload;
 
 			case 404:
@@ -89,7 +89,7 @@ export class AuthService extends BackendService {
 
 			case 405:
 	
-				payload = { ...payload, message: 'método no permitido', status: 405 };
+				payload = { ...payload, message: 'Método de acceso no permitido', status: 405 };
 				return payload;
 
 			case 409:

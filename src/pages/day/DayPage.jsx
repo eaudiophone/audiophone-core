@@ -8,6 +8,7 @@ import { DayService } from '../../services/DayService';
 import { verifyRangeHours } from '../../util-functions/date-format';
 import { ToastComponent } from '../../components/toasts/ToastComponent';
 import { LoadingComponent } from '../../components/loading/LoadingComponent';
+import { RedirectService } from '../../services/RedirectService';
 
 class DayPage extends Component {
 
@@ -30,7 +31,8 @@ class DayPage extends Component {
 		
 		this.state = { 
 			showToast: false, 
-			loading: false
+			loading: false,
+			redirect: false
 		};
 
 		this.getDataForm = this.getDataForm.bind( this );
@@ -63,6 +65,10 @@ class DayPage extends Component {
 				// console.log( this.terms );
 			})
 			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
 
 				this.message = error.message;
 				this.action = 'Error';
@@ -109,8 +115,11 @@ class DayPage extends Component {
 				})
 				.catch( error => {
 
-
 					actions.setSubmitting( false );
+
+					if ( error.status === 401 ) {
+						return this.setState({ redirect: true });
+					}
 
 					this.message = error.message;
 					this.action = error.action;
@@ -211,6 +220,7 @@ class DayPage extends Component {
 		
 		return (
 			<div>
+				{ this.state.redirect && ( <RedirectService  route="/login" /> ) }
 				<ToastComponent 
 					showToast={ this.state.showToast } 
 					onHide={ () => this.setState({ showToast: false }) }  

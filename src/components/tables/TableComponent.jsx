@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Button } from 'react-bootstrap';
-import { RedirectService } from '../../services/RedirectService';
 import { UserService } from '../../services/UserService';
 import { ToastComponent } from '../../components/toasts/ToastComponent';
 import { PaginationComponent } from '../../components/pagination/PaginationComponent'; 
@@ -14,7 +13,7 @@ class TableComponent extends Component {
 	action = '';
 	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
 	history = [];  // array de navegacion
-	UserService = new UserService();
+	userService = new UserService();
 
 	constructor( props ) {
 
@@ -33,15 +32,15 @@ class TableComponent extends Component {
 
 	componentDidMount() {
 
-		this.UserService.getUsers()
+		this.userService.getUsers()
 			.then(( resp ) => {
 				this.setHistory( resp );
 				this.setState( resp );
 			})
 			.catch( ( error ) => {
-				console.log( error )
+				
 				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
+					return this.props.redirect();
 				}
 
 				this.message = error.message;
@@ -79,7 +78,7 @@ class TableComponent extends Component {
 
 		if ( user !== null ) {
 
-			this.UserService.editUserRole( user, this.state.users )
+			this.userService.editUserRole( user, this.state.users )
 				.then(( resp ) => {
 
 					this.message = resp.message;
@@ -96,7 +95,7 @@ class TableComponent extends Component {
 					// console.log( error )
 					
 					if ( error.status === 401 ) {
-						return this.setState({ redirect: true });
+						return this.props.redirect();
 					}
 
 					this.message = error.message;
@@ -117,7 +116,7 @@ class TableComponent extends Component {
 
 		if ( idUser !== null ) {
 
-			this.UserService.deleteUser( idUser, this.state.users )
+			this.userService.deleteUser( idUser, this.state.users )
 				.then( resp => {
 
 					this.message = resp.message;
@@ -132,7 +131,7 @@ class TableComponent extends Component {
 				.catch( error => {
 
 					if ( error.status === 401 ) {
-						return this.setState({ redirect: true });
+						return this.props.redirect();
 					}
 
 					this.message = error.message;
@@ -149,12 +148,12 @@ class TableComponent extends Component {
 	
 	sendSearch( search = '' ) {
 
-		return this.UserService.searchUser( search )
+		return this.userService.searchUser( search )
 			.then( resp => this.setState( resp ) )
 			.catch( error => {
 
 				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
+					return this.props.redirect();
 				}
 
 				this.message = error.message;
@@ -167,7 +166,7 @@ class TableComponent extends Component {
 
 		const url = `apiaudiophoneuser/show?start=${ start }&end=${ end }`;
 
-		this.UserService.paginationUsers( url )
+		this.userService.paginationUsers( url )
 			.then( resp => {
 				this.setHistory( resp );
 				this.setState( resp );
@@ -175,7 +174,7 @@ class TableComponent extends Component {
 			.catch( error => {
 
 				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
+					return this.props.redirect();
 				}
 
 				this.message = error.message;
@@ -263,7 +262,7 @@ class TableComponent extends Component {
 
 	getTable() {
 
-		if ( this.state.users.length > 0 ) {
+		if ( this.state.users.length > 0 && JSON.parse( sessionStorage.getItem('logged') ) ) {
 
 			return (
 				<div>
@@ -302,7 +301,6 @@ class TableComponent extends Component {
 		return (
 
 			<div>
-				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<Row>
 					<Col xs={ 12 } className="mb-10" sm={ 6 }>
 						<SearchFilterComponent filterSearch={ ( filter ) => this.filterSearch( filter ) } />
