@@ -6,7 +6,7 @@ export const EmailInput = ({ field, form, type }) => {
 
 	return (
 
-		<Form.Group>
+		<Form.Group className="w-100">
 			<Form.Label>email:</Form.Label>
 			<Form.Control
 	     	{ ...field }
@@ -22,7 +22,7 @@ export const EmailInput = ({ field, form, type }) => {
 
 export const PasswordInput = ({ field, form, type }) => (
 
-	<Form.Group>
+	<Form.Group className="w-100">
     <Form.Label>password:</Form.Label>
 		<Form.Control
       { ...field }
@@ -53,7 +53,7 @@ export const CheckboxInput = ({ field, form, label, id = '', type = 'checkbox', 
 export const FormInput = ({ field, form, type, title }) => {
 
   return (
-    <Form.Group>
+    <Form.Group className="w-100">
       <Form.Label className="form-label">{ title }</Form.Label>
       <Form.Control
        	{ ...field }
@@ -70,7 +70,7 @@ export const FormInput = ({ field, form, type, title }) => {
 export const FormInputDate = ({ title, field, type, form }) => {
  
   return (
-    <Form.Group>
+    <Form.Group className="w-100">
       <Form.Label className="form-label">{title}</Form.Label>
       <Form.Control
       	{ ...field }

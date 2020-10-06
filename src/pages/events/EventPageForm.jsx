@@ -4,9 +4,28 @@ import Event from '../../models/EventModels';
 import EventSchema from '../../components/form/events-form/EventSchema';
 import FormEventComponent from '../../components/form/events-form/FormEventComponent';
 
-class NewEventPage extends Component {
+class EventPageForm extends Component {
 
-	getData( values, actions ) {
+	constructor( props ) {
+		super( props );
+		this.state = { event: null };
+	}
+
+	componentDidMount() {
+				
+		const { id } = this.props.match.params;
+
+		if ( id ) {
+			return this.getEvent( Number( id ) );
+		}
+	}
+
+	getEvent( id = 1 ) {
+		// consultar al servicio cuando llega el id por parametro
+		console.log( id );
+	}
+
+	sendData( values, actions ) {
 		values = { 
 			...values, 
 			idService: Number( values.idService ), 
@@ -28,9 +47,9 @@ class NewEventPage extends Component {
 
 				<Formik 
 					component={ FormEventComponent }
-					initialValues={ new Event() }
+					initialValues={  this.state.event || new Event() }
 					validationSchema={ new EventSchema().getSchema() }
-					onSubmit={ this.getData }
+					onSubmit={ this.sendData }
 					validateOnChange={ false }
 				/>
 			</div>
@@ -38,4 +57,4 @@ class NewEventPage extends Component {
 	}
 }
 
-export default NewEventPage;
+export default EventPageForm;

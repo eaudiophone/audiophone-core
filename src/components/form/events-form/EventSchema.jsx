@@ -31,36 +31,34 @@ class EventSchema {
 
 		this.schema = object().shape({
 
-			title: string()
+			apiaudiophonevents_title: string()
 				.required( this.validationMessages.string.required )
 				.min( 2, this.validationMessages.string.min( 2 ) )
 				.max( 25, this.validationMessages.string.max( 25 ) ),
 
-			idService: string()
-				.required( this.validationMessages.number.required ),
-
-			date: date()
+			apiaudiophonevents_date: date()
 				.required( this.validationMessages.date.required ),
 
-			startingTime: mixed()
+			apiaudiophonevents_begintime: mixed()
 				.required( this.validationMessages.mixed.required ),
 
-			finalHour: mixed()
+			apiaudiophonevents_finaltime: mixed()
 				.required( this.validationMessages.mixed.required ),
 
-			totalHours: number()
-				.required( this.validationMessages.number.required )
-				.positive( this.validationMessages.number.positive )
-				.integer( this.validationMessages.number.integer ),
+			apiaudiophonevents_totalhours: mixed()
+				.required( this.validationMessages.mixed.required ),
 
-			description: string()
+			apiaudiophonevents_description: string()
 				.required( this.validationMessages.string.required )
 				.min( 10, this.validationMessages.string.min( 10 ) )
 				.max( 255, this.validationMessages.string.max( 255 )),
 
-			addressMeeting: string()
+			apiaudiophonevents_address: string()
 				.min( 10, this.validationMessages.string.min( 10 ) )
-				.max( 255, this.validationMessages.string.max( 255 ) )
+				.max( 255, this.validationMessages.string.max( 255 ) ),
+
+			id_apiaudiophoneservices: string()
+				.required( this.validationMessages.number.required ),
 		});
 	}
 

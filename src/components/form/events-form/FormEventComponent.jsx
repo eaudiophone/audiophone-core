@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Col, Button } from 'react-bootstrap'; 
+import { Field, Form as FormFormik } from 'formik';
+
+import { 
+  NumberInput, 
+  SelectInput,
+  HourInput,
+  FormButtons,
+  FormInput,
+  FormInputDate
+} from '../FormComponent';
 
 const FormEventComponent = ( props ) => {
 
@@ -14,63 +24,62 @@ const FormEventComponent = ( props ) => {
 
 	return (
 
-		<Form onSubmit={ handleSubmit } noValidate>
+		<FormFormik>
 
-			<Form.Row>
-
-        <InputText 
-          columnSize={ 12 }
-          title="Titulo del evento"
-          value={ values.title }
-          error={ errors.title }
-          name="title"
-          change={ handleChange }
+      <Form.Row>
+        
+        <Field 
+          title="Título del evento:"
+          name="apiaudiophonevents_title"
+          type="text"
+          component={ FormInput }
         />
 
-        <InputSelect 
-          name="idService"
+        <Field 
+          component={ SelectInput }
           title="Servicio a solicitar:"
-          value={ values.idService.toString() }
-          error={ errors.idService }
-          columnSize={ 12 }
-          change={ handleChange }
+          name="id_apiaudiophoneservices"
+          options={ getOptions() }
+          type="select"
         />
 
-        <InputDate 
-          name="date"
-          title="Fecha del evento"
-          value={ values.date }
-          error={ errors.date }
-          columnSize={ 12 }
-          change={ handleChange }
+        <Field 
+          name="apiaudiophonevents_date"
+          title="Fecha del evento:"
+          type="date"
+          component={ FormInputDate }
         />
 
-        <InputHour 
+        <Field 
           title="Hora de inicio:"
-          name="startingTime"
-          value={ values.startingTime }
-          error={ errors.startingTime }
+          name="apiaudiophonevents_begintime"
           columnSize={ 4 }
-          change={ handleChange }
+          type="time"
+          component={ HourInput }
         />
 
-        <InputHour 
-          title="Hora final"
-          name="finalHour"
-          value={ values.finalHour }
-          error={ errors.finalHour }
+        <Field 
+          title="Hora de finalización:"
+          name="apiaudiophonevents_finaltime"
           columnSize={ 4 }
-          change={ handleChange }
+          type="time"
+          component={ HourInput }
         />
 
-        <InputText 
+        <Field 
           columnSize={ 4 }
-          title="Total horas"
-          value={ values.totalHours }
-          name="totalHours"
-          error={ errors.totalHours }
-          change={ handleChange }
+          title="Total horas:"
+          name="apiaudiophonevents_totalhours"
+          type="time"
+          component={ HourInput }
         />
+
+
+
+      </Form.Row>
+
+
+			{/*<Form.Row>
 
         { values.idService === '2' &&
 
@@ -96,11 +105,32 @@ const FormEventComponent = ( props ) => {
 
       <Buttons 
         reset={ handleReset }
-      />
+      />/*/}
 			
-		</Form>
+		</FormFormik>
 	);
 }
+
+
+const getOptions = () => {
+
+  let idServices = [];
+
+  for ( let i = 1; i <= 2; i++ ) {
+
+    if ( i === 1 ) {
+      idServices = idServices.concat([{ value: i, description: 'servicio de alquiler ( Grupo Musical Horizonte )' }]);
+    
+    } else {
+      idServices = idServices.concat([{ value: i, description: 'servicio de grabación ( Estudios Audiophone )' }]);
+    }
+  }
+
+  return idServices;
+}
+
+
+
 
 const InputText = ({ columnSize, name, change, value, error, title })  => (
     

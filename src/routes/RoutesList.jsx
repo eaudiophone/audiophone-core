@@ -1,8 +1,7 @@
 import { lazy } from 'react';
 
-import NewEventPage from './../pages/events/NewEventPage';
-import EditEventPage from './../pages/events/EditEventPage';
-import IndexEventPage from './../pages/events/IndexEventPage';
+import EventPageForm from './../pages/events/EventPageForm';
+import EventPage from './../pages/events/EventPage';
 import ProfilePage from './../pages/profile/ProfilePage';
 import UserPage from './../pages/user/UserPage';
 import DayPage from './../pages/day/DayPage';
@@ -15,9 +14,9 @@ export const routesApp = [
 	{ path: '/day', component: DayPage, admin: true },
 	{ path: '/budget', component: BudgetPage, admin: true },
 	{ path: '/events-admin', component: EventsAdminPage, admin: true },
-	{ path: '/event/new', component: NewEventPage, admin: false },
-	{ path: '/event/:id', component: EditEventPage, admin: false },
-	{ path: '/event', component: IndexEventPage, admin: false },
+	{ path: '/event/new', component: EventPageForm, admin: false },
+	{ path: '/event/:id', component: EventPageForm, admin: false },
+	{ path: '/event', component: EventPage, admin: false },
 	{ path: '/profile', component: ProfilePage }
 ];
 
