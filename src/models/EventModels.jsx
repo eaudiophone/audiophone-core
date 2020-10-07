@@ -6,7 +6,6 @@ class Event {
 			apiaudiophonevents_date,
 			apiaudiophonevents_begintime,
 			apiaudiophonevents_finaltime,
-			apiaudiophonevents_totalhours,
 			apiaudiophonevents_description,
 			apiaudiophonevents_address,
 			id_apiaudiophoneservices
@@ -17,7 +16,6 @@ class Event {
 		this.apiaudiophonevents_date = apiaudiophonevents_date || '';
 		this.apiaudiophonevents_begintime = apiaudiophonevents_begintime || '';
 		this.apiaudiophonevents_finaltime = apiaudiophonevents_finaltime || '';
-		this.apiaudiophonevents_totalhours = apiaudiophonevents_totalhours || '';
 		this.apiaudiophonevents_address = apiaudiophonevents_address || '';
 		this.apiaudiophonevents_description = apiaudiophonevents_description || '';
 		this.id_apiaudiophoneservices = id_apiaudiophoneservices || '';

@@ -39,7 +39,7 @@ const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, is
 
     values.apiaudiophoneterms_daysevents = daysArray;
 
-    console.log( values.apiaudiophoneterms_daysevents );
+    // console.log( values.apiaudiophoneterms_daysevents );
   }
 
   return (

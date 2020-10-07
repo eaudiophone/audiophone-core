@@ -148,6 +148,24 @@ export const SelectInput = ({ title, columnSize = 12, field, form, options = [] 
   </Col>
 );
 
+export const TextAreaInput = ({ type = 'textarea', form, field, columnSize = 12, title }) => {
+
+  return (
+    <Col sm={ columnSize }>
+      <Form.Group>
+        <Form.Label>{ title }</Form.Label>
+        <Form.Control
+          { ...field }
+          as={ type }
+          isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+        />
+        <Form.Control.Feedback type="invalid">
+          { form.errors[ field.name ] }
+        </Form.Control.Feedback>
+      </Form.Group>
+    </Col>
+  );
+}
 
 // buttons
 export const FormButtons = ({ reset, loading = false, disabled })  => {

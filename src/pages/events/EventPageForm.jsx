@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import Event from '../../models/EventModels';
 import EventSchema from '../../components/form/events-form/EventSchema';
 import FormEventComponent from '../../components/form/events-form/FormEventComponent';
+import { getDifferenceHours } from './../../util-functions/date-format';
 
 class EventPageForm extends Component {
 
@@ -26,11 +27,14 @@ class EventPageForm extends Component {
 	}
 
 	sendData( values, actions ) {
+		
 		values = { 
 			...values, 
-			idService: Number( values.idService ), 
 			totalHours: Number( values.totalHours )
 		}; 
+
+		console.log( getDifferenceHours( values.apiaudiophonevents_begintime, values.apiaudiophonevents_finaltime ) );
+		
 		console.log( values );
 		actions.setSubmitting( false );
 	}
@@ -42,7 +46,8 @@ class EventPageForm extends Component {
 			<div>
 				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 					align-items-center pb-2 mb-3 border-bottom">
-					<h2>Nuevo evento</h2> 
+					{ !this.props.match.params.id && ( <h2>Nuevo evento</h2> ) }
+					{ this.props.match.params.id && ( <h2>Actualizar evento</h2> ) }  
 				</div>
 
 				<Formik 
@@ -50,7 +55,6 @@ class EventPageForm extends Component {
 					initialValues={  this.state.event || new Event() }
 					validationSchema={ new EventSchema().getSchema() }
 					onSubmit={ this.sendData }
-					validateOnChange={ false }
 				/>
 			</div>
 		);

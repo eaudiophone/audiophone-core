@@ -1,4 +1,4 @@
-import { string, object, number, mixed, date } from 'yup';
+import { string, object, mixed, date } from 'yup';
 
 class EventSchema {
 
@@ -43,9 +43,6 @@ class EventSchema {
 				.required( this.validationMessages.mixed.required ),
 
 			apiaudiophonevents_finaltime: mixed()
-				.required( this.validationMessages.mixed.required ),
-
-			apiaudiophonevents_totalhours: mixed()
 				.required( this.validationMessages.mixed.required ),
 
 			apiaudiophonevents_description: string()
