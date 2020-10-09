@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 
 const SECONDS = Object.freeze({
+	DAY: 86400,
 	HOURS: 3600,
 	MINUTES: 60
 });
@@ -63,6 +64,14 @@ export function verifyRangeHours( start = '00:00', end = '23:59' ) {
 export function getDifferenceHours( start = '00:00', end = '23:59', object = true ) {
 
 	let difference = calculateTotalSeconds( end ) - calculateTotalSeconds( start );
+
+	// fisica básica horario inverso ( alquiler )
+
+	if ( difference < 0 ) {
+
+		difference = SECONDS.DAY - calculateTotalSeconds( start );
+		difference = difference + calculateTotalSeconds( end );
+	}
 
 	if ( object ) {  // devuelve un objeto
 		return {
