@@ -5,7 +5,7 @@ const SECONDS = Object.freeze({
 	MINUTES: 60
 });
 
-function calculateTotalSeconds( time ) {
+export function calculateTotalSeconds( time ) {
 
 	let hour = parseInt( time.split(':')[0] );
 	let minutes = parseInt( time.split(':')[1] );
@@ -24,10 +24,12 @@ export function getHour( hour = '00:00' ) {
 	return hour.slice( 0, 5 );
 }
 
-export function verifyRangeHours( beginTime = '', finalHour = '' ) {
+export function verifyRangeHours( start = '00:00', end = '23:59' ) {
 	
-	const totalSecoundsBegin = calculateTotalSeconds( beginTime );
-	const totalSecoundsFinal = calculateTotalSeconds( finalHour );
+	const totalSecoundsBegin = calculateTotalSeconds( start );
+	const totalSecoundsFinal = calculateTotalSeconds( end );
+
+	console.log( totalSecoundsBegin, totalSecoundsFinal );
 
 	if ( totalSecoundsBegin > totalSecoundsFinal ) {
 		
@@ -58,14 +60,30 @@ export function verifyRangeHours( beginTime = '', finalHour = '' ) {
 	} 
 }
 
-export function getDifferenceHours( start = '00:00', end = '23:59' ) {
+export function getDifferenceHours( start = '00:00', end = '23:59', object = true ) {
 
 	let difference = calculateTotalSeconds( end ) - calculateTotalSeconds( start );
 
-	// console.log( diff % SECONDS.HOURS );
-
-	return {
-		hours: Math.floor( difference / SECONDS.HOURS ),
-		minutes: ( difference % SECONDS.HOURS ) / SECONDS.MINUTES
+	if ( object ) {  // devuelve un objeto
+		return {
+			hours: Math.floor( difference / SECONDS.HOURS ),
+			minutes: ( difference % SECONDS.HOURS ) / SECONDS.MINUTES
+		};
 	}
+
+	return secondsToString( difference );  // devuelve un string
+}
+
+export function secondsToString( timeSeconds = 0 ) {
+
+	let hour = Math.floor( timeSeconds / SECONDS.HOURS );
+	hour = ( hour < 10 ) ? '0' + hour : hour;
+
+	let minutes = ( ( timeSeconds % SECONDS.HOURS ) / SECONDS.MINUTES );
+	minutes = ( minutes < 10 ) ? '0' + minutes : minutes;
+
+	let seconds = ( timeSeconds % 60 );
+	seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
+
+	return hour + ':' + minutes + ':' + seconds;  
 }

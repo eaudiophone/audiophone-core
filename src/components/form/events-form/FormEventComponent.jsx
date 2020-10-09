@@ -13,14 +13,7 @@ import {
 
 const FormEventComponent = ( props ) => {
 
-	const {
-		handleReset,
-		values,
-    isSubmitting,
-    isValid
-	} = props;
-
-  console.log( isValid );
+	const { handleReset, values, isSubmitting, isValid } = props;
 
 	return (
 
