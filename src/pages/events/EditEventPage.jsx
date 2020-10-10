@@ -4,7 +4,7 @@ import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 import { Formik } from 'formik';
 import EventSchema from './../../components/form/events-form/EventSchema';
 
-class EditEventPage extends Component {
+export class EditEventPage extends Component {
 
 	getId() {
 		return parseInt( this.props.match.params.id );
@@ -45,5 +45,3 @@ class EditEventPage extends Component {
 		);
 	}
 }
-
-export default EditEventPage;

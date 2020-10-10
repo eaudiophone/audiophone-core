@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { routesApp } from './RoutesList';
+
+import { routesApp } from './RoutesList' 
+
 
 const AdminRoutes = () => (
 

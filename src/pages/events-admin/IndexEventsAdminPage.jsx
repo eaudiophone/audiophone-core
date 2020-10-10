@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import CalendarComponent from '../../components/calendar/CalendarComponent';
 
-class IndexEventsAdminPage extends Component {
+export class IndexEventsAdminPage extends Component {
 
 	info = null;  // dom element
 
@@ -42,5 +42,3 @@ class IndexEventsAdminPage extends Component {
 		);
 	}
 }
-
-export default IndexEventsAdminPage;

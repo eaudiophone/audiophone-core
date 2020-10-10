@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
-import { recordMeetings } from './RecordHardcode';
-import CardComponent from './../../components/card/CardComponent';
+// import { recordMeetings } from './RecordHardcode';
+// import CardComponent from './../../components/card/CardComponent';
 import { Row } from 'react-bootstrap';
 
-class RecordPage extends Component {
-
-	constructor( props ) {
-
-		super( props );
-
-		this.state = { 
-			meeting: recordMeetings
-		};
-	}
+export class RecordPage extends Component {
 
 	getHeader() {
 		
@@ -30,10 +21,7 @@ class RecordPage extends Component {
 		return (
 			
     		<Row>
-    			{ 	this.state.meeting.map( ( element ) => (
-    					<CardComponent meeting={ element } color="#c7e5ec" key={ element.id } /> 
-    				)) 
-    			}
+    		
     		</Row>
 		);
 	}
@@ -49,5 +37,3 @@ class RecordPage extends Component {
 		);
 	}
 }
-
-export default RecordPage;

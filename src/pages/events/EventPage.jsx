@@ -9,7 +9,7 @@ import CardComponent from './../../components/card/CardComponent';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 import ModalEventComponent from '../../components/modal/modal-events/ModalEventsComponent';
 
-class EventPage extends Component {
+export class EventPage extends Component {
 
 	rental = null;
 	record = null;
@@ -154,5 +154,3 @@ class EventPage extends Component {
 		);
 	}
 }
-
-export default EventPage;

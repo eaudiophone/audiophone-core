@@ -10,7 +10,7 @@ import { ToastComponent } from '../../components/toasts/ToastComponent';
 import { LoadingComponent } from '../../components/loading/LoadingComponent';
 import { RedirectService } from '../../services/RedirectService';
 
-class DayPage extends Component {
+export class DayPage extends Component {
 
 	dayService = new DayService();
 
@@ -236,5 +236,3 @@ class DayPage extends Component {
 		);
 	}
 }
-
-export default DayPage;

@@ -7,7 +7,7 @@ import { ToastComponent } from './../../components/toasts/ToastComponent';
 import { UserService } from './../../services/UserService';
 import './ProfilePage.css';
 
-class ProfilePage extends Component {
+export class ProfilePage extends Component {
 
 	userService = new UserService();
 	message = '';
@@ -101,5 +101,3 @@ class ProfilePage extends Component {
 		);
 	}
 }
-
-export default ProfilePage;

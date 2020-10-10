@@ -6,7 +6,7 @@ import FormEventComponent from '../../components/form/events-form/FormEventCompo
 import { getDifferenceHours, verifyRangeHours } from './../../util-functions/date-format';
 import { ToastComponent } from './../../components/toasts/ToastComponent';
 
-class EventPageForm extends Component {
+export class EventPageForm extends Component {
 
 	message = '';
 	action = '';
@@ -94,5 +94,3 @@ class EventPageForm extends Component {
 		);
 	}
 }
-
-export default EventPageForm;

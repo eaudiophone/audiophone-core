@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { RedirectService } from '../../services/RedirectService';
 import TableComponent from '../../components/tables/TableComponent';
 
-class UserPage extends Component {
+export class UserPage extends Component {
 
 	constructor( props ) {
 		super( props );
@@ -33,5 +33,3 @@ class UserPage extends Component {
 		);
 	}
 }
-
-export default UserPage;

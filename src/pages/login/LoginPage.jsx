@@ -7,7 +7,7 @@ import LoginForm from '../../components/form/login-form/LoginForm';
 
 import './LoginPage.css';
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
 
   authService =  new AuthService();
   message = '';

@@ -4,7 +4,7 @@ import BudgetRentalComponent from './budget-rental/BudgetRentalComponent';
 import BudgetRecordComponent from './budget-record/BudgetRecordComponent';
 import { Button, Nav } from 'react-bootstrap';
 
-class BudgetPage extends Component {
+export class BudgetPage extends Component {
 
 	newItemButton = null;	
 	totalButton =  null;
@@ -210,5 +210,3 @@ class BudgetPage extends Component {
 		);
 	}
 }
-
-export default BudgetPage;

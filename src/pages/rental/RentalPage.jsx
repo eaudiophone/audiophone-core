@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
-import { rentalMeetings } from './RentalHardcode';
-import CardComponent from './../../components/card/CardComponent';
+// import CardComponent from './../../components/card/CardComponent';
 import { Row } from 'react-bootstrap';
 
-class RentalPage extends Component {
-
-	constructor( props ) {
-
-		super( props );
-
-		this.state = { 
-			meetings: rentalMeetings, 
-		};
-	}
+export class RentalPage extends Component {
 
 	setHeader() {
 
@@ -30,15 +20,6 @@ class RentalPage extends Component {
 
 		return (
 			<Row>
-				{ 	
-					this.state.meetings.map( ( element ) => (
-						<CardComponent 
-							meeting={ element } 
-							color="#fbf096" 
-							key={ element.id }
-						/>
-					)) 
-				}
 			</Row>
 		);
 	}
@@ -53,5 +34,3 @@ class RentalPage extends Component {
 		);
 	}
 }
-
-export default RentalPage;
