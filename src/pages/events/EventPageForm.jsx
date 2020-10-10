@@ -51,7 +51,7 @@ class EventPageForm extends Component {
 
 		values = { 
 			...values, 
-			totalHours: getDifferenceHours( 
+			apiaudiophonevents_totalhours: getDifferenceHours( 
 				values.apiaudiophonevents_begintime, 
 				values.apiaudiophonevents_finaltime, 
 				false 
