@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Button } from 'react-bootstrap';
 import { UserService } from '../../services/UserService';
-import { ToastComponent } from '../../components/toasts/ToastComponent';
-import { PaginationComponent } from '../../components/pagination/PaginationComponent'; 
-import { SearchBarComponent, SearchFilterComponent } from '../../components/searchbar/SearchBarComponent';
-import { DeleteProfileModal, ChangeRoleModal } from '../../components/modal/modal-profile/ModalProfileComponent';
+import { SearchBarComponent, SearchFilterComponent, PaginationComponent, ToastComponent } from '../index';
+import { DeleteProfileModal, ChangeRoleModal } from '../modal/index';
 import { getDateWithHour } from './../../util-functions/date-format';
 
-class TableComponent extends Component { 
+export class TableComponent extends Component { 
 
 	message = '';
 	action = '';
@@ -330,5 +328,3 @@ class TableComponent extends Component {
 		);
 	}
 }
-
-export default TableComponent;

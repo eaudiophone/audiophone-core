@@ -8,7 +8,7 @@ class EventSchema {
 			string: {
 				required: 'campo requerido',
 				min: ( min ) => `minimo ${ min } caracteres`,
-				max: ( max ) => `minimo ${ max } caracteres`
+				max: ( max ) => `máximo ${ max } caracteres`
 			},
 			date: {
 				required: 'campo requerido',
@@ -48,11 +48,11 @@ class EventSchema {
 			apiaudiophonevents_description: string()
 				.required( this.validationMessages.string.required )
 				.min( 10, this.validationMessages.string.min( 10 ) )
-				.max( 255, this.validationMessages.string.max( 255 )),
+				.max( 120, this.validationMessages.string.max( 120 )),
 
 			apiaudiophonevents_address: string()
 				.min( 10, this.validationMessages.string.min( 10 ) )
-				.max( 255, this.validationMessages.string.max( 255 ) ),
+				.max( 120, this.validationMessages.string.max( 120 ) ),
 
 			id_apiaudiophoneservices: string()
 				.required( this.validationMessages.number.required ),

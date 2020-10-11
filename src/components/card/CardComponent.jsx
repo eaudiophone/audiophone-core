@@ -4,7 +4,7 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import { RedirectService } from './../../services/RedirectService';
 import './CardComponent.css';
 
-const CardComponent = ({ meeting, color, showModal }) => {
+export const CardComponent = ({ meeting, color, showModal }) => {
 
 	const {
 		icon,
@@ -133,6 +133,3 @@ CardComponent.propTypes = {
 	color: PropTypes.string.isRequired,
 	showModal: PropTypes.func.isRequired
 };
-
-
-export default CardComponent;

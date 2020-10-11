@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
-const ModalCalendarComponent = ({ showModal, closeModal }) => (
+export const ModalCalendarComponent = ({ showModal, closeModal }) => (
 
 	<Modal 
 		show={ showModal }
@@ -21,6 +21,3 @@ const ModalContentEvent = () => (
 		<p> Prueba de contenido </p>
 	</Modal.Body>
 );
-
-
-export default ModalCalendarComponent;

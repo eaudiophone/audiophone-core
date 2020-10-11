@@ -7,11 +7,11 @@ import interactionPlugin from "@fullcalendar/interaction";
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/core/main.css';
 
-import ModalCalendarComponent from './../modal/modal-calendar/ModalCalendarComponent';
+import { ModalCalendarComponent } from './../modal/index';
 
 import { MEETINGS } from '../../hardcode/MeetigsHardcode';
 
-class CalendarComponent extends Component {
+export class CalendarComponent extends Component {
 
 	constructor( props ) {
 		super( props );
@@ -82,5 +82,3 @@ class CalendarComponent extends Component {
 		);
 	}
 }
-
-export default CalendarComponent;

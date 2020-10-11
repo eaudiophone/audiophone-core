@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { RedirectService } from '../../services/RedirectService';
-import TableComponent from '../../components/tables/TableComponent';
+import { TableComponent } from './../../components/index';
 
 export class UserPage extends Component {
 

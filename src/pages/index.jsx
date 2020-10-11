@@ -1,10 +1,10 @@
-// archivo centralizado de exportacion
+// indices de pages
 
 import { UserPage } from './user/UserPage';
 import { RentalPage } from './rental/RentalPage';
 import { RecordPage } from './record/RecordPage';
 import { ProfilePage } from './profile/ProfilePage';
-import { IndexEventsAdminPage } from './events-admin/IndexEventsAdminPage';
+import { EventsAdminPage } from './events-admin/EventsAdminPage';
 import { EventPageForm } from './events/EventPageForm';
 import { EditEventPage } from './events/EditEventPage';
 import { EventPage } from './events/EventPage';
@@ -15,7 +15,7 @@ export {
 	UserPage,
 	RecordPage,
 	RentalPage,
-	IndexEventsAdminPage,
+	EventsAdminPage,
 	EditEventPage,
 	EventPage,
 	DayPage,

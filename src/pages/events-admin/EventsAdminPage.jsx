@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import CalendarComponent from '../../components/calendar/CalendarComponent';
+import { CalendarComponent } from '../../components/index';
 
-export class IndexEventsAdminPage extends Component {
+export class EventsAdminPage extends Component {
 
 	info = null;  // dom element
 

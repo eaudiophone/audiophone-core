@@ -5,9 +5,9 @@ import {
 	Button,
 	Row
 } from 'react-bootstrap';
-import CardComponent from './../../components/card/CardComponent';
+import { CardComponent } from './../../components/index';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
-import ModalEventComponent from '../../components/modal/modal-events/ModalEventsComponent';
+import { ModalEventComponent } from '../../components/modal/index';
 
 export class EventPage extends Component {
 

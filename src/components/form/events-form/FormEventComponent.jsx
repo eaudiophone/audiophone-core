@@ -11,9 +11,7 @@ import {
   TextAreaInput
 } from '../FormComponent';
 
-const FormEventComponent = ( props ) => {
-
-	const { handleReset, values, isSubmitting, isValid } = props;
+const FormEventComponent = ({ handleReset, values, isSubmitting, isValid }) => {
 
 	return (
 

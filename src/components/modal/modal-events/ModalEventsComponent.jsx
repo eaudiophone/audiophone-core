@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 
-const ModalComponent = ({ showModal, idEvent, deleteModal }) => {
-
-	const handleClose = ( confirm ) => deleteModal( confirm, idEvent );
+export const ModalEventComponent = ({ showModal, idEvent, deleteModal }) => {
  
 	return (
 		
     <Modal 
       show={ showModal } 
-      onHide={ () => handleClose( false ) }
+      onHide={ () => deleteModal( false ) }
     >
       
     		<Modal.Header closeButton>
@@ -24,14 +22,14 @@ const ModalComponent = ({ showModal, idEvent, deleteModal }) => {
         	<Button 
         		variant="secondary"
         		type="reset" 
-        		onClick={ () => handleClose( false ) }
+        		onClick={ () => deleteModal( false ) }
         	>
           	Cancelar
         	</Button>
         	<Button 
         		variant="primary" 
         		type="submit"
-        		onClick={ () => handleClose( true ) }
+        		onClick={ () => deleteModal( true, idEvent ) }
         	>
           	Confirmar
         	</Button>
@@ -43,10 +41,8 @@ const ModalComponent = ({ showModal, idEvent, deleteModal }) => {
 	);
 };
 
-ModalComponent.propTypes = {
+ModalEventComponent.propTypes = {
   showModal: PropTypes.bool.isRequired,
   idEvent: PropTypes.number.isRequired,
   deleteModal: PropTypes.func.isRequired
 };
-
-export default ModalComponent; 
