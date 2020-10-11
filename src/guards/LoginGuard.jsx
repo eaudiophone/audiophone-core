@@ -8,10 +8,10 @@ export const LoginGuard = ( props ) => {
 	return new AuthService().isLogged() ? ( <Route { ...props } /> ) : ( <RedirectService route="/login" /> );
 }
 
-/*LoginGuard.propTypes = {
+LoginGuard.propTypes = {
 	path: PropTypes.string.isRequired,
-	component: PropTypes.object.isRequired
-};*/
+	component: PropTypes.any.isRequired
+};
 
 export const NoLoginGuard = ( props ) => {
 	return !new AuthService().isLogged() ? ( <Route { ...props } /> ) : ( <RedirectService route="/profile" /> );  

@@ -1,44 +1,36 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, Form as FormFormik, Field } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
-import FormBudgetComponent from  '../../form/budget-form/FormBudgetComponent';
+import { FormInput, TextAreaInput } from '../../form/FormComponent';
 import ItemModel from '../../../models/ItemModels';
 import FormItemSchema from './../../form/budget-form/FormItemSchema';
 
 const FormItem = ( props ) => {
 
 	const {
-		handleChange,
-		handleSubmit,
 		handleReset,
-		values,
-		errors
+		isValid
 	} = props;
 
 	return (
 		
-		<Form onSubmit={ handleSubmit } noValidate>
+		<FormFormik noValidate>
 
 			<Modal.Body>
 				<Form.Row>
 
-				<FormBudgetComponent.InputText 
-					change={ handleChange }
-					name="item"
-					error={ errors.item }
-					value={ values.item }
-					columnSize={ 12 }
-					title="Nombre del articulo:"
-				/>
+					<Field 
+						title="Nombre del articulo:"
+						name="item"
+						type="text"
+						component={ FormInput }
+					/>
 
-				<FormBudgetComponent.InputTextArea 
-					columnSize={ 12 }
-					name="description"
-					error={ errors.description }
-					value={ values.description }
-					title="Descripcion del articulo"
-					change={ handleChange }
-				/>
+					<Field 
+						name="description"
+						title="Descripcion del articulo"
+						component={ TextAreaInput }
+					/>
 
 				</Form.Row>
 
@@ -50,17 +42,18 @@ const FormItem = ( props ) => {
 	    		type="reset" 
 	    		onClick={ handleReset }
 	    	>
-	      	Cerrar
+	      	Limpiar
 	    	</Button>
 	    	<Button 
 	    		variant="primary" 
 	    		type="submit"
+	    		disabled={ !isValid }
 	    	>
 	      	Actualizar
 	    	</Button>
 	  	</Modal.Footer>
 
-		</Form>
+		</FormFormik>
 	);
 };
 

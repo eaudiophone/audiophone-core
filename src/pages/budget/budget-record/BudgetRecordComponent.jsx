@@ -1,6 +1,6 @@
 import React from 'react';
-import { Formik } from 'formik';
-import FormBudgetComponent from '../../../components/form/budget-form/FormBudgetComponent';
+import { Formik, Form as FormFormik, Field } from 'formik';
+import { FormInputDate, HourInput, NumberInput, FormButtons } from '../../../components/form/FormComponent';
 import { Form } from 'react-bootstrap';
 import FormRecordSchema from '../../../components/form/budget-form/FormRecordSchema';
 import RecordBudgetModels from '../../../models/RecordBudgetModels';
@@ -26,63 +26,51 @@ const BudgetRecordComponent = () => {
 	);
 }
 
-const FormRecord = ( props ) => {
-
-	const {
-		handleChange,
-		handleSubmit,
-		handleReset,
-		errors,
-		values
-	} = props;
+const FormRecord = ({ handleReset, isSubmitting, isValid }) => {
 
 	return (
 
-		<Form onSubmit={ handleSubmit } noValidate>
+		<FormFormik className="mt-3" noValidate>
 
 			<Form.Row>
-				
-				<FormBudgetComponent.InputDate 
+
+				<Field 
 					name="date"
-          title="Fecha del evento"
-          value={ values.date }
-          error={ errors.date }
-          columnSize={ 12 }
-          change={ handleChange }
+					title="Fecha del evento"
+					type="date"
+					component={ FormInputDate }
 				/>
 
-				 <FormBudgetComponent.InputHour 
-          title="Hora de inicio:"
-          name="startingTime"
-          value={ values.startingTime }
-          error={ errors.startingTime }
-          columnSize={ 6 }
-          change={ handleChange }
-        />
+				<Field 
+					title="Hora de inicio"
+					name="startingTime"
+					type="time"
+					columnSize={ 6 }
+					component={ HourInput }
+				/>
+				
 
-        <FormBudgetComponent.InputHour 
-        	title="Hora de finalización"
-        	name="finishTime"
-        	value={ values.finishTime }
-        	error={ errors.finishTime }
-        	columnSize={ 6 }
-        	change={ handleChange }
-        />
+				<Field 
+					title="Hora de finalización"
+					name="finishTime"
+					type="time"
+					columnSize={ 6 }
+					component={ HourInput }
+				/>
 
-        <FormBudgetComponent.InputNumber 
-        	title="Costo de hora"
+				<Field 
+					title="Costo de hora"
         	name="costHour"
-        	value={ values.costHour }
-        	error={ errors.costHour }
-        	columnSize={ 12 }
-        	change={ handleChange }
-        />
+        	type="number"
+        	component={ NumberInput }
+				/>	
+			
 
 			</Form.Row>
 
-			<FormBudgetComponent.Buttons reset={ handleReset } />
+			<FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />	
 			
-		</Form>
+		</FormFormik>
 	);
 }
 
