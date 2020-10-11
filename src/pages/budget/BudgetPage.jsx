@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ModalBudgetComponent from './../../components/modal/modal-budget/ModalBudgetComponent';
+import { ModalNewBudgetComponent } from './../../components/modal/index';
 import BudgetRentalComponent from './budget-rental/BudgetRentalComponent';
 import BudgetRecordComponent from './budget-record/BudgetRecordComponent';
 import { Button, Nav } from 'react-bootstrap';
@@ -182,7 +182,7 @@ export class BudgetPage extends Component {
 		return (
 			<div>
 
-				<ModalBudgetComponent.ModalNewBudgetComponent 
+				<ModalNewBudgetComponent 
 					showModal={ this.state.showModal } 
 					closeModal={ ( data ) => this.closeModalItem( data ) } 
 				/>

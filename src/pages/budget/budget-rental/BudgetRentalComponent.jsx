@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Form, Row, Button, ButtonGroup } from 'react-bootstrap';
-import ModalBudgetComponent from './../../../components/modal/modal-budget/ModalBudgetComponent';
+import { ModalEditBudgetComponent } from './../../../components/modal/index';
 
 class BudgetRentalContent extends Component {
 
@@ -115,7 +115,7 @@ class BudgetRentalContent extends Component {
 
 			<div className="mt-4">
 
-				<ModalBudgetComponent.ModalEditBudgetComponent 
+				<ModalEditBudgetComponent 
 						showModal={ this.state.showModal }
 						closeModal={ ( data ) => this.closeModal( data ) }
 						item={{

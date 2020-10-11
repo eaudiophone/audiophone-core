@@ -5,31 +5,6 @@ import FormBudgetComponent from  '../../form/budget-form/FormBudgetComponent';
 import ItemModel from '../../../models/ItemModels';
 import FormItemSchema from './../../form/budget-form/FormItemSchema';
 
-const ModalNewBudgetComponent = ({ showModal, closeModal }) => (
-	
-	<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg">
-		<Modal.Header closeButton>
-			<Modal.Title>Nuevo Articulo</Modal.Title>
-		</Modal.Header>
-		<Formik 
-			component={ FormItem }
-			initialValues={ new ItemModel() }
-			validationSchema={ new FormItemSchema().getSchema() }
-			validateOnChange={ false }
-			
-			onSubmit={ ( values, actions ) => {
-
-				if ( actions !== undefined ) {
-					actions.setSubmitting( false );
-				}
-				
-				closeModal( values || null );
-
-			}}
-		/>
-	</Modal>
-);
-
 const FormItem = ( props ) => {
 
 	const {
@@ -89,7 +64,32 @@ const FormItem = ( props ) => {
 	);
 };
 
-const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => (
+export const ModalNewBudgetComponent = ({ showModal, closeModal }) => (
+	
+	<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg">
+		<Modal.Header closeButton>
+			<Modal.Title>Nuevo Articulo</Modal.Title>
+		</Modal.Header>
+		<Formik 
+			component={ FormItem }
+			initialValues={ new ItemModel() }
+			validationSchema={ new FormItemSchema().getSchema() }
+			validateOnChange={ false }
+			
+			onSubmit={ ( values, actions ) => {
+
+				if ( actions !== undefined ) {
+					actions.setSubmitting( false );
+				}
+				
+				closeModal( values || null );
+
+			}}
+		/>
+	</Modal>
+);
+
+export const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => (
 
 	<Modal show={ showModal } onHide={ () => closeModal( null ) } size="lg"> 
 		<Modal.Header closeButton>
@@ -100,7 +100,6 @@ const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => (
 			initialValues={ item }
 			validationSchema={ new FormItemSchema().getSchema() }
 			validateOnChange={ false }
-			
 			onSubmit={ ( values, actions ) => {
 
 				if ( actions !== undefined ) {
@@ -113,8 +112,3 @@ const ModalEditBudgetComponent = ({ showModal, closeModal, item }) => (
 		/>
 	</Modal>	
 );
-
-export default {
-	ModalNewBudgetComponent,
-	ModalEditBudgetComponent
-};
