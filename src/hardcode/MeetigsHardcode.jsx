@@ -1,7 +1,7 @@
 export const MEETINGS = [
 	{ 
 		id: 1,
-		icon: 'fas fa-microphone',
+		icon: 'microphone',
 		title: 'Sr. Martínez',
 		date: '2020-04-04',
 		startingTime: '10:00',
@@ -13,7 +13,7 @@ export const MEETINGS = [
 	},
 	{ 
 		id: 2,
-		icon: 'fas fa-microphone',
+		icon: 'microphone',
 		title: 'Sr. Alejandro',
 		date: '2020-04-08',
 		startingTime: '13:00',
@@ -25,7 +25,7 @@ export const MEETINGS = [
 	},
 	{ 
 		id: 3,
-		icon: 'fas fa-microphone',
+		icon: 'microphone',
 		title: 'Sr. Jesús',
 		date: '2020-04-23',
 		startingTime: '10:00',
@@ -37,7 +37,7 @@ export const MEETINGS = [
 	},
 	{ 
 		id: 4,
-		icon: 'fas fa-microphone',
+		icon: 'microphone',
 		title: 'Sr. Martínez',
 		date: '2020-04-12',
 		startingTime: '13:00',
@@ -49,7 +49,7 @@ export const MEETINGS = [
 	},
 	{
 		id: 5,
-		icon: 'fas fa-truck',
+		icon: 'truck',
 		title: 'Fiesta Sr. Martínez',
 		date: '2020-04-05',
 		startingTime: '21:00',
@@ -61,7 +61,7 @@ export const MEETINGS = [
 	},
 	{
 		id: 6,
-		icon: 'fas fa-truck',
+		icon: 'truck',
 		title: 'Fiesta Sr. Martínez',
 		date: '2020-04-13',
 		startingTime: '00:00',
@@ -73,7 +73,7 @@ export const MEETINGS = [
 	},
 	{
 		id: 7,
-		icon: 'fas fa-truck',
+		icon: 'truck',
 		title: 'Fiesta Sr. Martínez',
 		date: '2020-04-15',
 		startingTime: '15:00',
@@ -85,7 +85,7 @@ export const MEETINGS = [
 	},
 	{
 		id: 8,
-		icon: 'fas fa-truck',
+		icon: 'truck',
 		title: 'Fiesta Sr. Martínez',
 		date: '2020-04-20',
 		startingTime: '21:00',

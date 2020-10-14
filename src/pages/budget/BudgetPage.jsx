@@ -3,6 +3,7 @@ import { ModalNewBudgetComponent } from './../../components/modal/index';
 import BudgetRentalComponent from './budget-rental/BudgetRentalComponent';
 import BudgetRecordComponent from './budget-record/BudgetRecordComponent';
 import { Button, Nav } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class BudgetPage extends Component {
 
@@ -108,7 +109,7 @@ export class BudgetPage extends Component {
 					onClick={ () => this.showModalItem() }
 					ref={ ( element ) => 	this.newItemButton = element }
 				>
-					<i className="mr-2 fas fa-plus"></i>
+					<FontAwesomeIcon className="mr-2" icon="plus" />
 					Nuevo articulo
 				</Button>
 		

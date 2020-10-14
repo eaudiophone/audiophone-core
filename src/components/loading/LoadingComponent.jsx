@@ -1,7 +1,8 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const LoadingComponent = () => (
 	<div className="d-flex justify-content-center align-items-center flex-row">
-		<i className="fas fa-spinner fa-spin fa-2x"></i>
+		<FontAwesomeIcon icon="spinner" spin size="2x" />
 	</div>
 ); 

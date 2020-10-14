@@ -6,6 +6,8 @@ import { Formik, Form, Field } from 'formik';
 
 import { EmailInput, PasswordInput, CheckboxInput } from '../FormComponent';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import LoginSchema from './LoginSchema';
 import Login from './../../../models/LoginModels';
 
@@ -97,7 +99,7 @@ const Buttons = ({ handleReset, loading = false, disabled = true }) => {
   	{
   		loading && (
   			<Button variant="primary" size="lg" block disabled>
-					<i className="fas fa-spinner fa-spin mr-2"></i>
+					<FontAwesomeIcon icon="spinner" spin className="mr-2" />
 					Iniciar sesión
 				</Button>
   		)

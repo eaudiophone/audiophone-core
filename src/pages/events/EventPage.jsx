@@ -8,6 +8,7 @@ import {
 import { CardComponent } from './../../components/index';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 import { ModalEventComponent } from '../../components/modal/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class EventPage extends Component {
 
@@ -47,7 +48,7 @@ export class EventPage extends Component {
 							size="sm"
 							onClick={ () => this.changeView('record') }
 						>
-							<i className="mr-2 fas fa-microphone"></i>
+							<FontAwesomeIcon className="mr-2" icon="microphone" />
 							Grabación
 						</Button>
 
@@ -56,7 +57,7 @@ export class EventPage extends Component {
 							size="sm"
 							onClick={ () => this.changeView('rental') }
 						>
-							<i className="mr-2 fas fa-truck"></i>
+							<FontAwesomeIcon className="mr-2" icon="truck" />
 							Alquiler
 						</Button>
 

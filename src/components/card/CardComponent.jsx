@@ -4,6 +4,8 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import { RedirectService } from './../../services/RedirectService';
 import './CardComponent.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 export const CardComponent = ({ meeting, color, showModal }) => {
 
 	const {
@@ -35,12 +37,9 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 				sm={ 12 } 
 				className="d-flex justify-content-between flex-row mt-1"
 			>
-				<i className={ icon }></i>
+				<FontAwesomeIcon icon={ icon } />
 				<h5 className="card-title">{ title }</h5>
-				<i 
-					className="fas fa-times pointer" 
-					onClick={ () => showModal( id ) }>
-				</i>
+				<FontAwesomeIcon icon="times" className="pointer" onClick={ () => showModal( id ) } />
 			</Col>
 
 		</Row>
@@ -62,7 +61,7 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 
 				<Row className="pt-2 d-flex justify-content-center">
 			     <h6>
-			        <i className="mr-1 fas fa-clock"></i>
+			     	<FontAwesomeIcon icon="clock" className="mr-1" />
 			        Total: { totalHours } horas
 			    </h6>        
 		   	</Row> 
@@ -70,13 +69,13 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 				<Row className="d-flex justify-content-between pt-2">
 					<h5>
 			      <span className="badge badge-secondary">
-			          <i className="mr-1 fas fa-clock"></i>
+			          <FontAwesomeIcon icon="clock" className="mr-1" />
 			          Inicio: { startingTime }
 			       </span>
 			    </h5>
 			    <h5>
 			        <span className="badge badge-secondary">
-			            <i className="mr-1 fas fa-clock"></i>
+			            <FontAwesomeIcon icon="clock" className="mr-1" />
 			            Cierre: { finalHour }
 			        </span>
 			    </h5> 
@@ -90,7 +89,7 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 		      <Button 
 		      	variant="dark" 
 		      	onClick={ () => setRedirect( true ) }>
-		          <i className="fas fa-pen mr-2"></i>
+		          <FontAwesomeIcon className="mr-2" icon="pen" />
 		          Ver detalles
 		      </Button>  
 		    </Row>

@@ -7,6 +7,7 @@ import { ToastComponent } from './../../components/toasts/ToastComponent';
 import { UserService } from './../../services/UserService';
 import './ProfilePage.css';
 
+
 export class ProfilePage extends Component {
 
 	userService = new UserService();

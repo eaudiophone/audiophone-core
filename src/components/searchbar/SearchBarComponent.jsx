@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import './SearchBarComponent.css';
 
 export const SearchBarComponent = ({ sendSearch }) => {
@@ -41,7 +43,7 @@ export const SearchBarComponent = ({ sendSearch }) => {
 						variant="primary"
 						onClick={ () => validateText() }
 					>
-						<i className="fas fa-search"></i>
+						<FontAwesomeIcon icon="search" />
 					</Button>
 				</InputGroup.Append>
 			</InputGroup>

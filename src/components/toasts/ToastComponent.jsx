@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Toast, Row, Col } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
@@ -18,7 +19,7 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 					
 					<Row className="p-2">
 						<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
-							<i className="fas fa-check-circle fa-2x"></i>
+							<FontAwesomeIcon icon="check-circle" size="2x"/>
 						</Col>
 						<Col sm={ 10 } className="text-center">
 							<h5 className="font-weight-bold">{ context }</h5>
@@ -44,7 +45,7 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
 				<Row className="p-2">
 					<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
-						<i className="fas fa-times-circle fa-2x"></i>
+						<FontAwesomeIcon icon="times-circle" size="2x"/>
 					</Col>
 					<Col sm={ 10 } className="text-center">
 						<h5 className="font-weight-bold">{ context }</h5>

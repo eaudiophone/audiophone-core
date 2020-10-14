@@ -41,11 +41,13 @@ export class UserService {
 				)
 				.then( ({ data }) => {
 
+					const user = data.apiaudiophoneusernew;
+
 					const result = users.map( ( element ) => {
-						if ( data.apiaudiophoneuserupdate.apiaudiophoneusers_id === element.apiaudiophoneusers_id ) {
+						if ( user.apiaudiophoneusers_id === element.apiaudiophoneusers_id ) {
 							return {
 								...element,
-								apiaudiophoneusers_role: data.apiaudiophoneuserupdate.apiaudiophoneusers_role
+								apiaudiophoneusers_role: user.apiaudiophoneusers_role
 							}
 						}
 
@@ -74,7 +76,7 @@ export class UserService {
 			this.authService.putClient(`apiaudiophoneuser/${ method }/${ idUser }`, data )
 				.then( ({ data }) => {
 
-					const user = method === 'inactivate' ? data.apiaudiophoneuserinactive : data.apiaudiophoneuseractivate;
+					const user = data.apiaudiophoneusernew;
 
 					const result = users.map( ( element ) => {
 						if ( element.apiaudiophoneusers_id === user.apiaudiophoneusers_id  ) {
@@ -83,6 +85,7 @@ export class UserService {
 								apiaudiophoneusers_status: user.apiaudiophoneusers_status
 							}
 						}
+						
 						return element;
 					});
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const EmailInput = ({ field, form, type }) => {
 
@@ -193,7 +194,7 @@ export const FormButtons = ({ reset, loading = false, disabled })  => {
 
         { loading && (
           <Button  block disabled className="button-w80" variant="primary">
-            <i className="fas fa-spinner fa-spin mr-2"></i>
+            <FontAwesomeIcon className="mr-2" icon="spinner" spin />
             Enviar
           </Button>
           ) 

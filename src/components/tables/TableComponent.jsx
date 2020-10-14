@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Button } from 'react-bootstrap';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { UserService } from '../../services/UserService';
 import { SearchBarComponent, SearchFilterComponent, PaginationComponent, ToastComponent } from '../index';
 import { DeleteProfileModal, ChangeRoleModal } from '../modal/index';
@@ -242,7 +245,7 @@ export class TableComponent extends Component {
 						onClick={ () => this.showModal( 'edit', user ) }
 						disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
 					>
-						<i className="fas fa-user point" ></i> 
+						<FontAwesomeIcon icon="user" className="point" />
 					</Button>
 
 					<Button
@@ -250,7 +253,7 @@ export class TableComponent extends Component {
 						onClick={ () => this.showModal( 'delete', user ) }
 						disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
 					>
-						<i className="fas fa-trash point"></i>		
+						<FontAwesomeIcon icon="trash" className="point" />	
 					</Button>
 				</td>
 			</tr> 

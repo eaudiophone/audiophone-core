@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Form, Row, Button, ButtonGroup } from 'react-bootstrap';
 import { ModalEditBudgetComponent } from './../../../components/modal/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class BudgetRentalContent extends Component {
 
@@ -136,14 +137,14 @@ class BudgetRentalContent extends Component {
 									className="m-0"
 									onClick={ () => this.showModal() }
 								>	
-									<i className="fas fa-pen mr-2"></i>
+									<FontAwesomeIcon className="mr-2" icon="pen"/>
 									Editar
 								</Button>
 								<Button 
 									variant="danger" 
 									onClick={ () => this.deleteItemLocal() }
 								>	
-									<i className="fas fa-trash mr-2"></i>
+									<FontAwesomeIcon className="mr-2" icon="trash"/>
 									Eliminar
 								</Button>
 							</ButtonGroup>
