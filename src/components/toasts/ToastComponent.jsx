@@ -5,8 +5,38 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
-	if ( context !== 'Error' ) {
+	console.log( context );
 
+	if ( context === 'Warning' ) {
+
+		return (
+			<Toast 
+				className="toast-style warning-toast" 
+				delay={ 3000 }
+				onClose={ () => onHide() }
+				show={ showToast }
+				autohide
+			>
+				<Toast.Body>
+					
+					<Row className="p-2">
+						<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
+							<FontAwesomeIcon icon="exclamation-circle" size="2x"/>
+						</Col>
+						<Col sm={ 10 } className="text-center">
+							<h5 className="font-weight-bold">Precaución</h5>
+							<p>{ content }</p>
+						</Col>
+					</Row>
+					
+				</Toast.Body>
+			</Toast>		
+
+		);
+
+	} else if ( context === 'Exito' ) {
+
+		
 		return (
 			<Toast 
 				className="toast-style success-toast" 
@@ -31,7 +61,7 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 			</Toast>		
 		);
 
-	} 
+	}	
 
 	return (
 		<Toast 

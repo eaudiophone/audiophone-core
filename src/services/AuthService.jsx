@@ -62,6 +62,8 @@ export class AuthService extends BackendService {
 		
 		// para acceder al objeto de la respuesta es error.response
 			
+		console.log( response );
+
 		let payload = {
 			ok: false,
 			message: '',
@@ -84,7 +86,7 @@ export class AuthService extends BackendService {
 
 			case 404:
 				
-				payload = { ...payload, status: 404, message: 'Recurso no encontrado' }
+				payload = { ...payload, status: 404, message: response.data.errorMessage };
 				return payload;
 
 			case 405:

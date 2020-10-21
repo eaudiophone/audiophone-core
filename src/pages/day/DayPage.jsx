@@ -70,9 +70,15 @@ export class DayPage extends Component {
 					return this.setState({ redirect: true });
 				}
 
+				if ( error.status === 404 ) {
+					this.message = error.message;
+					this.action = 'Warning';
+					return this.setState({ showToast: true, loading: false });
+				}
+
 				this.message = error.message;
 				this.action = 'Error';
-				this.setState({ showToast: true });
+				this.setState({ showToast: true, loading: false });
 			});
 	}
 
@@ -103,6 +109,8 @@ export class DayPage extends Component {
 
 			this.dayService.createTerms( values )
 				.then( resp => {
+
+					console.log( resp );
 
 					// variable que cambia el estado del botón
 					actions.setSubmitting( false );

@@ -26,6 +26,11 @@
 	color: white;
 }
 
+.warning-toast {
+	background-color: #ffc107;
+	color: black;
+}
+
 .fail-toast {
 	background-color: red;
 	color: white;

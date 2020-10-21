@@ -141,8 +141,11 @@ export class DayService {
 
 			this.authService.postClient(`apiaudiophoneterm/store/${ id }`, form )
 				.then(({ data }) => {
+
+					console.log( data );
+
 					resolve({
-						message: data.apiaudiophoneterm_mesaage,
+						message: data.apiaudiophoneterm_message,
 						ok: data.ok,
 						status: data.status,
 						apiaudiophonetermnew: data.apiaudiophonetermnew
