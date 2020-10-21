@@ -71,8 +71,18 @@ export class DayPage extends Component {
 				}
 
 				if ( error.status === 404 ) {
+					
 					this.message = error.message;
 					this.action = 'Warning';
+
+					if ( idTerms === this.TERMS.RECORD ) {
+						this.tabSelected = '#nav-records';
+				
+					} else {
+						this.tabSelected = '#nav-rental'
+
+					}
+
 					return this.setState({ showToast: true, loading: false });
 				}
 
