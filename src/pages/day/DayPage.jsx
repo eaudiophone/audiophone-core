@@ -72,8 +72,7 @@ export class DayPage extends Component {
 
 				if ( error.status === 404 ) {
 					
-					this.message = error.message;
-					this.action = 'Warning';
+					// si no trae registros de terminos
 
 					if ( idTerms === this.TERMS.RECORD ) {
 						this.tabSelected = '#nav-records';
@@ -83,11 +82,11 @@ export class DayPage extends Component {
 
 					}
 
-					return this.setState({ showToast: true, loading: false });
+					return this.setState({ loading: false });
 				}
 
 				this.message = error.message;
-				this.action = 'Error';
+				this.action = error.action;
 				this.setState({ showToast: true, loading: false });
 			});
 	}
