@@ -44,25 +44,15 @@ export class DayPage extends Component {
 
 	getTerms( idTerms ) {
 
-		this.setState({ loading: true })
-
+		this.setState({ loading: true });
 
 		this.dayService.getTerms( idTerms )
 			.then( resp => { 
 				
-				if ( idTerms === this.TERMS.RECORD ) {
-					this.tabSelected = '#nav-records';
-				
-				} else {
-					this.tabSelected = '#nav-rental'
-
-				}
-
+				this.tabSelected = idTerms === this.TERMS.RECORD ? '#nav-records' : '#nav-rental';
 				this.terms = resp.data;
 
-				this.setState({ loading: false })
-				
-				// console.log( this.terms );
+				return this.setState({ loading: false });
 			})
 			.catch( error => {
 
@@ -73,21 +63,16 @@ export class DayPage extends Component {
 				if ( error.status === 404 ) {
 					
 					// si no trae registros de terminos
-
-					if ( idTerms === this.TERMS.RECORD ) {
-						this.tabSelected = '#nav-records';
-				
-					} else {
-						this.tabSelected = '#nav-rental'
-
-					}
+					this.tabSelected = idTerms === this.TERMS.RECORD ? '#nav-records' : '#nav-rental';
+					this.terms = new Terms();
 
 					return this.setState({ loading: false });
 				}
 
 				this.message = error.message;
 				this.action = error.action;
-				this.setState({ showToast: true, loading: false });
+
+				return this.setState({ showToast: true, loading: false });
 			});
 	}
 
@@ -109,7 +94,7 @@ export class DayPage extends Component {
 		// foreign key
 		values = {
 			...values,
-			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? 2 : 1 
+			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? this.TERMS.RECORD : this.TERMS.RENTAL 
 		};
 
 		// console.log( values );
@@ -119,7 +104,7 @@ export class DayPage extends Component {
 			this.dayService.createTerms( values )
 				.then( resp => {
 
-					console.log( resp );
+					// console.log( resp );
 
 					// variable que cambia el estado del botón
 					actions.setSubmitting( false );
@@ -132,6 +117,7 @@ export class DayPage extends Component {
 				})
 				.catch( error => {
 
+					// console.error( error );
 					actions.setSubmitting( false );
 
 					if ( error.status === 401 ) {
@@ -141,8 +127,8 @@ export class DayPage extends Component {
 					this.message = error.message;
 					this.action = error.action;
 					this.setState({ showToast: true })
-					console.error( error );
 				});
+
 		}, 2000 );
 
 	}
