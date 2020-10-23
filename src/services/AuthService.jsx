@@ -86,7 +86,7 @@ export class AuthService extends BackendService {
 
 			case 404:
 				
-				payload = { ...payload, status: 404, message: 'recurso no encontrado', action: 'Warning' };
+				payload = { ...payload, status: 404, message: response.data.errorMessage, action: 'Warning' };
 				return payload;
 
 			case 405:

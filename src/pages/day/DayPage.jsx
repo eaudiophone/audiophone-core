@@ -66,7 +66,7 @@ export class DayPage extends Component {
 					this.tabSelected = idTerms === this.TERMS.RECORD ? '#nav-records' : '#nav-rental';
 					this.terms = new Terms();
 
-					return this.setState({ loading: false });
+					// return this.setState({ loading: false, showToast: true });
 				}
 
 				this.message = error.message;
