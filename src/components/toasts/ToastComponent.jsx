@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
-	console.log( context );
-
 	if ( context === 'Warning' ) {
 
 		return (

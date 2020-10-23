@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { CalendarComponent } from '../../components/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class EventsAdminPage extends Component {
 
@@ -17,7 +18,7 @@ export class EventsAdminPage extends Component {
 					onClick={ () => this.info.hidden = !this.info.hidden }
 					size="sm"
 				>
-					<i className="fas fa-info-circle mr-2"></i>
+					<FontAwesomeIcon className="mr-2" icon="info-circle" />
 					Mostrar info
 				</Button>
 			</div>
