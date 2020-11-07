@@ -236,7 +236,7 @@ export class TableComponent extends Component {
 				<td>{ user.apiaudiophoneusers_fullname }</td>
 				<td>{ user.apiaudiophoneusers_email }</td>
 				<td>{ user.apiaudiophoneusers_role }</td>
-				<td>{  getDateWithHour( user.created_at ) }</td>
+				<td>{ getDateWithHour( user.created_at ) }</td>
 				<td>{ user.apiaudiophoneusers_status === 1 ? 'activo' : 'inactivo' }</td>
 
 				<td className="d-flex flex-row justify-content-around">
