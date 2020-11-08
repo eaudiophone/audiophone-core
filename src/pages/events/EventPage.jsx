@@ -5,15 +5,19 @@ import {
 	Button,
 	Row
 } from 'react-bootstrap';
-import { CardComponent } from './../../components/index';
+import { CardComponent, LoadingComponent } from './../../components/index';
 import { MEETINGS } from './../../hardcode/MeetigsHardcode';
 import { ModalEventComponent } from '../../components/modal/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { EventService } from '../../services/EventService';
 
 export class EventPage extends Component {
 
+	// DOM elements
 	rental = null;
 	record = null;
+
+	eventService = new EventService();
 
 	constructor( props ) {
 
@@ -21,7 +25,9 @@ export class EventPage extends Component {
 
 		this.state = { 
 			showModal: false, 
-			idEvent: 0 
+			idEvent: 0,
+			loading: false,
+			events: [] 
 		}
 
 		this.showModal = this.showModal.bind( this );
@@ -29,7 +35,28 @@ export class EventPage extends Component {
 	}
 
 	componentDidMount() {
-		this.changeView('record')
+
+		this.setState({ loading: true });
+
+		this.eventService.getAllEvents()
+			.then( events => {
+				
+				this.setState({ loading: false, events });
+				
+				return this.changeView('record');
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+
+				return this.setState({ showToast: true, loading: false });
+			})
+
 	}
 
 	getHeader() {
@@ -118,8 +145,44 @@ export class EventPage extends Component {
 
 	changeView( view ) {
 
-		this.record.hidden = view === 'record' ? false : true;
-		this.rental.hidden = view === 'record' ? true : false;
+		console.log( this.state.events );
+
+		let events = [];
+
+		if ( view === 'record' ) {
+			
+			events = this.state.events.map( event => {
+				
+				if ( event.id_apiaudiophoneservices === 2 ) {
+					return event;
+				}
+
+				return null;
+
+			}).filter( event => event );
+
+			this.setState({ events });
+			this.record.hidden = false;
+			this.rental.hidden = true;
+
+		} else {
+
+			events = this.state.events.map( event => {
+				
+				if ( event.id_apiaudiophoneservices === 1 ) {
+					return event;
+				}
+
+				return null;
+
+			}).filter( event => event );
+
+			this.setState({ events });
+			this.record.hidden = true;
+			this.rental.hidden = false;
+		}
+
+		console.log( events );
 	}
 
 	deleteEvent( confirm, id ) {
@@ -135,22 +198,36 @@ export class EventPage extends Component {
 		this.setState({ showModal: true, idEvent: id });
 	}
 
+
+	showContent() {
+		
+		if ( !this.state.loading ) {
+			return (
+				<div>
+					{ this.getHeader() }
+					<div ref={ ( element ) => this.record = element }>
+						{ this.showMeetings('record') }
+					</div>
+					<div ref={ ( element ) => this.rental = element }>
+						{ this.showMeetings('rental') }
+					</div>
+				</div>
+			);
+		}
+
+		return ( <LoadingComponent /> );
+	}
+
 	render() {
 		return (
 			
 			<div>
-				{ this.getHeader() }
-				<div ref={ ( element ) => this.record = element }>
-					{ this.showMeetings('record') }
-				</div>
-				<div ref={ ( element ) => this.rental = element }>
-					{ this.showMeetings('rental') }
-				</div>
 				<ModalEventComponent 
 					showModal={ this.state.showModal }
 					idEvent={ this.state.idEvent }
 					deleteModal={ ( confirm, id ) => this.deleteEvent( confirm, id ) }
 				/>
+				{ this.showContent() }
 			</div>
 		);
 	}

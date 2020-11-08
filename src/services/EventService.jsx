@@ -51,6 +51,18 @@ export class EventService {
 		});
 	}
 
+	getAllEvents() {
+
+		return new Promise(( resolve, reject ) => {
+			
+			const id = this.authService.getLogged().id;
+
+			this.authService.postClient(`apiaudiophonevent/show/${ id }`)
+				.then(({ data }) => resolve( data.apiaudiophoneventdata ))
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
+		});
+	}
+
 	getTerms() {
 
 		return new Promise(( resolve, reject ) => {
@@ -82,7 +94,6 @@ export class EventService {
 	}
 
 	deleteEvent( idEvent ) {
-
 	}
 
 	verifyRangeHours( start = '00:00', end = '00:00' ) {
