@@ -11,7 +11,7 @@ import {
   TextAreaInput
 } from '../FormComponent';
 
-const FormEventComponent = ({ handleReset, values, isSubmitting, isValid }) => {
+export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid }) => {
 
 	return (
 
@@ -101,6 +101,3 @@ const getOptions = () => {
 
   return idServices;
 };
-
-
-export default FormEventComponent;

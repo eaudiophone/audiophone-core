@@ -6,10 +6,12 @@ const SECONDS = Object.freeze({
 	MINUTES: 60
 });
 
-export function calculateTotalSeconds( time ) {
+export function calculateTotalSeconds( time = '00:00' ) {
 
-	let hour = parseInt( time.split(':')[0] );
-	let minutes = parseInt( time.split(':')[1] );
+	let [ hour, minutes ] = time.split(':');
+
+	hour = parseInt( hour );
+	minutes = parseInt( minutes );
 	let totalSeconds = ( hour * SECONDS.HOURS ) + ( minutes * SECONDS.MINUTES );
 
 	// console.log( totalSeconds );
@@ -61,7 +63,7 @@ export function verifyRangeHours( start = '00:00', end = '23:59' ) {
 	} 
 }
 
-export function getDifferenceHours( start = '00:00', end = '23:59', object = true ) {
+export function getDifferenceHours( start = '00:00', end = '23:59', object = false ) {
 
 	let difference = calculateTotalSeconds( end ) - calculateTotalSeconds( start );
 
@@ -91,8 +93,19 @@ export function secondsToString( timeSeconds = 0 ) {
 	let minutes = ( ( timeSeconds % SECONDS.HOURS ) / SECONDS.MINUTES );
 	minutes = ( minutes < 10 ) ? '0' + minutes : minutes;
 
-	let seconds = ( timeSeconds % 60 );
-	seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
+	// let seconds = ( timeSeconds % 60 );
+	// seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
+	// return hour + ':' + minutes + ':' + seconds;  
 
-	return hour + ':' + minutes + ':' + seconds;  
+	return hour + ':' + minutes; 
+}
+
+export function hourToObject( format = '00:00' ) {
+
+	const [ hour, minutes ] = format.split(':');
+
+	return {
+		hour,
+		minutes
+	};
 }

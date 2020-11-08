@@ -86,12 +86,22 @@ export class AuthService extends BackendService {
 
 			case 404:
 				
-				payload = { ...payload, status: 404, message: response.data.errorMessage, action: 'Warning' };
+				payload = { 
+					...payload, 
+					status: 404, 
+					message: response.data.errorMessage || 'Recurso no encontrado', 
+					action: 'Warning' 
+				};
+				
 				return payload;
 
 			case 405:
 	
-				payload = { ...payload, message: 'Método de acceso no permitido', status: 405 };
+				payload = { 
+					...payload, 
+					message: response.data.apiaudiophoneusermessage || 'Metodo de acceso no permitido', 
+					status: 405 
+				};
 				return payload;
 
 			case 409:

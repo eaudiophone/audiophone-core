@@ -7,6 +7,7 @@ import { LoadingComponent } from './loading/LoadingComponent';
 import { CardComponent } from './card/CardComponent';
 import { TableComponent } from './tables/TableComponent';
 import { CalendarComponent } from './calendar/CalendarComponent';
+import { FormEventComponent } from './form/events-form/FormEventComponent';
 
 export {
 	ToastComponent,
@@ -16,5 +17,6 @@ export {
 	CardComponent,
 	TableComponent,
 	SearchFilterComponent,
-	CalendarComponent
+	CalendarComponent,
+	FormEventComponent
 };
