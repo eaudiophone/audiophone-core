@@ -1,4 +1,5 @@
 import { AuthService } from './AuthService';
+import { getDifferenceHours, verifyRangeHours, getHour } from './../util-functions/date-format';
 
 export class EventService {
 
@@ -31,9 +32,19 @@ export class EventService {
 
 			this.authService.postClient(`apiaudiophonevent/show/${ id }`)
 				.then(({ data }) => {
-
-					const event = data.apiaudiophoneventdata.find( event => idEvent === event.apiaudiophonevents_id );
 					
+					let event = data.apiaudiophoneventdata.find( event => idEvent === event.apiaudiophonevents_id );
+
+					event = {
+						...event,
+						apiaudiophonevents_begintime: getHour( event.apiaudiophonevents_begintime ),
+						apiaudiophonevents_finaltime: getHour( event.apiaudiophonevents_finaltime ),
+						apiaudiophonevents_totalhours: getHour( event.apiaudiophonevents_totalhours ),
+
+						// valor para validacion del form
+						id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString()  
+					};
+
 					resolve( event ); 
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
@@ -55,7 +66,30 @@ export class EventService {
 		});
 	}
 
-	updateEvent( idEvent = 1, event ) {
+	updateEvent( event ) {
 
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
+
+			this.authService.putClient(`apiaudiophonevent/update/${ id }`, event )
+				.then(({ data }) => resolve({
+							message: data.apiaudiophoneventmessage,
+							action: 'Exito'
+						})
+					)
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
+		});
+	}
+
+	deleteEvent( idEvent ) {
+
+	}
+
+	verifyRangeHours( start = '00:00', end = '00:00' ) {
+		return verifyRangeHours( start, end );
+	}
+
+	getDifferenceHours( start = '00:00', end = '00:00' ) {
+		return getDifferenceHours( start, end );
 	}
 }

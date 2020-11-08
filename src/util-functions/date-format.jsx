@@ -12,6 +12,7 @@ export function calculateTotalSeconds( time = '00:00' ) {
 
 	hour = parseInt( hour );
 	minutes = parseInt( minutes );
+	
 	let totalSeconds = ( hour * SECONDS.HOURS ) + ( minutes * SECONDS.MINUTES );
 
 	// console.log( totalSeconds );
@@ -93,11 +94,11 @@ export function secondsToString( timeSeconds = 0 ) {
 	let minutes = ( ( timeSeconds % SECONDS.HOURS ) / SECONDS.MINUTES );
 	minutes = ( minutes < 10 ) ? '0' + minutes : minutes;
 
+	return hour + ':' + minutes; 
+	
 	// let seconds = ( timeSeconds % 60 );
 	// seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
 	// return hour + ':' + minutes + ':' + seconds;  
-
-	return hour + ':' + minutes; 
 }
 
 export function hourToObject( format = '00:00' ) {

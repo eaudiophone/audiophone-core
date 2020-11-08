@@ -57,7 +57,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           component={ HourInput }
         />
 
-        { values.id_apiaudiophoneservices === '1'  && (
+        { values.id_apiaudiophoneservices === '1' && (
             
             <Field 
               name="apiaudiophonevents_address"
