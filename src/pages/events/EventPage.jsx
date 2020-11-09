@@ -6,16 +6,13 @@ import {
 	Row
 } from 'react-bootstrap';
 import { CardComponent, LoadingComponent } from './../../components/index';
-import { MEETINGS } from './../../hardcode/MeetigsHardcode';
+import { MEETINGS, idServices } from './../../hardcode/MeetigsHardcode';
 import { ModalEventComponent } from '../../components/modal/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EventService } from '../../services/EventService';
+import { RedirectService } from '../../services/RedirectService';
 
 export class EventPage extends Component {
-
-	// DOM elements
-	rental = null;
-	record = null;
 
 	eventService = new EventService();
 
@@ -27,36 +24,24 @@ export class EventPage extends Component {
 			showModal: false, 
 			idEvent: 0,
 			loading: false,
-			events: [] 
+			events: [],
+			redirect: false 
 		}
 
 		this.showModal = this.showModal.bind( this );
 		this.deleteEvent = this.deleteEvent.bind( this );
+
+		// DOM elements
+		this.rentalRef = React.createRef();
+		this.recordRef = React.createRef();
 	}
 
 	componentDidMount() {
+		return this.changeView( idServices.RENTAL );
+	}
 
-		this.setState({ loading: true });
-
-		this.eventService.getAllEvents()
-			.then( events => {
-				
-				this.setState({ loading: false, events });
-				
-				return this.changeView('record');
-			})
-			.catch( error => {
-
-				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-
-				this.message = error.message;
-				this.action = error.action;
-
-				return this.setState({ showToast: true, loading: false });
-			})
-
+	componentDidUpdate() {
+		// console.log( this.recordRef.current );
 	}
 
 	getHeader() {
@@ -73,7 +58,7 @@ export class EventPage extends Component {
 						<Button 
 							variant="success" 
 							size="sm"
-							onClick={ () => this.changeView('record') }
+							onClick={ () => this.changeView( idServices.RECORD ) }
 						>
 							<FontAwesomeIcon className="mr-2" icon="microphone" />
 							Grabación
@@ -82,7 +67,7 @@ export class EventPage extends Component {
 						<Button 
 							variant="success" 
 							size="sm"
-							onClick={ () => this.changeView('rental') }
+							onClick={ () => this.changeView( idServices.RENTAL ) }
 						>
 							<FontAwesomeIcon className="mr-2" icon="truck" />
 							Alquiler
@@ -96,93 +81,96 @@ export class EventPage extends Component {
 
 	showMeetings( mode ) {
 
-		let events = [];
-		let idService = 0;
+		if ( !this.state.loading ) {
+			
+			if ( mode === 'record' ) {
 
-		if ( mode === 'record' ) {
-
-			idService = 1;
-			events = MEETINGS.filter( ( element ) => element.idService === idService );
-
-			return(
-
-				<Row>
+				return (
+					<Row>
 					{ 	
-						events.map( ( element ) => (
+						this.state.events.length > 0 && this.state.events.map( ( element ) => (
 							<CardComponent 
 								meeting={ element } 
 								color="#fbf096" key={ element.id }
 								showModal={ ( id ) => this.showModal( id ) }
 							/>
 						)) 
-				}
+					}
+					{ 
+						this.state.events.length === 0 && 
+							(<p className="text-center w-100">No hay eventos de grabaciones registrados</p> )
+					}
 				</Row>
-			);
+				);
+			
+			} else {
+				
+				return (
+					<Row>
+						{ 	
+							this.state.events.length > 0 && this.state.events.map( ( element ) => (
+								<CardComponent 
+									meeting={ element } 
+									color="#c7e5ec" key={ element.id }
+									showModal={ ( id ) => this.showModal( id ) }
+								/>
+							)) 
+						}
+						{
+							this.state.events.length === 0 && 
+								(<p className="text-center w-100">No hay eventos de alquiler registrados</p> )
+						}
+					</Row>
+				);
 
-
-		} else {
-
-			idService = 2;
-			events = MEETINGS.filter( ( element ) => element.idService === idService );
-
-			return(
-
-				<Row>
-					{ 	
-						events.map( ( element ) => (
-							<CardComponent 
-								meeting={ element } 
-								color="#c7e5ec" key={ element.id }
-								showModal={ ( id ) => this.showModal( id ) }
-							/>
-						)) 
-				}
-				</Row>
-			);
+			}
 		}
 
+		return ( <LoadingComponent /> );
 	}
 
-	changeView( view ) {
+	changeView( idService = 1 ) {
 
-		console.log( this.state.events );
+		this.setState({ loading: true });
 
-		let events = [];
-
-		if ( view === 'record' ) {
+		this.eventService.getAllEvents()
+			.then( events => {
+				
+				// validacion de los tipos de eventos
+				events = events.reduce(( accum, event ) => {
+					
+					if ( event.id_apiaudiophoneservices === idService ) {
+						return accum = accum.concat([ event ]);
+					}
 			
-			events = this.state.events.map( event => {
+					return accum;
+
+				}, []);
 				
-				if ( event.id_apiaudiophoneservices === 2 ) {
-					return event;
+				this.setState({ loading: false, events });				
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
 				}
 
-				return null;
+				this.message = error.message;
+				this.action = error.action;
 
-			}).filter( event => event );
+				return this.setState({ showToast: true, loading: false });
+			})
 
-			this.setState({ events });
-			this.record.hidden = false;
-			this.rental.hidden = true;
+		return this.switchTab( idService );
+	}
 
-		} else {
+	switchTab( idService ) {
+		
+		const nodeRental = this.rentalRef.current;
+		const nodeRecord = this.recordRef.current;
 
-			events = this.state.events.map( event => {
-				
-				if ( event.id_apiaudiophoneservices === 1 ) {
-					return event;
-				}
-
-				return null;
-
-			}).filter( event => event );
-
-			this.setState({ events });
-			this.record.hidden = true;
-			this.rental.hidden = false;
-		}
-
-		console.log( events );
+		nodeRecord.hidden = idService > 1 ? false : true;
+		nodeRental.hidden = idService > 1 ? true : false;
 	}
 
 	deleteEvent( confirm, id ) {
@@ -198,36 +186,25 @@ export class EventPage extends Component {
 		this.setState({ showModal: true, idEvent: id });
 	}
 
-
-	showContent() {
-		
-		if ( !this.state.loading ) {
-			return (
-				<div>
-					{ this.getHeader() }
-					<div ref={ ( element ) => this.record = element }>
-						{ this.showMeetings('record') }
-					</div>
-					<div ref={ ( element ) => this.rental = element }>
-						{ this.showMeetings('rental') }
-					</div>
-				</div>
-			);
-		}
-
-		return ( <LoadingComponent /> );
-	}
-
 	render() {
 		return (
 			
 			<div>
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<ModalEventComponent 
 					showModal={ this.state.showModal }
 					idEvent={ this.state.idEvent }
 					deleteModal={ ( confirm, id ) => this.deleteEvent( confirm, id ) }
 				/>
-				{ this.showContent() }
+				<div>
+					{ this.getHeader() }
+					<div ref={ this.recordRef }>
+						{ this.showMeetings('record') }
+					</div>
+					<div ref={ this.rentalRef }>
+						{ this.showMeetings('rental') }
+					</div>
+				</div>
 			</div>
 		);
 	}

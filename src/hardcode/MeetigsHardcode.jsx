@@ -1,3 +1,8 @@
+export const idServices = Object.freeze({
+	RENTAL: 1,
+	RECORD: 2
+});
+
 export const MEETINGS = [
 	{ 
 		id: 1,
