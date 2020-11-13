@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Row, Col, Button } from 'react-bootstrap';
+import { Card, Row, Button } from 'react-bootstrap';
 import { RedirectService } from './../../services/RedirectService';
 import './CardComponent.css';
 
@@ -32,16 +32,10 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 
 	const CardHeader = () => (
 
-		<Row>
-			<Col 
-				sm={ 12 } 
-				className="d-flex justify-content-between flex-row mt-1"
-			>
-				<FontAwesomeIcon icon={ icon } />
-				<h5 className="card-title">{ title }</h5>
-				<FontAwesomeIcon icon="times" className="pointer" onClick={ () => showModal( id ) } />
-			</Col>
-
+		<Row className="justify-content-between align-items-center mt-1 pr-3 pl-3">
+			<FontAwesomeIcon icon={ icon } />
+			<h5 className="mb-0">{ title }</h5>
+			<FontAwesomeIcon icon={ icon } />
 		</Row>
 	);
 
@@ -59,10 +53,14 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 		      </label>
 				</Row>
 
+				<Row className="justify-content-center">
+					<b>Estado: en proceso</b>
+				</Row>
+
 				<Row className="pt-2 d-flex justify-content-center">
 			     <h6>
 			     	<FontAwesomeIcon icon="clock" className="mr-1" />
-			        Total: { totalHours } horas
+			        Total: { totalHours.hour } horas, { totalHours.minutes } minutos
 			    </h6>        
 		   	</Row> 
 
@@ -81,8 +79,8 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 			    </h5> 
 		    </Row>
 
-		    <Row className=" pt-2 text-justify">
-		        <p>{ description }</p>       
+		    <Row className="pt-2">
+		        <p className="w-100 text-justify">{ description }</p>       
 		    </Row>
 		    
 		    <Row className="d-flex justify-content-center pt-2">
@@ -123,7 +121,10 @@ CardComponent.propTypes = {
 		title: PropTypes.string.isRequired,
 		date: PropTypes.string.isRequired,
 		startingTime: PropTypes.string.isRequired,
-		totalHours: PropTypes.number.isRequired,
+		totalHours: PropTypes.shape({
+			hour: PropTypes.number.isRequired,
+			minutes: PropTypes.number.isRequired
+		}),
 		finalHour: PropTypes.string.isRequired,
 		description: PropTypes.string,
 		addressMeeting: PropTypes.string.isRequired,

@@ -1,5 +1,12 @@
 import { AuthService } from './AuthService';
-import { getDifferenceHours, verifyRangeHours, getHour } from './../util-functions/date-format';
+import { 
+	getDifferenceHours, 
+	verifyRangeHours, 
+	getHour, 
+	hourToObject,
+	getSpanishFormatDate
+} from './../util-functions/date-format';
+import { sliceString } from './../util-functions/string-format';
 
 export class EventService {
 
@@ -51,14 +58,38 @@ export class EventService {
 		});
 	}
 
-	getAllEvents() {
+	getAllEvents( isUser = false ) {
 
 		return new Promise(( resolve, reject ) => {
 			
 			const id = this.authService.getLogged().id;
 
 			this.authService.postClient(`apiaudiophonevent/show/${ id }`)
-				.then(({ data }) => resolve( data.apiaudiophoneventdata ))
+				.then(({ data }) => {
+
+					let events = data.apiaudiophoneventdata || [];
+
+					if ( events.length > 0 && isUser ) {
+
+						events = events.map(( event ) => ({
+							id: event.apiaudiophonevents_id,
+							icon: event.id_apiaudiophoneservices > 1 ? 'microphone' : 'truck',
+							title: event.apiaudiophonevents_title.length > 20 ? 
+								sliceString( event.apiaudiophonevents_title, 20 ) : event.apiaudiophonevents_title,
+							date: getSpanishFormatDate( event.apiaudiophonevents_date ),
+							startingTime: getHour( event.apiaudiophonevents_begintime ),
+							finalHour: getHour( event.apiaudiophonevents_finaltime ),
+							totalHours: hourToObject( event.apiaudiophonevents_totalhours ),
+							description: event.apiaudiophonevents_description,
+							addressMeeting: event.apiaudiophonevents_address.length > 50 ? 
+								sliceString( event.apiaudiophonevents_address, 50 ) : event.apiaudiophonevents_address,
+							idService: event.id_apiaudiophoneservices 
+						}));
+
+						return resolve( events );
+					}
+
+				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
 		});
 	}

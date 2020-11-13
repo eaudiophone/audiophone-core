@@ -6,7 +6,7 @@ const SECONDS = Object.freeze({
 	MINUTES: 60
 });
 
-export function calculateTotalSeconds( time = '00:00' ) {
+function calculateTotalSeconds( time = '00:00' ) {
 
 	let [ hour, minutes ] = time.split(':');
 
@@ -20,15 +20,19 @@ export function calculateTotalSeconds( time = '00:00' ) {
 	return totalSeconds;
 }
 
-export function getDateWithHour( date = '' ) {
+function getDateWithHour( date = '' ) {
 	return moment( date ).format('DD-MM-YYYY kk:mm:ss');
 }
 
-export function getHour( hour = '00:00' ) {
+function getSpanishFormatDate( date = '' ) {
+	return moment( date ).format('DD-MM-YYYY');
+}
+
+function getHour( hour = '00:00' ) {
 	return hour.slice( 0, 5 );
 }
 
-export function verifyRangeHours( start = '00:00', end = '23:59' ) {
+function verifyRangeHours( start = '00:00', end = '23:59' ) {
 	
 	const totalSecoundsBegin = calculateTotalSeconds( start );
 	const totalSecoundsFinal = calculateTotalSeconds( end );
@@ -64,7 +68,7 @@ export function verifyRangeHours( start = '00:00', end = '23:59' ) {
 	} 
 }
 
-export function getDifferenceHours( start = '00:00', end = '23:59', object = false ) {
+function getDifferenceHours( start = '00:00', end = '23:59', object = false ) {
 
 	let difference = calculateTotalSeconds( end ) - calculateTotalSeconds( start );
 
@@ -86,7 +90,7 @@ export function getDifferenceHours( start = '00:00', end = '23:59', object = fal
 	return secondsToString( difference );  // devuelve un string
 }
 
-export function secondsToString( timeSeconds = 0 ) {
+function secondsToString( timeSeconds = 0 ) {
 
 	let hour = Math.floor( timeSeconds / SECONDS.HOURS );
 	hour = ( hour < 10 ) ? '0' + hour : hour;
@@ -101,12 +105,23 @@ export function secondsToString( timeSeconds = 0 ) {
 	// return hour + ':' + minutes + ':' + seconds;  
 }
 
-export function hourToObject( format = '00:00' ) {
+function hourToObject( format = '00:00' ) {
 
 	const [ hour, minutes ] = format.split(':');
 
 	return {
-		hour,
-		minutes
+		hour: parseInt( hour ),
+		minutes: parseInt( minutes )
 	};
 }
+
+export {
+	hourToObject,
+	secondsToString,
+	verifyRangeHours, 
+	getHour,
+	calculateTotalSeconds,
+	getDateWithHour,
+	getDifferenceHours,
+	getSpanishFormatDate
+};

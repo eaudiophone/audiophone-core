@@ -6,8 +6,8 @@ import {
 	Row
 } from 'react-bootstrap';
 import { CardComponent, LoadingComponent } from './../../components/index';
-import { MEETINGS, idServices } from './../../hardcode/MeetigsHardcode';
-import { ModalEventComponent } from '../../components/modal/index';
+import { idServices } from './../../hardcode/MeetigsHardcode';
+// import { ModalEventComponent } from '../../components/modal/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EventService } from '../../services/EventService';
 import { RedirectService } from '../../services/RedirectService';
@@ -15,13 +15,15 @@ import { RedirectService } from '../../services/RedirectService';
 export class EventPage extends Component {
 
 	eventService = new EventService();
+	rentalRef = null;
+	recordRef = null;
 
 	constructor( props ) {
 
 		super( props );
 
 		this.state = { 
-			showModal: false, 
+			// showModal: false, 
 			idEvent: 0,
 			loading: false,
 			events: [],
@@ -37,11 +39,64 @@ export class EventPage extends Component {
 	}
 
 	componentDidMount() {
-		return this.changeView( idServices.RENTAL );
+		return this.changeView( idServices.RECORD );
 	}
 
-	componentDidUpdate() {
-		// console.log( this.recordRef.current );
+	changeView( idService = 1 ) {
+
+		this.setState({ loading: true });
+
+		this.eventService.getAllEvents( true )
+			.then( events => {
+
+				// validacion de los tipos de eventos
+				events = events.reduce(( accum, event ) => {
+					
+					if ( event.idService === idService ) {
+						return accum = accum.concat([ event ]);
+					}
+			
+					return accum;
+
+				}, []);
+				
+				this.setState({ loading: false, events });				
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+
+				return this.setState({ showToast: true, loading: false });
+			})
+
+		return this.switchTab( idService );
+	}
+
+	switchTab( idService ) {
+		
+		const nodeRental = this.rentalRef.current;
+		const nodeRecord = this.recordRef.current;
+
+		nodeRecord.hidden = idService > 1 ? false : true;
+		nodeRental.hidden = idService > 1 ? true : false;
+	}
+
+	deleteEvent( confirm, id ) {
+
+		if ( confirm ) {
+			console.log( confirm, id );
+		} 
+
+		this.setState({ showModal: false });
+	}
+
+	showModal( id ) {
+		this.setState({ showModal: true, idEvent: id });
 	}
 
 	getHeader() {
@@ -91,14 +146,15 @@ export class EventPage extends Component {
 						this.state.events.length > 0 && this.state.events.map( ( element ) => (
 							<CardComponent 
 								meeting={ element } 
-								color="#fbf096" key={ element.id }
+								color="#fbf096" 
+								key={ element.id } 
 								showModal={ ( id ) => this.showModal( id ) }
 							/>
 						)) 
 					}
 					{ 
 						this.state.events.length === 0 && 
-							(<p className="text-center w-100">No hay eventos de grabaciones registrados</p> )
+							(<p className="text-center text-danger w-100">No hay eventos de grabaciones registrados</p> )
 					}
 				</Row>
 				);
@@ -111,14 +167,15 @@ export class EventPage extends Component {
 							this.state.events.length > 0 && this.state.events.map( ( element ) => (
 								<CardComponent 
 									meeting={ element } 
-									color="#c7e5ec" key={ element.id }
+									color="#c7e5ec" 
+									key={ element.id }
 									showModal={ ( id ) => this.showModal( id ) }
 								/>
 							)) 
 						}
 						{
 							this.state.events.length === 0 && 
-								(<p className="text-center w-100">No hay eventos de alquiler registrados</p> )
+								(<p className="text-center text-danger w-100">No hay eventos de alquiler registrados</p> )
 						}
 					</Row>
 				);
@@ -129,73 +186,10 @@ export class EventPage extends Component {
 		return ( <LoadingComponent /> );
 	}
 
-	changeView( idService = 1 ) {
-
-		this.setState({ loading: true });
-
-		this.eventService.getAllEvents()
-			.then( events => {
-				
-				// validacion de los tipos de eventos
-				events = events.reduce(( accum, event ) => {
-					
-					if ( event.id_apiaudiophoneservices === idService ) {
-						return accum = accum.concat([ event ]);
-					}
-			
-					return accum;
-
-				}, []);
-				
-				this.setState({ loading: false, events });				
-			})
-			.catch( error => {
-
-				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-
-				this.message = error.message;
-				this.action = error.action;
-
-				return this.setState({ showToast: true, loading: false });
-			})
-
-		return this.switchTab( idService );
-	}
-
-	switchTab( idService ) {
-		
-		const nodeRental = this.rentalRef.current;
-		const nodeRecord = this.recordRef.current;
-
-		nodeRecord.hidden = idService > 1 ? false : true;
-		nodeRental.hidden = idService > 1 ? true : false;
-	}
-
-	deleteEvent( confirm, id ) {
-
-		if ( confirm ) {
-			console.log( confirm, id );
-		} 
-
-		this.setState({ showModal: false });
-	}
-
-	showModal( id ) {
-		this.setState({ showModal: true, idEvent: id });
-	}
-
 	render() {
-		return (
-			
+		return (	
 			<div>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
-				<ModalEventComponent 
-					showModal={ this.state.showModal }
-					idEvent={ this.state.idEvent }
-					deleteModal={ ( confirm, id ) => this.deleteEvent( confirm, id ) }
-				/>
 				<div>
 					{ this.getHeader() }
 					<div ref={ this.recordRef }>
