@@ -5,7 +5,7 @@ import {
 	Button,
 	Row
 } from 'react-bootstrap';
-import { CardComponent, LoadingComponent } from './../../components/index';
+import { CardComponent, LoadingComponent, ToastComponent } from './../../components/index';
 import { idServices } from './../../hardcode/MeetigsHardcode';
 // import { ModalEventComponent } from '../../components/modal/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,8 @@ export class EventPage extends Component {
 	eventService = new EventService();
 	rentalRef = null;
 	recordRef = null;
+	message = '';
+	action = '';
 
 	constructor( props ) {
 
@@ -27,7 +29,8 @@ export class EventPage extends Component {
 			idEvent: 0,
 			loading: false,
 			events: [],
-			redirect: false 
+			redirect: false,
+			showToast: false 
 		}
 
 		this.showModal = this.showModal.bind( this );
@@ -103,33 +106,9 @@ export class EventPage extends Component {
 
 		return (
 
-			<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
+			<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 				align-items-center pb-2 mb-3 border-bottom">
 				<h2>Eventos</h2> 
-
-				<ButtonToolbar className="mb-2 mb-md-0">
-					<ButtonGroup>
-						
-						<Button 
-							variant="success" 
-							size="sm"
-							onClick={ () => this.changeView( idServices.RECORD ) }
-						>
-							<FontAwesomeIcon className="mr-2" icon="microphone" />
-							Grabación
-						</Button>
-
-						<Button 
-							variant="success" 
-							size="sm"
-							onClick={ () => this.changeView( idServices.RENTAL ) }
-						>
-							<FontAwesomeIcon className="mr-2" icon="truck" />
-							Alquiler
-						</Button>
-
-					</ButtonGroup>
-				</ButtonToolbar>
 			</div>
 		);
 	}
@@ -187,11 +166,43 @@ export class EventPage extends Component {
 	}
 
 	render() {
+		
 		return (	
 			<div>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				<ToastComponent 
+					showToast={ this.state.showToast }  
+					content={ this.message } 
+					context={ this.action } 
+					onHide={ () => this.setState({ showToast: false }) }
+				/>
 				<div>
 					{ this.getHeader() }
+					<Row className="justify-content-center mb-4">
+						<ButtonToolbar className="mb-2 mb-md-0">
+							<ButtonGroup>
+								
+								<Button 
+									variant="success" 
+									size="sm"
+									onClick={ () => this.changeView( idServices.RECORD ) }
+								>
+									<FontAwesomeIcon className="mr-2" icon="microphone" />
+									Grabación
+								</Button>
+
+								<Button 
+									variant="success" 
+									size="sm"
+									onClick={ () => this.changeView( idServices.RENTAL ) }
+								>
+									<FontAwesomeIcon className="mr-2" icon="truck" />
+									Alquiler
+								</Button>
+
+							</ButtonGroup>
+						</ButtonToolbar>
+					</Row>
 					<div ref={ this.recordRef }>
 						{ this.showMeetings('record') }
 					</div>

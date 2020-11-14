@@ -17,6 +17,7 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 		startingTime,
 		finalHour,
 		description,
+		status
 	} = meeting;
 
 	const [ redirect, setRedirect ] = useState( false );
@@ -54,7 +55,7 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 				</Row>
 
 				<Row className="justify-content-center">
-					<b>Estado: en proceso</b>
+					<b>Estado: <span>{ status }</span> </b>
 				</Row>
 
 				<Row className="pt-2 d-flex justify-content-center">
@@ -128,7 +129,8 @@ CardComponent.propTypes = {
 		finalHour: PropTypes.string.isRequired,
 		description: PropTypes.string,
 		addressMeeting: PropTypes.string.isRequired,
-		idService: PropTypes.number.isRequired
+		idService: PropTypes.number.isRequired,
+		status: PropTypes.string.isRequired
 	}),
 	color: PropTypes.string.isRequired,
 	showModal: PropTypes.func.isRequired

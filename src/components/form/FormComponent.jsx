@@ -3,7 +3,7 @@ import { Form, Col, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const EmailInput = ({ field, form, type }) => {
+export const EmailInput = ({ field, form, type, readonly = false }) => {
 
 	return (
 
@@ -21,7 +21,7 @@ export const EmailInput = ({ field, form, type }) => {
 	)
 };
 
-export const PasswordInput = ({ field, form, type }) => (
+export const PasswordInput = ({ field, form, type, readonly = false }) => (
 
 	<Form.Group className="w-100">
     <Form.Label>password:</Form.Label>
@@ -51,7 +51,7 @@ export const CheckboxInput = ({ field, form, label, id = '', type = 'checkbox', 
    </Form.Group>
 )};
 
-export const FormInput = ({ field, form, type, title }) => {
+export const FormInput = ({ field, form, type, title, readonly = false }) => {
 
   return (
     <Form.Group className="w-100">
@@ -59,6 +59,7 @@ export const FormInput = ({ field, form, type, title }) => {
       <Form.Control
        	{ ...field }
        	type={ type }
+        readOnly={ readonly }
         isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
       />
       <Form.Control.Feedback type="invalid">
@@ -68,14 +69,15 @@ export const FormInput = ({ field, form, type, title }) => {
   );
 };
 
-export const FormInputDate = ({ title, field, type, form }) => {
+export const FormInputDate = ({ title, field, type, form, readonly = false }) => {
  
   return (
     <Form.Group className="w-100">
       <Form.Label className="form-label">{title}</Form.Label>
       <Form.Control
       	{ ...field }
-        type={ type }   
+        type={ type }
+        readOnly={ readonly }   
         isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
       />
       <Form.Control.Feedback type="invalid">
@@ -86,7 +88,7 @@ export const FormInputDate = ({ title, field, type, form }) => {
   );
 };
 
-export const HourInput = ({ title, field, form, type, columnSize = 12 }) => {
+export const HourInput = ({ title, field, form, type, columnSize = 12, readonly = false }) => {
 
   return (  
     <Col sm={ columnSize }>
@@ -95,6 +97,7 @@ export const HourInput = ({ title, field, form, type, columnSize = 12 }) => {
        <Form.Control 
          { ...field }
          type={ type }
+         readOnly={ readonly } 
          isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
       />
       <Form.Control.Feedback type="invalid">
@@ -106,7 +109,7 @@ export const HourInput = ({ title, field, form, type, columnSize = 12 }) => {
 };
 
 
-export const NumberInput = ({ field, form, type, columnSize = 12, title }) => {
+export const NumberInput = ({ field, form, type, columnSize = 12, title, readonly = false }) => {
 
   return (
     <Col sm={ columnSize }>
@@ -116,6 +119,7 @@ export const NumberInput = ({ field, form, type, columnSize = 12, title }) => {
           { ...field }
           isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
           type={ type }
+          readOnly={ readonly } 
           min="1"
         /> 
         <Form.Control.Feedback type="invalid">
@@ -126,7 +130,7 @@ export const NumberInput = ({ field, form, type, columnSize = 12, title }) => {
    );
 }
 
-export const SelectInput = ({ title, columnSize = 12, field, form, options = [] }) => (
+export const SelectInput = ({ title, columnSize = 12, field, form, options = [], readonly = false }) => (
 
   <Col sm={ columnSize }>
    <Form.Group>
@@ -134,6 +138,7 @@ export const SelectInput = ({ title, columnSize = 12, field, form, options = [] 
      <Form.Control
       as="select"
       { ...field }
+      disabled={ readonly }
       isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
     >
       <option value="">Seleccione</option>
@@ -149,7 +154,7 @@ export const SelectInput = ({ title, columnSize = 12, field, form, options = [] 
   </Col>
 );
 
-export const TextAreaInput = ({ type = 'textarea', form, field, columnSize = 12, title }) => {
+export const TextAreaInput = ({ type = 'textarea', form, field, columnSize = 12, title, readonly = false }) => {
 
   return (
     <Col sm={ columnSize }>
@@ -158,6 +163,7 @@ export const TextAreaInput = ({ type = 'textarea', form, field, columnSize = 12,
         <Form.Control
           { ...field }
           as={ type }
+          readOnly={ readonly } 
           isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
         />
         <Form.Control.Feedback type="invalid">
@@ -180,6 +186,7 @@ export const FormButtons = ({ reset, loading = false, disabled })  => {
           variant="secondary"
           type="reset"
           onClick={reset}
+          disabled={ disabled }
         >
           Cancelar
         </Button>

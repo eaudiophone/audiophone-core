@@ -24,6 +24,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           name="apiaudiophonevents_title"
           type="text"
           component={ FormInput }
+          readonly={ values.update || false }  // solo lectura para edicion en usuarios
         />
 
         <Field 
@@ -32,6 +33,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           name="id_apiaudiophoneservices"
           options={ getOptions() }
           type="select"
+           readonly={ values.update || false }
         />
 
         <Field 
@@ -39,6 +41,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           title="Fecha del evento:"
           type="date"
           component={ FormInputDate }
+          readonly={ values.update || false }
         />
 
         <Field 
@@ -47,6 +50,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           columnSize={ 6 }
           type="time"
           component={ HourInput }
+          readonly={ values.update || false }
         />
 
         <Field 
@@ -55,6 +59,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           columnSize={ 6 }
           type="time"
           component={ HourInput }
+          readonly={ values.update || false }
         />
 
         { values.id_apiaudiophoneservices === '1' && (
@@ -65,6 +70,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
               columnSize={ 12 }
               component={ TextAreaInput }
               type="textarea"
+              readonly={ values.update || false }
             />
           )  
         }
@@ -75,11 +81,16 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
             columnSize={ 12 }
             component={ TextAreaInput }
             type="textarea"
+            readonly={ values.update || false }
          />
 
       </Form.Row>
 
-      <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
+      <FormButtons 
+        reset={ handleReset } 
+        disabled={ !isValid || ( values.update === true ) } 
+        loading={ isSubmitting } 
+      />
 			
 		</FormFormik>
 	);

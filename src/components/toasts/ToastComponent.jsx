@@ -9,7 +9,7 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
 		return (
 			<Toast 
-				className="toast-style warning-toast" 
+				className="toast-style warning-toast"
 				delay={ 3000 }
 				onClose={ () => onHide() }
 				show={ showToast }

@@ -6,7 +6,7 @@ import {
 	hourToObject,
 	getSpanishFormatDate
 } from './../util-functions/date-format';
-import { sliceString } from './../util-functions/string-format';
+import { sliceString, toCapitalize } from './../util-functions/string-format';
 
 export class EventService {
 
@@ -31,7 +31,7 @@ export class EventService {
 		});
 	}
 
-	getEvent( idEvent = 1 ) {
+	getEvent( idEvent = 1, readOnly =  false ) {
 
 		return new Promise(( resolve, reject ) => {
 			
@@ -49,7 +49,8 @@ export class EventService {
 						apiaudiophonevents_totalhours: getHour( event.apiaudiophonevents_totalhours ),
 
 						// valor para validacion del form
-						id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString()  
+						id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
+						update: readOnly
 					};
 
 					resolve( event ); 
@@ -83,11 +84,14 @@ export class EventService {
 							description: event.apiaudiophonevents_description,
 							addressMeeting: event.apiaudiophonevents_address.length > 50 ? 
 								sliceString( event.apiaudiophonevents_address, 50 ) : event.apiaudiophonevents_address,
-							idService: event.id_apiaudiophoneservices 
+							idService: event.id_apiaudiophoneservices,
+							status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
+								: 'Ingresado' 
 						}));
 
-						return resolve( events );
 					}
+					
+					return resolve( events );
 
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );

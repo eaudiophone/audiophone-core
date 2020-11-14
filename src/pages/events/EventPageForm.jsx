@@ -41,7 +41,7 @@ export class EventPageForm extends Component {
 
 			// Promise all encadena un arreglo de promesas y devuelve el resultado
 
-			Promise.all([ this.eventService.getTerms(), this.eventService.getEvent( this.idEvent ) ])
+			Promise.all([ this.eventService.getTerms(), this.eventService.getEvent( this.idEvent, true ) ])
 				.then( ([ terms, event ]) => {
 
 					this.idTerms = terms;
@@ -197,7 +197,7 @@ export class EventPageForm extends Component {
 				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 						align-items-center pb-2 mb-3 border-bottom">
 						{ !this.props.match.params.id && ( <h2>Nuevo evento</h2> ) }
-						{ this.props.match.params.id && ( <h2>Actualizar evento</h2> ) }  
+						{ this.props.match.params.id && ( <h2>Ver evento</h2> ) }  
 				</div>
 				{ this.showContent() }
 			</div>
