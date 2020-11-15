@@ -175,7 +175,6 @@ export class EventPageForm extends Component {
 					initialValues={ this.state.event || new Event() }
 					validationSchema={ new EventSchema().getSchema() }
 					onSubmit={ this.prepareValues }
-					prueba="prueba"
 				/>
 			);
 		}

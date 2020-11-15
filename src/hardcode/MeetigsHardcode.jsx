@@ -8,7 +8,7 @@ export const MEETINGS = [
 		id: 1,
 		icon: 'microphone',
 		title: 'Sr. Martínez',
-		date: '2020-04-04',
+		date: '2020-11-15',
 		startingTime: '10:00',
 		totalHours: 2,
 		finalHour: '12:00',

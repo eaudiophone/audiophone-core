@@ -12,11 +12,18 @@ import {
 } from '../FormComponent';
 
 export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid }) => {
-	return (
+
+  return (
 
 		<FormFormik>
 
       <Form.Row>
+
+        { values.readOnly && (  // estado del evento
+            <label className="w-100 text-center">Estado del evento: 
+              <b className="ml-2">{ values.apiaudiophonevents_status }</b>
+            </label>
+          ) }
         
         <Field 
           title="Título del evento:"

@@ -28,8 +28,8 @@ function getSpanishFormatDate( date = '' ) {
 	return moment( date ).format('DD-MM-YYYY');
 }
 
-function getHour( hour = '00:00' ) {
-	return hour.slice( 0, 5 );
+function getHour( hour = '00:00', limit = 5 ) {
+	return hour.slice( 0, limit );
 }
 
 function verifyRangeHours( start = '00:00', end = '23:59' ) {
@@ -90,7 +90,7 @@ function getDifferenceHours( start = '00:00', end = '23:59', object = false ) {
 	return secondsToString( difference );  // devuelve un string
 }
 
-function secondsToString( timeSeconds = 0 ) {
+function secondsToString( timeSeconds = 0, seconds = false ) {
 
 	let hour = Math.floor( timeSeconds / SECONDS.HOURS );
 	hour = ( hour < 10 ) ? '0' + hour : hour;
@@ -98,11 +98,16 @@ function secondsToString( timeSeconds = 0 ) {
 	let minutes = ( ( timeSeconds % SECONDS.HOURS ) / SECONDS.MINUTES );
 	minutes = ( minutes < 10 ) ? '0' + minutes : minutes;
 
-	return hour + ':' + minutes; 
+	if ( seconds ) {
+		
+		let seconds = ( timeSeconds % 60 );
+		seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
+		
+		return hour + ':' + minutes + ':' + seconds;  
 	
-	// let seconds = ( timeSeconds % 60 );
-	// seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
-	// return hour + ':' + minutes + ':' + seconds;  
+	} 
+	
+	return hour + ':' + minutes; 
 }
 
 function hourToObject( format = '00:00' ) {

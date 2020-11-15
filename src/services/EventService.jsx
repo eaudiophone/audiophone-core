@@ -88,11 +88,34 @@ export class EventService {
 							status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
 								: 'Ingresado' 
 						}));
-
 					}
 					
 					return resolve( events );
 
+				})
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
+		});
+	}
+
+	getAllEventsCalendar() {
+
+		return new Promise(( resolve, reject ) => {
+			
+			const id = this.authService.getLogged().id;
+
+			this.authService.postClient(`apiaudiophonevent/show/${ id }`)
+				.then(({ data }) => {
+
+					let events = data.apiaudiophoneventdata || [];
+
+					events = events.map(( event ) => ({
+						id: event.apiaudiophonevents_id.toString(),
+						title: event.apiaudiophonevents_title,
+						start: `${ event.apiaudiophonevents_date } ${ getHour( event.apiaudiophonevents_begintime, 8 ) }`,
+						end: `${ event.apiaudiophonevents_date } ${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`
+					}));
+
+					return resolve( events );
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
 		});
@@ -126,9 +149,6 @@ export class EventService {
 					)
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
 		});
-	}
-
-	deleteEvent( idEvent ) {
 	}
 
 	verifyRangeHours( start = '00:00', end = '00:00' ) {

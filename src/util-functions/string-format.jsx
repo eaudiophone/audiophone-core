@@ -1,4 +1,5 @@
 function sliceString( message = '', limit = 0 ) {
+	
 	return message.slice( 0, limit ) + '...';
 }
 
@@ -20,7 +21,8 @@ function toCapitalize( text = '' ) {
 	return result;
 }
 
+
 export {
 	sliceString,
-	toCapitalize
+	toCapitalize,
 };

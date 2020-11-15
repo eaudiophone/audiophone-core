@@ -35,7 +35,7 @@ export const SearchBarComponent = ({ sendSearch }) => {
 				<Form.Control
 					type="text"  
 					value={ search }
-					onInput={ ( $event ) => setSearch( $event.target.value ) }
+					onChange={ ( $event ) => setSearch( $event.target.value ) }
 					placeholder="Buscar ..."
 				/>
 				<InputGroup.Append>

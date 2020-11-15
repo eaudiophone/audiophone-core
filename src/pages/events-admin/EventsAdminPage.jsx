@@ -1,11 +1,48 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { CalendarComponent } from '../../components/index';
+import { CalendarComponent, ToastComponent } from '../../components/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { EventService } from '../../services/EventService';
+import { RedirectService } from '../../services/RedirectService';
 
 export class EventsAdminPage extends Component {
 
 	info = null;  // dom element
+	eventService = new EventService();
+	events = [];
+	message = '';
+	action = '';
+
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			loading: false,
+			redirect: false,
+			showToast: false,
+		};
+	}
+
+	componentDidMount() {
+
+		this.setState({ loading: true });
+
+		this.eventService.getAllEventsCalendar()
+			.then( resp => {
+				this.events = resp;
+				return this.setState({ loading: false });
+			})
+			.catch( error => {
+				
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+				return this.setState({ showToast: true, loading: false });	 
+			});
+	}
 
 	getHeader() {
 
@@ -29,6 +66,13 @@ export class EventsAdminPage extends Component {
 
 		return (
 			<div>
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				<ToastComponent 
+					showToast={ this.state.showToast }  
+					content={ this.message } 
+					context={ this.action } 
+					onHide={ () => this.setState({ showToast: false }) }
+				/>
 				{ this.getHeader() }
 				<p 
 					className="text-justify" 
