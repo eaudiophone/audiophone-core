@@ -12,7 +12,6 @@ import {
 } from '../FormComponent';
 
 export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid }) => {
-
 	return (
 
 		<FormFormik>
@@ -24,7 +23,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           name="apiaudiophonevents_title"
           type="text"
           component={ FormInput }
-          readonly={ values.update || false }  // solo lectura para edicion en usuarios
+          readonly={ values.readOnly || false }  // solo lectura para edicion en usuarios
         />
 
         <Field 
@@ -33,7 +32,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           name="id_apiaudiophoneservices"
           options={ getOptions() }
           type="select"
-           readonly={ values.update || false }
+          readonly={ values.readOnly || false }
         />
 
         <Field 
@@ -41,7 +40,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           title="Fecha del evento:"
           type="date"
           component={ FormInputDate }
-          readonly={ values.update || false }
+          readonly={ values.readOnly || false }
         />
 
         <Field 
@@ -50,7 +49,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           columnSize={ 6 }
           type="time"
           component={ HourInput }
-          readonly={ values.update || false }
+          readonly={ values.readOnly || false }
         />
 
         <Field 
@@ -59,7 +58,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
           columnSize={ 6 }
           type="time"
           component={ HourInput }
-          readonly={ values.update || false }
+          readonly={ values.readOnly || false }
         />
 
         { values.id_apiaudiophoneservices === '1' && (
@@ -70,7 +69,7 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
               columnSize={ 12 }
               component={ TextAreaInput }
               type="textarea"
-              readonly={ values.update || false }
+              readonly={ values.readOnly || false }
             />
           )  
         }
@@ -81,16 +80,18 @@ export const FormEventComponent = ({ handleReset, values, isSubmitting, isValid 
             columnSize={ 12 }
             component={ TextAreaInput }
             type="textarea"
-            readonly={ values.update || false }
+            readonly={ values.readOnly || false }
          />
 
       </Form.Row>
 
-      <FormButtons 
-        reset={ handleReset } 
-        disabled={ !isValid || ( values.update === true ) } 
-        loading={ isSubmitting } 
-      />
+      { !values.readOnly && ( 
+        <FormButtons 
+          reset={ handleReset } 
+          disabled={ !isValid || ( values.readOnly === true ) } 
+          loading={ isSubmitting } 
+        />)
+      }
 			
 		</FormFormik>
 	);

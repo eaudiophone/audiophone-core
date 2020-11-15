@@ -50,7 +50,7 @@ export class EventService {
 
 						// valor para validacion del form
 						id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
-						update: readOnly
+						readOnly
 					};
 
 					resolve( event ); 
