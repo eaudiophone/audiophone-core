@@ -9,55 +9,33 @@ import '@fullcalendar/core/main.css';
 
 import { ModalCalendarComponent } from './../modal/index';
 
-import { MEETINGS } from '../../hardcode/MeetigsHardcode';
-
 export class CalendarComponent extends Component {
 
-	constructor( props ) {
+	calendarRef = React.createRef();
+	calendarApi = null;  // calendarInstance 
+
+	constructor( props ) {	
 		super( props );
-		this.state = { showModal: false };
 
 		this.handleClickDay = this.handleClickDay.bind( this );
 		this.handleClickEvent = this.handleClickEvent.bind( this );
 	}
 
-	getArrayEvents() {
-		
-		return MEETINGS.map( ( element ) => {
-
-			let event = {
-				id: element.id,
-				title: element.title,
-				date: element.date,
-				textColor: 'black'
-			};
-
-			if ( element.idService === 1 ) {
-
-				event = {
-					...event,
-					color: '#fbf096'
-				};
-
-			} else {
-
-				event = {
-					...event,
-					color: '#c7e5ec'
-				};
-			}
-
-			return event;
-		});
+	componentDidMount() {
+		this.calendarApi = this.calendarRef.current.getApi();
 	}
 
-	// javascript events fullcalendar
-	handleClickDay( $event ) {
-		this.setState({ showModal: true });
+	handleClickDay( data ) {
+		return this.props.showModal( true );
 	}
 
-	handleClickEvent( $event ) {
-		this.setState({ showModal: true });
+	handleClickEvent( data ) {
+
+		const resp = this.calendarApi.getEventById( 1 );
+
+		console.log( resp );
+
+		return this.props.showModal( true );
 	}
 
 	render() {
@@ -68,14 +46,15 @@ export class CalendarComponent extends Component {
 				<FullCalendar 
 					defaultView="dayGridMonth" 
 					plugins={[ dayGridPlugin, interactionPlugin ]} 
-					events={ this.getArrayEvents() }
+					events={ this.props.events }
 					locale={ esLocale }
 					dateClick={ this.handleClickDay }
 					eventClick={ this.handleClickEvent }
+					ref={ this.calendarRef }
 				/>
 				<ModalCalendarComponent 
-					showModal={ this.state.showModal }
-					closeModal={ () => this.setState({ showModal: false }) }
+					showModal={ this.props.openModal }
+					closeModal={ () => this.props.showModal( false ) }
 				/>
 			</div>
 

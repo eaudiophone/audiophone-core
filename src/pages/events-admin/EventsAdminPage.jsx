@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import { CalendarComponent, ToastComponent } from '../../components/index';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CalendarComponent, ToastComponent, LoadingComponent } from '../../components/index';
 import { EventService } from '../../services/EventService';
 import { RedirectService } from '../../services/RedirectService';
 
 export class EventsAdminPage extends Component {
 
-	info = null;  // dom element
 	eventService = new EventService();
-	events = [];
+	eventsCalendar = [];
 	message = '';
 	action = '';
 
@@ -17,19 +14,18 @@ export class EventsAdminPage extends Component {
 		super( props );
 
 		this.state = {
-			loading: false,
+			loading: true,
 			redirect: false,
 			showToast: false,
+			showModal: false
 		};
 	}
 
 	componentDidMount() {
 
-		this.setState({ loading: true });
-
 		this.eventService.getAllEventsCalendar()
 			.then( resp => {
-				this.events = resp;
+				this.eventsCalendar = resp;
 				return this.setState({ loading: false });
 			})
 			.catch( error => {
@@ -44,22 +40,17 @@ export class EventsAdminPage extends Component {
 			});
 	}
 
-	getHeader() {
+	showContent() {
 
-		return (
-			<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
-			align-items-center pb-2 mb-3 border-bottom">
-				<h2>Calendarios de eventos</h2> 
-				<Button
-					variant="info"
-					onClick={ () => this.info.hidden = !this.info.hidden }
-					size="sm"
-				>
-					<FontAwesomeIcon className="mr-2" icon="info-circle" />
-					Mostrar info
-				</Button>
-			</div>
-		);
+		if ( !this.state.loading ) {
+			return ( <CalendarComponent 
+				events={ this.eventsCalendar } 
+				showModal={ ( resp ) => this.setState({ showModal: resp })  } 
+				openModal={ this.state.showModal }
+			/> );
+		}
+
+		return ( <LoadingComponent /> );
 	}
 
 	render() {
@@ -73,16 +64,11 @@ export class EventsAdminPage extends Component {
 					context={ this.action } 
 					onHide={ () => this.setState({ showToast: false }) }
 				/>
-				{ this.getHeader() }
-				<p 
-					className="text-justify" 
-					ref={ ( element ) => this.info = element }
-					hidden={ true }
-				>
-					Este es el calendario de eventos del administrador puedes observar las
-					solicitudes que realizan los clientes y acceptar, posponer o rechazar el evento.
-				</p>
-				<CalendarComponent />
+				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
+					align-items-center pb-2 mb-3 border-bottom">
+					<h2>Calendarios de eventos</h2> 
+				</div>
+				{ this.showContent() }
 			</div>
 		);
 	}

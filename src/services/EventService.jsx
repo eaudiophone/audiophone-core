@@ -47,8 +47,6 @@ export class EventService {
 						apiaudiophonevents_begintime: getHour( event.apiaudiophonevents_begintime ),
 						apiaudiophonevents_finaltime: getHour( event.apiaudiophonevents_finaltime ),
 						apiaudiophonevents_totalhours: getHour( event.apiaudiophonevents_totalhours ),
-
-						// valor para validacion del form
 						id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
 						readOnly
 					};
@@ -108,11 +106,16 @@ export class EventService {
 
 					let events = data.apiaudiophoneventdata || [];
 
+					// mapeo de parsing https://fullcalendar.io/docs/event-parsing
+
 					events = events.map(( event ) => ({
-						id: event.apiaudiophonevents_id.toString(),
+						id: event.apiaudiophonevents_id,
 						title: event.apiaudiophonevents_title,
-						start: `${ event.apiaudiophonevents_date } ${ getHour( event.apiaudiophonevents_begintime, 8 ) }`,
-						end: `${ event.apiaudiophonevents_date } ${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`
+						start: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_begintime, 8 ) }`,
+						end: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`,
+						color: event.id_apiaudiophoneservices > 1 ? '#fbf096' : '#c7e5ec',
+						textColor: 'black',
+						extendedProps: { ...event }
 					}));
 
 					return resolve( events );

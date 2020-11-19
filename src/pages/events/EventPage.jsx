@@ -15,8 +15,8 @@ import { RedirectService } from '../../services/RedirectService';
 export class EventPage extends Component {
 
 	eventService = new EventService();
-	rentalRef = null;
-	recordRef = null;
+	rentalRef = React.createRef();
+	recordRef = React.createRef();
 	message = '';
 	action = '';
 
@@ -27,7 +27,7 @@ export class EventPage extends Component {
 		this.state = { 
 			// showModal: false, 
 			idEvent: 0,
-			loading: false,
+			loading: true,
 			events: [],
 			redirect: false,
 			showToast: false 
@@ -35,10 +35,6 @@ export class EventPage extends Component {
 
 		this.showModal = this.showModal.bind( this );
 		this.deleteEvent = this.deleteEvent.bind( this );
-
-		// DOM elements
-		this.rentalRef = React.createRef();
-		this.recordRef = React.createRef();
 	}
 
 	componentDidMount() {
@@ -46,8 +42,6 @@ export class EventPage extends Component {
 	}
 
 	changeView( idService = 1 ) {
-
-		this.setState({ loading: true });
 
 		this.eventService.getAllEvents( true )
 			.then( events => {
