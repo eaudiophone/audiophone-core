@@ -12,7 +12,7 @@ import { ModalCalendarComponent } from './../modal/index';
 export class CalendarComponent extends Component {
 
 	calendarRef = React.createRef();
-	calendarApi = null;  // calendarInstance 
+	calendarInstance = null;  // calendarInstance 
 
 	constructor( props ) {	
 		super( props );
@@ -22,18 +22,25 @@ export class CalendarComponent extends Component {
 	}
 
 	componentDidMount() {
-		this.calendarApi = this.calendarRef.current.getApi();
+		this.calendarInstance = this.calendarRef.current.getApi();
 	}
 
 	handleClickDay( data ) {
 		return this.props.showModal( true );
 	}
 
-	handleClickEvent( data ) {
+	handleClickEvent({ event }) {
 
-		const resp = this.calendarApi.getEventById( 1 );
+		/*
+		* 	getEventId: permite obtener el evento por el id público
+		*		del calendario
+		*/
 
-		console.log( resp );
+		const id = event._def.publicId; 
+
+		let result = this.calendarInstance.getEventById( id );
+
+		console.log( result.extendedProps );
 
 		return this.props.showModal( true );
 	}

@@ -4,7 +4,8 @@ import {
 	verifyRangeHours, 
 	getHour, 
 	hourToObject,
-	getSpanishFormatDate
+	getSpanishFormatDate,
+	getDateWithHour
 } from './../util-functions/date-format';
 import { sliceString, toCapitalize } from './../util-functions/string-format';
 
@@ -86,7 +87,7 @@ export class EventService {
 							status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
 								: 'Ingresado' 
 						}));
-					}
+					} 
 					
 					return resolve( events );
 
@@ -95,7 +96,7 @@ export class EventService {
 		});
 	}
 
-	getAllEventsCalendar() {
+	getAllEventsCalendar() {  // calendar admin
 
 		return new Promise(( resolve, reject ) => {
 			
@@ -115,12 +116,12 @@ export class EventService {
 						end: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`,
 						color: event.id_apiaudiophoneservices > 1 ? '#fbf096' : '#c7e5ec',
 						textColor: 'black',
-						extendedProps: { ...event }
+						extendedProps: this.parseDataEvent( event )
 					}));
 
 					return resolve( events );
 				})
-				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ));
 		});
 	}
 
@@ -160,5 +161,19 @@ export class EventService {
 
 	getDifferenceHours( start = '00:00', end = '00:00' ) {
 		return getDifferenceHours( start, end );
+	}
+
+	parseDataEvent( event = {} ) {
+		return {
+			...event,
+			apiaudiophonevents_begintime: getHour( event.apiaudiophonevents_begintime ),
+			apiaudiophonevents_finaltime: getHour( event.apiaudiophonevents_finaltime ),
+			created_at: getDateWithHour( event.created_at ),
+			updated_at:  event.updated_at.length > 0 ? getDateWithHour( event.updated_at ) : '',
+			apiaudiophonevents_status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
+				: 'Ingresado',
+			id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
+			apiaudiophonevents_totalhours: hourToObject( event.apiaudiophonevents_totalhours )
+		};
 	}
 }

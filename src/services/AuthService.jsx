@@ -58,30 +58,54 @@ export class AuthService extends BackendService {
 		return JSON.parse( sessionStorage.getItem('logged') );
 	}
 
-	validateExceptionServer({ response }) {
-		
-		// para acceder al objeto de la respuesta es error.response
-			
-		console.log( response );
-
+	// para acceder al objeto de la respuesta es error.response
+	validateExceptionServer( error ) {
+				
 		let payload = {
 			ok: false,
 			message: '',
 			status: null,
 			action: 'Error'
-		}
+		};
 
+		if ( error instanceof TypeError || error instanceof Error ) {
+			return { 
+				...payload, 
+				status: 422, 
+				message: error.message 
+			};
+		}
+		
+		const response = error.response;
+		
 		switch ( response.status ) {
+
+			case 400: 
+				
+				payload = { 
+					...payload, 
+					status: 400, 
+					message: response.data.errorMessage || 'Error en parámetros de envio' 
+				};
+				
+				return payload;
 
 			case 401:	
 				
 				this.logOut();
-				payload = { ...payload, status: 401, message: 'Usuario no autorizado' };
+				
+				payload = { 
+					...payload, 
+					status: 401, 
+					message: 'Usuario no autorizado' 
+				};
+
 				return payload; 
 
 			case 403:
 
 				payload = { ...payload, message: 'Prohibido el acceso', status: 403 };
+				
 				return payload;
 
 			case 404:
@@ -102,21 +126,25 @@ export class AuthService extends BackendService {
 					message: response.data.apiaudiophoneusermessage || 'Metodo de acceso no permitido', 
 					status: 405 
 				};
+				
 				return payload;
 
 			case 409:
 
 				payload = { ...payload, status: 409, message: 'Conficto de información' };	
+				
 				return payload;
 
 			case 422:
 
 				payload = { ...payload, message: 'entidad inprocesable por el servidor', status: 422 };
+				
 				return payload;
 
 			default: // 500
 
 				payload = { ...payload, message: 'problemas internos del servidor', status: 500 };
+				
 				return payload;
 		}
 	}

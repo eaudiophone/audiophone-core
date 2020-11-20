@@ -124,12 +124,7 @@ export class DayService {
 						data: apiaudiophonetermshowdata
 					})
 				})
-				.catch( error => {
-
-					// console.log( error.response );
-
-					reject( this.authService.validateExceptionServer( error ) );
-				});
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ));
 			});
 	}
 
@@ -140,20 +135,14 @@ export class DayService {
 			const id = this.authService.getLogged().id;
 
 			this.authService.postClient(`apiaudiophoneterm/store/${ id }`, form )
-				.then(({ data }) => {
-
-					console.log( data );
-
-					resolve({
+				.then(({ data }) => resolve({
 						message: data.apiaudiophoneterm_message,
 						ok: data.ok,
 						status: data.status,
 						apiaudiophonetermnew: data.apiaudiophonetermnew
-					});
-				})
-				.catch( error => {
-					reject( this.authService.validateExceptionServer( error ) );
-			});
+					})
+				)
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ));
 		});
 	}
 
