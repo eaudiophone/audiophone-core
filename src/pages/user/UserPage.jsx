@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { RedirectService } from '../../services/RedirectService';
-import { TableComponent } from './../../components/index';
+import { UserTableComponent } from './../../components/index';
 
 export class UserPage extends Component {
 
@@ -28,7 +28,7 @@ export class UserPage extends Component {
 			<div>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				{ this.getHeader() }
-				<TableComponent redirect={ () => this.setState({ redirect: true }) } />
+				<UserTableComponent redirect={ () => this.setState({ redirect: true }) } />
 			</div>
 		);
 	}

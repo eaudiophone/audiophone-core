@@ -19,7 +19,8 @@ export class UserService {
 
 				resolve({
 					users: apiaudiophoneuserdata,
-					totalUsers: bduserstotal 
+					totalUsers: bduserstotal,
+					loading: false
 				});
 			})
 			.catch( error => reject( this.authService.validateExceptionServer( error )) );

@@ -4,11 +4,17 @@ import { Table, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { UserService } from '../../services/UserService';
-import { SearchBarComponent, SearchFilterComponent, PaginationComponent, ToastComponent } from '../index';
+import { 
+	SearchBarComponent, 
+	SearchFilterComponent, 
+	PaginationComponent, 
+	ToastComponent, 
+	LoadingComponent 
+} from '../index';
 import { DeleteProfileModal, ChangeRoleModal } from '../modal/index';
 import { getDateWithHour } from './../../util-functions/date-format';
 
-export class TableComponent extends Component { 
+export class UserTableComponent extends Component { 
 
 	message = '';
 	action = '';
@@ -27,7 +33,7 @@ export class TableComponent extends Component {
 			showDeleteModal: false,
 			showToast: false,
 			data: {},  // user
-			redirect: false
+			loading: true
 		}
 	}
 
@@ -297,20 +303,33 @@ export class TableComponent extends Component {
 		}
 	}
 
+	showContent() {
+
+		if ( !this.state.loading ) {
+			return (
+				<div>
+					<Row>
+						<Col xs={ 12 } className="mb-10" sm={ 6 }>
+							<SearchFilterComponent filterSearch={ ( filter ) => this.filterSearch( filter ) } />
+						</Col>
+						<Col xs={ 12 } sm={ 6 }>
+							<SearchBarComponent sendSearch={ ( search ) => this.sendSearch( search ) } />
+						</Col>
+					</Row>
+					{ this.getTable() }
+				</div>
+			);
+		}
+
+		return ( <LoadingComponent /> );
+	}
+
 	render() {
 
 		return (
 
 			<div>
-				<Row>
-					<Col xs={ 12 } className="mb-10" sm={ 6 }>
-						<SearchFilterComponent filterSearch={ ( filter ) => this.filterSearch( filter ) } />
-					</Col>
-					<Col xs={ 12 } sm={ 6 }>
-						<SearchBarComponent sendSearch={ ( search ) => this.sendSearch( search ) } />
-					</Col>
-				</Row>
-				{ this.getTable() }
+				{ this.showContent() }
 				<DeleteProfileModal 
 					showModal={ this.state.showDeleteModal }  
 					deleteUser={ ( id = null ) => this.deleteUser( id ) }

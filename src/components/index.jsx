@@ -5,7 +5,7 @@ import { PaginationComponent } from './pagination/PaginationComponent';
 import { SearchBarComponent, SearchFilterComponent } from './searchbar/SearchBarComponent';
 import { LoadingComponent } from './loading/LoadingComponent';
 import { CardComponent } from './card/CardComponent';
-import { TableComponent } from './tables/TableComponent';
+import { UserTableComponent } from './tables/UserTableComponent';
 import { CalendarComponent } from './calendar/CalendarComponent';
 import { FormEventComponent } from './form/events-form/FormEventComponent';
 
@@ -15,7 +15,7 @@ export {
 	SearchBarComponent,
 	LoadingComponent,
 	CardComponent,
-	TableComponent,
+	UserTableComponent,
 	SearchFilterComponent,
 	CalendarComponent,
 	FormEventComponent
