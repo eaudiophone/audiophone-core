@@ -60,7 +60,9 @@ export class AuthService extends BackendService {
 
 	// para acceder al objeto de la respuesta es error.response
 	validateExceptionServer( error ) {
-				
+		
+		// Error Request es Instancia del objeto Error
+
 		let payload = {
 			ok: false,
 			message: '',
@@ -68,7 +70,7 @@ export class AuthService extends BackendService {
 			action: 'Error'
 		};
 
-		if ( error instanceof TypeError || error instanceof Error ) {
+		if ( error instanceof TypeError ) {
 			return { 
 				...payload, 
 				status: 422, 
@@ -77,6 +79,14 @@ export class AuthService extends BackendService {
 		}
 		
 		const response = error.response;
+
+		if ( !response ) {
+			return { 
+				...payload, 
+				status: 500, 
+				message: 'problemas internos del servidor' 
+			};
+		}
 		
 		switch ( response.status ) {
 

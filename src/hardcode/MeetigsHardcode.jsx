@@ -3,6 +3,8 @@ export const idServices = Object.freeze({
 	RECORD: 2
 });
 
+export const STATUS_MEETINGS = [ 'INGRESADO', 'ACEPTADO', 'POSPUESTO', 'RECHAZADO', 'CERRADO' ];
+
 export const MEETINGS = [
 	{ 
 		id: 1,

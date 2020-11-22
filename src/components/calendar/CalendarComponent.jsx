@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -13,6 +13,7 @@ export class CalendarComponent extends Component {
 
 	calendarRef = React.createRef();
 	calendarInstance = null;  // calendarInstance 
+	eventSelected = null;
 
 	constructor( props ) {	
 		super( props );
@@ -31,25 +32,32 @@ export class CalendarComponent extends Component {
 
 	handleClickEvent({ event }) {
 
-		/*
-		* 	getEventId: permite obtener el evento por el id público
-		*		del calendario
-		*/
-
 		const id = event._def.publicId; 
+		const result = this.calendarInstance.getEventById( id );
 
-		let result = this.calendarInstance.getEventById( id );
-
-		console.log( result.extendedProps );
+		this.eventSelected = result.extendedProps;
 
 		return this.props.showModal( true );
 	}
 
+	renderModal() {
+
+		if ( this.eventSelected ) {
+			return (
+				<ModalCalendarComponent 
+					showModal={ this.props.openModal }
+					closeModal={ () => this.props.showModal( false ) }
+					event={ this.eventSelected }
+				/>
+			);
+		}
+	}
+	
 	render() {
 
 		return (
 
-			<div>
+			<Fragment>
 				<FullCalendar 
 					defaultView="dayGridMonth" 
 					plugins={[ dayGridPlugin, interactionPlugin ]} 
@@ -59,12 +67,10 @@ export class CalendarComponent extends Component {
 					eventClick={ this.handleClickEvent }
 					ref={ this.calendarRef }
 				/>
-				<ModalCalendarComponent 
-					showModal={ this.props.openModal }
-					closeModal={ () => this.props.showModal( false ) }
-				/>
-			</div>
+				{ this.renderModal() }
+			</Fragment>
 
 		);
 	}
+
 }
