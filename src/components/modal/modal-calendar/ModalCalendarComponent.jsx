@@ -1,14 +1,20 @@
 import React, { Fragment } from 'react';
-import { Modal, Button, Form, Container, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Container } from 'react-bootstrap';
 import { Form as FormFormik, Formik, Field } from 'formik';
 import { FormInput, FormInputDate, HourInput, SelectInput, TextAreaInput } from '../../form/FormComponent';
 
+import { toCapitalize } from '../../../util-functions/string-format';
+
+import { STATUS_MEETINGS } from '../../../hardcode/MeetigsHardcode';
+
 export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) => {
 
-	console.log( event );
+	// console.log( event );
 
 	const handleSubmit = ( values, actions ) => {
-		console.log( values );
+		
+		// console.log( values );
+		
 		return closeModal();
 	}
 
@@ -16,7 +22,7 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) 
 		<Modal 
 			show={ showModal }
 		 	onHide={ () => closeModal() } 
-		 	size="lg"
+		 	size="xl"
 		 	centered
 		 >
 			<Modal.Header  closeButton>
@@ -32,88 +38,141 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) 
 	)
 };
 
-const ModalContentEvent = ({ values, handleReset, isSubmitting, isValid  }) => (
+const ModalContentEvent = ( props ) => {
 
-	<Fragment>
-		<FormFormik>
+	// console.log( props );
 
-			<Modal.Body> 
-				
-				<Container>
+	return (
+
+		<Fragment>
+			<FormFormik>
+
+				<Modal.Body> 
 					
-					<Form.Row>
+					<Container>
+						
+						<label className="font-weight-bold">Estado del evento:</label>
+						
+						<Form.Row className="justify-content-around mb-4 mt-3">
+							{ STATUS_MEETINGS.map(( status, index ) => (
+									<Button 
+										key={ index } 
+										variant={ status === props.values.apiaudiophonevents_status ? 'primary' : 'secondary' }
+										onClick={ () => props.setFieldValue( 'apiaudiophonevents_status', status ) }
+									>
+										{ toCapitalize( status ) }
+									</Button>
+								)) 
+							}
+						</Form.Row>
 
-						<Col sm={ 12 }>
-							{ /* Colocar botones */ }
-						</Col>
+						<Form.Row>
+
+							<Field 
+								name="apiaudiophonevents_title" 
+								type="text" 
+								title="Nombre del evento:" 
+								component={ FormInput }
+								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+							/>
+
+							 <Field 
+	          		component={ SelectInput }
+	          		title="Servicio a solicitar:"
+	          		name="id_apiaudiophoneservices"
+	          		options={ getOptions() }
+	          		type="select"
+	          		readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+	        		/>
+
+							<Field 
+								name="apiaudiophonevents_date"
+								type="date"
+								title="Fecha del evento:"
+								component={ FormInputDate }
+								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+							/>
+
+							<Field 
+								name="apiaudiophonevents_begintime"
+								type="time"
+								title="Hora de inicio:"
+								component={ HourInput }
+								columnSize={ 6 }
+								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+							/>
+
+							<Field 
+								name="apiaudiophonevents_finaltime"
+								type="time"
+								title="Hora de inicio:"
+								component={ HourInput }
+								columnSize={ 6 }
+								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+							/>
+
+		          <Field 
+		            name="apiaudiophonevents_address"
+		            title="Direccion del evento:"
+		            component={ TextAreaInput }
+		            type="textarea"
+		            readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+		          />
+
+		         <Field 
+		            name="apiaudiophonevents_description"
+		            title="Descripción del evento"
+		            component={ TextAreaInput }
+		            type="textarea"
+		            readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
+		         />
+
+						</Form.Row>
+					</Container>
+
+				</Modal.Body>
 
 
-						<Field 
-							name="apiaudiophonevents_title" 
-							type="text" 
-							title="Nombre del evento:" 
-							component={ FormInput }
-						/>
+				<Modal.Footer>
+					{ showButtons( props.values.apiaudiophonevents_status, !props.isValid ) }
+				</Modal.Footer>
+				
+			</FormFormik>
+		</Fragment>
+	);
+}
 
-						 <Field 
-          		component={ SelectInput }
-          		title="Servicio a solicitar:"
-          		name="id_apiaudiophoneservices"
-          		options={ getOptions() }
-          		type="select"
-        		/>
+const showButtons = ( status, isValid ) => {
+	
+	if ( status === 'ACEPTADO' )  {
+		
+		return (
+			<Button 
+				variant="primary" 
+				type="submit">Generar Presupuesto
+			</Button>
+		);
+	}
 
-						<Field 
-							name="apiaudiophonevents_date"
-							type="date"
-							title="Fecha del evento:"
-							component={ FormInputDate }
-						/>
+	if ( status !== 'INGRESADO' ) {
+		
+		return (
+			<Fragment>
+				<Button variant="secondary" type="reset">
+					Cancelar
+				</Button>
+				<Button 
+					variant="primary" 
+					type="submit"
+					disabled={ isValid }
+				>
+					Editar
+				</Button>
+			</Fragment>
+		);	
+	} 
 
-						<Field 
-							name="apiaudiophonevents_begintime"
-							type="time"
-							title="Hora de inicio:"
-							component={ HourInput }
-							columnSize={ 6 }
-						/>
-
-						<Field 
-							name="apiaudiophonevents_finaltime"
-							type="time"
-							title="Hora de inicio:"
-							component={ HourInput }
-							columnSize={ 6 }
-						/>
-
-	          <Field 
-	            name="apiaudiophonevents_address"
-	            title="Direccion del evento:"
-	            component={ TextAreaInput }
-	            type="textarea"
-	          />
-
-	         <Field 
-	            name="apiaudiophonevents_description"
-	            title="Descripción del evento"
-	            component={ TextAreaInput }
-	            type="textarea"
-	         />
-
-					</Form.Row>
-				</Container>
-
-
-
-			</Modal.Body>
-
-			<Modal.Footer>
-				<Button variant="primary" type="submit">Confirmar</Button>
-			</Modal.Footer>
-			
-		</FormFormik>
-	</Fragment>
-);
+}
 
 const getOptions = () => {
 

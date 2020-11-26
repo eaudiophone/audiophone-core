@@ -170,8 +170,8 @@ export class EventService {
 			apiaudiophonevents_finaltime: getHour( event.apiaudiophonevents_finaltime ),
 			created_at: getDateWithHour( event.created_at ),
 			updated_at:  event.updated_at.length > 0 ? getDateWithHour( event.updated_at ) : '',
-			apiaudiophonevents_status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
-				: 'Ingresado',
+			// apiaudiophonevents_status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
+			//	: 'Ingresado',
 			id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
 			apiaudiophonevents_totalhours: hourToObject( event.apiaudiophonevents_totalhours )
 		};

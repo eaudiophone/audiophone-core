@@ -15,7 +15,7 @@ import { DAYSWEEK, OPTIONS } from './../../../hardcode/WeekHardcode';
 
 let change = false;
 
-const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, isSubmitting, isValid }) => {
+const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, isSubmitting, isValid, setFieldValue }) => {
 
   let buttonsArray = [];
 
@@ -35,9 +35,10 @@ const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, is
     changeStyle( 
       buttonsArray.find(( button, index ) => index === +id ), 
       change
-    );  
+    );
 
-    values.apiaudiophoneterms_daysevents = daysArray;
+
+    return setFieldValue('apiaudiophoneterms_daysevents', daysArray );
 
     // console.log( values.apiaudiophoneterms_daysevents );
   }
