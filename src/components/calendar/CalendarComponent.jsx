@@ -46,7 +46,7 @@ export class CalendarComponent extends Component {
 			return (
 				<ModalCalendarComponent 
 					showModal={ this.props.openModal }
-					closeModal={ () => this.props.showModal( false ) }
+					closeModal={ ( resp, eventForm ) => this.props.closeModal( resp, eventForm ) }
 					event={ this.eventSelected }
 				/>
 			);

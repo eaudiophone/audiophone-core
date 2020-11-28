@@ -107,7 +107,7 @@ export class EventService {
 
 					let events = data.apiaudiophoneventdata || [];
 
-					// mapeo de parsing https://fullcalendar.io/docs/event-parsing
+					// mapeo de eventObject https://fullcalendar.io/docs/event-parsing
 
 					events = events.map(( event ) => ({
 						id: event.apiaudiophonevents_id,
@@ -148,7 +148,24 @@ export class EventService {
 			this.authService.putClient(`apiaudiophonevent/update/${ id }`, event )
 				.then(({ data }) => resolve({
 							message: data.apiaudiophoneventmessage,
-							action: 'Exito'
+							action: 'Exito',
+							eventUpdate: data.apiaudiophoneventupdate
+						})
+					)
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
+		});
+	}
+
+	updateStatusEvent( event ) {
+
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
+
+			this.authService.putClient(`apiaudiophonevent/status/update/${ id }`, event )
+				.then(({ data }) => resolve({
+							message: data.apiaudiophoneusermessage,
+							action: 'Exito',
+							eventUpdate: this.parseDataEvent( data.apiaudiophoneusernew ) 
 						})
 					)
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
@@ -170,8 +187,6 @@ export class EventService {
 			apiaudiophonevents_finaltime: getHour( event.apiaudiophonevents_finaltime ),
 			created_at: getDateWithHour( event.created_at ),
 			updated_at:  event.updated_at.length > 0 ? getDateWithHour( event.updated_at ) : '',
-			// apiaudiophonevents_status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
-			//	: 'Ingresado',
 			id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
 			apiaudiophonevents_totalhours: hourToObject( event.apiaudiophonevents_totalhours )
 		};
