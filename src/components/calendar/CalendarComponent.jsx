@@ -12,25 +12,23 @@ import { ModalCalendarComponent } from './../modal/index';
 export class CalendarComponent extends Component {
 
 	calendarRef = React.createRef();
-	calendarInstance = null;  // calendarInstance 
+	calendarInstance = null;
 	eventSelected = null;
 
 	constructor( props ) {	
 		super( props );
 
-		this.handleClickDay = this.handleClickDay.bind( this );
-		this.handleClickEvent = this.handleClickEvent.bind( this );
+		// this.handleMoveEvent = this.handleMoveEvent.bind( this );
+		// this.handleDayClick = this.handleDayClick.bind( this );
+		
+		this.handleEventClick = this.handleEventClick.bind( this );
 	}
 
 	componentDidMount() {
 		this.calendarInstance = this.calendarRef.current.getApi();
 	}
 
-	handleClickDay( data ) {
-		return this.props.showModal( true );
-	}
-
-	handleClickEvent({ event }) {
+	handleEventClick({ event }) {
 
 		const id = event._def.publicId; 
 		const result = this.calendarInstance.getEventById( id );
@@ -39,6 +37,29 @@ export class CalendarComponent extends Component {
 
 		return this.props.showModal( true );
 	}
+
+	/* 
+		handleEventMove( info ) {  
+		
+			const resp = window.confirm('¿desea mover el evento a la fecha seleccionada?');
+
+			if ( !resp ) {
+				return info.revert(); // revert permite retroceder al movimiento anterior
+			}
+
+			console.log( info );
+		}
+
+		handleDayClick({ event }) {
+
+			const id = event._def.publicId; 
+			const result = this.calendarInstance.getEventById( id );
+
+			this.eventSelected = result.extendedProps;
+
+			return this.props.showModal( true );
+		}
+	*/
 
 	renderModal() {
 
@@ -63,9 +84,11 @@ export class CalendarComponent extends Component {
 					plugins={[ dayGridPlugin, interactionPlugin ]} 
 					events={ this.props.events }
 					locale={ esLocale }
-					dateClick={ this.handleClickDay }
-					eventClick={ this.handleClickEvent }
+					eventClick={ this.handleEventClick }
 					ref={ this.calendarRef }
+					// dayClick={ this.handleDayClick }
+					// eventDrop={ this.handleMoveEvent }
+					// editable={ true } para mover eventos en el calendario
 				/>
 				{ this.renderModal() }
 			</Fragment>

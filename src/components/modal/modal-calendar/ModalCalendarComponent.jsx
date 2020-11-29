@@ -5,6 +5,8 @@ import { FormInput, FormInputDate, HourInput, SelectInput, TextAreaInput } from 
 import EventSchema from '../../form/events-form/EventSchema';
 import { toCapitalize } from '../../../util-functions/string-format';
 import { STATUS_MEETINGS } from '../../../hardcode/MeetigsHardcode';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) => {
 
@@ -37,7 +39,7 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) 
 
 const ModalContentEvent = ( props ) => {
 
-	console.log( props.values );
+	// console.log( props );
 
 	return (
 
@@ -67,6 +69,7 @@ const ModalContentEvent = ( props ) => {
 
 							<Col sm={12} className="text-center">
 								<p>
+									<FontAwesomeIcon icon="clock" className="mr-2" />
 									Tiempo total:
 									<span className="ml-3 font-weight-bold">
 										{ props.values.apiaudiophonevents_totalhours.hour }

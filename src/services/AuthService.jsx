@@ -58,9 +58,9 @@ export class AuthService extends BackendService {
 		return JSON.parse( sessionStorage.getItem('logged') );
 	}
 
-	// para acceder al objeto de la respuesta es error.response
 	validateExceptionServer( error ) {
 		
+		// para acceder al objeto de la respuesta es error.response
 		// Error Request es Instancia del objeto Error
 
 		let payload = {

@@ -110,7 +110,7 @@ export class EventsAdminPage extends Component {
 
 					if ( extendedProps.apiaudiophonevents_id === respStatus.eventUpdate.apiaudiophonevents_id ) {
 						
-						console.log( event );
+						// console.log( event );
 
 						return {
 							...event,
@@ -121,7 +121,7 @@ export class EventsAdminPage extends Component {
 					return event;
 				});
 
-				console.log( this.eventsCalendar );
+				// console.log( this.eventsCalendar );
 
 				return this.setState({ showToast: true, loading: false });
 			})

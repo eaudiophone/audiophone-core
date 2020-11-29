@@ -116,6 +116,7 @@ export class EventService {
 						end: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`,
 						color: event.id_apiaudiophoneservices > 1 ? '#fbf096' : '#c7e5ec',
 						textColor: 'black',
+						className: ['point'],  // css class
 						extendedProps: this.parseDataEvent( event )
 					}));
 
