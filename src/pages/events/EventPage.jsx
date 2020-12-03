@@ -49,7 +49,7 @@ export class EventPage extends Component {
 				// validacion de los tipos de eventos
 				events = events.reduce(( accum, event ) => {
 					
-					if ( event.idService === idService ) {
+					if ( event.idService === idService && event.status !== 'CERRADO' ) {
 						return accum = accum.concat([ event ]);
 					}
 			

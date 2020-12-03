@@ -7,7 +7,7 @@ import {
 	getSpanishFormatDate,
 	getDateWithHour
 } from './../util-functions/date-format';
-import { sliceString, toCapitalize } from './../util-functions/string-format';
+import { sliceString } from './../util-functions/string-format';
 
 export class EventService {
 
@@ -84,8 +84,7 @@ export class EventService {
 							addressMeeting: event.apiaudiophonevents_address.length > 50 ? 
 								sliceString( event.apiaudiophonevents_address, 50 ) : event.apiaudiophonevents_address,
 							idService: event.id_apiaudiophoneservices,
-							status: event.apiaudiophonevents_status.length > 0 ? toCapitalize( event.apiaudiophonevents_status ) 
-								: 'Ingresado' 
+							status: event.apiaudiophonevents_status || 'INGRESADO'
 						}));
 					} 
 					

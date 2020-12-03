@@ -6,6 +6,8 @@ import './CardComponent.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { toCapitalize } from '../../util-functions/string-format';
+
 export const CardComponent = ({ meeting, color, showModal }) => {
 
 	const {
@@ -55,7 +57,7 @@ export const CardComponent = ({ meeting, color, showModal }) => {
 				</Row>
 
 				<Row className="justify-content-center">
-					<b>Estado: <span>{ status }</span> </b>
+					<b>Estado: <span>{ toCapitalize( status ) }</span> </b>
 				</Row>
 
 				<Row className="pt-2 d-flex justify-content-center">
