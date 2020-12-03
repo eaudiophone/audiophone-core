@@ -71,22 +71,30 @@ export class EventService {
 
 					if ( events.length > 0 && isUser ) {
 
-						events = events.map(( event ) => ({
-							id: event.apiaudiophonevents_id,
-							icon: event.id_apiaudiophoneservices > 1 ? 'microphone' : 'truck',
-							title: event.apiaudiophonevents_title.length > 20 ? 
-								sliceString( event.apiaudiophonevents_title, 20 ) : event.apiaudiophonevents_title,
-							date: getSpanishFormatDate( event.apiaudiophonevents_date ),
-							startingTime: getHour( event.apiaudiophonevents_begintime ),
-							finalHour: getHour( event.apiaudiophonevents_finaltime ),
-							totalHours: hourToObject( event.apiaudiophonevents_totalhours ),
-							description: event.apiaudiophonevents_description,
-							addressMeeting: event.apiaudiophonevents_address.length > 50 ? 
-								sliceString( event.apiaudiophonevents_address, 50 ) : event.apiaudiophonevents_address,
-							idService: event.id_apiaudiophoneservices,
-							status: event.apiaudiophonevents_status || 'INGRESADO'
-						}));
-					} 
+						events = events.reduce(( accum, event ) => {
+
+						if ( event.apiaudiophonevents_status !== 'CERRADO' ) {
+							return accum = accum.concat([{
+									id: event.apiaudiophonevents_id,
+									icon: event.id_apiaudiophoneservices > 1 ? 'microphone' : 'truck',
+									title: event.apiaudiophonevents_title.length > 20 ? 
+										sliceString( event.apiaudiophonevents_title, 20 ) : event.apiaudiophonevents_title,
+									date: getSpanishFormatDate( event.apiaudiophonevents_date ),
+									startingTime: getHour( event.apiaudiophonevents_begintime ),
+									finalHour: getHour( event.apiaudiophonevents_finaltime ),
+									totalHours: hourToObject( event.apiaudiophonevents_totalhours ),
+									description: event.apiaudiophonevents_description,
+									addressMeeting: event.apiaudiophonevents_address.length > 50 ? 
+										sliceString( event.apiaudiophonevents_address, 50 ) : event.apiaudiophonevents_address,
+									idService: event.id_apiaudiophoneservices,
+										status: event.apiaudiophonevents_status || 'INGRESADO'
+								}]);
+							}
+
+						return accum;
+
+						}, []);
+					}
 					
 					return resolve( events );
 
@@ -108,16 +116,24 @@ export class EventService {
 
 					// mapeo de eventObject https://fullcalendar.io/docs/event-parsing
 
-					events = events.map(( event ) => ({
-						id: event.apiaudiophonevents_id,
-						title: event.apiaudiophonevents_title,
-						start: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_begintime, 8 ) }`,
-						end: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`,
-						color: event.id_apiaudiophoneservices > 1 ? '#fbf096' : '#c7e5ec',
-						textColor: 'black',
-						className: ['point'],  // css class
-						extendedProps: this.parseDataEvent( event )
-					}));
+					events = events.reduce(( accum, event ) => {
+
+						if ( event.apiaudiophonevents_status !== 'CERRADO' ) {
+							return accum = accum.concat([{
+								id: event.apiaudiophonevents_id,
+								title: event.apiaudiophonevents_title,
+								start: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_begintime, 8 ) }`,
+								end: `${ event.apiaudiophonevents_date }T${ getHour( event.apiaudiophonevents_finaltime, 8 ) }`,
+								color: event.id_apiaudiophoneservices > 1 ? '#fbf096' : '#c7e5ec',
+								textColor: 'black',
+								className: ['point'],  // css class
+								extendedProps: this.parseDataEvent( event )
+							}]);
+						}
+
+						return accum;
+					
+					}, []);
 
 					return resolve( events );
 				})

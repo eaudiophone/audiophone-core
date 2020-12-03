@@ -104,6 +104,24 @@ export class EventsAdminPage extends Component {
 
 				// console.log( respStatus, respUpdate.eventUpdate );
 
+				/*this.eventsCalendar = this.eventsCalendar.reduce(( accum, event ) => {
+
+					let { extendedProps } = event;
+
+					if ( extendedProps.apiaudiophonevents_id === respStatus.eventUpdate.apiaudiophonevents_id &&
+						extendedProps.apiaudiophonevents_status !== 'CERRADO'
+					 ) {
+						
+						return accum = accum.concat([{
+							...event,
+							extendedProps: respStatus.eventUpdate
+						}]);
+					}
+
+					return accum;
+
+				}, []);*/
+
 				this.eventsCalendar = this.eventsCalendar.map(( event ) => {
 					
 					let { extendedProps } = event;
