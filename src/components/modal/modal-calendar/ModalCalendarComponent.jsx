@@ -6,14 +6,15 @@ import EventSchema from '../../form/events-form/EventSchema';
 import { toCapitalize } from '../../../util-functions/string-format';
 import { STATUS_MEETINGS } from '../../../hardcode/MeetigsHardcode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Event from '../../../models/EventModels';
 
 
-export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) => {
+export const ModalCalendarComponent = ({ showModal, closeModal, event = null, action, date }) => {
 
-	// console.log( event );
+	console.log( action );
 
 	const handleSubmit = ( values, actions ) => {
-		return closeModal( false, { values, actions });
+		return closeModal( false, { values, actions }, action );
 	}
 
 	return (
@@ -24,12 +25,12 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) 
 		 	centered
 		 >
 			<Modal.Header  closeButton>
-				<Modal.Title>{ event ? event.apiaudiophonevents_title : 'Evento de Calendario' }</Modal.Title>
+				<Modal.Title>{ event ? event.apiaudiophonevents_title : 'Nuevo evento' }</Modal.Title>
 			</Modal.Header>
 			<Formik 
-				component={ ModalContentEvent }
+				component={ action === 'edit' ? ModalEditEvent : ModalNewEvent }
 				validateOnChange={ true }
-				initialValues={ event }
+				initialValues={ action === 'edit' ? event : new Event( '', '', date, '', '', '', '', '' ) }
 				onSubmit={ handleSubmit }
 				validationSchema={ new EventSchema().getSchema() }
 			/>
@@ -37,7 +38,7 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null }) 
 	)
 };
 
-const ModalContentEvent = ( props ) => {
+const ModalEditEvent = ( props ) => {
 
 	// console.log( props );
 
@@ -183,6 +184,103 @@ const ModalContentEvent = ( props ) => {
 		</Fragment>
 	);
 }
+
+
+const ModalNewEvent = ( props ) => {
+
+	// console.log( props );
+
+	return (
+
+		<Fragment>
+			<FormFormik>
+
+				<Modal.Body> 
+					
+					<Container>
+
+						<Form.Row>
+						
+							<Field 
+								name="apiaudiophonevents_title" 
+								type="text" 
+								title="Nombre del evento:" 
+								component={ FormInput }
+							/>
+
+							 <Field 
+	          		component={ SelectInput }
+	          		title="Servicio a solicitar:"
+	          		name="id_apiaudiophoneservices"
+	          		options={ getOptions() }
+	          		type="select"
+	        		/>
+
+							<Field 
+								name="apiaudiophonevents_date"
+								type="date"
+								title="Fecha del evento:"
+								component={ FormInputDate }
+							/>
+
+							<Field 
+								name="apiaudiophonevents_begintime"
+								type="time"
+								title="Hora de inicio:"
+								component={ HourInput }
+								columnSize={ 6 }
+							/>
+
+							<Field 
+								name="apiaudiophonevents_finaltime"
+								type="time"
+								title="Hora de inicio:"
+								component={ HourInput }
+								columnSize={ 6 }
+							/>
+
+		          <Field 
+		            name="apiaudiophonevents_address"
+		            title="Direccion del evento:"
+		            component={ TextAreaInput }
+		            type="textarea"
+		          />
+
+		         <Field 
+		            name="apiaudiophonevents_description"
+		            title="Descripción del evento"
+		            component={ TextAreaInput }
+		            type="textarea"
+		         />
+
+						</Form.Row>
+					</Container>
+
+				</Modal.Body>
+
+
+				<Modal.Footer> { /* Botones */ }
+
+					<Button variant="secondary" type="reset">
+						Cancelar
+					</Button>
+					<Button 
+						variant="primary" 
+						type="submit"
+						disabled={ !props.isValid }
+					>
+						Editar
+					</Button>
+					
+				</Modal.Footer>
+				
+			</FormFormik>
+		</Fragment>
+	);
+}
+
+
+
 
 const getOptions = () => {
 

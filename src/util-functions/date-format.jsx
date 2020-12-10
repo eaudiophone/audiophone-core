@@ -120,6 +120,21 @@ function hourToObject( format = '00:00' ) {
 	};
 }
 
+function compareDates( 
+	date1 = new Date().setHours( 0, 0, 0, 0 ), 
+	date2 = new Date().setHours( 0, 0, 0, 0 ) 
+) {
+
+		if ( date1 < date2 ) {
+			return false;
+		}  
+
+		return {
+			date1: moment( date1 ).format('YYYY-MM-DD'),
+			date2: moment( date2 ).format('YYYY-MM-DD')
+		};
+}
+
 export {
 	hourToObject,
 	secondsToString,
@@ -128,5 +143,6 @@ export {
 	calculateTotalSeconds,
 	getDateWithHour,
 	getDifferenceHours,
-	getSpanishFormatDate
+	getSpanishFormatDate,
+	compareDates
 };

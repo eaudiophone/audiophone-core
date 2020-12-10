@@ -7,6 +7,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/core/main.css';
 
+import { compareDates } from '../../util-functions/date-format';
+
 import { ModalCalendarComponent } from './../modal/index';
 
 export class CalendarComponent extends Component {
@@ -14,13 +16,14 @@ export class CalendarComponent extends Component {
 	calendarRef = React.createRef();
 	calendarInstance = null;
 	eventSelected = null;
+	action = '';  // edit | new
+	date = ''; // fecha (solo nuevo evento)
 
 	constructor( props ) {	
 		super( props );
 
 		// this.handleMoveEvent = this.handleMoveEvent.bind( this );
-		// this.handleDayClick = this.handleDayClick.bind( this );
-		
+		this.handleDayClick = this.handleDayClick.bind( this );
 		this.handleEventClick = this.handleEventClick.bind( this );
 	}
 
@@ -34,41 +37,38 @@ export class CalendarComponent extends Component {
 		const result = this.calendarInstance.getEventById( id );
 
 		this.eventSelected = result.extendedProps;
+		this.action = 'edit';
 
-		return this.props.showModal( true );
+		this.props.showModal( true );
 	}
 
-	/* 
-		handleEventMove( info ) {  
-		
-			const resp = window.confirm('¿desea mover el evento a la fecha seleccionada?');
+	handleDayClick( info ) {
 
-			if ( !resp ) {
-				return info.revert(); // revert permite retroceder al movimiento anterior
-			}
+		// comparacion de fechas
+		const result = compareDates( new Date( info.date ).setHours( 0, 0, 0, 0 ) );
 
-			console.log( info );
+		if ( !result ) {
+			return;
 		}
 
-		handleDayClick({ event }) {
+		this.eventSelected = null; 
+		this.action = 'new';
+		this.date = result.date1;
 
-			const id = event._def.publicId; 
-			const result = this.calendarInstance.getEventById( id );
-
-			this.eventSelected = result.extendedProps;
-
-			return this.props.showModal( true );
-		}
-	*/
+		this.props.showModal( true );
+	}
+	
 
 	renderModal() {
 
-		if ( this.eventSelected ) {
+		if ( this.eventSelected || this.action === 'new' ) {
 			return (
 				<ModalCalendarComponent 
 					showModal={ this.props.openModal }
-					closeModal={ ( resp, eventForm ) => this.props.closeModal( resp, eventForm ) }
+					closeModal={ ( resp, eventForm, action ) => this.props.closeModal( resp, eventForm, action ) }
 					event={ this.eventSelected }
+					action={ this.action }
+					date={ this.date } // se inyecta la fecha del calendario solo en nuevo evento
 				/>
 			);
 		}
@@ -86,7 +86,7 @@ export class CalendarComponent extends Component {
 					locale={ esLocale }
 					eventClick={ this.handleEventClick }
 					ref={ this.calendarRef }
-					// dayClick={ this.handleDayClick }
+					dateClick={ this.handleDayClick }
 					// eventDrop={ this.handleMoveEvent }
 					// editable={ true } para mover eventos en el calendario
 				/>

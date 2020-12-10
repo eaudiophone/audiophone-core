@@ -47,10 +47,21 @@ export class EventsAdminPage extends Component {
 			});
 	}
 
+	newEvent( close = false, eventForm = null ) {
+		
+		if ( !eventForm ) {
+			return this.setState({ showModal: close });
+		}
+
+		console.log( eventForm );
+
+		return this.setState({ showModal: close });
+	}
+
 
 	editEvent( close = false, eventForm = null ) {
 		
-		if ( eventForm === null ) {
+		if ( !eventForm ) {
 			return this.setState({ showModal: close });
 		}
 
@@ -87,7 +98,7 @@ export class EventsAdminPage extends Component {
  			apiaudiophonevents_status: values.apiaudiophonevents_status
  		};
 
- 		console.log( values, updateStatus );
+ 		// console.log( values, updateStatus );
 
 		return this.sendData( values, updateStatus );
 	}
@@ -99,37 +110,18 @@ export class EventsAdminPage extends Component {
 		Promise.all([ this.eventService.updateEvent( form ), this.eventService.updateStatusEvent( status ) ])
 			.then(([ respUpdate, respStatus ]) => {
 
+				const eventUpdate = respStatus.eventUpdate;
+		
 				this.message = respUpdate.message;
 				this.action = respUpdate.action;
 
-				// console.log( respStatus, respUpdate.eventUpdate );
-
-				/*this.eventsCalendar = this.eventsCalendar.reduce(( accum, event ) => {
-
-					let { extendedProps } = event;
-
-					if ( extendedProps.apiaudiophonevents_id === respStatus.eventUpdate.apiaudiophonevents_id &&
-						extendedProps.apiaudiophonevents_status !== 'CERRADO'
-					 ) {
-						
-						return accum = accum.concat([{
-							...event,
-							extendedProps: respStatus.eventUpdate
-						}]);
-					}
-
-					return accum;
-
-				}, []);*/
-
+				// se mapea los datos y luego se actualiza
+				
 				this.eventsCalendar = this.eventsCalendar.map(( event ) => {
 					
-					let { extendedProps } = event;
+					let { apiaudiophonevents_id } = event.extendedProps;
 
-					if ( extendedProps.apiaudiophonevents_id === respStatus.eventUpdate.apiaudiophonevents_id ) {
-						
-						// console.log( event );
-
+					if ( eventUpdate.apiaudiophonevents_id === apiaudiophonevents_id ) {
 						return {
 							...event,
 							extendedProps: respStatus.eventUpdate
@@ -137,9 +129,10 @@ export class EventsAdminPage extends Component {
 					}
 
 					return event;
-				});
 
-				// console.log( this.eventsCalendar );
+				})
+					.filter(({ extendedProps }) => extendedProps.apiaudiophonevents_status !== 'CERRADO' );
+
 
 				return this.setState({ showToast: true, loading: false });
 			})
@@ -157,15 +150,26 @@ export class EventsAdminPage extends Component {
 			});
 	}
 
+	prepareData( resp, event, action ) {
+		
+		if ( action === 'new' ) {
+			return this.newEvent( resp, event );
+		}
+
+		return this.editEvent( resp, event );  
+	}
+
 	showContent() {
 
 		if ( !this.state.loading ) {
-			return ( <CalendarComponent 
-				events={ this.eventsCalendar } 
-				closeModal={ ( resp, event ) => this.editEvent( resp, event )  } 
-				openModal={ this.state.showModal }
-				showModal={ ( open ) => this.setState({ showModal: open }) }
-			/> );
+			return ( 
+				<CalendarComponent 
+					events={ this.eventsCalendar } 
+					closeModal={ ( resp, event, action = 'edit' ) => this.prepareData( resp, event, action ) } 
+					openModal={ this.state.showModal }
+					showModal={ ( open ) => this.setState({ showModal: open }) }
+				/> 
+			);
 		}
 
 		return ( <LoadingComponent /> );
