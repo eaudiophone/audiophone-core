@@ -53,9 +53,35 @@ export class EventsAdminPage extends Component {
 			return this.setState({ showModal: close });
 		}
 
-		console.log( eventForm );
+		let { values } = eventForm;
 
-		return this.setState({ showModal: close });
+		const { ok, message } = this.eventService.verifyRangeHours( 
+			values.apiaudiophonevents_begintime, 
+			values.apiaudiophonevents_finaltime 
+		);
+
+		if ( !ok && ( parseInt( values.id_apiaudiophoneservices ) === 2 ) ) {
+			
+			this.message = message;
+			this.action = 'Error'; 
+
+			return this.setState({ showToast: true, showModal: close });
+		}
+
+		values = { 
+			...values, 
+			apiaudiophonevents_totalhours: this.eventService.getDifferenceHours( 
+				values.apiaudiophonevents_begintime, 
+				values.apiaudiophonevents_finaltime, 
+			),
+			id_apiaudiophoneterms: parseInt( values.id_apiaudiophoneservices ) > 1 ? 
+				this.idTerms.idTermsRecord : this.idTerms.idTermsRental,
+			id_apiaudiophoneservices: parseInt( values.id_apiaudiophoneservices ),
+			apiaudiophonevents_address: values.id_apiaudiophoneservices > 1 ? 
+				'Estudio Principal Av. Principal de Manicomio Esq. Trinchera La Pastora' : values.apiaudiophonevents_address
+ 		};
+
+		this.sendData( values );
 	}
 
 
@@ -100,54 +126,86 @@ export class EventsAdminPage extends Component {
 
  		// console.log( values, updateStatus );
 
-		return this.sendData( values, updateStatus );
+		this.sendData( values, updateStatus );
 	}
 
-	sendData( form, status, closeModal = false ) {
+	sendData( form, status = null ) {
+
+		this.setState({ showModal: false, loading: true })
 		
-		this.setState({ showModal: closeModal, loading: true })
+		if ( form.apiaudiophonevents_id && status ) { // edit
 
-		Promise.all([ this.eventService.updateEvent( form ), this.eventService.updateStatusEvent( status ) ])
-			.then(([ respUpdate, respStatus ]) => {
+			Promise.all([ this.eventService.updateEvent( form ), this.eventService.updateStatusEvent( status ) ])
+				.then(([ respUpdate, respStatus ]) => {
 
-				const eventUpdate = respStatus.eventUpdate;
-		
-				this.message = respUpdate.message;
-				this.action = respUpdate.action;
+					const eventUpdate = respStatus.eventUpdate;
+			
+					this.message = respUpdate.message;
+					this.action = respUpdate.action;
 
-				// se mapea los datos y luego se actualiza
-				
-				this.eventsCalendar = this.eventsCalendar.map(( event ) => {
-					
-					let { apiaudiophonevents_id } = event.extendedProps;
+					// se mapea los datos y luego se actualiza
 
-					if ( eventUpdate.apiaudiophonevents_id === apiaudiophonevents_id ) {
-						return {
-							...event,
-							extendedProps: respStatus.eventUpdate
-						};
+					this.eventsCalendar = this.eventsCalendar.map(( event ) => {
+						
+						let { apiaudiophonevents_id } = event.extendedProps;
+
+						if ( eventUpdate.apiaudiophonevents_id === apiaudiophonevents_id ) {
+							return {
+								...event,
+								extendedProps: respStatus.eventUpdate
+							};
+						}
+
+						return event;
+
+					})
+						.filter(({ extendedProps }) => extendedProps.apiaudiophonevents_status !== 'CERRADO' );
+
+
+					return this.setState({ showToast: true, loading: false });
+				})
+				.catch( error => {
+
+					if ( error.status === 401 ) {
+						return this.setState({ redirect: true });
 					}
 
-					return event;
+					this.message = error.message;
+					this.action = error.action;
+					
+					return this.setState({ showToast: true, loading: false });
 
+				});
+		
+		} else {  // new
+
+			this.eventService.registerEvent( form )
+				.then( resp => {
+
+					console.log( resp );
+
+					this.message = resp.message;
+					this.action = resp.action;
+
+					this.eventsCalendar = this.eventsCalendar.concat([ resp.event ]);
+
+					return this.setState({ loading: false, showToast: true });
 				})
-					.filter(({ extendedProps }) => extendedProps.apiaudiophonevents_status !== 'CERRADO' );
+				.catch( error => {
 
+					if ( error.status === 401 ) {
+						return this.setState({ redirect: true });
+					}
 
-				return this.setState({ showToast: true, loading: false });
-			})
-			.catch( error => {
+					this.message = error.message;
+					this.action = error.action;
+					
+					return this.setState({ showToast: true, loading: false });
+				})
 
-				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
+		}
+		
 
-				this.message = error.message;
-				this.action = error.action;
-				
-				return this.setState({ showToast: true, loading: false });
-
-			});
 	}
 
 	prepareData( resp, event, action ) {

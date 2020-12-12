@@ -11,8 +11,6 @@ import Event from '../../../models/EventModels';
 
 export const ModalCalendarComponent = ({ showModal, closeModal, event = null, action, date }) => {
 
-	console.log( action );
-
 	const handleSubmit = ( values, actions ) => {
 		return closeModal( false, { values, actions }, action );
 	}
@@ -38,7 +36,7 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null, ac
 	)
 };
 
-const ModalEditEvent = ( props ) => {
+const ModalEditEvent = ( props ) => {  // children
 
 	// console.log( props );
 
@@ -186,7 +184,7 @@ const ModalEditEvent = ( props ) => {
 }
 
 
-const ModalNewEvent = ( props ) => {
+const ModalNewEvent = ( props ) => {  // children
 
 	// console.log( props );
 
@@ -239,12 +237,18 @@ const ModalNewEvent = ( props ) => {
 								columnSize={ 6 }
 							/>
 
-		          <Field 
-		            name="apiaudiophonevents_address"
-		            title="Direccion del evento:"
-		            component={ TextAreaInput }
-		            type="textarea"
-		          />
+
+							{ props.values.id_apiaudiophoneservices === '1' && (
+            
+			            <Field 
+			              name="apiaudiophonevents_address"
+			              title="Direccion del evento:"
+			              columnSize={ 12 }
+			              component={ TextAreaInput }
+			              type="textarea"
+		          	  />
+		          	)  
+        			}
 
 		         <Field 
 		            name="apiaudiophonevents_description"
@@ -269,7 +273,7 @@ const ModalNewEvent = ( props ) => {
 						type="submit"
 						disabled={ !props.isValid }
 					>
-						Editar
+						Crear evento
 					</Button>
 					
 				</Modal.Footer>

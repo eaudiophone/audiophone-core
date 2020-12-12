@@ -21,9 +21,20 @@ export class EventService {
 
 			this.authService.postClient( `apiaudiophonevent/store/${ id }`, event )
 				.then( resp => {
+					const { apiaudiophoneventnew, apiaudiophoneventmessage } = resp.data;
 					resolve({
 						action: 'Exito',
-						message: resp.data.apiaudiophoneventmessage
+						message: apiaudiophoneventmessage,
+						event: {
+							id: apiaudiophoneventnew.apiaudiophonevents_id,
+							title: apiaudiophoneventnew.apiaudiophonevents_title,
+							start: `${ apiaudiophoneventnew.apiaudiophonevents_date }T${ getHour( apiaudiophoneventnew.apiaudiophonevents_begintime, 8 ) }`,
+							end: `${ apiaudiophoneventnew.apiaudiophonevents_date }T${ getHour( apiaudiophoneventnew.apiaudiophonevents_finaltime, 8 ) }`,
+							color: apiaudiophoneventnew.id_apiaudiophoneservices > 1 ? '#fbf096' : '#c7e5ec',
+							textColor: 'black',
+							className: ['point'],  // css class
+							extendedProps: this.parseDataEvent( apiaudiophoneventnew )
+						}
 					});
 				})
 				.catch( error => {
@@ -204,7 +215,8 @@ export class EventService {
 			created_at: getDateWithHour( event.created_at ),
 			updated_at:  event.updated_at.length > 0 ? getDateWithHour( event.updated_at ) : '',
 			id_apiaudiophoneservices: event.id_apiaudiophoneservices.toString(),
-			apiaudiophonevents_totalhours: hourToObject( event.apiaudiophonevents_totalhours )
+			apiaudiophonevents_totalhours: hourToObject( event.apiaudiophonevents_totalhours ),
+			apiaudiophonevents_status: event.apiaudiophonevents_status || 'INGRESADO'
 		};
 	}
 }
