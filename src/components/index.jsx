@@ -6,6 +6,8 @@ import { SearchBarComponent, SearchFilterComponent } from './searchbar/SearchBar
 import { LoadingComponent } from './loading/LoadingComponent';
 import { CardComponent } from './card/CardComponent';
 import { UserTableComponent } from './tables/UserTableComponent';
+import { ItemsTableComponent } from './tables/ItemsTableComponent';
+import { BudgetTableComponent } from './tables/BudgetTableComponent';
 import { CalendarComponent } from './calendar/CalendarComponent';
 import { FormEventComponent } from './form/events-form/FormEventComponent';
 
@@ -18,5 +20,7 @@ export {
 	UserTableComponent,
 	SearchFilterComponent,
 	CalendarComponent,
-	FormEventComponent
+	FormEventComponent,
+	ItemsTableComponent,
+	BudgetTableComponent
 };

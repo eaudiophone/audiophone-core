@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { ItemsTableComponent } from '../../components/tables/ItemsTableComponent';
+import { ItemsTableComponent } from '../../components/index';
 import { RedirectService } from '../../services/RedirectService';
 
 export class ItemsPage extends Component {
@@ -18,7 +18,7 @@ export class ItemsPage extends Component {
 
 				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
 							align-items-center pb-2 mb-3 border-bottom">
-					<h2>Gestión de articulos ( presupuesto )</h2>	
+					<h2>Gestión de articulos</h2>	
 				</div>
 				<ItemsTableComponent />
 			</Fragment>
