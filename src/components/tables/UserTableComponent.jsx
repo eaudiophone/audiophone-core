@@ -52,7 +52,7 @@ export class UserTableComponent extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-				this.setState({ showToast: true });
+				this.setState({ showToast: true, loading: false });
 			})
 	}
 
@@ -229,9 +229,7 @@ export class UserTableComponent extends Component {
 	}
 
 	setHeaderTable() {
-		return this.headerTable.map( ( element, index ) => (
-			<th className="text-center" key={ index }>{ element }:</th>
-		));
+	
 	}
 
 	setData() {
@@ -243,8 +241,12 @@ export class UserTableComponent extends Component {
 				<td>{ user.apiaudiophoneusers_email }</td>
 				<td>{ user.apiaudiophoneusers_role }</td>
 				<td>{ getDateWithHour( user.created_at ) }</td>
-				<td>{ user.apiaudiophoneusers_status === 1 ? 'activo' : 'inactivo' }</td>
-
+				<td>
+					<FontAwesomeIcon 
+						icon={ user.apiaudiophoneusers_status === 1 ? 'check' : 'times' } 
+						className={ user.apiaudiophoneusers_status === 1 ? 'success' : 'danger' } 
+					/>
+				</td>
 				<td className="d-flex flex-row justify-content-around">
 					<Button 
 						variant="warning"
@@ -276,20 +278,23 @@ export class UserTableComponent extends Component {
 					<Table className="mt-4" striped responsive hover>
 						<thead className="thead-dark">
 							<tr>
-								{ this.setHeaderTable() }
+								{ this.headerTable.map( ( element, index ) => (
+										<th className="text-center" key={ index }>{ element }:</th>
+									)) 
+								}
 							</tr>
 						</thead>
 						<tbody>
 							{ this.setData() }
 						</tbody>
 					</Table>
-					<div className="mt-3 d-flex flex-row justify-content-center">
+					<Row className="justify-content-center">
 						<PaginationComponent 
 							totalRegisters={ this.state.totalUsers } 
 							send={ ( params ) => this.getPagination( params ) }
 							pagination={ 5 }
 						/>
-					</div>
+					</Row>
 				</div>
 			);
 

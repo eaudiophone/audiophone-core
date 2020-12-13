@@ -15,9 +15,10 @@ class NavbarComponent extends Component {
 
 			return (
 				<NavDropdown title="Gestion">
-					<NavDropdown.Item href="/budget">Presupuesto</NavDropdown.Item>
 	        <NavDropdown.Item href="/day">Dias de servicios</NavDropdown.Item>
 	        <NavDropdown.Item href="/users">Usuarios</NavDropdown.Item> 
+	        <NavDropdown.Item href="/items">Artículos</NavDropdown.Item>
+					<NavDropdown.Item href="/budget">Presupuesto</NavDropdown.Item>
 				</NavDropdown>
 			);
 
@@ -26,7 +27,7 @@ class NavbarComponent extends Component {
 			return (
 
 				<NavDropdown title="Eventos">
-		      <NavDropdown.Item href="/event/new">Nuevo evento</NavDropdown.Item>
+		      {/* <NavDropdown.Item href="/event/new">Nuevo evento</NavDropdown.Item> */}
 		      <NavDropdown.Item href="/event">Ver eventos</NavDropdown.Item> 
 		    </NavDropdown>
 			);

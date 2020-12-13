@@ -2,6 +2,7 @@ import { ChangeRoleModal, DeleteProfileModal } from './modal-profile/ModalProfil
 import { ModalEventComponent } from './modal-events/ModalEventsComponent';
 import { ModalCalendarComponent } from './modal-calendar/ModalCalendarComponent';
 import { ModalEditBudgetComponent, ModalNewBudgetComponent } from './modal-budget/ModalBudgetComponent';
+import { ModalItemsComponent } from './modal-items/ModalItemsComponent';
 
 export {
 	ChangeRoleModal,
@@ -9,5 +10,6 @@ export {
 	ModalEventComponent,
 	ModalCalendarComponent,
 	ModalEditBudgetComponent,
-	ModalNewBudgetComponent
+	ModalNewBudgetComponent,
+	ModalItemsComponent
 };

@@ -43,6 +43,14 @@
 	left: 50vw;
 }
 
+.success {
+	color: #4caf50;
+}
+
+.danger {
+	color: red;
+}
+
 
 table>tbody>tr>td {
 	font-size: 14px;

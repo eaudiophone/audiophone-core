@@ -11,7 +11,7 @@ export const SearchBarComponent = ({ sendSearch }) => {
 
 	const validateText = () => {
 
-		const string = /^[A-Za-z]+$/;
+		const string = /^[A-Za-z\s]+$/;
 		const email = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 		// const email = /^[A-Za-z0-9]+@[A-Za-z0-9]+(?:\.[A-Za-z]{2,3})$/;
 

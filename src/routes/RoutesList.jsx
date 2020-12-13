@@ -7,6 +7,7 @@ import {
 	EventPageForm,
 	EventPage,
 	ProfilePage,
+	ItemsPage
 } from '../pages/index';
 
 export const routesApp = [
@@ -18,7 +19,8 @@ export const routesApp = [
 	{ path: '/event/new', component: EventPageForm, admin: false },
 	{ path: '/event/:id', component: EventPageForm, admin: false },
 	{ path: '/event', component: EventPage, admin: false },
-	{ path: '/profile', component: ProfilePage }
+	{ path: '/items', component: ItemsPage, admin: true },
+	{ path: '/profile', component: ProfilePage },
 ];
 
 export const rootRoutes = [
