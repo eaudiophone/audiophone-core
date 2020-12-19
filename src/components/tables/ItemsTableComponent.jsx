@@ -3,13 +3,13 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { ToastComponent, PaginationComponent, SearchBarComponent, SearchFilterComponent } from '../index';
-import { items } from '../../hardcode/ItemsHardcode';
+// import { items } from '../../hardcode/ItemsHardcode';
 
 import { ModalItemsComponent } from '../modal/index';
 
 export class ItemsTableComponent extends Component {
 
-	headerTable = [ 'Id', 'Nombre', 'Cantidad', 'Precio por alquiler o hora', 'Estado', 'Acciones' ];
+	headerTable = [ 'Id:', 'Nombre:', 'Descripción:', 'Precio:', 'Creado:', 'Actualizado:' ];
 	action = '';
 	message = '';
 	typeModal = '';
@@ -18,8 +18,8 @@ export class ItemsTableComponent extends Component {
 		super( props );
 
 		this.state = {
-			items: items,
-			totalItems: items.length,
+			items: [],
+			totalItems: 0,
 			item: {},
 			showToast: false,
 			showModal: false,

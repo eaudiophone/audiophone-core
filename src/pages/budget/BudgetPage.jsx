@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Nav, Row, Col } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Row, Col } from 'react-bootstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getSpanishFormatDate } from '../../util-functions/date-format';
 import { BudgetTableComponent } from '../../components/index';
 

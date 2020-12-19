@@ -130,6 +130,28 @@ export const NumberInput = ({ field, form, type, columnSize = 12, title, readonl
    );
 }
 
+export const DecimalNumberInput = ({ field, form, type, columnSize = 12, title, readonly = false }) => {
+
+  return (
+    <Col sm={ columnSize }>
+      <Form.Group>
+        <Form.Label>{ title }</Form.Label>
+        <Form.Control 
+          { ...field }
+          isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+          type={ type }
+          readOnly={ readonly } 
+          min="1"
+          step="0.01"
+        /> 
+        <Form.Control.Feedback type="invalid">
+          { form.errors[ field.name ] }
+        </Form.Control.Feedback>
+      </Form.Group>
+    </Col>
+   );
+}
+
 export const SelectInput = ({ title, columnSize = 12, field, form, options = [], readonly = false }) => (
 
   <Col sm={ columnSize }>

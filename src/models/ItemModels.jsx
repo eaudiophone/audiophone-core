@@ -1,19 +1,15 @@
 class Item {
 
 	constructor(
-		id,
-		item,
-		description,
-		costUnit,
-		itemQuantity,
-		itemMount
+		apiaudiophoneitems_id ,
+		apiaudiophoneitems_name,
+		apiaudiophoneitems_description,
+		apiaudiophoneitems_price,
 	) {
-		this.id = id || new Date().getTime();
-		this.item = item || '';
-		this.description = description || '';
-		this.costUnit = costUnit || 0;
-		this.itemQuantity = itemQuantity || 0;
-		this.itemMount = itemMount || 0;
+		this.apiaudiophoneitems_id = apiaudiophoneitems_id  || null;
+		this.apiaudiophoneitems_name = apiaudiophoneitems_name || '';
+		this.apiaudiophoneitems_description = apiaudiophoneitems_description || '';
+		this.apiaudiophoneitems_price = apiaudiophoneitems_price || 1;
 	}
 }
 

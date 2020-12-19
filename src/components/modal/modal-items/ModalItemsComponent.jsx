@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { ItemsForm } from './../../form/items-form/ItemsForm';
 
 export const ModalItemsComponent = ( props ) => {
 	
@@ -34,31 +35,12 @@ export const ModalItemsComponent = ( props ) => {
 
 const NewItem = ( props ) => {
 
-	const { confirm } = props;
-
 	return (
 		<Fragment>
 			<Modal.Header closeButton>
 				<Modal.Title>Nuevo articulo:</Modal.Title>
 			</Modal.Header>
-
-			<Modal.Body>
-			</Modal.Body>
-
-			<Modal.Footer>
-	    	<Button 
-		    		variant="secondary" 
-		    		onClick={ () => confirm( false ) }
-		    	>
-		      	Cerrar
-		    	</Button>
-		    	<Button 
-		    		variant="primary" 
-		    		onClick={ () => confirm( true ) }
-		    	>
-		      	Confirmar
-		    	</Button>
-	  	</Modal.Footer>
+			<ItemsForm item={ null } />
 		</Fragment>
 	);
 };
