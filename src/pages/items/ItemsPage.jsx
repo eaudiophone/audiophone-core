@@ -20,7 +20,7 @@ export class ItemsPage extends Component {
 							align-items-center pb-2 mb-3 border-bottom">
 					<h2>Gestión de articulos</h2>	
 				</div>
-				<ItemsTableComponent />
+				<ItemsTableComponent redirect={ () => this.setState({ redirect: true }) } />
 			</Fragment>
 		); 
 	}

@@ -40,7 +40,10 @@ const NewItem = ( props ) => {
 			<Modal.Header closeButton>
 				<Modal.Title>Nuevo articulo:</Modal.Title>
 			</Modal.Header>
-			<ItemsForm item={ null } />
+			<ItemsForm 
+				item={ null } 
+				getForm={ ( values, actions ) => props.confirm({ values, actions }) }  
+			/>
 		</Fragment>
 	);
 };

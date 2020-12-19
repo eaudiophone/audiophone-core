@@ -6,13 +6,17 @@ import { ToastComponent, PaginationComponent, SearchBarComponent, SearchFilterCo
 // import { items } from '../../hardcode/ItemsHardcode';
 
 import { ModalItemsComponent } from '../modal/index';
+import { ItemService } from '../../services/ItemService';
 
 export class ItemsTableComponent extends Component {
 
-	headerTable = [ 'Id:', 'Nombre:', 'Descripción:', 'Precio:', 'Creado:', 'Actualizado:' ];
+	itemService = new ItemService();
+
+	headerTable = ['Nombre:', 'Descripción:', 'Precio:', 'Acciones:' ];
 	action = '';
 	message = '';
 	typeModal = '';
+	limitPagination = 5;
 
 	constructor( props ) {
 		super( props );
@@ -24,6 +28,32 @@ export class ItemsTableComponent extends Component {
 			showToast: false,
 			showModal: false,
 		};
+	}
+
+	componentDidMount() {
+		return this.getAllItems();
+	}
+
+	getAllItems( pagination = { start: 1, end: 5 } ) {
+
+		this.itemService.getAllItems( pagination )
+			.then( response => {
+				return this.setState({
+					items: response.items,
+					totalItems: response.bdItemsTotal
+				});
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.props.redirect();
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+
+				return this.setState({ showToast: true, showModal: false });
+			});
 	}
 
 	editItem( item ) {
@@ -44,12 +74,44 @@ export class ItemsTableComponent extends Component {
 		return this.setState({ showModal: false });
 	}
 
-	sendSearch( search = '' ) {
-		console.log( search );
+	newItem({ values, actions }) {
+
+		actions.setSubmitting( true );
+		
+		this.itemService.createItem( values )
+			.then( resp => {
+
+				this.action = resp.action;
+				this.message = resp.message;
+
+				actions.setSubmitting( false );
+			
+				return this.setState({ 
+					showModal: false,
+					showToast: true, 
+					items: this.state.items.length < this.limitPagination ? 
+						this.state.items.concat([ resp.item ]) : this.state.items,
+					totalItems: this.state.totalItems + 1
+				});
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.props.redirect();
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+				
+				actions.setSubmitting( false );
+
+				return this.setState({ showToast: true, showModal: false });
+			});
+
 	}
 
-	getPagination( params ) {
-		console.log( params );
+	sendSearch( search = '' ) {
+		console.log( search );
 	}
 
 	filterSearch( filter ) {
@@ -59,18 +121,18 @@ export class ItemsTableComponent extends Component {
 	handleClick( item, type ) {
 		
 		this.typeModal = type;
+
 		return this.setState({ showModal: true, item });
 	}
 
 	prepareData( type, response ) {
 
 		if ( type === 'delete' ) {
-			
 			return this.deleteItem( response );
 
 		} else if ( type === 'new' ) {
-
-			return this.setState({ showModal: false });
+			return this.newItem( response );
+			
 
 		} else if ( type === 'edit' ) {
 
@@ -83,18 +145,11 @@ export class ItemsTableComponent extends Component {
 	}
 
 	setData() {
-		return this.state.items.map(( item ) => (
-			<tr key={ item.id } className="text-center">
-				<td>{ item.id }</td>
-				<td>{ item.name }</td>
-				<td>{ item.quantity }</td>
-				<td>{ item.price }</td>
-				<td>
-					<FontAwesomeIcon 
-						icon={ item.state ? 'check' : 'times' } 
-						className={ item.state ? 'success' : 'danger' } 
-					/>
-				</td>
+		return this.state.items.map(( item, index ) => (
+			<tr key={ index + 1 } className="text-center">
+				<td>{ item.apiaudiophoneitems_name }</td>
+				<td>{ item.apiaudiophoneitems_description }</td>
+				<td>{ item.apiaudiophoneitems_price }</td>
 				<td>
 					<Button 
 						variant="info" 
@@ -152,7 +207,7 @@ export class ItemsTableComponent extends Component {
 					<Row className="justify-content-center">
 						<PaginationComponent 
 							totalRegisters={ this.state.totalItems } 
-							send={ ( params ) => this.getPagination( params ) } 
+							send={ ( params ) => this.getAllItems( params ) } 
 							pagination={ 5 } 
 						/>
 					</Row>

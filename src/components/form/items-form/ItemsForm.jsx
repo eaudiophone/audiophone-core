@@ -1,21 +1,15 @@
 import React, { Fragment } from 'react';
 import { Form, Formik, Field } from 'formik';
-import { ItemsSchema } from './ItemsSchema';
-import Item from '../../../models/ItemModels';
 import { Row, Col, Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Item from '../../../models/ItemModels';
+import { ItemsSchema } from './ItemsSchema';
 import { FormInput, TextAreaInput, DecimalNumberInput } from '../FormComponent';
 
 export const ItemsForm = ( props ) => {
 	
-	const { item } = props;
-
-	const handleSubmit = ( values, actions ) => {
-		
-		console.log( values );
-		
-		// return getItemForm( values );
-	}
+	const { item, getForm } = props;
 
 	return (
 		<Fragment>
@@ -23,7 +17,7 @@ export const ItemsForm = ( props ) => {
 				initialValues={ item || new Item() }
 				validationSchema={ new ItemsSchema().getSchema() }
 				validateOnChange={ true }
-				onSubmit={ handleSubmit }
+				onSubmit={ getForm }
 			>
 				{ ({ values, handleReset, isValid, isSubmitting }) => {
 						
@@ -58,16 +52,25 @@ export const ItemsForm = ( props ) => {
 									</Modal.Body>
 
 									<Modal.Footer>
+							    	
 							    	<Button variant="secondary" type="reset">
 								      Cancelar
 								    </Button>
-								    	<Button 
-								    		variant="primary" 
-								    		type="submit"
-								    		disabled={ !isValid }
-								    	>
-								      	Confirmar
-								    	</Button>
+										
+										{ !isSubmitting && (
+						          <Button disabled={ !isValid } variant="primary" type="submit">
+						            Enviar
+						          </Button>
+						          ) 
+						        }
+						        { isSubmitting && (
+						          <Button disabled variant="primary">
+						            <FontAwesomeIcon className="mr-2" icon="spinner" spin />
+						            Enviar
+						          </Button>
+						          ) 
+						        }
+
 							  	</Modal.Footer>
 								</Form>
 
