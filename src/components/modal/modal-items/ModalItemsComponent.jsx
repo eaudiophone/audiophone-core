@@ -6,6 +6,8 @@ export const ModalItemsComponent = ( props ) => {
 	
 	const { action, showModal, closeModal, item } = props;
 
+	console.log( item, action );
+
 	return (
 		<Modal size={ action === 'delete' ? 'md' : 'lg' } show={ showModal } onHide={ () => { closeModal() } }>
 			{ action === 'delete' && ( 
@@ -35,6 +37,8 @@ export const ModalItemsComponent = ( props ) => {
 
 const NewItem = ( props ) => {
 
+	const { confirm } = props;
+
 	return (
 		<Fragment>
 			<Modal.Header closeButton>
@@ -42,7 +46,7 @@ const NewItem = ( props ) => {
 			</Modal.Header>
 			<ItemsForm 
 				item={ null } 
-				getForm={ ( values, actions ) => props.confirm({ values, actions }) }  
+				getForm={ ( values, actions ) => confirm({ values, actions }) }  
 			/>
 		</Fragment>
 	);
@@ -55,26 +59,12 @@ const EditItem = ( props ) => {
 	return (
 		<Fragment>
 			<Modal.Header closeButton>
-				<Modal.Title>Editar articulo { item.id }:</Modal.Title>
+				<Modal.Title>Editar articulo { item.apiaudiophoneitems_id }:</Modal.Title>
 			</Modal.Header>
-
-			<Modal.Body>
-			</Modal.Body>
-
-			<Modal.Footer>
-	    	<Button 
-		    		variant="secondary" 
-		    		onClick={ () => confirm( false ) }
-		    	>
-		      	Cerrar
-		    	</Button>
-		    	<Button 
-		    		variant="primary" 
-		    		onClick={ () => confirm( item.id ) }
-		    	>
-		      	Confirmar
-		    	</Button>
-	  	</Modal.Footer>
+			<ItemsForm 
+				item={ item }
+				getForm={ ( values, actions ) => confirm({ values, actions }) }
+			/>
 		</Fragment>
 	);
 };

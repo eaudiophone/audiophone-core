@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { ToastComponent, PaginationComponent, SearchBarComponent, SearchFilterComponent } from '../index';
+import { ToastComponent, PaginationComponent, SearchBarComponent } from '../index';
 // import { items } from '../../hardcode/ItemsHardcode';
 
 import { ModalItemsComponent } from '../modal/index';
@@ -12,7 +12,7 @@ export class ItemsTableComponent extends Component {
 
 	itemService = new ItemService();
 
-	headerTable = ['Nombre:', 'Descripción:', 'Precio:', 'Acciones:' ];
+	headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio:', 'Acciones:' ];
 	action = '';
 	message = '';
 	typeModal = '';
@@ -56,11 +56,31 @@ export class ItemsTableComponent extends Component {
 			});
 	}
 
-	editItem( item ) {
+	editItem({ actions, values }) {
 		
-		console.log( item );
+		actions.setSubmitting( true );
 
-		this.setState({ showModal: false });
+		this.itemService.updateItem()
+			.then( response => {
+				
+				actions.setSubmitting( false );
+				
+				return this.setState({ showModal: false });
+			})
+			.catch( error => {
+
+				actions.setSubmitting( false );
+				
+				if ( error.status === 401 ) {
+					return this.props.redirect();
+				}
+				
+				this.message = error.message;
+				this.action = error.action;
+
+				return this.setState({ showToast: true, showModal: false });
+
+			});	
 	}
 
 	deleteItem( idItem ) {
@@ -111,11 +131,22 @@ export class ItemsTableComponent extends Component {
 	}
 
 	sendSearch( search = '' ) {
-		console.log( search );
-	}
 
-	filterSearch( filter ) {
-		console.log( filter );
+		this.itemService.searchItem( search )
+			.then( response => {
+				console.log( response );
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.props.redirect();
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+			
+				return this.setState({ showToast: true, showModal: false });
+			});
 	}
 
 	handleClick( item, type ) {
@@ -145,8 +176,10 @@ export class ItemsTableComponent extends Component {
 	}
 
 	setData() {
+
 		return this.state.items.map(( item, index ) => (
-			<tr key={ index + 1 } className="text-center">
+			<tr key={ item.apiaudiophoneitems_id } className="text-center">
+				<td>{ item.apiaudiophoneitems_id }</td>
 				<td>{ item.apiaudiophoneitems_name }</td>
 				<td>{ item.apiaudiophoneitems_description }</td>
 				<td>{ item.apiaudiophoneitems_price }</td>
@@ -176,10 +209,7 @@ export class ItemsTableComponent extends Component {
 			return (
 				<Fragment>
 					<Row>
-						<Col xs={ 12 } className="mb-10" sm={ 5 }>
-							<SearchFilterComponent filterSearch={ ( filter ) => this.filterSearch( filter ) } />
-						</Col>
-						<Col xs={ 12 } sm={ 5 }>
+						<Col xs={ 12 } sm={ 10 }>
 							<SearchBarComponent sendSearch={ ( search ) => this.sendSearch( search ) } />
 						</Col>
 						<Col xs={ 12 } sm={ 2 }>
@@ -231,6 +261,7 @@ export class ItemsTableComponent extends Component {
 	}
 
 	render() {
+
 		return (
 			<div>
 				{ this.getTable() }

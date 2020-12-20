@@ -19,7 +19,7 @@ export class ItemService {
 					});
 				})
 				.catch( error => {
-					reject( this.authService.validateExceptionServer( error ) )	
+					reject( this.authService.validateExceptionServer( error ) );	
 				})
 		});
 
@@ -27,6 +27,23 @@ export class ItemService {
 
 	getItem( idItem = 1 ) {
 
+	}
+
+	searchItem( stringSearch = '' ) {
+
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
+			const url = `apiaudiophoneitem/show/${ id }?stringsearch=${ stringSearch }`;
+
+			this.authService.postClient( url )
+				.then( response => {
+					resolve( response.data );
+				})
+				.catch( error => {
+					reject( this.authService.validateExceptionServer( error ) );
+				})
+
+		});
 	}
 
 	createItem( item ) {
@@ -55,8 +72,19 @@ export class ItemService {
 		});
 	}
 
-	updateItem() {
+	updateItem( item ) {
+		
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
 
+			this.authService.putClient(`apiaudiophoneitem/update/${ id }`, item )
+				.then( response => {
+					resolve( response.data );
+				})
+				.catch( error => {
+					reject( this.authService.validateExceptionServer( error ) );
+				});
+		});
 	}
 
 	deleteItem() {
