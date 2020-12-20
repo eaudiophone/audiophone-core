@@ -60,7 +60,12 @@ export class ItemsTableComponent extends Component {
 		
 		actions.setSubmitting( true );
 
-		this.itemService.updateItem()
+		values = {
+			...values,
+			apiaudiophoneitems_id: this.state.item.apiaudiophoneitems_id
+		};
+
+		this.itemService.updateItem( values )
 			.then( response => {
 				
 				actions.setSubmitting( false );
@@ -79,7 +84,6 @@ export class ItemsTableComponent extends Component {
 				this.action = error.action;
 
 				return this.setState({ showToast: true, showModal: false });
-
 			});	
 	}
 

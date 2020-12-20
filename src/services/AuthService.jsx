@@ -147,7 +147,11 @@ export class AuthService extends BackendService {
 
 			case 422:
 
-				payload = { ...payload, message: 'entidad inprocesable por el servidor', status: 422 };
+				payload = { 
+					...payload, 
+					message: response.data.apiaudiophoneusermessage || 'entidad inprocesable por el servidor', 
+					status: 422 
+				};
 				
 				return payload;
 
