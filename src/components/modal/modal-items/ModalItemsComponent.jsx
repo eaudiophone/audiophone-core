@@ -6,14 +6,13 @@ export const ModalItemsComponent = ( props ) => {
 	
 	const { action, showModal, closeModal, item } = props;
 
-	console.log( item, action );
-
 	return (
 		<Modal size={ action === 'delete' ? 'md' : 'lg' } show={ showModal } onHide={ () => { closeModal() } }>
 			{ action === 'delete' && ( 
 					<DeleteItem 
 						item={ item } 
-						confirm={ ( response ) => props.closeModal( 'delete', response ) }  /> 
+						confirm={ ( response ) => props.closeModal( 'delete', response ) }  
+					/> 
 				) 
 			}
 			{
@@ -76,12 +75,12 @@ const DeleteItem = ( props ) => {
 	return (
 		<Fragment>
 			<Modal.Header closeButton>
-				<Modal.Title>Remover articulo { item.id }:</Modal.Title>
+				<Modal.Title>Remover articulo { item.apiaudiophoneitems_id }:</Modal.Title>
 			</Modal.Header>
 
 			<Modal.Body>
 				<p className="text-left">
-					¿Desea cambiar la disponibilidad del articulo dentro del presupuesto?
+					¿Desea cambiar la remover del articulo dentro del presupuesto?
 				</p>
 			</Modal.Body>
 
@@ -94,7 +93,7 @@ const DeleteItem = ( props ) => {
 		    	</Button>
 		    	<Button 
 		    		variant="primary" 
-		    		onClick={ () => confirm( item.id ) }
+		    		onClick={ () => confirm( item.apiaudiophoneitems_id ) }
 		    	>
 		      	Confirmar
 		    	</Button>

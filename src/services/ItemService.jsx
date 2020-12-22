@@ -1,5 +1,4 @@
 import { AuthService } from './AuthService';
-import { getDateWithHour } from '../util-functions/date-format';
 
 export class ItemService {
 
@@ -8,14 +7,18 @@ export class ItemService {
 	getAllItems( pagination ) {
 
 		return new Promise(( resolve, reject ) => {
+
 			const id = this.authService.getLogged().id;
 			const url = `apiaudiophoneitem/show/${ id }?start=${ pagination.start }&end=${ pagination.end }`;
 
 			this.authService.postClient( url )
 				.then( response => {
+
+					const { apiaudiophoneitemdata, bditemstotal } = response.data;
+
 					resolve({ 
-						items: response.data.apiaudiophoneitemdata,
-						bdItemsTotal: response.data.bditemstotal
+						items: apiaudiophoneitemdata,
+						bdItemsTotal: bditemstotal
 					});
 				})
 				.catch( error => {
@@ -25,19 +28,22 @@ export class ItemService {
 
 	}
 
-	getItem( idItem = 1 ) {
-
-	}
-
 	searchItem( stringSearch = '' ) {
 
 		return new Promise(( resolve, reject ) => {
+
 			const id = this.authService.getLogged().id;
 			const url = `apiaudiophoneitem/show/${ id }?stringsearch=${ stringSearch }`;
 
 			this.authService.postClient( url )
 				.then( response => {
-					resolve( response.data );
+
+					const { apiaudiophoneitemdata, bditemstotal } = response.data;
+
+					resolve({
+						items: apiaudiophoneitemdata,
+						total: bditemstotal
+					});
 				})
 				.catch( error => {
 					reject( this.authService.validateExceptionServer( error ) );
@@ -49,6 +55,7 @@ export class ItemService {
 	createItem( item ) {
 
 		return new Promise(( resolve, reject ) => {
+
 			const id = this.authService.getLogged().id;
 
 			this.authService.postClient( `apiaudiophoneitem/store/${ id }`, item )
@@ -59,11 +66,7 @@ export class ItemService {
 					resolve({
 						message: apiaudiophoneitemessage,
 						action: 'Exito',
-						item: {
-							...apiaudiophoneitemnew,
-							created_at: getDateWithHour( apiaudiophoneitemnew.created_at ),
-							updated_at: getDateWithHour( apiaudiophoneitemnew.updated_at )
-						}
+						item: apiaudiophoneitemnew
 					});
 				})
 				.catch( error => {
@@ -75,11 +78,20 @@ export class ItemService {
 	updateItem( item ) {
 		
 		return new Promise(( resolve, reject ) => {
+
 			const id = this.authService.getLogged().id;
 
 			this.authService.putClient(`apiaudiophoneitem/update/${ id }`, item )
 				.then( response => {
-					resolve( response.data );
+
+					const { apiaudiophoneitemessage, apiaudiophoneitemupdate } = response.data;
+
+					resolve({
+						action: 'Exito',
+						message: apiaudiophoneitemessage,
+						item: apiaudiophoneitemupdate
+					});
+
 				})
 				.catch( error => {
 					reject( this.authService.validateExceptionServer( error ) );
@@ -87,7 +99,26 @@ export class ItemService {
 		});
 	}
 
-	deleteItem() {
+	deleteItem( item ) {
 
+		return new Promise(( resolve, reject ) => {
+	
+			const id = this.authService.getLogged().id;
+			const url = `apiaudiophoneitem/destroy/${ id }`;
+
+			this.authService.deleteClient( url, item )
+				.then( response => {
+
+					const { apiaudiophoneterm_mesaage } = response.data;
+
+					resolve({
+						action: 'Exito',
+						message: apiaudiophoneterm_mesaage
+					});
+				})
+				.catch( error => {
+					reject( this.authService.validateExceptionServer( error ) );
+				})
+		});
 	}
 }

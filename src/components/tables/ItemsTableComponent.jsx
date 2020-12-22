@@ -38,10 +38,12 @@ export class ItemsTableComponent extends Component {
 
 		this.itemService.getAllItems( pagination )
 			.then( response => {
+
 				return this.setState({
 					items: response.items,
 					totalItems: response.bdItemsTotal
 				});
+
 			})
 			.catch( error => {
 
@@ -69,8 +71,24 @@ export class ItemsTableComponent extends Component {
 			.then( response => {
 				
 				actions.setSubmitting( false );
+
+				const items = this.state.items.map(( item ) => {
+					
+					if ( item.apiaudiophoneitems_id === response.item.apiaudiophoneitems_id ) {
+						return response.item;
+					}
+
+					return item;
+				});
+
+				this.message = response.message;
+				this.action = response.action;
 				
-				return this.setState({ showModal: false });
+				return this.setState({ 
+					showModal: false, 
+					items,
+					showToast: true
+				});
 			})
 			.catch( error => {
 
@@ -88,12 +106,39 @@ export class ItemsTableComponent extends Component {
 	}
 
 	deleteItem( idItem ) {
+		
+		if ( idItem ) {
 
-		if ( !idItem ) {
-			return this.setState({ showModal: false });
+			this.itemService.deleteItem({ apiaudiophoneitems_id: idItem })
+				.then( response => {
+					
+					// console.log( response );
+
+					this.message = response.message;
+					this.action = response.action;
+
+					const items = this.state.items.filter(( item ) => item.apiaudiophoneitems_id !== idItem );
+
+					return this.setState({
+						showToast: true,
+						showModal: false,
+						items,
+						totalItems: this.state.totalItems - 1
+					});
+
+				})
+				.catch( error => {
+					
+					if ( error.status === 401 ) {
+						return this.props.redirect();
+					}
+				
+					this.message = error.message;
+					this.action = error.action;
+
+					return this.setState({ showToast: true, showModal: false });
+				});
 		}
-
-		console.log( idItem );
 
 		return this.setState({ showModal: false });
 	}
@@ -138,7 +183,9 @@ export class ItemsTableComponent extends Component {
 
 		this.itemService.searchItem( search )
 			.then( response => {
-				console.log( response );
+				return this.setState({
+					items: response.items
+				});
 			})
 			.catch( error => {
 
@@ -170,11 +217,9 @@ export class ItemsTableComponent extends Component {
 			
 
 		} else if ( type === 'edit' ) {
-
 			return this.editItem( response );
 
 		} else {
-
 			return this.setState({ showModal: false });
 		}
 	}

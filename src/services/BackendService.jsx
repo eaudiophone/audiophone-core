@@ -58,12 +58,13 @@ export class BackendService {
 		return await axios( this.request );
 	}
 
-	async deleteClient( apiUrl ) {
+	async deleteClient( apiUrl, data = null ) {
 		
 		this.request = {
 			...this.request,
 			method: 'DELETE',
 			url: apiUrl,
+			data: data !== null ? data : null,
 			headers: {
 				authorization: 'Bearer ' + this.token.access_token
 			}		
