@@ -283,13 +283,6 @@ export class ItemsTableComponent extends Component {
 							{ this.setData() }
 						</tbody>
 					</Table>
-					<Row className="justify-content-center">
-						<PaginationComponent 
-							totalRegisters={ this.state.totalItems } 
-							send={ ( params ) => this.getAllItems( params ) } 
-							pagination={ 5 } 
-						/>
-					</Row>
 				</Fragment>
 			);
 		}
@@ -314,6 +307,16 @@ export class ItemsTableComponent extends Component {
 		return (
 			<div>
 				{ this.getTable() }
+				{ this.state.totalItems > 0 && (
+						<Row className="justify-content-center mt-2">
+							<PaginationComponent 
+								totalRegisters={ this.state.totalItems } 
+								send={ ( params ) => this.getAllItems( params ) } 
+								pagination={ 5 } 
+							/>
+						</Row>
+					) 
+				}
 				<ModalItemsComponent 
 					showModal={ this.state.showModal }
 					closeModal={ ( type, response ) => this.prepareData( type, response ) }

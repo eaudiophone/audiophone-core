@@ -61,7 +61,7 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 PaginationComponent.propTypes = {
 	totalRegisters: PropTypes.number.isRequired,
-	pagination: PropTypes.number,
+	pagination: PropTypes.number.isRequired,
 	send: PropTypes.func.isRequired
 };
 
