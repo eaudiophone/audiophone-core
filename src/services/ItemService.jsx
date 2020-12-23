@@ -25,7 +25,6 @@ export class ItemService {
 					reject( this.authService.validateExceptionServer( error ) );	
 				})
 		});
-
 	}
 
 	searchItem( stringSearch = '' ) {
