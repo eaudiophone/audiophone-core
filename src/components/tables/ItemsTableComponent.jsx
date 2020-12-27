@@ -60,7 +60,11 @@ export class ItemsTableComponent extends Component {
 				this.message = error.message;
 				this.action = error.action;
 
-				return this.setState({ showToast: true, showModal: false, loading: false });
+				return this.setState({ 
+					showToast: true, 
+					showModal: false, 
+					loading: false 
+				});
 			});
 	}
 
