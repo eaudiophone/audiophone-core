@@ -2,8 +2,12 @@ import React, { Component, Fragment } from 'react';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { ToastComponent, PaginationComponent, SearchBarComponent } from '../index';
-// import { items } from '../../hardcode/ItemsHardcode';
+import { 
+	ToastComponent, 
+	PaginationComponent, 
+	SearchBarComponent, 
+	LoadingComponent 
+} from '../index';
 
 import { ModalItemsComponent } from '../modal/index';
 import { ItemService } from '../../services/ItemService';
@@ -27,6 +31,7 @@ export class ItemsTableComponent extends Component {
 			item: {},
 			showToast: false,
 			showModal: false,
+			loading: true
 		};
 	}
 
@@ -41,7 +46,8 @@ export class ItemsTableComponent extends Component {
 
 				return this.setState({
 					items: response.items,
-					totalItems: response.bdItemsTotal
+					totalItems: response.bdItemsTotal,
+					loading: false
 				});
 
 			})
@@ -54,7 +60,7 @@ export class ItemsTableComponent extends Component {
 				this.message = error.message;
 				this.action = error.action;
 
-				return this.setState({ showToast: true, showModal: false });
+				return this.setState({ showToast: true, showModal: false, loading: false });
 			});
 	}
 
@@ -302,11 +308,20 @@ export class ItemsTableComponent extends Component {
 		);
 	}
 
+	showContent() {
+		
+		if ( !this.state.loading ) {
+			return this.getTable();
+		}
+
+		return ( <LoadingComponent /> );
+	}
+
 	render() {
 
 		return (
 			<div>
-				{ this.getTable() }
+				{ this.showContent() }
 				{ this.state.totalItems > 0 && (
 						<Row className="justify-content-center mt-2">
 							<PaginationComponent 
