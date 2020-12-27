@@ -7,13 +7,15 @@ import {
 	EventPageForm,
 	EventPage,
 	ProfilePage,
-	ItemsPage
+	ItemsPage,
+	DetailBudgetPage
 } from '../pages/index';
 
 export const routesApp = [
 	{ path: '/', component: lazy(() => import('../pages/home/HomePage') ) }, // main
 	{ path: '/users', component: UserPage, admin: true },
 	{ path: '/day', component: DayPage, admin: true },
+	{ path: '/budget/:id', component: DetailBudgetPage, admin: true },
 	{ path: '/budget', component: BudgetPage, admin: true },
 	{ path: '/events-admin', component: EventsAdminPage, admin: true },
 	{ path: '/event/new', component: EventPageForm, admin: false },

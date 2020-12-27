@@ -9,6 +9,7 @@ import { EventPageForm } from './events/EventPageForm';
 import { EventPage } from './events/EventPage';
 import { DayPage } from './day/DayPage';
 import { BudgetPage } from './budget/BudgetPage';
+import { DetailBudgetPage } from './budget/DetailBudgetPage';
 import { ItemsPage } from './items/ItemsPage';
 
 export {
@@ -21,5 +22,6 @@ export {
 	BudgetPage,
 	ProfilePage,
 	EventPageForm,
-	ItemsPage
+	ItemsPage,
+	DetailBudgetPage
 };
