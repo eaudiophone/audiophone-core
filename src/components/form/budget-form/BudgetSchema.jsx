@@ -1,38 +1,44 @@
-import { object, string, number } from 'yup';
+import { mixed, object, string, number } from 'yup';
 
-export class ItemsSchema {
+export class BudgetSchema {
 
 	constructor() {
+
 		this.validationMessages = {
-			string: {
-				required: 'Campo requerido',
-				min: ( min ) => `minimo ${ min } caracteres`,
-				max: ( max ) => `máximo ${ max } caracteres`
-			},
 			number: {
-				required: 'Campo requerido',
+				required: 'campo requerido',
 				positive: 'Solo números positivos',
 				moreThan: ( min ) => `El número no puede ser menor a ${ min }`,
 				lessThan: ( max ) => `El número no puede ser mayor que ${ max }`
+			},
+			string: {
+				required: 'campo requerido',
+				min: ( min ) => `minimo ${ min } caracteres`,
+				max: ( max ) => `máximo ${ max } caracteres`,
+				email: 'Debe ser un correo válido'
 			}
-		}
+		};
 
 		this.setSchema();
 	}
 
 	setSchema() {
+
 		this.schema = object().shape({
-			apiaudiophoneitems_name: string()
+			apiaudiophonebudgets_client_name: string()
 				.required( this.validationMessages.string.required )
 				.min( 2, this.validationMessages.string.min( 2 ) )
-				.max( 60, this.validationMessages.string.max( 60 ) ),
+				.max( 20, this.validationMessages.string.max( 20 ) ),
 
-			apiaudiophoneitems_description: string()
+			apiaudiophonebudgets_client_email: string()
 				.required( this.validationMessages.string.required )
-				.min( 2, this.validationMessages.string.min( 2 ) )
-				.max( 60, this.validationMessages.string.max( 60 ) ),
+				.email( this.validationMessages.string.email ),
 
-			apiaudiophoneitems_price: number()
+			apiaudiophonebudgets_client_phone: string(),
+
+			apiaudiophonebudgets_client_social: string(),
+
+			apiaudiophonebudgets_total_price: string()
 				.required( this.validationMessages.number.required )
 				.positive( this.validationMessages.number.positive )
 				.moreThan( 0, this.validationMessages.number.moreThan( 0 ) )
@@ -42,5 +48,9 @@ export class ItemsSchema {
 
 	getSchema() {
 		return this.schema;
+	}
+
+	async testData( form ) {
+		return await this.schema.isValid( form );
 	}
 }

@@ -37,7 +37,7 @@ function verifyRangeHours( start = '00:00', end = '23:59' ) {
 	const totalSecoundsBegin = calculateTotalSeconds( start );
 	const totalSecoundsFinal = calculateTotalSeconds( end );
 
-	console.log( totalSecoundsBegin, totalSecoundsFinal );
+	// console.log( totalSecoundsBegin, totalSecoundsFinal );
 
 	if ( totalSecoundsBegin > totalSecoundsFinal ) {
 		

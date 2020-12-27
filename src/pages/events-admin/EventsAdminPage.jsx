@@ -10,6 +10,7 @@ export class EventsAdminPage extends Component {
 	message = '';
 	action = '';
 	idTerms = {};  // { idTermsRental: 8, idTemsRecord: 7 }
+	redirectRoute = '/login';
 
 	constructor( props ) {
 		super( props );
@@ -158,11 +159,20 @@ export class EventsAdminPage extends Component {
 
 						return event;
 
-					})
-						.filter(({ extendedProps }) => extendedProps.apiaudiophonevents_status !== 'CERRADO' );
+					});
+						
+					this.eventsCalendar = this.eventsCalendar.filter(({ extendedProps }) => extendedProps.apiaudiophonevents_status !== 'CERRADO' );
 
+					this.setState({ 
+						showToast: true, 
+						loading: false,
+					});
 
-					return this.setState({ showToast: true, loading: false });
+					// si el evento es aceptado redirecciona a presupuesto
+					if ( form.apiaudiophonevents_status === 'ACEPTADO' ) {
+						return this.redirectNewBudget( form.apiaudiophonevents_id );
+					}
+
 				})
 				.catch( error => {
 
@@ -204,8 +214,14 @@ export class EventsAdminPage extends Component {
 				})
 
 		}
-		
+	}
 
+	redirectNewBudget( idEvent ) {
+
+		setTimeout(() => {					
+			this.redirectRoute = `/budget/${ idEvent }`;	
+			return this.setState({ redirect: true });	
+		}, 1500 );
 	}
 
 	prepareData( resp, event, action ) {
@@ -237,7 +253,7 @@ export class EventsAdminPage extends Component {
 
 		return (
 			<div>
-				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				{ this.state.redirect && ( <RedirectService route={ this.redirectRoute } /> ) }
 				<ToastComponent 
 					showToast={ this.state.showToast }  
 					content={ this.message } 
