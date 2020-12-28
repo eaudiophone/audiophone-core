@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 import { Form as FormFormik, Formik, Field } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Budget from './../../../models/BudgetModels';
 import { BudgetSchema } from './BudgetSchema';
@@ -9,7 +10,7 @@ import { FormInput } from '../FormComponent';
 
 export const BudgetFormComponent = ( props ) => {
 	
-	const { children, items, addItem, generateBudget } = props;
+	const { children, itemsLength, openModal, generateBudget } = props;
 
 	return (
 		<Fragment>
@@ -25,7 +26,7 @@ export const BudgetFormComponent = ( props ) => {
 							// se pueden inyectar propiedades a los props que incluye
 							// formik
 							
-							const newProps = { ...props, items, addItem, children };
+							const newProps = { ...props, itemsLength, openModal, children };
 							
 							return ( <ClientForm { ...newProps } /> )
 						} 
@@ -38,7 +39,7 @@ export const BudgetFormComponent = ( props ) => {
 
 const ClientForm = ( props ) => {
 	
-	const { children, addItem, isValid, items } = props;
+	const { children, openModal, isValid, itemsLength } = props;
 
 	return (
 		<FormFormik>
@@ -78,14 +79,15 @@ const ClientForm = ( props ) => {
 			</Form.Row>
 			<Form.Row>
 				<Col sm={ 12 } className="text-right">
-					<Button size="sm" onClick={ addItem } variant="success">
+					<Button size="sm" onClick={ openModal } variant="success">
+						<FontAwesomeIcon icon="plus" className="mr-2" />
 						Añadir aticulo
 					</Button>
 				</Col>
 				{ children }
 			</Form.Row>
 			<Form.Row className="justify-content-center">
-				<Button type="submit" disabled={ !isValid || items.length === 0 }>
+				<Button type="submit" disabled={ !isValid || itemsLength === 0 }>
 					Generar Presupuesto
 				</Button>
 			</Form.Row>

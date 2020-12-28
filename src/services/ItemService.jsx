@@ -6,6 +6,7 @@ export class ItemService {
 
 	getAllItems( pagination ) {
 
+		// el servicio incluye paginación enviarla en el parametro
 		return new Promise(( resolve, reject ) => {
 
 			const id = this.authService.getLogged().id;

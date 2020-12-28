@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Table, Button, Row, Col } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { 
 	ToastComponent, 

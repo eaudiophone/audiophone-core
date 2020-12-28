@@ -5,6 +5,8 @@ import { LoadingComponent } from '../../components/index';
 import { BudgetFormComponent } from '../../components/form/budget-form/BudgetFormComponent';
 import { Table, Row, Col } from 'react-bootstrap';
 import { getSpanishFormatDate } from '../../util-functions/date-format';
+import { RedirectService } from '../../services/RedirectService';
+import { ModalSelectItemsComponent } from '../../components/modal/index';
 
 export class DetailBudgetPage extends Component {
 
@@ -19,7 +21,11 @@ export class DetailBudgetPage extends Component {
 		this.state = {
 			items: [],
 			showToast: false,
-			loading: true
+			loading: true,
+			redirect: false,
+			showModal: false,
+			total: 0,
+			totalItems: 0
 		};
 	}
 
@@ -45,8 +51,28 @@ export class DetailBudgetPage extends Component {
 			});
 	}
 
-	addItem() {
-		console.log('addItem');
+	openModal() {
+
+		this.itemService.getAllItems({ start: 0, end: 5 })
+			.then( response => {
+				return this.setState({
+					items: response.items,
+					totalItems: response.bdItemsTotal,
+					showModal: true
+				});
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+
+				return this.setState({ showToast: true, showModal: false });
+			});
+
 	}
 
 	removeItem() {
@@ -55,6 +81,10 @@ export class DetailBudgetPage extends Component {
 
 	generateBudget( form ) {
 		console.log( form );
+	}
+
+	getItems( pagination = { start: 1, end: 5 } ) {
+		console.log( pagination );
 	}
 
 	getTable() {
@@ -69,6 +99,7 @@ export class DetailBudgetPage extends Component {
 					</tr>
 				</thead>
 				<tbody>
+
 				</tbody>
 				<tfoot>
 					<tr>
@@ -123,9 +154,9 @@ export class DetailBudgetPage extends Component {
 						{ this.showDetails() }
 						<BudgetFormComponent 
 							children={ this.getTable() } 
-							addItem={ () => this.addItem() }
+							openModal={ () => this.openModal() }
 							generateBudget={ ( form ) => this.generateBudget( form ) }
-							items={ this.state.items }
+							itemsLength={ this.state.items.length }
 						/> 
 					</Row>
 				</Fragment>
@@ -139,11 +170,19 @@ export class DetailBudgetPage extends Component {
 
 		return (
 			<Fragment>
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
 						align-items-center pb-2 mb-3 border-bottom">
 					<h2>Presupuesto de servicios: </h2>
 				</div>
 				{ this.showContent() }
+				<ModalSelectItemsComponent 
+					showModal={ this.state.showModal }
+					items={ this.state.items }
+					totalItems={ this.state.totalItems }
+					pagination={ ( pagination ) => this.getItems( pagination ) }
+					closeModal={ ( resp ) => this.setState({ showModal: false }) }
+				/>
 			</Fragment>
 		);
 	}
