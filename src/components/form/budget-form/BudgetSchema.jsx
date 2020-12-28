@@ -1,16 +1,10 @@
-import { mixed, object, string, number } from 'yup';
+import { object, string } from 'yup';
 
 export class BudgetSchema {
 
 	constructor() {
 
 		this.validationMessages = {
-			number: {
-				required: 'campo requerido',
-				positive: 'Solo números positivos',
-				moreThan: ( min ) => `El número no puede ser menor a ${ min }`,
-				lessThan: ( max ) => `El número no puede ser mayor que ${ max }`
-			},
 			string: {
 				required: 'campo requerido',
 				min: ( min ) => `minimo ${ min } caracteres`,
@@ -36,13 +30,7 @@ export class BudgetSchema {
 
 			apiaudiophonebudgets_client_phone: string(),
 
-			apiaudiophonebudgets_client_social: string(),
-
-			apiaudiophonebudgets_total_price: string()
-				.required( this.validationMessages.number.required )
-				.positive( this.validationMessages.number.positive )
-				.moreThan( 0, this.validationMessages.number.moreThan( 0 ) )
-				.lessThan( 9999, this.validationMessages.number.lessThan( 9999 ) )
+			apiaudiophonebudgets_client_social: string(),			
 		});
 	}
 
