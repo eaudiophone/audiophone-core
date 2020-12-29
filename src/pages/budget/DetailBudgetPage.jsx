@@ -10,10 +10,11 @@ import { ModalSelectItemsComponent } from '../../components/modal/index';
 
 export class DetailBudgetPage extends Component {
 
-	headerTable = ['Cantidad', 'Descripción', 'Precio unitario', 'Subtotal'];
+	headerTable = ['Id', 'Nombre', 'Descripción', 'Cantidad', 'Precio unitario', 'Subtotal', 'Acciones'];
 	eventService = new EventService();
 	itemService = new ItemService();
 	event = {};
+	itemsSelected = [];
 
 	constructor( props ) {
 		super( props );
@@ -24,7 +25,7 @@ export class DetailBudgetPage extends Component {
 			loading: true,
 			redirect: false,
 			showModal: false,
-			total: 0,
+			totalBudget: 0,
 			totalItems: 0
 		};
 	}
@@ -75,6 +76,26 @@ export class DetailBudgetPage extends Component {
 
 	}
 
+	addItem( itemsSelected = [] ) {
+
+		if ( !itemsSelected ) {
+			return this.setState({ showModal: false });
+		}
+
+		let price = 0;
+		this.itemsSelected = itemsSelected;
+
+		console.log( itemsSelected );
+		
+		// realiza el calculo del total
+		this.itemsSelected.forEach(( item ) => price += item.apiaudiophoneitems_price );
+
+		return this.setState({ 
+			showModal: false,
+			totalBudget: price 
+		});
+	}
+
 	removeItem() {
 		console.log('removeItem');
 	}
@@ -83,8 +104,27 @@ export class DetailBudgetPage extends Component {
 		console.log( form );
 	}
 
+	// paginacion de la tabla del modal
 	getItems( pagination = { start: 1, end: 5 } ) {
-		console.log( pagination );
+
+		this.itemService.getAllItems( pagination )
+			.then( response => {
+				return this.setState({
+					items: response.items,
+					// totalItems: response.bdItemsTotal,
+				});
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true, showModal: false });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+
+				return this.setState({ showToast: true, showModal: false });
+			});
 	}
 
 	getTable() {
@@ -99,13 +139,24 @@ export class DetailBudgetPage extends Component {
 					</tr>
 				</thead>
 				<tbody>
-
+					{ this.itemsSelected.map(( item ) => (
+							<tr className="text-center" key={ item.apiaudiophoneitems_id }>
+								<td>{ item.apiaudiophoneitems_id }</td>
+								<td>{ item.apiaudiophoneitems_name }</td>
+								<td>{ item.apiaudiophoneitems_description }</td>
+								<td></td>
+								<td>{ item.apiaudiophoneitems_price }</td>
+								<td></td>
+								<td></td>
+							</tr>
+						)) 
+					}
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colSpan="4" className="text-right">
+						<td colSpan="7" className="text-right">
 							Total a pagar: 
-							<b className="ml-2">{ this.state.total }$</b>
+							<b className="ml-2">{ this.state.totalBudget }$</b>
 						</td>
 					</tr>
 				</tfoot>
@@ -156,7 +207,7 @@ export class DetailBudgetPage extends Component {
 							children={ this.getTable() } 
 							openModal={ () => this.openModal() }
 							generateBudget={ ( form ) => this.generateBudget( form ) }
-							itemsLength={ this.state.items.length }
+							itemsLength={ this.itemsSelected.length }
 						/> 
 					</Row>
 				</Fragment>
@@ -181,7 +232,7 @@ export class DetailBudgetPage extends Component {
 					items={ this.state.items }
 					totalItems={ this.state.totalItems }
 					pagination={ ( pagination ) => this.getItems( pagination ) }
-					closeModal={ ( resp ) => this.setState({ showModal: false }) }
+					closeModal={ ( itemsSelected ) => this.addItem( itemsSelected ) }
 				/>
 			</Fragment>
 		);
