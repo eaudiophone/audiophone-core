@@ -111,7 +111,7 @@ export class DetailBudgetPage extends Component {
 		);
 
 		// realiza el calculo del total
-		newArray.forEach(( item ) => price += item.apiaudiophoneitems_price );
+		newArray.forEach(( item ) => price += item.apiaudiophonebudgets_items_subtotal );
 
 		return this.setState({
 			itemsSelected: newArray,
@@ -119,8 +119,22 @@ export class DetailBudgetPage extends Component {
 		});
 	}
 
-	generateBudget( form ) {
-		console.log( form );
+	generateBudget({ values, actions }) {
+
+		const data = {
+			...values,
+			apiaudiophonebudgets_id_service: Number( this.event.id_apiaudiophoneservices ),
+			apiaudiophonebudgets_nameservice: Number( this.event.id_apiaudiophoneservices ) === 1 ? 'Alquiler' : 'Grabación',
+			apiaudiophonebudgets_total_price: this.state.totalBudget,
+			apiaudiophonebudgets_items: this.state.itemsSelected.map(( item ) => ({
+				apiaudiophonebudgets_items_quantity: item.apiaudiophonebudgets_items_quantity,
+				apiaudiophonebudgets_items_description: item.apiaudiophoneitems_description,
+				apiaudiophonebudgets_items_unit_price: item.apiaudiophoneitems_price,
+				apiaudiophonebudgets_items_subtotal: item.apiaudiophonebudgets_items_subtotal
+			}))
+		};
+
+		console.log( data );
 	}
 
 	// paginacion de la tabla del modal
@@ -149,9 +163,6 @@ export class DetailBudgetPage extends Component {
 	// maneja el calculo del subtotal
 	handleChange( value, idItem ) {
 
-		console.log( value );
-		console.log( idItem );
-		
 		let newPrice = 0;
 
 		let arrayItems = this.state.itemsSelected.map(( item ) => {
@@ -160,7 +171,8 @@ export class DetailBudgetPage extends Component {
 				return {
 					...item,
 					apiaudiophonebudgets_items_quantity: Number( value ),
-					apiaudiophonebudgets_items_subtotal: item.apiaudiophoneitems_price * value 
+					apiaudiophonebudgets_items_subtotal: 
+						( item.apiaudiophoneitems_price * value )
 				}
 			}
 
@@ -302,7 +314,7 @@ export class DetailBudgetPage extends Component {
 	}
 }
 
-// componente de control de cantidad del formulario
+// componente que controla el input de la cantidad del formulario
 const InputQuantity = ( props ) => {
 
 	const { item, changeQuantity } = props;
