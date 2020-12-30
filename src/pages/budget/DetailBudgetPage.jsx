@@ -1,12 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState } from 'react';
 import { EventService } from '../../services/EventService';
 import { ItemService } from '../../services/ItemService';
 import { LoadingComponent } from '../../components/index';
 import { BudgetFormComponent } from '../../components/form/budget-form/BudgetFormComponent';
-import { Table, Row, Col } from 'react-bootstrap';
+import { Table, Row, Col, Button } from 'react-bootstrap';
 import { getSpanishFormatDate } from '../../util-functions/date-format';
 import { RedirectService } from '../../services/RedirectService';
 import { ModalSelectItemsComponent } from '../../components/modal/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class DetailBudgetPage extends Component {
 
@@ -14,7 +15,6 @@ export class DetailBudgetPage extends Component {
 	eventService = new EventService();
 	itemService = new ItemService();
 	event = {};
-	itemsSelected = [];
 
 	constructor( props ) {
 		super( props );
@@ -26,7 +26,8 @@ export class DetailBudgetPage extends Component {
 			redirect: false,
 			showModal: false,
 			totalBudget: 0,
-			totalItems: 0
+			totalItems: 0,
+			itemsSelected: []
 		};
 	}
 
@@ -57,8 +58,8 @@ export class DetailBudgetPage extends Component {
 		this.itemService.getAllItems({ start: 0, end: 5 })
 			.then( response => {
 				return this.setState({
-					items: response.items,
-					totalItems: response.bdItemsTotal,
+					items: response.items || [],
+					totalItems: response.bdItemsTotal || 0,
 					showModal: true
 				});
 			})
@@ -82,22 +83,40 @@ export class DetailBudgetPage extends Component {
 			return this.setState({ showModal: false });
 		}
 
-		let price = 0;
-		this.itemsSelected = itemsSelected;
+		// se añaden los campos faltantes
+		itemsSelected = itemsSelected.map(( item ) => ({
+			...item,
+			apiaudiophonebudgets_items_quantity: 1,
+			apiaudiophonebudgets_items_subtotal: item.apiaudiophoneitems_price * 1
+		}));
 
-		console.log( itemsSelected );
+		let price = 0;
 		
 		// realiza el calculo del total
-		this.itemsSelected.forEach(( item ) => price += item.apiaudiophoneitems_price );
+		itemsSelected.forEach(( item ) => price += item.apiaudiophonebudgets_items_subtotal );
 
-		return this.setState({ 
+		return this.setState({
+			itemsSelected, 
 			showModal: false,
 			totalBudget: price 
 		});
 	}
 
-	removeItem() {
-		console.log('removeItem');
+	removeItem( item ) {
+
+		let price = 0;
+
+		let newArray = this.state.itemsSelected.filter(
+			( itemSelected ) => item.apiaudiophoneitems_id !== itemSelected.apiaudiophoneitems_id 
+		);
+
+		// realiza el calculo del total
+		newArray.forEach(( item ) => price += item.apiaudiophoneitems_price );
+
+		return this.setState({
+			itemsSelected: newArray,
+			totalBudget: price 
+		});
 	}
 
 	generateBudget( form ) {
@@ -127,6 +146,35 @@ export class DetailBudgetPage extends Component {
 			});
 	}
 
+	// maneja el calculo del subtotal
+	handleChange( value, idItem ) {
+
+		console.log( value );
+		console.log( idItem );
+		
+		let newPrice = 0;
+
+		let arrayItems = this.state.itemsSelected.map(( item ) => {
+
+			if ( item.apiaudiophoneitems_id === idItem ) {
+				return {
+					...item,
+					apiaudiophonebudgets_items_quantity: Number( value ),
+					apiaudiophonebudgets_items_subtotal: item.apiaudiophoneitems_price * value 
+				}
+			}
+
+			return item;
+		});
+
+		arrayItems.forEach(( item ) => newPrice += item.apiaudiophonebudgets_items_subtotal );
+
+		return this.setState({
+			itemsSelected: arrayItems,
+			totalBudget: newPrice
+		});
+	}
+
 	getTable() {
 		return (
 			<Table className="mt-4" striped responsive hover>
@@ -139,24 +187,39 @@ export class DetailBudgetPage extends Component {
 					</tr>
 				</thead>
 				<tbody>
-					{ this.itemsSelected.map(( item ) => (
+					{ this.state.itemsSelected.length > 0 && this.state.itemsSelected.map(( item ) => (
 							<tr className="text-center" key={ item.apiaudiophoneitems_id }>
 								<td>{ item.apiaudiophoneitems_id }</td>
 								<td>{ item.apiaudiophoneitems_name }</td>
 								<td>{ item.apiaudiophoneitems_description }</td>
-								<td></td>
+								<td>
+									<InputQuantity 
+										changeQuantity={ ( value, idItem ) => this.handleChange( value, idItem ) }
+										item={ item }
+									/>
+								</td>
 								<td>{ item.apiaudiophoneitems_price }</td>
-								<td></td>
-								<td></td>
+								<td>{ item.apiaudiophonebudgets_items_subtotal }</td>
+								<td>
+									<Button size="sm" variant="danger" onClick={ () => this.removeItem( item ) }>
+										<FontAwesomeIcon icon="trash" />
+									</Button>
+								</td>
 							</tr>
 						)) 
+					}
+					{	this.state.itemsSelected.length === 0 && (
+							<tr className="text-center">
+								<td colSpan="7">No hay articulos agregados</td>
+							</tr>
+						)
 					}
 				</tbody>
 				<tfoot>
 					<tr>
 						<td colSpan="7" className="text-right">
 							Total a pagar: 
-							<b className="ml-2">{ this.state.totalBudget }$</b>
+							<b className="ml-2">{ this.state.totalBudget.toFixed( 2 ) }$</b>
 						</td>
 					</tr>
 				</tfoot>
@@ -207,7 +270,7 @@ export class DetailBudgetPage extends Component {
 							children={ this.getTable() } 
 							openModal={ () => this.openModal() }
 							generateBudget={ ( form ) => this.generateBudget( form ) }
-							itemsLength={ this.itemsSelected.length }
+							itemsLength={ this.state.itemsSelected.length }
 						/> 
 					</Row>
 				</Fragment>
@@ -237,4 +300,33 @@ export class DetailBudgetPage extends Component {
 			</Fragment>
 		);
 	}
+}
+
+// componente de control de cantidad del formulario
+const InputQuantity = ( props ) => {
+
+	const { item, changeQuantity } = props;
+
+	// hooks
+	const [ value, setValue ] = useState( item.apiaudiophonebudgets_items_quantity );
+
+	const handleChange = ( val, idItem ) => {
+		
+		setValue( Number( val ) < 1 || Number( val ) > 9999  ? 1 : Number( val ) );
+
+		return changeQuantity( 
+			Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ), 
+			idItem 
+		);
+	}
+
+	return (
+		<input 
+			type="number" 
+			min="1" 
+			max="9999" 
+			onChange={ ( $event ) => handleChange( $event.target.value, item.apiaudiophoneitems_id ) } 
+			value={ value }
+		/>
+	);
 }

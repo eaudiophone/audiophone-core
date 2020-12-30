@@ -1,64 +1,123 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Modal, Button, Table, Row } from 'react-bootstrap';
 import { PaginationComponent } from '../../index';
 
-export const ModalSelectItemsComponent = ( props ) => {
-	
-	// props
-	const { items, totalItems, showModal, closeModal, pagination } = props;
-	
-	// hooks
-	const [ itemsSelected, setItemSelected ] = useState([]);
+export class ModalSelectItemsComponent extends Component {
 
-	// funcion que maneja la seleccion del articulo
-	const handleChange = ( checked = true, item ) => {
-		
-		// console.log( 'function' );
+	constructor( props ) {
+		super( props );
 
-		if ( checked && !itemsSelected.includes( item ) ) {
-			setItemSelected( itemsSelected.concat([ item ]) );
+		this.state = {
+			itemsSelected: []
+		};
+	}	
+
+	componentDidUpdate() {
+		// console.log( this.state.itemsSelected );
+	}
+
+	selectItem( checked = true, item ) {
+
+		if ( checked && !this.state.itemsSelected.includes( item ) ) {
+			return this.setState({ itemsSelected: this.state.itemsSelected.concat([ item ]) });
 			
-		} else if ( !checked && itemsSelected.includes( item ) ) {
-			setItemSelected(
-				itemsSelected.filter(
-				( selectedItem ) => item.apiaudiophoneitems_id !== selectedItem.apiaudiophoneitems_id )
-			);
-
 		} else {
-			return;
+			return this.setState({ 
+				itemsSelected: this.state.itemsSelected.filter( 
+					( selectedItem ) => item.apiaudiophoneitems_id !== selectedItem.apiaudiophoneitems_id
+				) 
+			});
 
 		}
 	}
 
-	return (
-		<Modal show={ showModal } size="xl" onHide={ () => { 
-				
-				// se resetea el valor de los articulos seleccionados 
-        // cuando se sale del modal
-				
+	showTable() {
+
+		const { items, totalItems, pagination } = this.props;
+
+		const headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio:', 'Acciones:'];
+
+		return (
+			<Fragment>
+				<Table striped responsive hover>
+					<thead className="thead-dark">
+						<tr>
+							{ headerTable.map(( column, index ) => (
+									<th className="text-center" key={ index }>{ column }</th>
+								)) 
+							}
+						</tr>
+					</thead>
+					<tbody>
+						{ items.length > 0 && items.map(( item ) => {
+
+							return (
+								<tr key={ item.apiaudiophoneitems_id } className="text-center">
+									<td>{ item.apiaudiophoneitems_id }</td>
+									<td>{ item.apiaudiophoneitems_name }</td>
+									<td>{ item.apiaudiophoneitems_description }</td>
+									<td>{ item.apiaudiophoneitems_price }</td>
+									<td>
+										<input 
+											type="checkbox" 
+											onChange={ ( $event ) => this.selectItem( $event.target.checked, item ) } 
+											checked={ this.state.itemsSelected.includes( item ) }
+										/>
+									</td>
+								</tr>
+								)
+							}) 
+						}
+						{	items.length === 0 && (
+								<tr>
+									<td colSpan="5" className="text-center">
+										No existen articulos disponibles
+									</td>
+								</tr>
+							)
+						}
+					</tbody>		
+				</Table>
+				{ items.length > 0 && (
+						<Row className="justify-content-center">
+							<PaginationComponent 
+								totalRegisters={ totalItems }
+								send={ ( params ) => pagination( params )  }
+								pagination={ 5 }
+							/>
+						</Row>
+					)
+				}
+			</Fragment>
+		)
+	}
+
+
+	render() {
+
+		const { showModal, closeModal } = this.props;
+
+		return (
+			<Modal show={ showModal } size="xl" onHide={ () => { 
 				closeModal();
-				setItemSelected([]);
+
+				return this.setState({ itemsSelected: [] });
 			} 
 		}>
       <Modal.Header closeButton>
         <Modal.Title>Selecciona los artículos</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <TableSelectItems 
-        	items={ items }
-        	totalItems={ totalItems }
-        	getItemSelected={ ( checked, item ) => handleChange( checked, item ) }
-        	pagination={ ( params ) => pagination( params )  }
-        	itemsSelected={ itemsSelected }
-        />
+      	{ this.showTable() }
       </Modal.Body>
       <Modal.Footer>
         <Button 
         	variant="primary" 
-        	disabled={ itemsSelected.length === 0 } 
+        	disabled={ this.state.itemsSelected.length === 0 } 
         	onClick={ () => {
-        			closeModal( itemsSelected );
-        			setItemSelected([])
+        			closeModal( this.state.itemsSelected );
+
+        			return this.setState({ itemsSelected: [] });
         		} 
         	}
         >
@@ -66,70 +125,6 @@ export const ModalSelectItemsComponent = ( props ) => {
         </Button>
       </Modal.Footer>
      </Modal>
-	);
-}
-
-const TableSelectItems = ( props ) => {
-
-	const { items, totalItems, pagination, getItemSelected, itemsSelected } = props;
-	
-	const headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio:', 'Acciones:'];
-
-	// console.log( itemsSelected, items );
-
-	return (
-		<Fragment>
-			<Table striped responsive hover>
-				<thead className="thead-dark">
-					<tr>
-						{ headerTable.map(( column, index ) => (
-								<th className="text-center" key={ index }>{ column }</th>
-							)) 
-						}
-					</tr>
-				</thead>
-				<tbody>
-					{ items.length > 0 && items.map(( item ) => {
-
-						// console.log( itemsSelected.includes( item ) );
-
-						return (
-							<tr key={ item.apiaudiophoneitems_id } className="text-center">
-								<td>{ item.apiaudiophoneitems_id }</td>
-								<td>{ item.apiaudiophoneitems_name }</td>
-								<td>{ item.apiaudiophoneitems_description }</td>
-								<td>{ item.apiaudiophoneitems_price }</td>
-								<td>
-									<input 
-										type="checkbox" 
-										onChange={ ( $event ) => getItemSelected( $event.target.checked, item ) } 
-										checked={ itemsSelected.includes( item ) }
-									/>
-								</td>
-							</tr>
-							)
-						}) 
-					}
-					{	items.length === 0 && (
-							<tr>
-								<td colSpan="5" className="text-center">
-									No existen articulos disponibles
-								</td>
-							</tr>
-						)
-					}
-				</tbody>		
-			</Table>
-			{ items.length > 0 && (
-					<Row className="justify-content-center">
-						<PaginationComponent 
-							totalRegisters={ totalItems }
-							send={ ( params ) => pagination( params )  }
-							pagination={ 5 }
-						/>
-					</Row>
-				)
-			}
-		</Fragment>
-	);
+		);
+	}
 }
