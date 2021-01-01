@@ -1,28 +1,42 @@
 import  React, { Component, Fragment } from 'react';
-// import { Table } from 'react-bootstrap';
+import { PaginationComponent, SearchBarComponent } from '../index';
+import { Row, Table } from 'react-bootstrap';
 
-export class BudgetTableComponent extends Component {
-		
-	constructor( props ) {
-		super( props );
+const headerTable = ['id:', 'Tipo de Presupuesto:', 'Nombre cliente:', 'Telefono:', 'Acciones:'];
 
-		this.state = {
-			total: 0,
-			items: props.items,
-		};
-	}
+export const BudgetTableComponent = ( props ) => {
+	
+	const { pagination, showPdf, budgets, totalBudgets, search } = props;
 
-	setData() {
-	}
-
-	calculatePrice() {
-	}
-
-	render() {
-		return (
-			<Fragment>
-				{ this.props.children }
-			</Fragment>
-		);
-	}
+	return (
+		<Fragment>
+			<SearchBarComponent sendSearch={ ( stringSearch ) => search( stringSearch ) } />
+			<Table className="mt-4" striped responsive hover>
+				<thead className="thead-dark">
+					<tr>
+						{ headerTable.map(( columnName, index ) => (
+								<th key={ index } className="text-center">{ columnName }</th>
+							)) 
+						}	
+					</tr>
+				</thead>
+				<tbody>
+					{ budgets.length === 0 && (
+							<tr className="text-center">
+								<td colSpan="5">No hay informacion de presupuestos generados</td>
+							</tr>
+						) 
+					}
+				</tbody>
+			</Table>
+			<Row className="justify-content-center">
+				<PaginationComponent 
+					totalRegisters={ totalBudgets } 
+					send={ ( params ) => pagination( params ) } 
+					pagination={ 5 } 
+				/>
+			</Row>
+		</Fragment>
+	);
 }
+

@@ -1,34 +1,44 @@
 import React, { Component, Fragment } from 'react';
-import { Table } from 'react-bootstrap';
 import { BudgetTableComponent } from '../../components/index';
 
 export class BudgetPage extends Component {
 
-	headerTable = ['id', 'Tipo de Presupuesto', 'Nombre cliente', 'Telefono', 'Acciones'];
-
+	
 	constructor( props ) {
 		super( props );
-		this.state = { redirect: true };
+		
+		this.state = { 
+			redirect: true, 
+			budgets: [],
+			totalBudgets: 0,
+			showModal: false,
+			loading: false
+		};
 	}
 
-
-	getTable() {
-		return (
-			<Table className="mt-4" striped responsive hover>
-				<thead className="thead-dark">
-					<tr>
-						{ this.headerTable.map(( columnName, index ) => (
-								<th key={ index } className="text-center">{ columnName }</th>
-							)) 
-						}	
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</Table>
-		);
+	componentDidMount() {
+		
 	}
 
+	updateBudget() {
+
+	}
+
+	deleteBudget() {
+
+	}
+
+	getPagination( pagination = { start: 1, end: 5 } ) {
+		console.log( pagination );
+	}
+
+	searchBudget( stringSearch = '' ) {
+
+	}
+
+	showPdf() {
+		console.log('show pdf');
+	}
 
 	render() {
 		return (
@@ -37,7 +47,13 @@ export class BudgetPage extends Component {
 						align-items-center pb-2 mb-3 border-bottom">
 					<h2>Presupuesto de servicios</h2>
 				</div>
-				<BudgetTableComponent children={ this.getTable() } items={[]} />
+				<BudgetTableComponent 
+					budgets={ this.state.budgets }
+					totalBudgets={ this.state.totalBudgets }
+					pagination={ ( params ) => this.getPagination( params ) }
+					showPdf={ () => this.showPdf() }
+					search={ ( stringSearch ) => this.searchBudget( stringSearch ) }
+				/>
 			</Fragment>
 		);
 	}
