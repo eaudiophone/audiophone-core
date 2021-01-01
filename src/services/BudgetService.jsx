@@ -4,7 +4,7 @@ export class BudgetService {
 
 	authService = new AuthService();
 
-	getItemsBudget() {
+	getDataItemsBudget() {
 		return new Promise(( resolve, reject ) => {
 			const id = this.authService.getLogged().id;
 
@@ -22,8 +22,12 @@ export class BudgetService {
 
 			this.authService.postClient(`apiaudiophonebudget/store/${ id }`, budget )
 				.then( response => {
-					console.log( response.data );
-					resolve( response.data );
+					resolve({ 
+						ok: true,
+						message: response.data.apiaudiophonebudgetmessage,
+						action: 'Exito',
+						budget: response.data.apiaudiophonebudgetnew
+					});
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
 		});

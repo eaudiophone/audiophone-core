@@ -65,7 +65,7 @@ const ClientForm = ( props ) => {
 						component={ FormInput }
 						name="apiaudiophonebudgets_client_phone"
 						type="text"
-						title="Teléfono del cliente: (opcional)"
+						title="Teléfono del cliente:"
 					/>
 				</Col>
 				<Col sm={ 6 } className="p-3">
@@ -73,7 +73,7 @@ const ClientForm = ( props ) => {
 						component={ FormInput }
 						name="apiaudiophonebudgets_client_social"
 						type="text"
-						title="Red social del cliente: (opcional)"
+						title="Red social del cliente:"
 					/>
 				</Col>
 			</Form.Row>
@@ -93,8 +93,7 @@ const ClientForm = ( props ) => {
 						</Button>
 					)  
 				}
-				{
-					isSubmitting && (
+				{ isSubmitting && (
 						<Button type="submit" disabled>
 							<FontAwesomeIcon icon="spinner" spin className="mr-2" />
 							Generar Presupuesto

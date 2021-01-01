@@ -11,13 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class DetailBudgetPage extends Component {
 
-	headerTable = ['Id', 'Nombre', 'Descripción', 'Cantidad', 'Precio unitario', 'Subtotal', 'Acciones'];
 	eventService = new EventService();
 	budgetService = new BudgetService(); 
 	event = {};
 
 	message = '';
 	action = '';
+
+	route = '/login';
 
 	constructor( props ) {
 		super( props );
@@ -35,31 +36,28 @@ export class DetailBudgetPage extends Component {
 
 	componentDidMount() {
 
-		this.budgetService.getItemsBudget()
+		this.budgetService.getDataItemsBudget()
 			.then( response => {
-				console.log( response );
+				return this.getEvent( response.bd_items );
 			})
 			.catch( error => {
 				
-				// console.log( error );
+				// console.log( error.data );
 
 				if ( error.status === 401 ) {
 					return this.setState({ redirect: true });
 				}
-
-				this.message = error.message;
-				this.action = error.action;
-				
+	
 				if ( error.data ) {
-					return this.getEvent( error.data.bd_items, error.status );
+					return this.getEvent( error.data.bd_items );
 				}
 
 				return this.setState({ showToast: true, loading: false });
-			})
+			});
 	}
 
 
-	getEvent( items = [], status = 200 ) {
+	getEvent( items = [] ) {
 		
 		const idEvent = Number( this.props.match.params.id );		
 
@@ -67,10 +65,6 @@ export class DetailBudgetPage extends Component {
 			.then( event => { 
 
 				this.event = event;
-
-				if ( status === 404 ) {
-					return this.setState({ loading: false, items, showToast: true });
-				}
 
 				return this.setState({ loading: false, items }); 
 			})
@@ -85,10 +79,6 @@ export class DetailBudgetPage extends Component {
 					
 				return this.setState({ showToast: true });
 			});
-	}
-
-	openModal() {
-		return this.setState({ showModal: true });
 	}
 
 	addItem( itemsSelected ) {
@@ -155,7 +145,14 @@ export class DetailBudgetPage extends Component {
 				
 				actions.setSubmitting( false );
 				
-				console.log( response );
+				this.message = response.message;
+				this.action = response.action;
+				
+				this.setState({ showToast: true });
+
+				this.route = '/budget';
+
+				setTimeout(() => this.setState({ redirect: true }), 2000 );
 			})
 			.catch( error => {
 				
@@ -169,7 +166,7 @@ export class DetailBudgetPage extends Component {
 				this.action = error.action;
 					
 				return this.setState({ showToast: true });
-			})
+			});
 	}
 
 	// maneja el calculo del subtotal
@@ -183,8 +180,7 @@ export class DetailBudgetPage extends Component {
 				return {
 					...item,
 					apiaudiophonebudgets_items_quantity: Number( value ),
-					apiaudiophonebudgets_items_subtotal: 
-						( item.apiaudiophoneitems_price * value )
+					apiaudiophonebudgets_items_subtotal: item.apiaudiophoneitems_price * value
 				}
 			}
 
@@ -200,11 +196,14 @@ export class DetailBudgetPage extends Component {
 	}
 
 	getTable() {
+
+		const headerTable = ['Nombre:', 'Descripción:', 'Cantidad:', 'Precio:', 'Subtotal:', 'Acciones:'];
+
 		return (
 			<Table className="mt-4" striped responsive hover>
 				<thead className="thead-dark">
 					<tr>
-						{ this.headerTable.map(( columnName, index ) => (
+						{ headerTable.map(( columnName, index ) => (
 								<th key={ index } className="text-center">{ columnName }</th>
 							)) 
 						}	
@@ -213,7 +212,6 @@ export class DetailBudgetPage extends Component {
 				<tbody>
 					{ this.state.itemsSelected.length > 0 && this.state.itemsSelected.map(( item ) => (
 							<tr className="text-center" key={ item.apiaudiophoneitems_id }>
-								<td>{ item.apiaudiophoneitems_id }</td>
 								<td>{ item.apiaudiophoneitems_name }</td>
 								<td>{ item.apiaudiophoneitems_description }</td>
 								<td>
@@ -234,14 +232,14 @@ export class DetailBudgetPage extends Component {
 					}
 					{	this.state.itemsSelected.length === 0 && (
 							<tr className="text-center">
-								<td colSpan="7">No hay articulos agregados</td>
+								<td colSpan="6">No hay articulos agregados</td>
 							</tr>
 						)
 					}
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colSpan="7" className="text-right">
+						<td colSpan="6" className="text-right">
 							Total a pagar: 
 							<b className="ml-2">{ this.state.totalBudget.toFixed( 2 ) }$</b>
 						</td>
@@ -292,7 +290,7 @@ export class DetailBudgetPage extends Component {
 						{ this.showDetails() }
 						<BudgetFormComponent 
 							children={ this.getTable() } 
-							openModal={ () => this.openModal() }
+							openModal={ () => this.setState({ showModal: true }) }
 							generateBudget={ ( form ) => this.generateBudget( form ) }
 							itemsLength={ this.state.itemsSelected.length }
 						/> 
@@ -307,7 +305,7 @@ export class DetailBudgetPage extends Component {
 	render() {
 		return (
 			<Fragment>
-				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				{ this.state.redirect && ( <RedirectService route={ this.route } /> ) }
 				<ToastComponent 
 					content={ this.message } 
 					context={ this.action } 
@@ -343,7 +341,7 @@ const InputQuantity = ( props ) => {
 		
 		setValue( Number( val ) < 1 || Number( val ) > 9999  ? 1 : Number( val ) );
 
-		return changeQuantity( 
+		changeQuantity( 
 			Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ), 
 			idItem 
 		);

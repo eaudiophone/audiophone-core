@@ -15,8 +15,6 @@ import { ItemService } from '../../services/ItemService';
 export class ItemsTableComponent extends Component {
 
 	itemService = new ItemService();
-
-	headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio:', 'Acciones:' ];
 	action = '';
 	message = '';
 	typeModal = '';
@@ -264,6 +262,8 @@ export class ItemsTableComponent extends Component {
 
 	getTable() {
 
+		const headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio por servicio:', 'Acciones:' ];
+
 		if ( this.state.items.length > 0 ) {
 			return (
 				<Fragment>
@@ -283,7 +283,7 @@ export class ItemsTableComponent extends Component {
 					<Table className="mt-4" striped responsive hover>
 						<thead className="thead-dark">
 							<tr>
-								{ this.headerTable.map(( columnName, index ) => (
+								{ headerTable.map(( columnName, index ) => (
 										<th key={ index } className="text-center">{ columnName }</th>
 									)) 
 								}	
