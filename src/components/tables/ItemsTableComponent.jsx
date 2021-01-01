@@ -215,7 +215,7 @@ export class ItemsTableComponent extends Component {
 		return this.setState({ showModal: true, item });
 	}
 
-	prepareData( type, response ) {
+	dispatchActions( type, response ) {
 
 		if ( type === 'delete' ) {
 			return this.deleteItem( response );
@@ -338,7 +338,7 @@ export class ItemsTableComponent extends Component {
 				}
 				<ModalItemsComponent 
 					showModal={ this.state.showModal }
-					closeModal={ ( type, response ) => this.prepareData( type, response ) }
+					closeModal={ ( type, response ) => this.dispatchActions( type, response ) }
 					item={ this.state.item }
 					action={ this.typeModal }
 				/>
