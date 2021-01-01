@@ -39,7 +39,7 @@ export const BudgetFormComponent = ( props ) => {
 
 const ClientForm = ( props ) => {
 	
-	const { children, openModal, isValid, itemsLength } = props;
+	const { children, openModal, isValid, itemsLength, isSubmitting } = props;
 
 	return (
 		<FormFormik>
@@ -87,9 +87,21 @@ const ClientForm = ( props ) => {
 				{ children }
 			</Form.Row>
 			<Form.Row className="justify-content-center">
-				<Button type="submit" disabled={ !isValid || itemsLength === 0 }>
-					Generar Presupuesto
-				</Button>
+				{ !isSubmitting && (
+						<Button type="submit" disabled={ !isValid || itemsLength === 0 }>
+							Generar Presupuesto
+						</Button>
+					)  
+				}
+				{
+					isSubmitting && (
+						<Button type="submit" disabled>
+							<FontAwesomeIcon icon="spinner" spin className="mr-2" />
+							Generar Presupuesto
+						</Button>
+					)
+
+				}
 			</Form.Row>
 		</FormFormik>
 	);

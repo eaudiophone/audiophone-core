@@ -1,6 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Modal, Button, Table, Row } from 'react-bootstrap';
-import { PaginationComponent } from '../../index';
+import { Modal, Button, Table } from 'react-bootstrap';
 
 export class ModalSelectItemsComponent extends Component {
 
@@ -12,13 +11,9 @@ export class ModalSelectItemsComponent extends Component {
 		};
 	}	
 
-	componentDidUpdate() {
-		// console.log( this.state.itemsSelected );
-	}
-
 	selectItem( checked = true, item ) {
 
-		if ( checked && !this.state.itemsSelected.includes( item ) ) {
+		if ( checked ) {
 			return this.setState({ itemsSelected: this.state.itemsSelected.concat([ item ]) });
 			
 		} else {
@@ -33,7 +28,7 @@ export class ModalSelectItemsComponent extends Component {
 
 	showTable() {
 
-		const { items, totalItems, pagination } = this.props;
+		const { items } = this.props;
 
 		const headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio:', 'Acciones:'];
 
@@ -78,16 +73,6 @@ export class ModalSelectItemsComponent extends Component {
 						}
 					</tbody>		
 				</Table>
-				{ items.length > 0 && (
-						<Row className="justify-content-center">
-							<PaginationComponent 
-								totalRegisters={ totalItems }
-								send={ ( params ) => pagination( params )  }
-								pagination={ 5 }
-							/>
-						</Row>
-					)
-				}
 			</Fragment>
 		)
 	}

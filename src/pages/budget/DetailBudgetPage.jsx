@@ -1,7 +1,7 @@
 import React, { Component, Fragment, useState } from 'react';
 import { EventService } from '../../services/EventService';
-import { ItemService } from '../../services/ItemService';
-import { LoadingComponent } from '../../components/index';
+import { BudgetService } from '../../services/BudgetService';
+import { LoadingComponent, ToastComponent } from '../../components/index';
 import { BudgetFormComponent } from '../../components/form/budget-form/BudgetFormComponent';
 import { Table, Row, Col, Button } from 'react-bootstrap';
 import { getSpanishFormatDate } from '../../util-functions/date-format';
@@ -13,8 +13,11 @@ export class DetailBudgetPage extends Component {
 
 	headerTable = ['Id', 'Nombre', 'Descripción', 'Cantidad', 'Precio unitario', 'Subtotal', 'Acciones'];
 	eventService = new EventService();
-	itemService = new ItemService();
+	budgetService = new BudgetService(); 
 	event = {};
+
+	message = '';
+	action = '';
 
 	constructor( props ) {
 		super( props );
@@ -26,19 +29,50 @@ export class DetailBudgetPage extends Component {
 			redirect: false,
 			showModal: false,
 			totalBudget: 0,
-			totalItems: 0,
 			itemsSelected: []
 		};
 	}
 
 	componentDidMount() {
 
-		const idEvent = Number( this.props.match.params.id );
+		this.budgetService.getItemsBudget()
+			.then( response => {
+				console.log( response );
+			})
+			.catch( error => {
+				
+				// console.log( error );
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+				
+				if ( error.data ) {
+					return this.getEvent( error.data.bd_items, error.status );
+				}
+
+				return this.setState({ showToast: true, loading: false });
+			})
+	}
+
+
+	getEvent( items = [], status = 200 ) {
 		
+		const idEvent = Number( this.props.match.params.id );		
+
 		this.eventService.getEvent( idEvent )
 			.then( event => { 
-				this.event = event
-				return this.setState({ loading: false }); 
+
+				this.event = event;
+
+				if ( status === 404 ) {
+					return this.setState({ loading: false, items, showToast: true });
+				}
+
+				return this.setState({ loading: false, items }); 
 			})
 			.catch( error => {
 
@@ -54,30 +88,10 @@ export class DetailBudgetPage extends Component {
 	}
 
 	openModal() {
-
-		this.itemService.getAllItems({ start: 0, end: 5 })
-			.then( response => {
-				return this.setState({
-					items: response.items || [],
-					totalItems: response.bdItemsTotal || 0,
-					showModal: true
-				});
-			})
-			.catch( error => {
-
-				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-
-				this.message = error.message;
-				this.action = error.action;
-
-				return this.setState({ showToast: true, showModal: false });
-			});
-
+		return this.setState({ showModal: true });
 	}
 
-	addItem( itemsSelected = [] ) {
+	addItem( itemsSelected ) {
 
 		if ( !itemsSelected ) {
 			return this.setState({ showModal: false });
@@ -121,6 +135,8 @@ export class DetailBudgetPage extends Component {
 
 	generateBudget({ values, actions }) {
 
+		actions.setSubmitting( true );
+
 		const data = {
 			...values,
 			apiaudiophonebudgets_id_service: Number( this.event.id_apiaudiophoneservices ),
@@ -134,30 +150,26 @@ export class DetailBudgetPage extends Component {
 			}))
 		};
 
-		console.log( data );
-	}
-
-	// paginacion de la tabla del modal
-	getItems( pagination = { start: 1, end: 5 } ) {
-
-		this.itemService.getAllItems( pagination )
+		this.budgetService.createBudget( data )
 			.then( response => {
-				return this.setState({
-					items: response.items,
-					// totalItems: response.bdItemsTotal,
-				});
+				
+				actions.setSubmitting( false );
+				
+				console.log( response );
 			})
 			.catch( error => {
-
+				
 				if ( error.status === 401 ) {
-					return this.setState({ redirect: true, showModal: false });
+					return this.setState({ redirect: true });
 				}
+
+				actions.setSubmitting( false );
 
 				this.message = error.message;
 				this.action = error.action;
-
-				return this.setState({ showToast: true, showModal: false });
-			});
+					
+				return this.setState({ showToast: true });
+			})
 	}
 
 	// maneja el calculo del subtotal
@@ -293,10 +305,15 @@ export class DetailBudgetPage extends Component {
 	}
 
 	render() {
-
 		return (
 			<Fragment>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				<ToastComponent 
+					content={ this.message } 
+					context={ this.action } 
+					showToast={ this.state.showToast } 
+					onHide={ () => this.setState({ showToast: false }) }
+				/>
 				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
 						align-items-center pb-2 mb-3 border-bottom">
 					<h2>Presupuesto de servicios: </h2>

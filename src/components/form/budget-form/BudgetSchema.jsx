@@ -28,9 +28,11 @@ export class BudgetSchema {
 				.required( this.validationMessages.string.required )
 				.email( this.validationMessages.string.email ),
 
-			apiaudiophonebudgets_client_phone: string(),
+			apiaudiophonebudgets_client_phone: string()
+				.required( this.validationMessages.string.required ),
 
-			apiaudiophonebudgets_client_social: string(),			
+			apiaudiophonebudgets_client_social: string()
+				.required( this.validationMessages.string.required ),			
 		});
 	}
 

@@ -27,15 +27,41 @@ export class EventsAdminPage extends Component {
 
 	componentDidMount() {
 
-		Promise.all([ this.eventService.getTerms(), this.eventService.getAllEventsCalendar() ])
-			.then( ([ terms, events ]) => {
+		this.eventService.getTerms()
+			.then( terms => {
 				
 				this.idTerms = terms;
-				this.eventsCalendar = events;
+
+				return this.getEventsCalendar();
 				
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.setState({ redirect: true });
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+				
+				return this.setState({ showToast: true, loading: false });
+			})
+	}
+
+	getEventsCalendar() {
+
+		this.eventService.getAllEventsCalendar()
+			.then( events => {
+
+				console.log( events );
+
+				this.eventsCalendar = events;
+
 				return this.setState({ loading: false });
 			})
 			.catch( error => {
+
+				// console.log( error );
 
 				if ( error.status === 401 ) {
 					return this.setState({ redirect: true });
@@ -219,8 +245,11 @@ export class EventsAdminPage extends Component {
 	redirectNewBudget( idEvent ) {
 
 		setTimeout(() => {					
+			
 			this.redirectRoute = `/budget/${ idEvent }`;	
+			
 			return this.setState({ redirect: true });	
+		
 		}, 1500 );
 	}
 

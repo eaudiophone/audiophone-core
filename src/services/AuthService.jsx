@@ -124,7 +124,8 @@ export class AuthService extends BackendService {
 					...payload, 
 					status: 404, 
 					message: response.data.errorMessage || 'Recurso no encontrado', 
-					action: 'Warning' 
+					action: 'Warning',
+					data: response.data || null 
 				};
 				
 				return payload;

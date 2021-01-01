@@ -159,10 +159,14 @@ export class EventService {
 			const id = this.authService.getLogged().id;
 
 			this.authService.getClient(`apiaudiophonevent/create/${ id }`)
-				.then( ({ data }) => resolve({ 
-					idTermsRental: data.apiaudiophoneterm_id_uno,
-					idTermsRecord: data.apiaudiophoneterm_id_dos 
-				}))
+				.then( ({ data }) => { 
+					resolve({ 
+						idTermsRental: data.nombre_servicio_term_uno === 'alquiler' ? 
+							data.apiaudiophoneterm_id_uno : data.apiaudiophoneterm_id_dos,
+						idTermsRecord: data.nombre_servicio_term_dos === 'grabacion' ? 
+							data.apiaudiophoneterm_id_dos : data.apiaudiophoneterm_id_uno
+ 					})
+				})
 				.catch( error => reject( this.authService.validateExceptionServer( error )) );
 		});
 	}
