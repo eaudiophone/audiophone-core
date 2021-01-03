@@ -32,7 +32,7 @@ export const BudgetTableComponent = ( props ) => {
 					{
 						budgets.length > 0 && budgets.map(( budget ) => (
 							<tr key={ budget.apiaudiophonebudgets_id } className="text-center">
-								<td>{ budget.apiaudiophonebudgets_nameservice }</td>
+								<td>{ budget.apiaudiophonebudgets_nameservice.toLowerCase() }</td>
 								<td>{ budget.apiaudiophonebudgets_client_name }</td>
 								<td>{ budget.apiaudiophonebudgets_client_email }</td>
 								<td>{ getDateWithHour( budget.created_at ) }</td>

@@ -87,11 +87,12 @@ export class BudgetService {
 		return new Promise(( resolve, reject ) => {
 			const id = this.authService.getLogged().id;
 			
-			this.authService.deleteClient(`apiaudiophonebudget/update/${ id }`, budget )
+			this.authService.deleteClient(`apiaudiophonebudget/destroy/${ id }`, budget )
 				.then( response => {
-					console.log( response.data );
-
-					resolve( response.data );
+					resolve({
+						message: response.data.apiaudiophonebudget_mesaage,
+						action: 'Exito',
+					});
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )	
 		});

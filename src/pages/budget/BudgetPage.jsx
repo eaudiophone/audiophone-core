@@ -35,8 +35,8 @@ export class BudgetPage extends Component {
 
 		const data = {
 			...values,
-			apiaudiophonebudgets_id_service: values.apiaudiophonebudgets_nameservice === 'Alquiler' ?
-				1 : 2,
+			apiaudiophonebudgets_id_service: 
+				values.apiaudiophonebudgets_nameservice.toLowerCase() === 'alquiler' ? 1 : 2,
 		};
 
 		delete data.created_at;
@@ -84,9 +84,19 @@ export class BudgetPage extends Component {
 		this.budgetService.deleteBudget({ apiaudiophonebudgets_id: budget.apiaudiophonebudgets_id })
 			.then( response => {
 				
-				console.log( response );
+				let budgets = this.state.budgets.filter(
+					( budgetArray ) => budgetArray.apiaudiophonebudgets_id !== budget.apiaudiophonebudgets_id 
+				);
 
-				return this.setState({ showModal: false, showToast: true });
+				this.message = response.message;
+				this.action = response.action;
+
+				return this.setState({ 
+					showModal: false, 
+					showToast: true, 
+					budgets,
+					totalBudgets: this.state.totalBudgets - 1
+				});
 			})
 			.catch( error => {
 				
@@ -147,8 +157,10 @@ export class BudgetPage extends Component {
 			});
 	}
 
-	showPdf() {
-		console.log('show pdf');
+	showPdf( url = 'https://www.google.com/' ) {
+
+		// abre el PDF en otra pestaña del navegador
+		return window.open( url, '_blank');
 	}
 
 	openModal( action = '', budget ) {
