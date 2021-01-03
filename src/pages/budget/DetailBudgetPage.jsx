@@ -156,6 +156,8 @@ export class DetailBudgetPage extends Component {
 			})
 			.catch( error => {
 				
+				console.log( error );
+
 				if ( error.status === 401 ) {
 					return this.setState({ redirect: true });
 				}

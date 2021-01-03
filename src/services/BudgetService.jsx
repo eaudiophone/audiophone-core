@@ -22,6 +22,8 @@ export class BudgetService {
 
 			this.authService.postClient(`apiaudiophonebudget/store/${ id }`, budget )
 				.then( response => {
+
+					console.log( response );
 					resolve({ 
 						ok: true,
 						message: response.data.apiaudiophonebudgetmessage,

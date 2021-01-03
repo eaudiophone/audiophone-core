@@ -18,19 +18,10 @@ class NavbarComponent extends Component {
 	        <NavDropdown.Item href="/day">Dias de servicios</NavDropdown.Item>
 	        <NavDropdown.Item href="/users">Usuarios</NavDropdown.Item> 
 	        <NavDropdown.Item href="/items">Artículos</NavDropdown.Item>
-					<NavDropdown.Item href="/budget">Presupuesto</NavDropdown.Item>
+					<NavDropdown.Item href="/budget">Presupuestos</NavDropdown.Item>
 				</NavDropdown>
 			);
 
-		} else {
-
-			return (
-
-				<NavDropdown title="Eventos">
-		      {/* <NavDropdown.Item href="/event/new">Nuevo evento</NavDropdown.Item> */}
-		      <NavDropdown.Item href="/event">Ver eventos</NavDropdown.Item> 
-		    </NavDropdown>
-			);
 		}
 	}
 

@@ -86,7 +86,7 @@ const ClientForm = ( props ) => {
 				</Col>
 				{ children }
 			</Form.Row>
-			<Form.Row className="justify-content-center">
+			<Form.Row className="justify-content-center mt-3">
 				{ !isSubmitting && (
 						<Button type="submit" disabled={ !isValid || itemsLength === 0 }>
 							Generar Presupuesto
