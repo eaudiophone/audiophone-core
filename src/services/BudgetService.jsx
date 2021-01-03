@@ -41,9 +41,6 @@ export class BudgetService {
 
 			this.authService.postClient( url )
 				.then( response => {
-					
-					// console.log( response );
-
 					resolve({
 						totalBudgets: response.data.bditemstotal,
 						budgets: response.data.apiaudiophoneitemdata
@@ -60,15 +57,43 @@ export class BudgetService {
 
 			this.authService.postClient( url )
 				.then( response => {
-					
-					// console.log( response );
-
 					resolve({
 						totalBudgets: response.data.bditemstotal,
 						budgets: response.data.apiaudiophoneitemdata
 					});
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
+		});
+	}
+
+
+	updateBudget( budget ) {
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
+			
+			this.authService.putClient(`apiaudiophonebudget/update/${ id }`, budget )
+				.then( response => {
+					resolve({
+						message: response.data.apiaudiophonebudgetmessage,
+						action: 'Exito',
+						updateBudget: response.data.apiaudiophonebudgetupdate
+					});
+				})
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )	
+		});
+	}
+
+	deleteBudget( budget ) {
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
+			
+			this.authService.deleteClient(`apiaudiophonebudget/update/${ id }`, budget )
+				.then( response => {
+					console.log( response.data );
+
+					resolve( response.data );
+				})
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )	
 		});
 	}
 }
