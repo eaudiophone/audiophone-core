@@ -113,25 +113,29 @@ export class ItemsTableComponent extends Component {
 			});	
 	}
 
-	deleteItem( idItem ) {
+	activateItem( item ) {
 		
-		if ( idItem ) {
+		if ( item ) {
 
-			this.itemService.deleteItem({ apiaudiophoneitems_id: idItem })
+			this.itemService.changeStatus( item )
 				.then( response => {
-					
-					// console.log( response );
 
 					this.message = response.message;
 					this.action = response.action;
 
-					const items = this.state.items.filter(( item ) => item.apiaudiophoneitems_id !== idItem );
+					const items = this.state.items.map(( item ) => { 
+						
+						if ( item.apiaudiophoneitems_id === response.itemUpdate.apiaudiophoneitems_id ) {
+							return response.itemUpdate;
+						}
+
+						return item;
+					});
 
 					return this.setState({
 						showToast: true,
 						showModal: false,
-						items,
-						totalItems: this.state.totalItems - 1
+						items
 					});
 
 				})
@@ -218,7 +222,7 @@ export class ItemsTableComponent extends Component {
 	dispatchActions( type, response ) {
 
 		if ( type === 'delete' ) {
-			return this.deleteItem( response );
+			return this.activateItem( response );
 
 		} else if ( type === 'new' ) {
 			return this.newItem( response );
@@ -240,6 +244,10 @@ export class ItemsTableComponent extends Component {
 				<td>{ item.apiaudiophoneitems_name }</td>
 				<td>{ item.apiaudiophoneitems_description }</td>
 				<td>{ item.apiaudiophoneitems_price }</td>
+				<td>{ item.apiaudiophoneitems_status === 'ACTIVO' ? 
+					( <FontAwesomeIcon icon="check" className="text-success" /> ) : 
+					( <FontAwesomeIcon icon="times" className="text-danger" /> ) }
+				</td>
 				<td>
 					<Button 
 						variant="info" 
@@ -262,7 +270,7 @@ export class ItemsTableComponent extends Component {
 
 	getTable() {
 
-		const headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio por servicio:', 'Acciones:' ];
+		const headerTable = ['Id', 'Nombre:', 'Descripción:', 'Precio por servicio:', 'Estado', 'Acciones:' ];
 
 		if ( this.state.items.length > 0 ) {
 			return (

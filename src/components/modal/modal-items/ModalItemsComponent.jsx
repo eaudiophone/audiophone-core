@@ -11,7 +11,7 @@ export const ModalItemsComponent = ( props ) => {
 			{ action === 'delete' && ( 
 					<DeleteItem 
 						item={ item } 
-						confirm={ ( response ) => props.closeModal( 'delete', response ) }  
+						confirm={ ( response ) => closeModal( 'delete', response ) }  
 					/> 
 				) 
 			}
@@ -19,14 +19,14 @@ export const ModalItemsComponent = ( props ) => {
 				action === 'edit' && (
 					<EditItem 
 						item={ item }
-						confirm={ ( response ) => props.closeModal( 'edit', response ) } 
+						confirm={ ( response ) => closeModal( 'edit', response ) } 
 					/>
 				)
 			}
 			{
 				action === 'new' && (
 					<NewItem 
-						confirm={ ( response ) => props.closeModal( 'new', response ) } 
+						confirm={ ( response ) => closeModal( 'new', response ) } 
 					/>
 				)
 			}
@@ -93,7 +93,11 @@ const DeleteItem = ( props ) => {
 		    	</Button>
 		    	<Button 
 		    		variant="primary" 
-		    		onClick={ () => confirm( item.apiaudiophoneitems_id ) }
+		    		onClick={ () => confirm({ 
+		    				apiaudiophoneitems_id: item.apiaudiophoneitems_id, 
+		    				apiaudiophoneitems_status: item.apiaudiophoneitems_status === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO'
+		    			}) 
+		    		}
 		    	>
 		      	Confirmar
 		    	</Button>

@@ -99,21 +99,26 @@ export class ItemService {
 		});
 	}
 
-	deleteItem( item ) {
+	changeStatus( item ) {
 
 		return new Promise(( resolve, reject ) => {
 	
 			const id = this.authService.getLogged().id;
-			const url = `apiaudiophoneitem/destroy/${ id }`;
+			const url = `apiaudiophoneitemstatus/update/${ id }`;
 
-			this.authService.deleteClient( url, item )
+			this.authService.putClient( url, item )
 				.then( response => {
 
-					const { apiaudiophoneterm_mesaage } = response.data;
+					console.log( response );
+
+					debugger;
+
+					const { apiaudiophoneitemessage, apiaudiophoneitemnew } = response.data;
 
 					resolve({
 						action: 'Exito',
-						message: apiaudiophoneterm_mesaage
+						message: apiaudiophoneitemessage,
+						itemUpdate: apiaudiophoneitemnew
 					});
 				})
 				.catch( error => {
