@@ -88,7 +88,7 @@ export class ItemsTableComponent extends Component {
 
 					return item;
 				});
-
+				
 				this.message = response.message;
 				this.action = response.action;
 				

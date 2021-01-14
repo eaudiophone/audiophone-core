@@ -44,8 +44,8 @@ export class BudgetService {
 			this.authService.postClient( url )
 				.then( response => {
 					resolve({
-						totalBudgets: response.data.bditemstotal,
-						budgets: response.data.apiaudiophoneitemdata
+						totalBudgets: response.data.bdbudgetstotal,
+						budgets: response.data.apiaudiophonebudgetsdata
 					});
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
@@ -60,8 +60,8 @@ export class BudgetService {
 			this.authService.postClient( url )
 				.then( response => {
 					resolve({
-						totalBudgets: response.data.bditemstotal,
-						budgets: response.data.apiaudiophoneitemdata
+						totalBudgets: response.data.bdbudgetstotal,
+						budgets: response.data.apiaudiophonebudgetsdata
 					});
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) );
@@ -92,11 +92,26 @@ export class BudgetService {
 			this.authService.deleteClient(`apiaudiophonebudget/destroy/${ id }`, budget )
 				.then( response => {
 					resolve({
-						message: response.data.apiaudiophonebudget_mesaage,
+						message: response.data.apiaudiophonebudgetmessage,
 						action: 'Exito',
 					});
 				})
 				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )	
+		});
+	}
+
+	updateStatus( budget ) {
+		return new Promise(( resolve, reject ) => {
+			const id = this.authService.getLogged().id;
+
+			this.authService.putClient(`apiaudiophonebudgetstatus/update/${ id }`, budget )
+				.then( response => {
+					resolve({
+						message: response.data.apiaudiophonebudgetmessage,
+						action: 'Exito',
+					});
+				})
+				.catch( error => reject( this.authService.validateExceptionServer( error ) ) )
 		});
 	}
 }

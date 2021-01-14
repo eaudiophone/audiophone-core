@@ -30,7 +30,7 @@ export class BudgetPage extends Component {
 	}
 
 	updateBudget({ values, actions }) {
-		
+
 		actions.setSubmitting( true );
 
 		const data = {
@@ -41,15 +41,24 @@ export class BudgetPage extends Component {
 
 		delete data.created_at;
 
-		this.budgetService.updateBudget( data )
-			.then( response => {
-				
+		Promise.all([ 
+			this.budgetService.updateBudget( data ),  
+			this.budgetService.updateStatus({ 
+				apiaudiophonebudgets_id: values.apiaudiophonebudgets_id,
+				apiaudiophonebudgets_status: values.apiaudiophonebudgets_status 
+			})
+		])
+			.then(([ response ]) => {
+
 				actions.setSubmitting( false );
 
 				let budgets = this.state.budgets.map(( budget ) => {
 
 					if ( budget.apiaudiophonebudgets_id === response.updateBudget.apiaudiophonebudgets_id ) {
-						return response.updateBudget;
+						return {
+							...response.updateBudget,
+							apiaudiophonebudgets_status: values.apiaudiophonebudgets_status 
+						};
 					}
 
 					return budget;
@@ -76,6 +85,7 @@ export class BudgetPage extends Component {
 				this.action = error.action;
 
 				return this.setState({ showToast: true, showModal: false });
+
 			});
 	}
 

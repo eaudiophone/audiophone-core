@@ -9,7 +9,7 @@ export const ModalBudgetComponent = ( props ) => {
 	const { showModal, closeModal, budget, typeModal } = props;
 
 	return (
-		<Modal size={ typeModal === 'edit' ? 'lg' : 'md' } show={ showModal } onHide={ closeModal }>
+		<Modal size={ typeModal === 'edit' ? 'xl' : 'md' } show={ showModal } onHide={ closeModal }>
 			{ typeModal === 'edit' ? 
 				( <UpdateBudgetForm 
 						budget={ budget } 
@@ -75,12 +75,37 @@ const DeleleBudgetConfirm = ( props ) => {
 
 const BudgetForm = ( props ) => {
 	
-	const { values, isSubmitting, isValid } = props;
+	const { values, isSubmitting, isValid, setFieldValue } = props;
+
+	console.log( values.apiaudiophonebudgets_status );
 
 	return (
 		<Fragment>
 			<FormFormik>
 				 <Modal.Body>
+				 
+				 		<b>Estado del formulario:</b>
+				 		<Form.Row className="justify-content-around mb-4 mt-3">
+				 			<Button 
+				 				variant={ values.apiaudiophonebudgets_status === 'NO_APLICA' ? 'primary' : 'secondary' }
+				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'NO_APLICA' ) }
+				 			>
+				 				No aplica
+				 			</Button>
+				 			<Button 
+				 				variant={ values.apiaudiophonebudgets_status === 'PENDIENTE' ? 'primary' : 'secondary' }
+				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'PENDIENTE' ) }
+				 			>
+				 				Pendiente
+				 			</Button>
+				 			<Button 
+				 				variant={ values.apiaudiophonebudgets_status === 'PAGADO' ? 'primary' : 'secondary' }
+				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'PAGADO' ) }
+				 			>
+				 				Pagado
+				 			</Button>
+				 		</Form.Row>
+
 				 		<Form.Row className="mb-3 mt-2">
 				 			<Col className="text-center" sm={ 6 }>
 				 				Tipo de presupuesto: <b>{ values.apiaudiophonebudgets_nameservice }</b>
@@ -89,6 +114,8 @@ const BudgetForm = ( props ) => {
 				 				Precio final: <b>{ values.apiaudiophonebudgets_total_price }$</b>
 				 			</Col>
 				 		</Form.Row>
+
+				 		
 	      		<Form.Row>
 							<Col sm={ 12 }>
 								<Field 

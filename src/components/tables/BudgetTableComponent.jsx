@@ -9,6 +9,7 @@ const headerTable = [
 	'Nombre cliente:', 
 	'Correo cliente:', 
 	'Creado:',
+	'Estado:',
 	'Acciones:'
 ];
 
@@ -37,6 +38,11 @@ export const BudgetTableComponent = ( props ) => {
 								<td>{ budget.apiaudiophonebudgets_client_email }</td>
 								<td>{ getDateWithHour( budget.created_at ) }</td>
 								<td>
+									<b className={ getStatusClass( budget.apiaudiophonebudgets_status ) }>
+										{ budget.apiaudiophonebudgets_status }
+									</b>
+								</td>
+								<td>
 									<Row className="justify-content-center">
 										<Button 
 											variant="secondary"
@@ -54,14 +60,14 @@ export const BudgetTableComponent = ( props ) => {
 										>
 											<FontAwesomeIcon icon="pen" />
 										</Button>
-										<Button 
+										{/*<Button 
 											variant="danger" 
 											size="sm" 
 											className="point"
 											onClick={ () => dispatch('delete', budget ) }
 										>
 											<FontAwesomeIcon icon="trash" />
-										</Button>
+										</Button> */}
 									</Row>
 								</td>
 							</tr>
@@ -69,7 +75,7 @@ export const BudgetTableComponent = ( props ) => {
 					}
 					{ budgets.length === 0 && (
 							<tr className="text-center">
-								<td colSpan="5">No hay informacion de presupuestos generados</td>
+								<td colSpan="6">No hay informacion de presupuestos generados</td>
 							</tr>
 						) 
 					}
@@ -84,5 +90,18 @@ export const BudgetTableComponent = ( props ) => {
 			</Row>
 		</Fragment>
 	);
+}
+
+const getStatusClass = ( status ) => {
+
+	if ( status === 'PAGADO' ) {
+		return 'text-success';
+	
+	} else if ( status === 'NO_APLICA' ) {
+		return 'text-danger'
+	
+	} else {
+		return '';
+	}
 }
 

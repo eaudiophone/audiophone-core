@@ -137,13 +137,12 @@ export class DetailBudgetPage extends Component {
 				apiaudiophonebudgets_items_description: item.apiaudiophoneitems_description,
 				apiaudiophonebudgets_items_unit_price: item.apiaudiophoneitems_price,
 				apiaudiophonebudgets_items_subtotal: item.apiaudiophonebudgets_items_subtotal
-			}))
+			})),
 		};
 
 		this.budgetService.createBudget( data )
 			.then( response => {
 				
-				actions.setSubmitting( false );
 				
 				this.message = response.message;
 				this.action = response.action;
@@ -153,6 +152,8 @@ export class DetailBudgetPage extends Component {
 				this.route = '/budget';
 
 				setTimeout(() => this.setState({ redirect: true }), 2000 );
+				
+				actions.setSubmitting( false );
 			})
 			.catch( error => {
 				
