@@ -80,7 +80,7 @@ const DeleteItem = ( props ) => {
 
 			<Modal.Body>
 				<p className="text-left">
-					¿Desea cambiar la remover del articulo dentro del presupuesto?
+					¿Desea cambiar la disponibilidad del articulo dentro del presupuesto?
 				</p>
 			</Modal.Body>
 
