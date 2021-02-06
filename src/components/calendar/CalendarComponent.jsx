@@ -25,6 +25,8 @@ export class CalendarComponent extends Component {
 		// this.handleMoveEvent = this.handleMoveEvent.bind( this );
 		this.handleDayClick = this.handleDayClick.bind( this );
 		this.handleEventClick = this.handleEventClick.bind( this );
+
+		console.log( props.events );
 	}
 
 	componentDidMount() {

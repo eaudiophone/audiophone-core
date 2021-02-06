@@ -109,10 +109,6 @@ export class ItemService {
 			this.authService.putClient( url, item )
 				.then( response => {
 
-					console.log( response );
-
-					debugger;
-
 					const { apiaudiophoneitemessage, apiaudiophoneitemnew } = response.data;
 
 					resolve({

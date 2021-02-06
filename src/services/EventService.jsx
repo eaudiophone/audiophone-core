@@ -69,7 +69,7 @@ export class EventService {
 		});
 	}
 
-	getAllEvents( isUser = false ) {
+	getAllEventsUser( isUser = false ) {
 
 		return new Promise(( resolve, reject ) => {
 			

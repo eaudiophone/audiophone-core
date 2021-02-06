@@ -33,22 +33,22 @@ export class LoginPage extends Component {
 
     setTimeout( () => {
 
-      this.authService.logIn( value ).then( resp => {
+      this.authService.logIn( value )
+        .then( resp => {
 
-        if ( resp.status === 200 ) { // ok
-	        
           actions.setSubmitting( false );
-          this.setState({ redirect: true }); 
-        
-        } else {
-           
+          
+          return this.setState({ redirect: true }); 
+
+        })
+        .catch( error => {
+
           actions.setSubmitting( false );
-          this.message = resp.message;
+          this.message = error.message;
           this.action = 'Error';
 
-          this.setState({ showToast: true });
-        }
-      });
+          return this.setState({ showToast: true });
+        });
 
     }, 2000 );
 	}

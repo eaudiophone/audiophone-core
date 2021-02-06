@@ -6,7 +6,6 @@ import { RedirectService } from '../../services/RedirectService';
 export class EventsAdminPage extends Component {
 
 	eventService = new EventService();
-	eventsCalendar = [];
 	message = '';
 	action = '';
 	idTerms = {};  // { idTermsRental: 8, idTemsRecord: 7 }
@@ -19,59 +18,39 @@ export class EventsAdminPage extends Component {
 			loading: true,
 			redirect: false,
 			showToast: false,
-			showModal: false
+			showModal: false,
+			eventsCalendar: []
 		};
 
 		this.editEvent = this.editEvent.bind( this );
 	}
 
 	componentDidMount() {
-
-		this.eventService.getTerms()
-			.then( terms => {
-				
-				this.idTerms = terms;
-
-				return this.getEventsCalendar();
-				
-			})
-			.catch( error => {
-
-				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-
-				this.message = error.message;
-				this.action = error.action;
-				
-				return this.setState({ showToast: true, loading: false });
-			})
+		return this.getTermsAndEventsCalendar();
 	}
 
-	getEventsCalendar() {
+	async getTermsAndEventsCalendar() {
 
-		this.eventService.getAllEventsCalendar()
-			.then( events => {
+		try {
 
-				console.log( events );
-
-				this.eventsCalendar = events;
-
-				return this.setState({ loading: false });
-			})
-			.catch( error => {
-
-				// console.log( error );
-
-				if ( error.status === 401 ) {
-					return this.setState({ redirect: true });
-				}
-
-				this.message = error.message;
-				this.action = error.action;
-				
-				return this.setState({ showToast: true, loading: false });
+			this.idTerms = await this.eventService.getTerms();
+			
+			return this.setState({ 
+				loading: false, 
+				eventsCalendar: await this.eventService.getAllEventsCalendar() 
 			});
+
+		} catch( error ) {
+
+			if ( error.status === 401 ) {
+				return this.setState({ redirect: true });
+			}
+
+			this.message = error.message;
+			this.action = error.action;
+			
+			return this.setState({ showToast: true, loading: false });
+		}
 	}
 
 	newEvent( close = false, eventForm = null ) {
@@ -170,15 +149,16 @@ export class EventsAdminPage extends Component {
 					this.message = respUpdate.message;
 					this.action = respUpdate.action;
 
-					// se mapea los datos y luego se actualiza
+					// se mapea los datos, filtrando el cerrado y luego se actualiza
 
-					this.eventsCalendar = this.eventsCalendar.map(( event ) => {
+					let events = this.state.eventsCalendar.map(( event ) => {
 						
 						let { apiaudiophonevents_id } = event.extendedProps;
 
 						if ( eventUpdate.apiaudiophonevents_id === apiaudiophonevents_id ) {
 							return {
 								...event,
+								title: respStatus.eventUpdate.apiaudiophonevents_title,
 								extendedProps: respStatus.eventUpdate
 							};
 						}
@@ -186,15 +166,20 @@ export class EventsAdminPage extends Component {
 						return event;
 
 					});
+
+					console.log( events );
 						
-					this.eventsCalendar = this.eventsCalendar.filter(({ extendedProps }) => extendedProps.apiaudiophonevents_status !== 'CERRADO' );
+					events = this.state.eventsCalendar.filter(({ extendedProps }) => 
+						extendedProps.apiaudiophonevents_status !== 'CERRADO' );
 
 					this.setState({ 
+						eventsCalendar: events,
 						showToast: true, 
 						loading: false,
 					});
 
 					// si el evento es aceptado redirecciona a presupuesto
+
 					if ( form.apiaudiophonevents_status === 'ACEPTADO' ) {
 						return this.redirectNewBudget( form.apiaudiophonevents_id );
 					}
@@ -213,19 +198,17 @@ export class EventsAdminPage extends Component {
 
 				});
 		
-		} else {  // new
+		} else {  // new event
 
 			this.eventService.registerEvent( form )
 				.then( resp => {
 
-					console.log( resp );
-
 					this.message = resp.message;
 					this.action = resp.action;
 
-					this.eventsCalendar = this.eventsCalendar.concat([ resp.event ]);
+					const events = this.state.eventsCalendar.concat([ resp.event ]);
 
-					return this.setState({ loading: false, showToast: true });
+					return this.setState({ loading: false, showToast: true, eventsCalendar: events });
 				})
 				.catch( error => {
 
@@ -267,7 +250,7 @@ export class EventsAdminPage extends Component {
 		if ( !this.state.loading ) {
 			return ( 
 				<CalendarComponent 
-					events={ this.eventsCalendar } 
+					events={ this.state.eventsCalendar } 
 					closeModal={ ( resp, event, action = 'edit' ) => this.prepareData( resp, event, action ) } 
 					openModal={ this.state.showModal }
 					showModal={ ( open ) => this.setState({ showModal: open }) }

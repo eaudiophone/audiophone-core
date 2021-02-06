@@ -195,9 +195,11 @@ export class ItemsTableComponent extends Component {
 
 		this.itemService.searchItem( search )
 			.then( response => {
+				
 				return this.setState({
 					items: response.items
 				});
+				
 			})
 			.catch( error => {
 

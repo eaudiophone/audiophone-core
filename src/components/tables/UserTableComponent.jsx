@@ -83,74 +83,64 @@ export class UserTableComponent extends Component {
 
 	editUserRole( user ) {
 
-		if ( user !== null ) {
-
-			this.userService.editUserRole( user, this.state.users )
-				.then(( resp ) => {
-
-					this.message = resp.message;
-					this.action = resp.action;
-
-					this.setState({
-						showEditModal: false,
-						showToast: true,
-						users: resp.users
-					}); 
-				})
-				.catch( error => {
-					
-					// console.log( error )
-					
-					if ( error.status === 401 ) {
-						return this.props.redirect();
-					}
-
-					this.message = error.message;
-					this.action = error.action;
-					this.setState({ showToast: true, showEditModal: false });
-			
-				});
-
-		} else {
-
-			this.setState({
-				showEditModal: false,
-			});
+		if ( !user ) {
+			return this.setState({ showEditModal: false });
 		}
+
+		this.userService.editUserRole( user, this.state.users )
+			.then(( resp ) => {
+
+				this.message = resp.message;
+				this.action = resp.action;
+
+				return this.setState({
+					showEditModal: false,
+					showToast: true,
+					users: resp.users
+				}); 
+			})
+			.catch( error => {
+					
+				if ( error.status === 401 ) {
+					return this.props.redirect();
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+				
+				return this.setState({ showToast: true, showEditModal: false });
+		});
 	}
 
 	deleteUser( idUser ) {
 
-		if ( idUser !== null ) {
-
-			this.userService.deleteUser( idUser, this.state.users )
-				.then( resp => {
-
-					this.message = resp.message;
-					this.action = resp.action;
-					
-					this.setState({ 
-						showToast: true, 
-						users: resp.users,
-						showDeleteModal: false
-					});
-				})
-				.catch( error => {
-
-					if ( error.status === 401 ) {
-						return this.props.redirect();
-					}
-
-					this.message = error.message;
-					this.action = error.action;
-					this.setState({ showToast: true, showEditModal: false });
-				});
-		
-		} else {
-
-			this.setState({ showDeleteModal: false });
+		if ( !idUser ) {
+			return this.setState({ showDeleteModal: false });
 		} 
 		
+		this.userService.deleteUser( idUser, this.state.users )
+			.then( resp => {
+
+				this.message = resp.message;
+				this.action = resp.action;
+				
+				return this.setState({ 
+					showToast: true, 
+					users: resp.users,
+					showDeleteModal: false
+				});
+			})
+			.catch( error => {
+
+				if ( error.status === 401 ) {
+					return this.props.redirect();
+				}
+
+				this.message = error.message;
+				this.action = error.action;
+				
+				return this.setState({ showToast: true, showEditModal: false });
+			});
 	}
 	
 	sendSearch( search = '' ) {
@@ -165,7 +155,8 @@ export class UserTableComponent extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-				this.setState({ showToast: true });
+				
+				return this.setState({ showToast: true });
 			});
 	}
 
@@ -226,10 +217,6 @@ export class UserTableComponent extends Component {
 
 			break;
 		}
-	}
-
-	setHeaderTable() {
-	
 	}
 
 	setData() {
