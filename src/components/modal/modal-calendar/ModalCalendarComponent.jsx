@@ -116,7 +116,7 @@ const ModalEditEvent = ( props ) => {  // children
 							<Field 
 								name="apiaudiophonevents_finaltime"
 								type="time"
-								title="Hora de inicio:"
+								title="Hora de finalizacion:"
 								component={ HourInput }
 								columnSize={ 6 }
 								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
@@ -232,7 +232,7 @@ const ModalNewEvent = ( props ) => {  // children
 							<Field 
 								name="apiaudiophonevents_finaltime"
 								type="time"
-								title="Hora de inicio:"
+								title="Hora de finalizacion:"
 								component={ HourInput }
 								columnSize={ 6 }
 							/>
