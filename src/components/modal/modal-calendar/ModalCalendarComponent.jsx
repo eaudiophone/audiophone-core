@@ -132,7 +132,7 @@ const ModalEditEvent = ( props ) => {  // children
 
 		         <Field 
 		            name="apiaudiophonevents_description"
-		            title="Descripción del evento"
+		            title="Descripción del evento:"
 		            component={ TextAreaInput }
 		            type="textarea"
 		            readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
