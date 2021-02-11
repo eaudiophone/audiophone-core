@@ -13,9 +13,9 @@ export class BudgetPage extends Component {
 
 	constructor( props ) {
 		super( props );
-		
-		this.state = { 
-			redirect: false, 
+
+		this.state = {
+			redirect: false,
 			budgets: [],
 			totalBudgets: 0,
 			showModal: false,
@@ -35,17 +35,17 @@ export class BudgetPage extends Component {
 
 		const data = {
 			...values,
-			apiaudiophonebudgets_id_service: 
+			apiaudiophonebudgets_id_service:
 				values.apiaudiophonebudgets_nameservice.toLowerCase() === 'alquiler' ? 1 : 2,
 		};
 
 		delete data.created_at;
 
-		Promise.all([ 
-			this.budgetService.updateBudget( data ),  
-			this.budgetService.updateStatus({ 
+		Promise.all([
+			this.budgetService.updateBudget( data ),
+			this.budgetService.updateStatus({
 				apiaudiophonebudgets_id: values.apiaudiophonebudgets_id,
-				apiaudiophonebudgets_status: values.apiaudiophonebudgets_status 
+				apiaudiophonebudgets_status: values.apiaudiophonebudgets_status
 			})
 		])
 			.then(([ response ]) => {
@@ -57,7 +57,7 @@ export class BudgetPage extends Component {
 					if ( budget.apiaudiophonebudgets_id === response.updateBudget.apiaudiophonebudgets_id ) {
 						return {
 							...response.updateBudget,
-							apiaudiophonebudgets_status: values.apiaudiophonebudgets_status 
+							apiaudiophonebudgets_status: values.apiaudiophonebudgets_status
 						};
 					}
 
@@ -67,10 +67,10 @@ export class BudgetPage extends Component {
 				this.message = response.message;
 				this.action = response.action;
 
-				return this.setState({ 
-					showModal: false, 
+				return this.setState({
+					showModal: false,
 					showToast: true,
-					budgets 
+					budgets
 				});
 			})
 			.catch( error => {
@@ -93,23 +93,23 @@ export class BudgetPage extends Component {
 
 		this.budgetService.deleteBudget({ apiaudiophonebudgets_id: budget.apiaudiophonebudgets_id })
 			.then( response => {
-				
+
 				let budgets = this.state.budgets.filter(
-					( budgetArray ) => budgetArray.apiaudiophonebudgets_id !== budget.apiaudiophonebudgets_id 
+					( budgetArray ) => budgetArray.apiaudiophonebudgets_id !== budget.apiaudiophonebudgets_id
 				);
 
 				this.message = response.message;
 				this.action = response.action;
 
-				return this.setState({ 
-					showModal: false, 
-					showToast: true, 
+				return this.setState({
+					showModal: false,
+					showToast: true,
 					budgets,
 					totalBudgets: this.state.totalBudgets - 1
 				});
 			})
 			.catch( error => {
-				
+
 				if ( error.status === 401 ) {
 					this.setState({ redirect: true });
 				}
@@ -121,10 +121,10 @@ export class BudgetPage extends Component {
 			});
 
 		return this.setState({ showModal: false });
-	}	
+	}
 
 	getPagination( pagination = { start: 1, end: 5 }, init = false ) {
-		
+
 		this.budgetService.getAllBudgets( pagination )
 			.then( response => {
 
@@ -149,7 +149,7 @@ export class BudgetPage extends Component {
 	}
 
 	searchBudget( stringSearch = '' ) {
-		
+
 		this.budgetService.searchBudget( stringSearch )
 			.then( response => {
 				return this.setState({ budgets: response.budgets })
@@ -167,7 +167,7 @@ export class BudgetPage extends Component {
 			});
 	}
 
-	showPdf( url = 'https://www.google.com/' ) {
+	showPdf( url = 'http://localhost/psp_8_pppp_2021-02-06.pdf' ) {
 
 		// abre el PDF en otra pestaña del navegador
 		return window.open( url, '_blank');
@@ -195,14 +195,14 @@ export class BudgetPage extends Component {
 		} else {
 			this.setState({ showModal: false });
 		}
-		
+
 	}
 
 	showContent() {
 
 		if ( !this.state.loading ) {
 			return (
-				<BudgetTableComponent 
+				<BudgetTableComponent
 					budgets={ this.state.budgets }
 					totalBudgets={ this.state.totalBudgets }
 					pagination={ ( params ) => this.getPagination( params ) }
@@ -219,20 +219,20 @@ export class BudgetPage extends Component {
 	render() {
 		return (
 			<Fragment>
-				<ToastComponent 
+				<ToastComponent
 					context={ this.action }
 					content={ this.message }
 					onHide={ () => this.setState({ showToast: false }) }
 					showToast={ this.state.showToast }
 				/>
-				<ModalBudgetComponent 
+				<ModalBudgetComponent
 					showModal={ this.state.showModal }
 					closeModal={ ( response, action ) => this.dispatchActions( response, action ) }
 					budget={ this.state.budget }
 					typeModal={ this.typeModal }
 				/>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
-				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
+				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap
 						align-items-center pb-2 mb-3 border-bottom">
 					<h2>Presupuesto de servicios</h2>
 				</div>
