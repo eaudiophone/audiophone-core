@@ -16,16 +16,16 @@ export const ModalCalendarComponent = ({ showModal, closeModal, event = null, ac
 	}
 
 	return (
-		<Modal 
+		<Modal
 			show={ showModal }
-		 	onHide={ () => closeModal( false, null ) } 
+		 	onHide={ () => closeModal( false, null ) }
 		 	size="xl"
 		 	centered
 		 >
 			<Modal.Header  closeButton>
 				<Modal.Title>{ event ? event.apiaudiophonevents_title : 'Nuevo evento' }</Modal.Title>
 			</Modal.Header>
-			<Formik 
+			<Formik
 				component={ action === 'edit' ? ModalEditEvent : ModalNewEvent }
 				validateOnChange={ true }
 				initialValues={ action === 'edit' ? event : new Event( '', '', date, '', '', '', '', '' ) }
@@ -45,22 +45,22 @@ const ModalEditEvent = ( props ) => {  // children
 		<Fragment>
 			<FormFormik>
 
-				<Modal.Body> 
-					
+				<Modal.Body>
+
 					<Container>
-						
+
 						<label className="font-weight-bold">Estado del evento:</label>
-						
+
 						<Form.Row className="justify-content-around mb-4 mt-3">
 							{ STATUS_MEETINGS.map(( status, index ) => (
-									<Button 
-										key={ index } 
+									<Button
+										key={ index }
 										variant={ status === props.values.apiaudiophonevents_status ? 'primary' : 'secondary' }
 										onClick={ () => props.setFieldValue( 'apiaudiophonevents_status', status ) }
 									>
 										{ toCapitalize( status ) }
 									</Button>
-								)) 
+								))
 							}
 						</Form.Row>
 
@@ -78,16 +78,16 @@ const ModalEditEvent = ( props ) => {  // children
 									</span> Minutos
 								</p>
 							</Col>
-						
-							<Field 
-								name="apiaudiophonevents_title" 
-								type="text" 
-								title="Nombre del evento:" 
+
+							<Field
+								name="apiaudiophonevents_title"
+								type="text"
+								title="Nombre del evento:"
 								component={ FormInput }
 								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
 							/>
 
-							 <Field 
+							 <Field
 	          		component={ SelectInput }
 	          		title="Servicio a solicitar:"
 	          		name="id_apiaudiophoneservices"
@@ -96,7 +96,7 @@ const ModalEditEvent = ( props ) => {  // children
 	          		readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
 	        		/>
 
-							<Field 
+							<Field
 								name="apiaudiophonevents_date"
 								type="date"
 								title="Fecha del evento:"
@@ -104,7 +104,7 @@ const ModalEditEvent = ( props ) => {  // children
 								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
 							/>
 
-							<Field 
+							<Field
 								name="apiaudiophonevents_begintime"
 								type="time"
 								title="Hora de inicio:"
@@ -113,7 +113,7 @@ const ModalEditEvent = ( props ) => {  // children
 								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
 							/>
 
-							<Field 
+							<Field
 								name="apiaudiophonevents_finaltime"
 								type="time"
 								title="Hora de finalizacion:"
@@ -122,7 +122,7 @@ const ModalEditEvent = ( props ) => {  // children
 								readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
 							/>
 
-		          <Field 
+		          <Field
 		            name="apiaudiophonevents_address"
 		            title="Direccion del evento:"
 		            component={ TextAreaInput }
@@ -130,7 +130,7 @@ const ModalEditEvent = ( props ) => {  // children
 		            readonly={ props.values.apiaudiophonevents_status !== 'POSPUESTO' }
 		          />
 
-		         <Field 
+		         <Field
 		            name="apiaudiophonevents_description"
 		            title="Descripción del evento:"
 		            component={ TextAreaInput }
@@ -147,15 +147,15 @@ const ModalEditEvent = ( props ) => {  // children
 				<Modal.Footer> { /* Botones */ }
 
 					{ props.values.apiaudiophonevents_status === 'ACEPTADO' && (
-							
-							<Button 
-								variant="primary" 
+
+							<Button
+								variant="primary"
 								type="submit"
 								disabled={ !props.isValid }
 							>
 								Generar Presupuesto
 							</Button>
-						) 
+						)
 					}
 
 					{ props.values.apiaudiophonevents_status !== 'INGRESADO' &&
@@ -163,21 +163,21 @@ const ModalEditEvent = ( props ) => {  // children
 
 							<Fragment>
 								<Button variant="secondary" type="reset">
-									Cancelar
+									Limpiar formulario
 								</Button>
-								<Button 
-									variant="primary" 
+								<Button
+									variant="primary"
 									type="submit"
 									disabled={ !props.isValid }
 								>
 									Editar
 								</Button>
 							</Fragment>
-						) 
+						)
 					}
 
 				</Modal.Footer>
-				
+
 			</FormFormik>
 		</Fragment>
 	);
@@ -193,20 +193,20 @@ const ModalNewEvent = ( props ) => {  // children
 		<Fragment>
 			<FormFormik>
 
-				<Modal.Body> 
-					
+				<Modal.Body>
+
 					<Container>
 
 						<Form.Row>
-						
-							<Field 
-								name="apiaudiophonevents_title" 
-								type="text" 
-								title="Nombre del evento:" 
+
+							<Field
+								name="apiaudiophonevents_title"
+								type="text"
+								title="Nombre del evento:"
 								component={ FormInput }
 							/>
 
-							 <Field 
+							 <Field
 	          		component={ SelectInput }
 	          		title="Servicio a solicitar:"
 	          		name="id_apiaudiophoneservices"
@@ -214,14 +214,14 @@ const ModalNewEvent = ( props ) => {  // children
 	          		type="select"
 	        		/>
 
-							<Field 
+							<Field
 								name="apiaudiophonevents_date"
 								type="date"
 								title="Fecha del evento:"
 								component={ FormInputDate }
 							/>
 
-							<Field 
+							<Field
 								name="apiaudiophonevents_begintime"
 								type="time"
 								title="Hora de inicio:"
@@ -229,7 +229,7 @@ const ModalNewEvent = ( props ) => {  // children
 								columnSize={ 6 }
 							/>
 
-							<Field 
+							<Field
 								name="apiaudiophonevents_finaltime"
 								type="time"
 								title="Hora de finalizacion:"
@@ -239,18 +239,18 @@ const ModalNewEvent = ( props ) => {  // children
 
 
 							{ props.values.id_apiaudiophoneservices === '1' && (
-            
-			            <Field 
+
+			            <Field
 			              name="apiaudiophonevents_address"
 			              title="Direccion del evento:"
 			              columnSize={ 12 }
 			              component={ TextAreaInput }
 			              type="textarea"
 		          	  />
-		          	)  
+		          	)
         			}
 
-		         <Field 
+		         <Field
 		            name="apiaudiophonevents_description"
 		            title="Descripción del evento"
 		            component={ TextAreaInput }
@@ -266,18 +266,18 @@ const ModalNewEvent = ( props ) => {  // children
 				<Modal.Footer> { /* Botones */ }
 
 					<Button variant="secondary" type="reset">
-						Cancelar
+						Limpiar formulario
 					</Button>
-					<Button 
-						variant="primary" 
+					<Button
+						variant="primary"
 						type="submit"
 						disabled={ !props.isValid }
 					>
 						Crear evento
 					</Button>
-					
+
 				</Modal.Footer>
-				
+
 			</FormFormik>
 		</Fragment>
 	);
@@ -294,7 +294,7 @@ const getOptions = () => {
 
     if ( i === 1 ) {
       idServices = idServices.concat([{ value: i, description: 'servicio de alquiler ( Grupo Musical Horizonte )' }]);
-    
+
     } else {
       idServices = idServices.concat([{ value: i, description: 'servicio de grabación ( Estudios Audiophone )' }]);
     }
