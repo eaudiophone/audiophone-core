@@ -167,7 +167,7 @@ export class BudgetPage extends Component {
 			});
 	}
 
-	showPdf( url = 'http://localhost/psp_8_pppp_2021-02-06.pdf' ) {
+	showPdf( url = 'http://localhost/docs/psp_8_pppp_2021-02-06.pdf' ) {
 
 		// abre el PDF en otra pestaña del navegador
 		return window.open( url, '_blank');
