@@ -19,7 +19,7 @@ export class EventsAdminPage extends Component {
 			redirect: false,
 			showToast: false,
 			showModal: false,
-			eventsCalendar: []
+			eventsCalendar: [],
 		};
 
 		this.editEvent = this.editEvent.bind( this );
@@ -37,7 +37,7 @@ export class EventsAdminPage extends Component {
 			
 			return this.setState({ 
 				loading: false, 
-				eventsCalendar: await this.eventService.getAllEventsCalendar() 
+				eventsCalendar: await this.eventService.getAllEventsCalendar(),
 			});
 
 		} catch( error ) {
@@ -136,8 +136,6 @@ export class EventsAdminPage extends Component {
 	}
 
 	sendData( form, status = null ) {
-
-		this.setState({ showModal: false, loading: true })
 		
 		if ( form.apiaudiophonevents_id && status ) { // edit
 
@@ -149,44 +147,20 @@ export class EventsAdminPage extends Component {
 					this.message = respUpdate.message;
 					this.action = respUpdate.action;
 
-					// se mapea los datos, filtrando el cerrado y luego se actualiza
-					let events = this.state.eventsCalendar.map(( event ) => {
-						
-						let { apiaudiophonevents_id } = event.extendedProps;
-						
-						if ( eventUpdate.apiaudiophonevents_id === apiaudiophonevents_id ) {
-
-							return {
-								...event,
-								title: eventUpdate.apiaudiophonevents_title,
-								extendedProps: eventUpdate
-							};
-						}
-
-						return event;
-
-					});
+					let events = this.state.eventsCalendar.reduce( this.reduceEvents.bind( eventUpdate ), []);
 
 					console.log( events, eventUpdate );
-						
-					events = this.state.eventsCalendar.filter(({ extendedProps }) => 
-						extendedProps.apiaudiophonevents_status !== 'CERRADO' );
 
-					// callback para evitar la llamada asincrona de set state
-					this.setState({ 
+					this.setState(() => ({ 
 						eventsCalendar: events,
 						showToast: true, 
-						loading: false,
-					});
-
-					console.log('afuera callback');
+						showModal: false,
+					}));
 
 					// si el evento es aceptado redirecciona a presupuesto
-
 					if ( form.apiaudiophonevents_status === 'ACEPTADO' ) {
 						return this.redirectNewBudget( form.apiaudiophonevents_id );
 					}
-
 				})
 				.catch( error => {
 
@@ -197,7 +171,7 @@ export class EventsAdminPage extends Component {
 					this.message = error.message;
 					this.action = error.action;
 					
-					return this.setState({ showToast: true, loading: false });
+					return this.setState({ showToast: true });
 
 				});
 		
@@ -211,7 +185,12 @@ export class EventsAdminPage extends Component {
 
 					const events = this.state.eventsCalendar.concat([ resp.event ]);
 
-					return this.setState({ loading: false, showToast: true, eventsCalendar: events });
+					return this.setState({ 
+						loading: false, 
+						showToast: true, 
+						eventsCalendar: events, 
+						showModal: false,
+					});
 				})
 				.catch( error => {
 
@@ -222,7 +201,7 @@ export class EventsAdminPage extends Component {
 					this.message = error.message;
 					this.action = error.action;
 					
-					return this.setState({ showToast: true, loading: false });
+					return this.setState({ showToast: true, showModal: false, });
 				})
 
 		}
@@ -237,6 +216,31 @@ export class EventsAdminPage extends Component {
 			return this.setState({ redirect: true });	
 		
 		}, 1500 );
+	}
+
+	reduceEvents( accum, event ) {
+
+		// this = eventUpdate
+
+		const { apiaudiophonevents_id, apiaudiophonevents_status } = event.extendedProps;
+
+		if ( apiaudiophonevents_status !== 'CERRADO' ) {
+
+			if ( this.apiaudiophonevents_id === apiaudiophonevents_id  ) {
+				return accum.concat([{
+					...event,
+					title: this.apiaudiophonevents_title,
+					extendedProps: this
+				}]);
+			
+			} else {
+				return accum.concat([ event ]);
+			
+			}
+		}
+
+		// si hay un evento cerrado regresa el accum
+		return accum;
 	}
 
 	prepareData( resp, event, action ) {
