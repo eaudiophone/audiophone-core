@@ -15,7 +15,7 @@ const headerTable = [
 
 export const BudgetTableComponent = ( props ) => {
 	
-	const { pagination, budgets, totalBudgets, search, dispatch } = props;
+	const { pagination, budgets, totalBudgets, search, dispatch, showPdf } = props;
 
 	return (
 		<Fragment>
@@ -48,7 +48,7 @@ export const BudgetTableComponent = ( props ) => {
 											variant="secondary"
 											size="sm"
 											className="point mr-2 "
-											onClick={ () => dispatch('showPdf') }
+											onClick={ () => showPdf( budget.apiaudiophonebudgets_url ) }
 										>	
 											<FontAwesomeIcon icon="file-pdf" />
 										</Button>
@@ -60,14 +60,6 @@ export const BudgetTableComponent = ( props ) => {
 										>
 											<FontAwesomeIcon icon="pen" />
 										</Button>
-										{/*<Button 
-											variant="danger" 
-											size="sm" 
-											className="point"
-											onClick={ () => dispatch('delete', budget ) }
-										>
-											<FontAwesomeIcon icon="trash" />
-										</Button> */}
 									</Row>
 								</td>
 							</tr>

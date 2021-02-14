@@ -4,6 +4,7 @@ import { Table, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { UserService } from '../../services/UserService';
+
 import { 
 	SearchBarComponent, 
 	SearchFilterComponent, 
@@ -11,7 +12,9 @@ import {
 	ToastComponent, 
 	LoadingComponent 
 } from '../index';
+
 import { DeleteProfileModal, ChangeRoleModal } from '../modal/index';
+
 import { getDateWithHour } from './../../util-functions/date-format';
 
 export class UserTableComponent extends Component { 
@@ -66,7 +69,7 @@ export class UserTableComponent extends Component {
 		
 		if ( modal === 'edit' ) {
 			
-			this.setState({
+			return this.setState({
 				showDeleteModal: false,
 				showEditModal: true,
 				data
@@ -74,7 +77,7 @@ export class UserTableComponent extends Component {
 		
 		} else {  // new
 			
-			this.setState({
+			return this.setState({
 				showDeleteModal: true,
 				showEditModal: false,
 				data
@@ -147,7 +150,7 @@ export class UserTableComponent extends Component {
 	
 	sendSearch( search = '' ) {
 
-		return this.userService.searchUser( search )
+		this.userService.searchUser( search )
 			.then( resp => this.setState( resp ) )
 			.catch( error => {
 

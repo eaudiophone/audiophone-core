@@ -150,16 +150,16 @@ export class EventsAdminPage extends Component {
 					this.action = respUpdate.action;
 
 					// se mapea los datos, filtrando el cerrado y luego se actualiza
-
 					let events = this.state.eventsCalendar.map(( event ) => {
 						
 						let { apiaudiophonevents_id } = event.extendedProps;
-
+						
 						if ( eventUpdate.apiaudiophonevents_id === apiaudiophonevents_id ) {
+
 							return {
 								...event,
-								title: respStatus.eventUpdate.apiaudiophonevents_title,
-								extendedProps: respStatus.eventUpdate
+								title: eventUpdate.apiaudiophonevents_title,
+								extendedProps: eventUpdate
 							};
 						}
 
@@ -167,16 +167,19 @@ export class EventsAdminPage extends Component {
 
 					});
 
-					console.log( events );
+					console.log( events, eventUpdate );
 						
 					events = this.state.eventsCalendar.filter(({ extendedProps }) => 
 						extendedProps.apiaudiophonevents_status !== 'CERRADO' );
 
+					// callback para evitar la llamada asincrona de set state
 					this.setState({ 
 						eventsCalendar: events,
 						showToast: true, 
 						loading: false,
 					});
+
+					console.log('afuera callback');
 
 					// si el evento es aceptado redirecciona a presupuesto
 

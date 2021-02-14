@@ -3,6 +3,7 @@ import { BudgetTableComponent, LoadingComponent, ToastComponent } from '../../co
 import { BudgetService } from '../../services/BudgetService';
 import { RedirectService } from '../../services/RedirectService';
 import { ModalBudgetComponent } from '../../components/modal/index';
+import { URL_SERVER } from '../../enviroment';
 
 export class BudgetPage extends Component {
 
@@ -167,10 +168,8 @@ export class BudgetPage extends Component {
 			});
 	}
 
-	showPdf( url = 'https://www.google.com/' ) {
-
-		// abre el PDF en otra pestaña del navegador
-		return window.open( url, '_blank');
+	showPdf( url ) {
+		return window.open( URL_SERVER.documents + url, '_blank');
 	}
 
 	openModal( action = '', budget ) {
@@ -206,7 +205,7 @@ export class BudgetPage extends Component {
 					budgets={ this.state.budgets }
 					totalBudgets={ this.state.totalBudgets }
 					pagination={ ( params ) => this.getPagination( params ) }
-					showPdf={ () => this.showPdf() }
+					showPdf={ ( url ) => this.showPdf( url ) }
 					search={ ( stringSearch ) => this.searchBudget( stringSearch ) }
 					dispatch={ ( action, budget ) => this.openModal( action, budget ) }
 				/>
