@@ -37,9 +37,7 @@ export class DetailBudgetPage extends Component {
 	componentDidMount() {
 
 		this.budgetService.getDataItemsBudget()
-			.then( response => {
-				return this.getEvent( response.bd_items );
-			})
+			.then( response => this.getEvent( response.bd_items ))
 			.catch( error => {
 				
 				// console.log( error.data );
@@ -143,7 +141,6 @@ export class DetailBudgetPage extends Component {
 		this.budgetService.createBudget( data )
 			.then( response => {
 				
-				
 				this.message = response.message;
 				this.action = response.action;
 				
@@ -151,13 +148,15 @@ export class DetailBudgetPage extends Component {
 
 				this.route = '/budget';
 
-				setTimeout(() => this.setState({ redirect: true }), 2000 );
-				
-				actions.setSubmitting( false );
+				setTimeout(() => { 
+					actions.setSubmitting( false );
+					this.setState({ redirect: true });
+				} , 2000 );
+
 			})
 			.catch( error => {
 				
-				console.log( error );
+				// console.log( error );
 
 				if ( error.status === 401 ) {
 					return this.setState({ redirect: true });
@@ -172,7 +171,7 @@ export class DetailBudgetPage extends Component {
 			});
 	}
 
-	// maneja el calculo del subtotal
+	// calculo del subtotal
 	handleChange( value, idItem ) {
 
 		let newPrice = 0;
@@ -260,7 +259,8 @@ export class DetailBudgetPage extends Component {
 					<b className="mr-2">
 						Nombre del evento: 
 					</b> { this.event.apiaudiophonevents_title } <br />
-					<b className="mr-2">Tipo de presupuesto: </b> { Number( this.event.id_apiaudiophoneservices ) === 1 ? 'Alquiler' : 'Grabación' }
+					<b className="mr-2">Tipo de presupuesto: </b> 
+					{ Number( this.event.id_apiaudiophoneservices ) === 1 ? 'Alquiler' : 'Grabación' }
 					<br />
 					<b className="mr-2">Fecha: </b> { getSpanishFormatDate( new Date().toISOString() ) }
 				</p>
@@ -341,8 +341,8 @@ const InputQuantity = ( props ) => {
 	const [ value, setValue ] = useState( item.apiaudiophonebudgets_items_quantity );
 
 	const handleChange = ( val, idItem ) => {
-		
-		setValue( Number( val ) < 1 || Number( val ) > 9999  ? 1 : Number( val ) );
+
+		setValue( Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ) );
 
 		changeQuantity( 
 			Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ), 

@@ -4,29 +4,29 @@ import { Form as FormFormik, Field, Formik } from 'formik';
 import { BudgetSchema } from '../../form/budget-form/BudgetSchema';
 import { FormInput } from '../../form/FormComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
- 
+
 export const ModalBudgetComponent = ( props ) => {
 	const { showModal, closeModal, budget, typeModal } = props;
 
 	return (
 		<Modal size={ typeModal === 'edit' ? 'xl' : 'md' } show={ showModal } onHide={ closeModal }>
-			{ typeModal === 'edit' ? 
-				( <UpdateBudgetForm 
-						budget={ budget } 
+			{ typeModal === 'edit' ?
+				( <UpdateBudgetForm
+						budget={ budget }
 						confirm={ ( form ) => closeModal( form, 'edit' ) }
-					/> 
-				) : 
-				( <DeleleBudgetConfirm 
-						budget={ budget } 
-						confirm={ ( resp, action ) => closeModal( resp, action ) } 
-					/> ) 
+					/>
+				) :
+				( <DeleleBudgetConfirm
+						budget={ budget }
+						confirm={ ( resp, action ) => closeModal( resp, action ) }
+					/> )
 			}
 		</Modal>
 	);
 }
 
 const UpdateBudgetForm = ( props ) => {
-	
+
 	const { budget, confirm } = props;
 
 	const handleSubmit = ( values, actions ) => confirm({ values, actions })
@@ -36,7 +36,7 @@ const UpdateBudgetForm = ( props ) => {
 		 <Modal.Header closeButton>
        <Modal.Title>Editar datos del presupesto n° { budget.apiaudiophonebudgets_id }</Modal.Title>
      </Modal.Header>
-     <Formik 
+     <Formik
 	     	validationSchema={ new BudgetSchema().getSchema() }
 	     	initialValues={ budget }
 	     	validateOnChange={ true }
@@ -48,7 +48,7 @@ const UpdateBudgetForm = ( props ) => {
 }
 
 const DeleleBudgetConfirm = ( props ) => {
-	
+
 	const { budget, confirm } = props;
 
 	return (
@@ -63,18 +63,18 @@ const DeleleBudgetConfirm = ( props ) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={ () => confirm() }>
-          Cerrar
+          Limpiar datos
         </Button>
         <Button variant="primary" onClick={ () => confirm( budget, 'delete' ) }>
           Eliminar
         </Button>
       </Modal.Footer>
 		</Fragment>
-	);	
+	);
 }
 
 const BudgetForm = ( props ) => {
-	
+
 	const { values, isSubmitting, isValid, setFieldValue } = props;
 
 	console.log( values.apiaudiophonebudgets_status );
@@ -83,22 +83,22 @@ const BudgetForm = ( props ) => {
 		<Fragment>
 			<FormFormik>
 				 <Modal.Body>
-				 
+
 				 		<b>Estado del formulario:</b>
 				 		<Form.Row className="justify-content-around mb-4 mt-3">
-				 			<Button 
+				 			<Button
 				 				variant={ values.apiaudiophonebudgets_status === 'NO_APLICA' ? 'primary' : 'secondary' }
 				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'NO_APLICA' ) }
 				 			>
 				 				No aplica
 				 			</Button>
-				 			<Button 
+				 			<Button
 				 				variant={ values.apiaudiophonebudgets_status === 'PENDIENTE' ? 'primary' : 'secondary' }
 				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'PENDIENTE' ) }
 				 			>
 				 				Pendiente
 				 			</Button>
-				 			<Button 
+				 			<Button
 				 				variant={ values.apiaudiophonebudgets_status === 'PAGADO' ? 'primary' : 'secondary' }
 				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'PAGADO' ) }
 				 			>
@@ -115,10 +115,10 @@ const BudgetForm = ( props ) => {
 				 			</Col>
 				 		</Form.Row>
 
-				 		
+
 	      		<Form.Row>
 							<Col sm={ 12 }>
-								<Field 
+								<Field
 									component={ FormInput }
 									name="apiaudiophonebudgets_client_name"
 									type="text"
@@ -126,7 +126,7 @@ const BudgetForm = ( props ) => {
 								/>
 							</Col>
 							<Col sm={ 12 }>
-								<Field 
+								<Field
 									component={ FormInput }
 									name="apiaudiophonebudgets_client_email"
 									type="text"
@@ -134,7 +134,7 @@ const BudgetForm = ( props ) => {
 								/>
 							</Col>
 							<Col sm={ 12 }>
-								<Field 
+								<Field
 									component={ FormInput }
 									name="apiaudiophonebudgets_client_phone"
 									type="text"
@@ -142,7 +142,7 @@ const BudgetForm = ( props ) => {
 								/>
 							</Col>
 							<Col sm={ 12 }>
-								<Field 
+								<Field
 									component={ FormInput }
 									name="apiaudiophonebudgets_client_social"
 									type="text"
@@ -154,13 +154,13 @@ const BudgetForm = ( props ) => {
 	      </Modal.Body>
 	      <Modal.Footer>
 	        <Button variant="secondary" type="reset">
-	          Cancelar
+	          Limpiar formulario
 	        </Button>
 	        { !isSubmitting && (
 			        <Button variant="primary" disabled={ !isValid } type="submit">
 			          Actualizar
 			        </Button>
-	        	) 
+	        	)
 	      	}
 	      	{
 	      		isSubmitting && (

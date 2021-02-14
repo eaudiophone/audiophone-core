@@ -14,7 +14,8 @@ import { ModalCalendarComponent } from './../modal/index';
 export class CalendarComponent extends Component {
 
 	calendarRef = React.createRef();
-	calendarInstance = null;
+	calendarAPI = null;
+	
 	eventSelected = null;
 	action = '';  // edit | new
 	date = ''; // fecha (solo nuevo evento)
@@ -22,21 +23,20 @@ export class CalendarComponent extends Component {
 	constructor( props ) {	
 		super( props );
 
-		// this.handleMoveEvent = this.handleMoveEvent.bind( this );
+		this.state = { destroy: true }
+
 		this.handleDayClick = this.handleDayClick.bind( this );
 		this.handleEventClick = this.handleEventClick.bind( this );
-
-		console.log( props.events );
 	}
 
 	componentDidMount() {
-		this.calendarInstance = this.calendarRef.current.getApi();
+		this.calendarAPI = this.calendarRef.current.getApi();
 	}
 
 	handleEventClick({ event }) {
 
 		const id = event._def.publicId; 
-		const result = this.calendarInstance.getEventById( id );
+		const result = this.calendarAPI.getEventById( id );
 
 		this.eventSelected = result.extendedProps;
 		this.action = 'edit';
@@ -46,7 +46,6 @@ export class CalendarComponent extends Component {
 
 	handleDayClick( info ) {
 
-		// comparacion de fechas
 		const result = compareDates( new Date( info.date ).setHours( 0, 0, 0, 0 ) );
 
 		if ( !result ) {
@@ -59,7 +58,6 @@ export class CalendarComponent extends Component {
 
 		this.props.showModal( true );
 	}
-	
 
 	renderModal() {
 
