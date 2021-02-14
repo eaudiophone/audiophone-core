@@ -226,13 +226,16 @@ export class EventsAdminPage extends Component {
 
 		if ( apiaudiophonevents_status !== 'CERRADO' ) {
 
-			if ( this.apiaudiophonevents_id === apiaudiophonevents_id  ) {
-				return accum.concat([{
-					...event,
-					title: this.apiaudiophonevents_title,
-					extendedProps: this
-				}]);
-			
+			if ( this.apiaudiophonevents_id === apiaudiophonevents_id ) {
+				
+				if ( this.apiaudiophonevents_status !== 'CERRADO' ) {
+					return accum.concat([{
+						...event,
+						title: this.apiaudiophonevents_title,
+						extendedProps: this
+					}]);
+				}
+
 			} else {
 				return accum.concat([ event ]);
 			
