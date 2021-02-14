@@ -118,9 +118,11 @@ export class UserService {
 	}
 	
 
-	paginationUsers( url = '' ) {
+	paginationUsers({ start, end }) {
 
 		return new Promise( ( resolve, reject ) => {
+			
+			const url = `apiaudiophoneuser/show?start=${ start }&end=${ end }`;
 
 			this.authService.postClient( url )
 				.then( resp => {

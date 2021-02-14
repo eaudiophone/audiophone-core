@@ -18,8 +18,6 @@ export class UserTableComponent extends Component {
 
 	message = '';
 	action = '';
-	headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
-	history = [];  // array de navegacion
 	userService = new UserService();
 
 	constructor( props ) {
@@ -41,8 +39,15 @@ export class UserTableComponent extends Component {
 
 		this.userService.getUsers()
 			.then(( resp ) => {
-				this.setHistory( resp );
-				this.setState( resp );
+				
+				sessionStorage.setItem('navigationTableUsers', 
+					JSON.stringify({ 
+						start: 1, 
+						end: 5 
+					})
+				);
+
+				return this.setState( resp );
 			})
 			.catch( ( error ) => {
 				
@@ -52,12 +57,9 @@ export class UserTableComponent extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-				this.setState({ showToast: true, loading: false });
-			})
-	}
-
-	setHistory( action ) {
-		this.history = this.history.concat([ action ]);
+				
+				return this.setState({ showToast: true, loading: false });
+			});
 	}
 
 	showModal( modal, data ) {
@@ -70,7 +72,7 @@ export class UserTableComponent extends Component {
 				data
 			});
 		
-		} else {
+		} else {  // new
 			
 			this.setState({
 				showDeleteModal: true,
@@ -160,13 +162,18 @@ export class UserTableComponent extends Component {
 			});
 	}
 
-	getPagination({ start, end }) {
+	getPagination( pagination ) {
 
-		const url = `apiaudiophoneuser/show?start=${ start }&end=${ end }`;
-
-		this.userService.paginationUsers( url )
+		this.userService.paginationUsers( pagination )
 			.then( resp => {
-				this.setHistory( resp );
+				
+				sessionStorage.setItem('navigationTableUsers', 
+					JSON.stringify({ 
+						start: pagination.start, 
+						end: pagination.end 
+					})
+				);
+				
 				this.setState( resp );
 			})
 			.catch( error => {
@@ -184,42 +191,80 @@ export class UserTableComponent extends Component {
 	filterSearch( filter ) {
 		
 		let results = [];
+		let pagination = JSON.parse( sessionStorage.getItem( 'navigationTableUsers'));
 
 		switch ( filter ) {
 			
 			case 'activos': 
 
-				results = this.history[ this.history.length - 1 ].users.filter( 
-					( user ) => user.apiaudiophoneusers_status === 1 );
-				
-				this.setState({
-					users: results,
-					totalUsers: results.length
-				});
+				this.userService.paginationUsers( pagination )
+					.then( resp => {
+						results = resp.users.filter( ( user ) => user.apiaudiophoneusers_status === 1 );
+
+						return this.setState({
+							users: results,
+							totalUsers: results.length
+						});
+					}) 
+					.catch( error => {
+						if ( error.status === 401 ) {
+							return this.props.redirect();
+						}
+
+						this.message = error.message;
+						this.action = error.action;
+						
+						return this.setState({ showToast: true });
+					});
 				
 			break;
 
 			case 'inactivos':
 
-				results = this.history[ this.history.length - 1 ].users.filter( 
-					( user ) => user.apiaudiophoneusers_status === 0 );
-				
-				this.setState({
-					users: results,
-					totalUsers: results.length
-				});
+				this.userService.paginationUsers( pagination )
+					.then( resp => {
+						results = resp.users.filter( ( user ) => user.apiaudiophoneusers_status === 0 );
+
+						return this.setState({
+							users: results,
+							totalUsers: results.length
+						});
+					}) 
+					.catch( error => {
+						if ( error.status === 401 ) {
+							return this.props.redirect();
+						}
+
+						this.message = error.message;
+						this.action = error.action;
+						
+						return this.setState({ showToast: true });
+					});
 
 			break;
 
 			default: // todos
-				
-				this.setState( this.history[ this.history.length - 1 ] );
+
+				this.userService.paginationUsers( pagination )
+					.then( resp => {
+						return this.setState( resp );
+					}) 
+					.catch( error => {
+						if ( error.status === 401 ) {
+							return this.props.redirect();
+						}
+
+						this.message = error.message;
+						this.action = error.action;
+						
+						return this.setState({ showToast: true });
+					});
 
 			break;
 		}
 	}
 
-	setData() {
+	getRows() {
 		
 		return this.state.users.map( ( user, index ) => (
 
@@ -235,14 +280,14 @@ export class UserTableComponent extends Component {
 					/>
 				</td>
 				<td className="d-flex flex-row justify-content-around">
-					<Button 
-						variant="warning"
-						onClick={ () => this.showModal( 'edit', user ) }
-						disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
-					>
-						<FontAwesomeIcon icon="user" className="point" />
-					</Button>
-
+					{/* <Button 
+							variant="warning"
+							onClick={ () => this.showModal( 'edit', user ) }
+							disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
+						>
+							<FontAwesomeIcon icon="user" className="point" />
+						</Button> 
+					*/}
 					<Button
 						variant="danger"
 						onClick={ () => this.showModal( 'delete', user ) }
@@ -258,6 +303,8 @@ export class UserTableComponent extends Component {
 
 	getTable() {
 
+		const headerTable = [ 'Nombre', 'Correo', 'Rol', 'Fecha de registro', 'Estado', 'Acciones' ];
+
 		if ( this.state.users.length > 0 && JSON.parse( sessionStorage.getItem('logged') ) ) {
 
 			return (
@@ -265,14 +312,14 @@ export class UserTableComponent extends Component {
 					<Table className="mt-4" striped responsive hover>
 						<thead className="thead-dark">
 							<tr>
-								{ this.headerTable.map( ( element, index ) => (
+								{ headerTable.map( ( element, index ) => (
 										<th className="text-center" key={ index }>{ element }:</th>
 									)) 
 								}
 							</tr>
 						</thead>
 						<tbody>
-							{ this.setData() }
+							{ this.getRows() }
 						</tbody>
 					</Table>
 					<Row className="justify-content-center">

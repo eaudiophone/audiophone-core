@@ -60,7 +60,7 @@ export const SearchFilterComponent = ({ filterSearch }) => {
 
 	return (
 		<Form.Row>
-			<Form.Label>Buscar por:</Form.Label>
+			<Form.Label>Filtrar por:</Form.Label>
 			<Form.Control 
 				as="select"
 				onChange={ ( $event ) => filterSearch( $event.target.value ) }

@@ -47,7 +47,8 @@ export class AuthService extends BackendService {
 	}
 
 	logOut() {
-		return sessionStorage.removeItem('logged');
+		sessionStorage.removeItem('logged');
+		sessionStorage.removeItem('navigationTableUsers');
 	}
 
 	isLogged() {
