@@ -3,7 +3,6 @@ import { BudgetTableComponent, LoadingComponent, ToastComponent } from '../../co
 import { BudgetService } from '../../services/BudgetService';
 import { RedirectService } from '../../services/RedirectService';
 import { ModalBudgetComponent } from '../../components/modal/index';
-import { URL_SERVER } from '../../enviroment';
 
 export class BudgetPage extends Component {
 
@@ -170,7 +169,7 @@ export class BudgetPage extends Component {
 
 
 	showPdf( url ) {
-		return window.open( URL_SERVER.documents + url, '_blank');
+		return window.open( process.env.REACT_APP_ASSETS + url, '_blank');
 	}
 
 	openModal( action = '', budget ) {

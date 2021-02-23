@@ -2,6 +2,7 @@
 
 #enviroment
 /src/enviroment.jsx
+.env-cmdrc.json
 
 # dependencies
 /node_modules

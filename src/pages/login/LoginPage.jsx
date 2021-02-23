@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import { AuthService } from './../../services/AuthService'; 
+import { AuthService } from './../../services/AuthService';
 import { RedirectService }  from './../../services/RedirectService';
 import { ToastComponent } from './../../components/toasts/ToastComponent';
 import LoginForm from '../../components/form/login-form/LoginForm';
@@ -18,15 +18,15 @@ export class LoginPage extends Component {
   }
 
 	constructor( props ) {
-		
+
 		super( props );
 
 		this.state = {
-      redirect: false,  
+      redirect: false,
       showToast: false,
 		};
-
-		this.getFormData = this.getFormData.bind( this ); 
+    
+		this.getFormData = this.getFormData.bind( this );
 	}
 
 	getFormData( value, actions ) {
@@ -37,8 +37,8 @@ export class LoginPage extends Component {
         .then( resp => {
 
           actions.setSubmitting( false );
-          
-          return this.setState({ redirect: true }); 
+
+          return this.setState({ redirect: true });
 
         })
         .catch( error => {
@@ -60,10 +60,10 @@ export class LoginPage extends Component {
       <Container className="container-login">
 
         { this.state.redirect && ( <RedirectService route="/profile" /> ) }
-        
-        <ToastComponent 
-          showToast={ this.state.showToast } 
-          content={ this.message } 
+
+        <ToastComponent
+          showToast={ this.state.showToast }
+          content={ this.message }
           context={ this.action }
           onHide={ () => this.setState({ showToast: false }) }
         />

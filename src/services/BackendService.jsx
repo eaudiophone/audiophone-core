@@ -1,21 +1,21 @@
 // aqui se realizan todas las peticiones al API:
-import { URL_SERVER, CLIENT_SECRET } from './../enviroment';
+import { CLIENT_SECRET } from './../enviroment';
 import axios from 'axios';
 
 export class BackendService {
 
 	constructor() {
-		
+
 		this.token = JSON.parse( sessionStorage.getItem('logged'));
 
 		this.request = {
-			baseURL: URL_SERVER.enviroment,
+			baseURL: process.env.REACT_APP_API,
 			responseType: 'json',
 		};
 	}
 
 	async getClient( apiUrl ) {
-		
+
 		this.request = {
 			...this.request,
 			method: 'GET',
@@ -35,16 +35,16 @@ export class BackendService {
 			method: 'POST',
 			url: apiUrl,
 			data: data !== null ? data : null,
-			headers: { 
+			headers: {
 				authorization: 'Bearer ' + this.token.access_token
 			},
 		};
-		
+
 		return await axios( this.request );
 	}
 
 	async putClient( apiUrl, data ) {
-		
+
 		this.request = {
 			...this.request,
 			method: 'PUT',
@@ -59,7 +59,7 @@ export class BackendService {
 	}
 
 	async deleteClient( apiUrl, data = null ) {
-		
+
 		this.request = {
 			...this.request,
 			method: 'DELETE',
@@ -67,7 +67,7 @@ export class BackendService {
 			data: data !== null ? data : null,
 			headers: {
 				authorization: 'Bearer ' + this.token.access_token
-			}		
+			}
 		};
 
 		return await axios( this.request );
