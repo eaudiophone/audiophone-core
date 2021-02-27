@@ -25,7 +25,7 @@ export class LoginPage extends Component {
       redirect: false,
       showToast: false,
 		};
-    
+
 		this.getFormData = this.getFormData.bind( this );
 	}
 
@@ -44,6 +44,7 @@ export class LoginPage extends Component {
         .catch( error => {
 
           actions.setSubmitting( false );
+
           this.message = error.message;
           this.action = 'Error';
 

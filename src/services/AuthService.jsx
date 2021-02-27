@@ -21,29 +21,36 @@ export class AuthService extends BackendService {
 			password: login.audiophoneusers_password
 		};
 
-		return this.authenticate('login', login )
-			.then( resp => {
+		return this.sendLogin( login );
+	}
 
-				const logged = {
-					email: resp.data.apiaudiophoneusers_email,
-					fullname: resp.data.apiaudiophoneusers_fullname,
-					id: resp.data.apiaudiophoneusers_id,
-					role: resp.data.apiaudiophoneusers_role,
-					access_token: resp.data.apiToken.access_token,
-					expires_in: resp.data.apiToken.expires_in,
-					refresh_token: resp.data.apiToken.access_token
-				};
+	sendLogin( login ) {
 
-				sessionStorage.setItem('logged', JSON.stringify( logged ) );
+		return new Promise(( resolve, reject ) => {
+			this.authenticate('login', login )
+				.then( resp => {
 
-				return { // OK
-					ok: true,
-					message: null,
-					status: resp.data.status,
-				};
+					const logged = {
+						email: resp.data.apiaudiophoneusers_email,
+						fullname: resp.data.apiaudiophoneusers_fullname,
+						id: resp.data.apiaudiophoneusers_id,
+						role: resp.data.apiaudiophoneusers_role,
+						access_token: resp.data.apiToken.access_token,
+						expires_in: resp.data.apiToken.expires_in,
+						refresh_token: resp.data.apiToken.access_token
+					};
 
-			})
-			.catch( error => this.validateExceptionServer( error ) );
+					sessionStorage.setItem('logged', JSON.stringify( logged ) );
+
+					resolve({ // OK
+						ok: true,
+						message: null,
+						status: resp.data.status,
+					});
+
+				})
+				.catch( error => reject( this.validateExceptionServer( error )) );
+		});
 	}
 
 	logOut() {
@@ -148,10 +155,10 @@ export class AuthService extends BackendService {
 				return payload;
 
 			case 422:
-
+	
 				payload = {
 					...payload,
-					message: response.data.errorMessage || 'entidad inprocesable por el servidor',
+					message: response.data.message || 'entidad inprocesable por el servidor',
 					status: 422
 				};
 

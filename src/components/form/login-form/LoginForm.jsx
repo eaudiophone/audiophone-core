@@ -24,43 +24,43 @@ const LoginForm = ({ loading = false, getFormData }) => {
 
         return (
 
-         	<Form 
+         	<Form
            	className="form-signin"
-            noValidate 
-          > 
+            noValidate
+          >
 
             <h2 className="mb-3">Estudio Audiophone</h2>
             <h3 className="mb-3 text-center">
-              Sign In
+              Iniciar sesión
             </h3>
 
-            <Field 
-              type="email" 
-              name="audiophoneusers_email" 
+            <Field
+              type="email"
+              name="audiophoneusers_email"
               component={ EmailInput }
             />
 
-            <Field 
+            <Field
               type="password"
               name="audiophoneusers_password"
               component={ PasswordInput }
             />
 
-            <Field 
+            <Field
               type="checkbox"
               name="remember"
               component={ CheckboxInput }
-              label="remember me"
+              label="recuerdame"
             />
 
             <Buttons handleReset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
 
-            <Register />  
-            
+            <Register />
+
             <p className="mt-3 mb-3 text-muted text-center">
               &copy; Audiophone 2018
             </p>
-              
+
            </Form>
           );
         }
@@ -74,9 +74,9 @@ LoginForm.propTypes = {
 };
 
 const Register = () =>  {
-  
+
   return (
-     <div className="register"> 
+     <div className="register">
         <p>
             Si no posees cuenta
             <a href="/register">Registrese</a>
@@ -84,7 +84,7 @@ const Register = () =>  {
     </div>
   );
 }
-    
+
 const Buttons = ({ handleReset, loading = false, disabled = true }) => {
 
   return (
@@ -92,19 +92,19 @@ const Buttons = ({ handleReset, loading = false, disabled = true }) => {
   <div>
   	{ !loading && (
   			<Button type="submit" variant="primary" disabled={ disabled } size="lg" block>
-  				Iniciar sesión
+  				Acceder
 				</Button>
-  		) 
+  		)
   	}
   	{
   		loading && (
   			<Button variant="primary" size="lg" block disabled>
 					<FontAwesomeIcon icon="spinner" spin className="mr-2" />
-					Iniciar sesión
+					Acceder
 				</Button>
   		)
   	}
-    
+
     <Button
       onClick={ handleReset }
       variant="secondary"
@@ -121,6 +121,6 @@ Buttons.propTypes = {
   loading: PropTypes.bool,
   disabled: PropTypes.bool
 };
-   
+
 
 export default LoginForm;
