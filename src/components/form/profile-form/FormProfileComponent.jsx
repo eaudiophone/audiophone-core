@@ -11,32 +11,32 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
 
   return (
 
-    <Formik 
-      validationSchema={ 
-        register === true ? new ProfileSchema().getRegisterSchema() : new ProfileSchema().getProfileSchema() 
+    <Formik
+      validationSchema={
+        register === true ? new ProfileSchema().getRegisterSchema() : new ProfileSchema().getProfileSchema()
       }
       initialValues={ profile === null ? new Profile() : profile }
-      onSubmit={ getFormData } 
+      onSubmit={ getFormData }
       validateOnChange={ false }
     >
       { ({ handleReset, isValid, isSubmitting }) => (
 
           <FormFormik className="form" noValidate>
-             
-            <Field 
+
+            <Field
               type="text"
               name="apiaudiophoneusers_fullname"
               component={ FormInput }
-              title="nombre:"
+              title="Nombre:"
             />
 
-            <Field 
-              type="email" 
-              name="apiaudiophoneusers_email" 
+            <Field
+              type="email"
+              name="apiaudiophoneusers_email"
               component={ EmailInput }
             />
 
-            <Field 
+            <Field
               type="password"
               name="apiaudiophoneusers_password"
               component={ PasswordInput }
@@ -45,8 +45,8 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
             <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
 
           </FormFormik>
-        ) 
-      }     
+        )
+      }
     </Formik>
   );
 };

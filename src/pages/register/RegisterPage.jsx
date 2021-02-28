@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { RedirectService } from './../../services/RedirectService';
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
-import { ToastComponent } from '../../components/toasts/ToastComponent'; 
+import { ToastComponent } from '../../components/toasts/ToastComponent';
 import { AuthService } from './../../services/AuthService';
 import Profile from './../../models/ProfileModels';
 import './RegisterPage.css';
@@ -18,7 +18,7 @@ class RegisterPage extends Component {
 
 		super( props );
 
-		this.state = { 
+		this.state = {
 			redirect: false,
 			toast: false,
 		};
@@ -27,18 +27,18 @@ class RegisterPage extends Component {
 	}
 
 	getFormData( values, actions ) {
-		
+
 
 		setTimeout(() => {
 			this.authService.post( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
 
 				// console.log( resp )
-				
+
 				actions.setSubmitting( false );
 				this.message = resp.data.apiaudiophoneusermessage;
-				this.action = 'Éxito';
-				
+				this.action = 'Exito';
+
 				this.setState({ toast: true, loading: false });
 
 				setTimeout( () => {
@@ -59,27 +59,27 @@ class RegisterPage extends Component {
 	}
 
 	render() {
-		
-		return ( 
+
+		return (
 
 			<Container className="container-register">
 
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 
 				<ToastComponent
-					showToast={ this.state.toast }    
-					context={ this.action } 
+					showToast={ this.state.toast }
+					context={ this.action }
 					content={ this.message }
-					onHide={ () => this.setState({ toast: false }) } 
+					onHide={ () => this.setState({ toast: false }) }
 				/>
 
 				<h2 className="mb-5 text-center">
 					Registro de usuarios
 				</h2>
-				
+
 				<FormProfileComponent
 					profile={ new Profile() }
-					getFormData={ this.getFormData } 
+					getFormData={ this.getFormData }
 					register={ true }
 				/>
 
@@ -93,6 +93,6 @@ class RegisterPage extends Component {
 			</Container>
 		);
 	}
-} 
+}
 
 export default RegisterPage;
