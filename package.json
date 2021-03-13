@@ -2,6 +2,7 @@
   "name": "audiophone-core",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://192.168.0.110/audiophone-core",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",

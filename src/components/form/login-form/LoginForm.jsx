@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Button } from "react-bootstrap";
@@ -10,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import LoginSchema from './LoginSchema';
 import Login from './../../../models/LoginModels';
+
 
 const LoginForm = ({ loading = false, getFormData }) => {
 
@@ -79,7 +81,7 @@ const Register = () =>  {
      <div className="register">
         <p>
             Si no posees cuenta
-            <a href="/register">Registrese</a>
+            <Link to="/register">Registrese</Link>
         </p>
     </div>
   );

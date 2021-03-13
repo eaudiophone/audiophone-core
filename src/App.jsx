@@ -4,7 +4,7 @@ import AppRoutes from './routes/AppRoutes';
 
 const App = () => (
 
-	<Router>
+	<Router basename="/audiophone-core">
 		<AppRoutes />
 	</Router>
 );

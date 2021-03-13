@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { RedirectService } from '../../services/RedirectService';
 
 import { AuthService } from './../../services/AuthService';
  
@@ -9,16 +11,24 @@ class NavbarComponent extends Component {
 
 	authService = new AuthService();
 
+	constructor( props ) {
+		
+		super( props );
+		this.state = { redirect: false };
+
+		this.logOut = this.logOut.bind( this );
+	}
+
 	validateProfile() {
 
 		if ( this.props.role === 'ADMIN_ROLE' ) {
 
 			return (
 				<NavDropdown title="Gestion">
-	        <NavDropdown.Item href="/day">Dias de servicios</NavDropdown.Item>
-	        <NavDropdown.Item href="/users">Usuarios</NavDropdown.Item> 
-	        <NavDropdown.Item href="/items">Artículos</NavDropdown.Item>
-					<NavDropdown.Item href="/budget">Presupuestos</NavDropdown.Item>
+					<Link className="dropdown-item" to="/day">Dias de servicios</Link>
+					<Link className="dropdown-item" to="/users">Usuarios</Link>
+					<Link className="dropdown-item" to="/items">Articulos</Link>
+					<Link className="dropdown-item" to="/budget">Presupuestos</Link>
 				</NavDropdown>
 			);
 
@@ -34,13 +44,15 @@ class NavbarComponent extends Component {
 			<Nav className="w-100 justify-content-end">
 
 				{ this.props.role === 'ADMIN_ROLE' &&  
-					<Nav.Link href="/events-admin">Eventos</Nav.Link>
+					<Link className="nav-link" to="/events-admin">Eventos</Link>
 				}
 				{ this.validateProfile() }
-				<Nav.Link href="/profile">Perfil</Nav.Link>
+				<Link to="/profile" className="nav-link">Perfil</Link>
 				<Nav.Link 
-					href="/login" 
-					onSelect={ () => this.authService.logOut() }>Salir</Nav.Link>
+					href="#" 
+					onSelect={ () => this.logOut() }>
+						Salir
+				</Nav.Link>
 			</Nav>
 		</Navbar.Collapse>
 		);
@@ -50,20 +62,27 @@ class NavbarComponent extends Component {
 	render() {
 
 		return (
-
-			<Navbar 
-				collapseOnSelect 
-				expand="sm" 
-				bg="dark" 
-				variant="dark"
-				sticky="top"
-			>	
-		  		<Navbar.Brand>Audiophone</Navbar.Brand>
-		  		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-		 		{ this.getProfile() }
-			</Navbar>
+			<Fragment>
+				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				<Navbar 
+					collapseOnSelect 
+					expand="sm" 
+					bg="dark" 
+					variant="dark"
+					sticky="top"
+				>	
+			  		<Navbar.Brand>Audiophone</Navbar.Brand>
+			  		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+			 		{ this.getProfile() }
+				</Navbar>
+			</Fragment>
 		);
 
+	}
+
+	logOut() {
+		this.authService.logOut();
+		return this.setState({ redirect: true });
 	}
 }
 

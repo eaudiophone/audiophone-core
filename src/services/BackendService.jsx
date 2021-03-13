@@ -1,5 +1,5 @@
 // aqui se realizan todas las peticiones al API:
-import { CLIENT_SECRET } from './../enviroment';
+import { CLIENT_SECRET, URL_SERVER } from './../enviroment';
 import axios from 'axios';
 
 export class BackendService {
@@ -9,7 +9,7 @@ export class BackendService {
 		this.token = JSON.parse( sessionStorage.getItem('logged'));
 
 		this.request = {
-			baseURL: process.env.REACT_APP_API,
+			baseURL: process.env.REACT_APP_API || URL_SERVER.enviroment,
 			responseType: 'json',
 		};
 	}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { RedirectService } from './../../services/RedirectService';
 import FormProfileComponent from '../../components/form/profile-form/FormProfileComponent';
@@ -84,10 +85,7 @@ class RegisterPage extends Component {
 				/>
 
 				<p className="mt-5 text-center">
-					<a href="/login">
-						<i className="fas fa-sign-in-alt mr-2"></i>
-						Volver al login
-					</a>
+					<Link to="/login">Volver al login</Link>
 				</p>
 
 			</Container>
