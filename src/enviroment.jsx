@@ -1,5 +1,5 @@
 // this is the env file
-const environmentDev = true;
+const environmentDev = false;
 
 export const URL_SERVER = {
   enviroment: environmentDev ? 'http://localhost:8000/api/' : 'https://eaudiophone.com',
