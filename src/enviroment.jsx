@@ -2,8 +2,8 @@
 const environmentDev = false;
 
 export const URL_SERVER = {
-  enviroment: environmentDev ? 'http://localhost:8000/api/' : 'https://eaudiophone.com',
-  documents: environmentDev ? 'http://localhost:8000/' : 'https//eaudiophone.com'
+  enviroment: environmentDev ? 'http://localhost:8000/api/' : 'http://68.183.125.210/api/',
+  documents: environmentDev ? 'http://localhost:8000/' : 'http://68.183.125.210/api/'
 };
 
 export const CLIENT_SECRET = {
