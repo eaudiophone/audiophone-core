@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 #enviroment
-src/enviroment.jsx
+src/enviroment/enviroment.prod.jsx
 .env-cmdrc.json
 
 # dependencies
