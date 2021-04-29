@@ -1,14 +1,12 @@
-html, body {
-	background-color: #f5f5f5;
-	height: 100%;
+button {
+	border-radius: 24px !important;
 }
 
 .container-login {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding-top: 40px;
-	padding-bottom: 40px;
+	height: 100vh;
 }
 
 #remember > label {
@@ -42,9 +40,9 @@ html, body {
 	margin-top: 20px;
 }
 
-.form-signin input[type="password"] {
+/*.form-signin input[type="password"] {
 	margin-bottom: 20px;
-}
+}*/
 
 .register {
 	text-align: center;
@@ -58,4 +56,10 @@ html, body {
 
 .register > p > a {
 	margin-left: 10px;
+}
+
+@media screen and ( max-width: 768px ) and ( orientation: landscape ) {
+	.container-login {
+		height: auto;
+	}
 }

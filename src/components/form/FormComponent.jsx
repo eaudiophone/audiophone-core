@@ -233,6 +233,43 @@ export const FormButtons = ({ reset, loading = false, disabled })  => {
   );
 };
 
+export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
+
+  return (
+    <Form.Row className="mt-5">
+      <Col sm={6} className="d-flex flex-row justify-content-center">
+        <Button
+          block
+					size="lg"
+          className="button-w80"
+          variant="secondary"
+          type="reset"
+          onClick={reset}
+          disabled={ disabled }
+        >
+          Cancelar
+        </Button>
+      </Col>
+      <Col sm={6} className="d-flex flex-row justify-content-center">
+        { !loading && (
+          <Button size="lg" block className="button-w80" disabled={ disabled } variant="primary" type="submit">
+            Enviar
+          </Button>
+          )
+        }
+
+        { loading && (
+          <Button  block disabled className="button-w80" variant="primary">
+            <FontAwesomeIcon className="mr-2" icon="spinner" spin />
+            Enviar
+          </Button>
+          )
+        }
+      </Col>
+    </Form.Row>
+  );
+};
+
 FormButtons.propTypes = {
   reset: PropTypes.func.isRequired,
   loading: PropTypes.bool,

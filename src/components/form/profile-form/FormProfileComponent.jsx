@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import { Formik, Form as FormFormik, Field } from 'formik';
-import { EmailInput, PasswordInput, FormInput, FormButtons } from './../FormComponent';
+import { EmailInput, PasswordInput, FormInput, FormButtonsLg } from './../FormComponent';
 
 import Profile from './../../../models/ProfileModels';
 import ProfileSchema from './ProfileSchema';
@@ -42,7 +42,7 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
               component={ PasswordInput }
             />
 
-            <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
+          <FormButtonsLg reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
 
           </FormFormik>
         )

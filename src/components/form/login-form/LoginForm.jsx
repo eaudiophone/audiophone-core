@@ -52,15 +52,15 @@ const LoginForm = ({ loading = false, getFormData }) => {
               type="checkbox"
               name="remember"
               component={ CheckboxInput }
-              label="recuerdame"
+              label="Recordar"
             />
 
             <Buttons handleReset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
 
             <Register />
 
-            <p className="mt-3 mb-3 text-muted text-center">
-              &copy; Audiophone 2018
+            <p className="mt-3 mb-3 text-center">
+              &copy; Audiophone { new Date().getFullYear() }
             </p>
 
            </Form>

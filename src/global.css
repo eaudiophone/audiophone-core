@@ -1,3 +1,45 @@
+:root {
+	--background-theme: linear-gradient( #343434, black ) ;
+	--font-color-main: white;
+	--button-primary: #28667b;
+	--button-secondary: rgba(171,48,56,1);
+}
+
+body {
+	color: var(--font-color-main) !important;
+	background-color: #424242;
+	background-image: url('./images/Fondo05.jpg') !important;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	/* background-image: var(--background-theme) !important; */
+	/*background-size: 100%;*/
+}
+
+input {
+	border-radius: 10px !important;
+}
+
+/* Boostrap buttons */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:disabled,
+.btn-primary:active,
+.btn-primary:focus {
+	background: var(--button-primary) !important;
+	border: none;
+	box-shadow: none !important;
+}
+
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:disabled,
+.btn-secondary:active,
+.btn-secondary:focus {
+	background: var(--button-secondary) !important;
+	border: none;
+	box-shadow: none !important;
+}
+
 .button-w80 {
 	width: 80%;
 }
@@ -51,12 +93,12 @@
 	color: red;
 }
 
-
-table>tbody>tr>td {
+table > tbody > tr > td {
 	font-size: 14px;
 }
 
 @media screen and ( max-width: 360px ) and ( max-width: 768px ) {
+
 	.flex-vertical {
 		flex-direction: column !important;
 		justify-content: center;
