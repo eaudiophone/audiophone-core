@@ -3,12 +3,11 @@ import { Form, Col, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const EmailInput = ({ field, form, type, readonly = false }) => {
+export const EmailInput = ({ title, field, form, type, readonly = false }) => {
 
 	return (
-
 		<Form.Group className="w-100">
-			<Form.Label>Correo:</Form.Label>
+			<Form.Label>{ title || 'Correo:' }</Form.Label>
 			<Form.Control
 	     	{ ...field }
 	      type={ type }
@@ -241,11 +240,10 @@ export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
         <Button
           block
 					size="lg"
-          className="button-w80"
+          className="button-w80 mb-2 mb-sm-0"
           variant="secondary"
           type="reset"
           onClick={reset}
-          disabled={ disabled }
         >
           Cancelar
         </Button>

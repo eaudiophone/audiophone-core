@@ -64,30 +64,24 @@ class RegisterPage extends Component {
 		return (
 
 			<Container className="container-register">
-
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
-
 				<ToastComponent
 					showToast={ this.state.toast }
 					context={ this.action }
 					content={ this.message }
 					onHide={ () => this.setState({ toast: false }) }
 				/>
-
-				<h2 className="mb-5 text-center">
-					Registro de usuarios
-				</h2>
-
-				<FormProfileComponent
-					profile={ new Profile() }
-					getFormData={ this.getFormData }
-					register={ true }
-				/>
-
-				<p className="mt-5 text-center">
-					<Link to="/login">Volver al login</Link>
-				</p>
-
+			<div className="d-flex justify-content-center align-items-center flex-column h-100">
+					<h2 className="mb-2 text-center">Registro de usuarios</h2>
+					<FormProfileComponent
+						profile={ new Profile() }
+						getFormData={ this.getFormData }
+						register={ true }
+						/>
+					<p className="mt-4 text-center">
+						<Link to="/login">Volver al login</Link>
+					</p>
+				</div>
 			</Container>
 		);
 	}

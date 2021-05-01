@@ -1,6 +1,20 @@
+button {
+	border-radius: 24px !important;
+}
+
 .container-register {
 	padding-top: 40px;
-	width: 80%;
+	width: 50%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container-register input {
+	padding: 10px;
+	font-size: 16px;
+	height: auto;
 }
 
 .container-register a {
@@ -15,7 +29,18 @@
 	margin-bottom: 40px;
 }
 
-
 p {
 	font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+	.container-register {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+	.container-register {
+		height: auto;
+	}
 }
