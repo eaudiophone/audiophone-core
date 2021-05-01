@@ -7,7 +7,6 @@ import { ToastComponent } from './../../components/toasts/ToastComponent';
 import { UserService } from './../../services/UserService';
 import './ProfilePage.css';
 
-
 export class ProfilePage extends Component {
 
 	userService = new UserService();
@@ -19,8 +18,8 @@ export class ProfilePage extends Component {
 
 		super( props );
 
-		this.state = { 
-			showToast: false, 
+		this.state = {
+			showToast: false,
 			user: new Profile(
 				JSON.parse( sessionStorage.getItem('logged') ).fullname,
 				JSON.parse( sessionStorage.getItem('logged') ).email
@@ -38,7 +37,7 @@ export class ProfilePage extends Component {
 
 		this.userService.editUser( this.idUser, values )
 			.then(({ state, message, action }) => {
-				
+
 				actions.setSubmitting( false );
 				actions.setFieldValue( 'apiaudiophoneusers_password', '' );
 				this.message = message;
@@ -48,7 +47,7 @@ export class ProfilePage extends Component {
 			.catch(( error ) => {
 
 				actions.setSubmitting( false );
-				
+
 				if ( error.status === 401 ) {
 					return this.setState({ redirect: true })
 				}
@@ -61,7 +60,7 @@ export class ProfilePage extends Component {
 	}
 
 	render() {
-		
+
 		return (
 
 			<div>
@@ -72,13 +71,13 @@ export class ProfilePage extends Component {
 				</div>
 				<Nav variant="tabs" defaultActiveKey="#nav-profile">
 				<Nav.Item>
-					<Nav.Link 
-						className="nav-item nav-link" 
-	    				id="nav-profile-tab" 
-	    				data-toggle="tab" 
-	    				href="#nav-profile" 
-	    				role="tab" 
-	    				aria-controls="nav-profile" 
+					<Nav.Link
+						className="nav-item nav-link"
+	    				id="nav-profile-tab"
+	    				data-toggle="tab"
+	    				href="#nav-profile"
+	    				role="tab"
+	    				aria-controls="nav-profile"
 	    				aria-selected="true"
     				>
     					Perfil de usuario
@@ -86,13 +85,13 @@ export class ProfilePage extends Component {
 				</Nav.Item>
 				</Nav>
 				<div>
-					<FormProfileComponent 
+					<FormProfileComponent
 						profile={ this.state.user }
 						getFormData={ this.getFormData }
 						register={ false }
 					/>
 				</div>
-				<ToastComponent 
+				<ToastComponent
 					showToast={ this.state.showToast }
 					content={ this.message }
 					context={ this.action }

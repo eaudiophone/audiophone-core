@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { RedirectService } from '../../services/RedirectService';
 
 import { AuthService } from './../../services/AuthService';
- 
+
 import './NavbarComponent.css';
 
 class NavbarComponent extends Component {
@@ -12,7 +12,7 @@ class NavbarComponent extends Component {
 	authService = new AuthService();
 
 	constructor( props ) {
-		
+
 		super( props );
 		this.state = { redirect: false };
 
@@ -38,18 +38,18 @@ class NavbarComponent extends Component {
 	getProfile() {
 
 		return (
-			<Navbar.Collapse 
+			<Navbar.Collapse
 			id="responsive-navbar-nav"
 		>
 			<Nav className="w-100 justify-content-end">
 
-				{ this.props.role === 'ADMIN_ROLE' &&  
+				{ this.props.role === 'ADMIN_ROLE' &&
 					<Link className="nav-link" to="/events-admin">Eventos</Link>
 				}
 				{ this.validateProfile() }
 				<Link to="/profile" className="nav-link">Perfil</Link>
-				<Nav.Link 
-					href="#" 
+				<Nav.Link
+					href="#"
 					onSelect={ () => this.logOut() }>
 						Salir
 				</Nav.Link>
@@ -64,14 +64,14 @@ class NavbarComponent extends Component {
 		return (
 			<Fragment>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
-				<Navbar 
-					collapseOnSelect 
-					expand="sm" 
-					bg="dark" 
+				<Navbar
+					collapseOnSelect
+					expand="sm"
+					bg="dark"
 					variant="dark"
 					sticky="top"
-				>	
-			  		<Navbar.Brand>Audiophone</Navbar.Brand>
+				>
+			  		<Navbar.Brand>Estudios Audiophone</Navbar.Brand>
 			  		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			 		{ this.getProfile() }
 				</Navbar>

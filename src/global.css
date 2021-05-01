@@ -1,17 +1,23 @@
 :root {
-	--background-theme: linear-gradient( #343434, black ) ;
-	--font-color-main: white;
+	--background-theme: linear-gradient(
+     to bottom,
+		 #343434 30%,
+		 #000
+	) ;
+	--font-color-main: #fff;
 	--button-primary: #28667b;
 	--button-secondary: rgba(171,48,56,1);
+	--navbar-color: #343434;
 }
 
 body {
 	color: var(--font-color-main) !important;
 	background-color: #424242;
-	background-image: url('./images/Fondo05.jpg') !important;
+	background: var(--background-theme);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+	/* background-image: url('./images/Fondo05.jpg') !important; */
 	/* background-image: var(--background-theme) !important; */
 	/*background-size: 100%;*/
 }
@@ -65,18 +71,18 @@ input {
 
 /* toast */
 .success-toast {
-	background-color: #4caf50;
-	color: white;
+	background-color: var(--success);
+	color: var(--font-color-main);
 }
 
 .warning-toast {
-	background-color: #ffc107;
-	color: black;
+	background-color: var(--warning);
+	color: #000;
 }
 
 .fail-toast {
-	background-color: red;
-	color: white;
+	background-color: var(--danger);
+	color: var(--font-color-main);
 }
 
 /* loading */
