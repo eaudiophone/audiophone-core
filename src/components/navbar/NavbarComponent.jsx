@@ -12,10 +12,9 @@ class NavbarComponent extends Component {
 	authService = new AuthService();
 
 	constructor( props ) {
+	  super( props );
 
-		super( props );
 		this.state = { redirect: false };
-
 		this.logOut = this.logOut.bind( this );
 	}
 
@@ -38,23 +37,18 @@ class NavbarComponent extends Component {
 	getProfile() {
 
 		return (
-			<Navbar.Collapse
-			id="responsive-navbar-nav"
-		>
-			<Nav className="w-100 justify-content-end">
-
-				{ this.props.role === 'ADMIN_ROLE' &&
-					<Link className="nav-link" to="/events-admin">Eventos</Link>
-				}
-				{ this.validateProfile() }
-				<Link to="/profile" className="nav-link">Perfil</Link>
-				<Nav.Link
-					href="#"
-					onSelect={ () => this.logOut() }>
-						Salir
-				</Nav.Link>
-			</Nav>
-		</Navbar.Collapse>
+  		<Navbar.Collapse id="responsive-navbar-nav">
+  			<Nav className="w-100 justify-content-end">
+  				{ this.props.role === 'ADMIN_ROLE' &&
+  					<Link className="nav-link" to="/events-admin">Eventos</Link>
+  				}
+  				{ this.validateProfile() }
+  				<Link to="/profile" className="nav-link">Perfil</Link>
+  				<Nav.Link href="#" onSelect={ () => this.logOut() }>
+  					Salir
+  				</Nav.Link>
+  			</Nav>
+  		</Navbar.Collapse>
 		);
 
 	}

@@ -235,20 +235,8 @@ export const FormButtons = ({ reset, loading = false, disabled })  => {
 export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
 
   return (
-    <Form.Row className="mt-5">
-      <Col sm={6} className="d-flex flex-row justify-content-center">
-        <Button
-          block
-					size="lg"
-          className="button-w80 mb-2 mb-sm-0"
-          variant="secondary"
-          type="reset"
-          onClick={reset}
-        >
-          Cancelar
-        </Button>
-      </Col>
-      <Col sm={6} className="d-flex flex-row justify-content-center">
+    <Form.Row className="mt-4">
+      <Col sm={12} className="d-flex flex-row justify-content-center mb-2">
         { !loading && (
           <Button size="lg" block className="button-w80" disabled={ disabled } variant="primary" type="submit">
             Enviar
@@ -264,6 +252,18 @@ export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
           )
         }
       </Col>
+			<Col sm={12} className="d-flex flex-row justify-content-center">
+				<Button
+					block
+					size="lg"
+					className="button-w80 mb-sm-0"
+					variant="secondary"
+					type="reset"
+					onClick={reset}
+				>
+					Cancelar
+				</Button>
+			</Col>
     </Form.Row>
   );
 };

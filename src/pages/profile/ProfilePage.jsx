@@ -66,8 +66,8 @@ export class ProfilePage extends Component {
 			<div>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap
-					align-items-center pb-2 mb-3 border-bottom">
-					<h2>Perfil de Usuario</h2>
+					align-items-center pb-2 mb-3">
+					<h2 className="font-italic">Perfil de Usuario</h2>
 				</div>
 				<Nav variant="tabs" defaultActiveKey="#nav-profile">
 				<Nav.Item>
@@ -83,7 +83,7 @@ export class ProfilePage extends Component {
     					Perfil de usuario
     				</Nav.Link>
 				</Nav.Item>
-				</Nav>
+			</Nav>
 				<div>
 					<FormProfileComponent
 						profile={ this.state.user }
