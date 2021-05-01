@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import { Formik, Form as FormFormik, Field } from 'formik';
-import { EmailInput, PasswordInput, FormInput, FormButtonsLg } from './../FormComponent';
+import { EmailInput, PasswordInput, FormInput, FormButtonsLg, FormButtons } from './../FormComponent';
 import { Row, Col } from 'react-bootstrap';
 
 import Profile from './../../../models/ProfileModels';
@@ -11,7 +11,6 @@ import ProfileSchema from './ProfileSchema';
 const FormProfileComponent = ({ register = true, loading, getFormData, profile = null }) => {
 
   return (
-
     <Formik
       validationSchema={
         register === true ? new ProfileSchema().getRegisterSchema() : new ProfileSchema().getProfileSchema()
@@ -21,7 +20,7 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
       validateOnChange={ false }
     >
       { ({ handleReset, isValid, isSubmitting }) => (
-          <FormFormik className="form" noValidate>
+          <FormFormik className={ register ? 'form' : 'form-profile' } noValidate>
             <Row>
               <Col md={12} className>
                 <Field type="text" name="apiaudiophoneusers_fullname" component={ FormInput } title="Nombre:" />
@@ -33,7 +32,8 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
                 <Field type="password" name="apiaudiophoneusers_password" component={ PasswordInput } />
               </Col>
             </Row>
-            <FormButtonsLg reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } />
+            { register && <FormButtonsLg reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } /> }
+            { !register && <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } /> }
           </FormFormik>
         )
       }

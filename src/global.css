@@ -3,11 +3,13 @@
      to bottom,
 		 #343434 30%,
 		 #000
-	) ;
+	);
+	--gradient-theme: linear-gradient(rgba(171,48,56,1) 0%, rgba(40,102,123,1) 100%);
 	--font-color-main: #fff;
 	--button-primary: #28667b;
 	--button-secondary: rgba(171,48,56,1);
 	--navbar-color: #343434;
+
 }
 
 body {
@@ -48,7 +50,8 @@ input {
 }
 
 .button-w80 {
-	width: 80%;
+	width: 50%;
+	font-size: 18px;
 }
 
 .form-label {

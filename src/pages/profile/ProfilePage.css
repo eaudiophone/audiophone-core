@@ -13,11 +13,25 @@ button {
 }
 
 .form {
-	width: 50%;
+	max-width: 330px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	margin-top: 20px;
+}
+
+.form-profile {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.nav-tabs .nav-item {
+	background: var(--navbar-color) !important;
+	border-left: 6px solid var(--button-primary);
+}
+
+.nav-tabs, .nav-link {
+	border: none !important;
 }
 
 @media screen and (max-width: 768px)  {

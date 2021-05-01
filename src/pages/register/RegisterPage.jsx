@@ -72,7 +72,7 @@ class RegisterPage extends Component {
 					onHide={ () => this.setState({ toast: false }) }
 				/>
 			<div className="d-flex justify-content-center align-items-center flex-column h-100">
-					<h2 className="mb-2 text-center">Registro de usuarios</h2>
+					<h2 className="mb-4 text-center">Registro de usuarios</h2>
 					<FormProfileComponent
 						profile={ new Profile() }
 						getFormData={ this.getFormData }
@@ -80,6 +80,9 @@ class RegisterPage extends Component {
 						/>
 					<p className="mt-4 text-center">
 						<Link to="/login">Volver al login</Link>
+					</p>
+					<p className="mt-3 mb-4 text-center">
+						&copy; Audiophone { new Date().getFullYear() }
 					</p>
 				</div>
 			</Container>

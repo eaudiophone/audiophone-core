@@ -84,7 +84,7 @@ export class ProfilePage extends Component {
     				</Nav.Link>
 				</Nav.Item>
 			</Nav>
-				<div>
+				<div className="mt-3">
 					<FormProfileComponent
 						profile={ this.state.user }
 						getFormData={ this.getFormData }
