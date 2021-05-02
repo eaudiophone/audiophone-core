@@ -13,18 +13,18 @@ export class UserPage extends Component {
 	getHeader() {
 
 		return (
-			<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
-						align-items-center pb-2 mb-3 border-bottom">
-				<h2>Gestión de usuarios</h2>	
+			<div className="d-flex justify-content-start flex-wrap flex-md-nowrap
+						align-items-center pb-2 mb-3">
+				<h2 className="font-italic">Gestión de usuarios</h2>
 			</div>
 		);
 	}
 
 
 	render() {
-		
-		return ( 
-			
+
+		return (
+
 			<div>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				{ this.getHeader() }

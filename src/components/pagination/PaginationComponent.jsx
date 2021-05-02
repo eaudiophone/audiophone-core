@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Pagination } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+import './PaginationComponent.css';
+
 export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 	const [ paginationNumber, setPaginationNumber ] = useState( 1 );
-	
+
 	let limit = 0;
 
 	const getPagination = () => {
@@ -16,7 +18,7 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 			items.push(
 
-				<Pagination.Item 
+				<Pagination.Item
 					key={ index }
 					active={ index === paginationNumber }
 					onClick={ () => setUrl( index ) }
@@ -33,7 +35,7 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 	const setUrl = ( index ) => {
 
 		if ( index < 1 || index > limit ) { return; }
-		
+
 		let end = index * pagination;
 		let start = index > 1 ? end - ( pagination - 1 ): 1;
 
@@ -42,11 +44,11 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 	};
 
 	if ( Number.isInteger( totalRegisters / pagination ) ) {
-		
+
 		limit = totalRegisters / pagination;
-	
+
 	} else {
-		
+
 		limit = Math.ceil( totalRegisters / pagination );
 	}
 
@@ -64,4 +66,3 @@ PaginationComponent.propTypes = {
 	pagination: PropTypes.number.isRequired,
 	send: PropTypes.func.isRequired
 };
-

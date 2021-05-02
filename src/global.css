@@ -4,12 +4,14 @@
 		 #343434 30%,
 		 #000
 	);
-	--gradient-theme: linear-gradient(rgba(171,48,56,1) 0%, rgba(40,102,123,1) 100%);
+	--gradient-theme: linear-gradient(
+		rgba(171,48,56,1) 0%,
+		rgba(40,102,123,1) 100%
+	);
 	--font-color-main: #fff;
 	--button-primary: #28667b;
 	--button-secondary: rgba(171,48,56,1);
 	--navbar-color: #343434;
-
 }
 
 body {
@@ -24,8 +26,21 @@ body {
 	/*background-size: 100%;*/
 }
 
-input {
+input, select {
 	border-radius: 10px !important;
+}
+
+.input-group-append button {
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+.input-group .form-control {
+  border-radius: initial !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
 }
 
 /* Boostrap buttons */
@@ -102,11 +117,34 @@ input {
 .danger {
 	color: red;
 }
-
+/* tables */
 table > tbody > tr > td {
 	font-size: 14px;
 }
 
+thead th {
+	background-color: #000 !important;
+}
+
+/* columnas impares de la tabla */
+table tr:nth-child(odd) td {
+  background: #fff;
+}
+
+/* columnas pares de la tabla */
+table tr:nth-child(even) td {
+  background: #eee;
+}
+
+table td  {
+	vertical-align: middle !important;
+}
+
+table td button {
+  border-radius: 5px !important;
+}
+
+/* media query */
 @media screen and ( max-width: 360px ) and ( max-width: 768px ) {
 
 	.flex-vertical {
