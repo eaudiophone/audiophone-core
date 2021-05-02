@@ -200,7 +200,7 @@ export const FormButtons = ({ reset, loading = false, disabled })  => {
 
   return (
     <Form.Row className="mt-5">
-      <Col sm={6} className="d-flex flex-row justify-content-center">
+      <Col sm={6} className="d-flex flex-row justify-content-center mb-2 mb-sm-0">
         <Button
           block
           className="button-w80"
