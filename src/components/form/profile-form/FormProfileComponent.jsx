@@ -32,7 +32,7 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
                 <Field type="password" name="apiaudiophoneusers_password" component={ PasswordInput } />
               </Col>
             </Row>
-            { register && <FormButtonsLg reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } /> }
+            { register && <FormButtonsLg reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } widthAll={ true } /> }
             { !register && <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } /> }
           </FormFormik>
         )

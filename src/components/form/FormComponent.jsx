@@ -232,20 +232,20 @@ export const FormButtons = ({ reset, loading = false, disabled })  => {
   );
 };
 
-export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
+export const FormButtonsLg = ({ reset, loading = false, disabled, widthAll = false })  => {
 
   return (
     <Form.Row className="mt-4">
       <Col sm={12} className="d-flex flex-row justify-content-center mb-2">
         { !loading && (
-          <Button size="lg" block className="button-w80" disabled={ disabled } variant="primary" type="submit">
+          <Button size="lg" block className={ widthAll ? 'w-100' : 'button-w80' } disabled={ disabled } variant="primary" type="submit">
             Enviar
           </Button>
           )
         }
 
         { loading && (
-          <Button  block disabled className="button-w80" variant="primary">
+          <Button  block disabled className={ widthAll ? 'w-100' : 'button-w80' } variant="primary">
             <FontAwesomeIcon className="mr-2" icon="spinner" spin />
             Enviar
           </Button>
@@ -256,7 +256,7 @@ export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
 				<Button
 					block
 					size="lg"
-					className="button-w80 mb-sm-0"
+					className={ widthAll ? 'w-100 mb-sm-0' : 'button-w80 mb-sm-0' }
 					variant="secondary"
 					type="reset"
 					onClick={reset}
@@ -268,8 +268,15 @@ export const FormButtonsLg = ({ reset, loading = false, disabled })  => {
   );
 };
 
+FormButtonsLg.propTypes = {
+  reset: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool.isRequired,
+	widthAll: PropTypes.bool
+};
+
 FormButtons.propTypes = {
   reset: PropTypes.func.isRequired,
   loading: PropTypes.bool,
-  disabled: PropTypes.bool.isRequired
+  disabled: PropTypes.bool.isRequired,
 };
