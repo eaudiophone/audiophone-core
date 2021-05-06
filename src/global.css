@@ -12,6 +12,7 @@
 	--button-primary: #28667b;
 	--button-secondary: rgba(171,48,56,1);
 	--navbar-color: #343434;
+	--capitalize: capitalize;
 }
 
 body {
@@ -117,6 +118,12 @@ input, select {
 .danger {
 	color: red;
 }
+
+.nav-tabs .nav-link {
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+
 /* tables */
 table > tbody > tr > td {
 	font-size: 14px;

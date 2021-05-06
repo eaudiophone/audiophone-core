@@ -10,6 +10,8 @@ import { ToastComponent } from '../../components/toasts/ToastComponent';
 import { LoadingComponent } from '../../components/loading/LoadingComponent';
 import { RedirectService } from '../../services/RedirectService';
 
+import './DayPage.css';
+
 export class DayPage extends Component {
 
 	dayService = new DayService();
@@ -17,7 +19,7 @@ export class DayPage extends Component {
 	message = '';
 	action = '';
 	tabSelected = '#nav-records';
-	
+
 	terms = null;
 
 	TERMS = Object.freeze({
@@ -28,9 +30,9 @@ export class DayPage extends Component {
 	constructor( props ) {
 
 		super( props );
-		
-		this.state = { 
-			showToast: false, 
+
+		this.state = {
+			showToast: false,
 			loading: false,
 			redirect: false
 		};
@@ -47,8 +49,8 @@ export class DayPage extends Component {
 		this.setState({ loading: true });
 
 		this.dayService.getTerms( idTerms )
-			.then( resp => { 
-				
+			.then( resp => {
+
 				this.tabSelected = idTerms === this.TERMS.RECORD ? '#nav-records' : '#nav-rental';
 				this.terms = resp.data;
 
@@ -61,7 +63,7 @@ export class DayPage extends Component {
 				}
 
 				if ( error.status === 404 ) {
-					
+
 					// si no trae registros de terminos
 					this.tabSelected = idTerms === this.TERMS.RECORD ? '#nav-records' : '#nav-rental';
 					this.terms = new Terms();
@@ -82,10 +84,10 @@ export class DayPage extends Component {
 		const { ok, message } = verifyRangeHours( apiaudiophoneterms_begintime, apiaudiophoneterms_finaltime );
 
 		if ( !ok && this.tabSelected === '#nav-records' ) {
-		
+
 			this.message = message;
-			this.action = 'Error'; 
-			
+			this.action = 'Error';
+
 			return this.setState({ showToast: true });
 		}
 
@@ -94,7 +96,7 @@ export class DayPage extends Component {
 		// foreign key
 		values = {
 			...values,
-			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? this.TERMS.RECORD : this.TERMS.RENTAL 
+			id_apiaudiophoneservices: this.tabSelected === '#nav-records' ? this.TERMS.RECORD : this.TERMS.RENTAL
 		};
 
 		// console.log( values );
@@ -108,7 +110,7 @@ export class DayPage extends Component {
 
 					// variable que cambia el estado del botón
 					actions.setSubmitting( false );
-					
+
 					this.message = resp.message;
 					this.action = 'Exito';
 
@@ -134,31 +136,22 @@ export class DayPage extends Component {
 	}
 
 	getTabs() {
-		
+
 		return (
-
-			<Nav variant="tabs" defaultActiveKey={ this.tabSelected }>
-
+			<Nav className="mb-4" variant="tabs" defaultActiveKey={ this.tabSelected }>
 				<Nav.Item>
-					<Nav.Link
-						id="nav-records-tab"
-    				href="#nav-records"
-    				onSelect={ () => this.getTerms( this.TERMS.RECORD ) }
-					>
+					<Nav.Link id="nav-records-tab" href="#nav-records"
+						onSelect={ () => this.getTerms( this.TERMS.RECORD ) }>
 						Grabaciones
 					</Nav.Link>
 				</Nav.Item>
 
 				<Nav.Item>
-					<Nav.Link
-						id="nav-rental-tab"
-    				href="#nav-rental"
-    				onSelect={ () => this.getTerms( this.TERMS.RENTAL ) }
-					>
+					<Nav.Link id="nav-rental-tab" href="#nav-rental"
+						onSelect={ () => this.getTerms( this.TERMS.RENTAL ) }>
 						Alquiler
 					</Nav.Link>
 				</Nav.Item>
-
 			</Nav>
 		);
 	}
@@ -166,12 +159,8 @@ export class DayPage extends Component {
 	getTabRecord() {
 
 		return (
-			<div 
-				className="tab-pane active"
-				id="nav-records"
-				aria-labelledby="record-tab"
-			>
-				<Formik 
+			<div className="tab-pane active" id="nav-records" aria-labelledby="record-tab">
+				<Formik
 					component={ FormTerms }
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
@@ -186,12 +175,12 @@ export class DayPage extends Component {
 
 		return (
 
-			<div 
+			<div
 				className="tab-pane"
 				id="nav-rental"
 				aria-labelledby="rental-tab"
 			>
-				<Formik 
+				<Formik
 					component={ FormTerms }
 					validateOnChange={ false }
 					onSubmit={ this.getDataForm }
@@ -220,19 +209,19 @@ export class DayPage extends Component {
 	}
 
 	render() {
-		
+
 		return (
 			<div>
 				{ this.state.redirect && ( <RedirectService  route="/login" /> ) }
-				<ToastComponent 
-					showToast={ this.state.showToast } 
-					onHide={ () => this.setState({ showToast: false }) }  
+				<ToastComponent
+					showToast={ this.state.showToast }
+					onHide={ () => this.setState({ showToast: false }) }
 					content={ this.message }
 					context={ this.action }
 				/>
-				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap 
-						align-items-center pb-2 mb-3 border-bottom">
-					<h2>Dias de servicios</h2>	
+				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap
+						align-items-center pb-2 mb-3">
+					<h2 className="font-italic">Dias de servicios</h2>
 				</div>
 				{ this.showContent() }
 			</div>
