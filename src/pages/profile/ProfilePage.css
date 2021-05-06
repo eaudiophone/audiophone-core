@@ -36,7 +36,7 @@ button {
 .nav-item .active {
   border-left: 6px solid var(--button-primary);
   background: transparent !important;
-  color: gold !important;
+  color: var(--selected-item) !important;
 }
 
 .nav-tabs, .nav-link {

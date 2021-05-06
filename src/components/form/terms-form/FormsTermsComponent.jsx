@@ -45,7 +45,7 @@ const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, is
 
   return (
 
-  	<FormFormik noValidate className="m-3">
+  	<FormFormik noValidate className="m-1">
   		<Form.Row>
 
         <Field
@@ -79,7 +79,7 @@ const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, is
                   variant={
                     values.apiaudiophoneterms_daysevents.includes( day.id.toString() ) ? 'primary' : 'secondary'
                   }
-                  className="mb-5 mt-4"
+                  className="mb-3"
                   onClick={ () => validateDays( day.id.toString() ) }
                   ref={ ( element ) => buttonsArray = buttonsArray.concat([ element ]) }
                   key={ day.id }
@@ -87,7 +87,7 @@ const FormTerms = ({ handleSubmit, handleChange, handleReset, values, errors, is
                   { day.name }
                 </Button>
               ))}
-              <Col sm={12} className="text-center">
+              <Col sm={12} className="text-center d-none d-md-block mt-3">
                 <p>Días seleccionados:
                   { DAYSWEEK.map(( day, index ) => {
 

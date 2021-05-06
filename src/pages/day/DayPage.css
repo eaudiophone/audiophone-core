@@ -1,8 +1,4 @@
 .row-buttons button {
   width: 100px;
-  text-transform: var(--capitalize);
-}
-
-.day-selected {
-  text-transform: var(--capitalize);
+  text-transform: capitalize;
 }

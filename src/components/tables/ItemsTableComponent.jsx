@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { 
-	ToastComponent, 
-	PaginationComponent, 
-	SearchBarComponent, 
-	LoadingComponent 
+import {
+	ToastComponent,
+	PaginationComponent,
+	SearchBarComponent,
+	LoadingComponent
 } from '../index';
 
 import { ModalItemsComponent } from '../modal/index';
@@ -58,16 +58,16 @@ export class ItemsTableComponent extends Component {
 				this.message = error.message;
 				this.action = error.action;
 
-				return this.setState({ 
-					showToast: true, 
-					showModal: false, 
-					loading: false 
+				return this.setState({
+					showToast: true,
+					showModal: false,
+					loading: false
 				});
 			});
 	}
 
 	editItem({ actions, values }) {
-		
+
 		actions.setSubmitting( true );
 
 		values = {
@@ -77,23 +77,23 @@ export class ItemsTableComponent extends Component {
 
 		this.itemService.updateItem( values )
 			.then( response => {
-				
+
 				actions.setSubmitting( false );
 
 				const items = this.state.items.map(( item ) => {
-					
+
 					if ( item.apiaudiophoneitems_id === response.item.apiaudiophoneitems_id ) {
 						return response.item;
 					}
 
 					return item;
 				});
-				
+
 				this.message = response.message;
 				this.action = response.action;
-				
-				return this.setState({ 
-					showModal: false, 
+
+				return this.setState({
+					showModal: false,
 					items,
 					showToast: true
 				});
@@ -101,20 +101,20 @@ export class ItemsTableComponent extends Component {
 			.catch( error => {
 
 				actions.setSubmitting( false );
-				
+
 				if ( error.status === 401 ) {
 					return this.props.redirect();
 				}
-				
+
 				this.message = error.message;
 				this.action = error.action;
 
 				return this.setState({ showToast: true, showModal: false });
-			});	
+			});
 	}
 
 	activateItem( item ) {
-		
+
 		if ( item ) {
 
 			this.itemService.changeStatus( item )
@@ -123,8 +123,8 @@ export class ItemsTableComponent extends Component {
 					this.message = response.message;
 					this.action = response.action;
 
-					const items = this.state.items.map(( item ) => { 
-						
+					const items = this.state.items.map(( item ) => {
+
 						if ( item.apiaudiophoneitems_id === response.itemUpdate.apiaudiophoneitems_id ) {
 							return response.itemUpdate;
 						}
@@ -140,11 +140,11 @@ export class ItemsTableComponent extends Component {
 
 				})
 				.catch( error => {
-					
+
 					if ( error.status === 401 ) {
 						return this.props.redirect();
 					}
-				
+
 					this.message = error.message;
 					this.action = error.action;
 
@@ -158,7 +158,7 @@ export class ItemsTableComponent extends Component {
 	newItem({ values, actions }) {
 
 		actions.setSubmitting( true );
-		
+
 		this.itemService.createItem( values )
 			.then( resp => {
 
@@ -166,11 +166,11 @@ export class ItemsTableComponent extends Component {
 				this.message = resp.message;
 
 				actions.setSubmitting( false );
-			
-				return this.setState({ 
+
+				return this.setState({
 					showModal: false,
-					showToast: true, 
-					items: this.state.items.length < this.limitPagination ? 
+					showToast: true,
+					items: this.state.items.length < this.limitPagination ?
 						this.state.items.concat([ resp.item ]) : this.state.items,
 					totalItems: this.state.totalItems + 1
 				});
@@ -183,7 +183,7 @@ export class ItemsTableComponent extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-				
+
 				actions.setSubmitting( false );
 
 				return this.setState({ showToast: true, showModal: false });
@@ -195,11 +195,11 @@ export class ItemsTableComponent extends Component {
 
 		this.itemService.searchItem( search )
 			.then( response => {
-				
+
 				return this.setState({
 					items: response.items
 				});
-				
+
 			})
 			.catch( error => {
 
@@ -209,13 +209,13 @@ export class ItemsTableComponent extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-			
+
 				return this.setState({ showToast: true, showModal: false });
 			});
 	}
 
 	handleClick( item, type ) {
-		
+
 		this.typeModal = type;
 
 		return this.setState({ showModal: true, item });
@@ -228,7 +228,7 @@ export class ItemsTableComponent extends Component {
 
 		} else if ( type === 'new' ) {
 			return this.newItem( response );
-			
+
 
 		} else if ( type === 'edit' ) {
 			return this.editItem( response );
@@ -246,20 +246,20 @@ export class ItemsTableComponent extends Component {
 				<td>{ item.apiaudiophoneitems_name }</td>
 				<td>{ item.apiaudiophoneitems_description }</td>
 				<td>{ item.apiaudiophoneitems_price }</td>
-				<td>{ item.apiaudiophoneitems_status === 'ACTIVO' ? 
-					( <FontAwesomeIcon icon="check" className="text-success" /> ) : 
+				<td>{ item.apiaudiophoneitems_status === 'ACTIVO' ?
+					( <FontAwesomeIcon icon="check" className="text-success" /> ) :
 					( <FontAwesomeIcon icon="times" className="text-danger" /> ) }
 				</td>
 				<td>
-					<Button 
-						variant="info" 
-						size="sm" 
-						className="mr-2" 
+					<Button
+						variant="info"
+						size="sm"
+						className="mr-2"
 						onClick={ ( $event ) => this.handleClick( item, 'edit' ) }>
 						<FontAwesomeIcon icon="pen" className="point" />
 					</Button>
-					<Button 
-						variant="danger" 
+					<Button
+						variant="danger"
 						size="sm"
 						onClick={ ( $event ) => this.handleClick( item, 'delete' ) }
 					>
@@ -267,7 +267,7 @@ export class ItemsTableComponent extends Component {
 					</Button>
 				</td>
 			</tr>
-		)); 
+		));
 	}
 
 	getTable() {
@@ -283,10 +283,10 @@ export class ItemsTableComponent extends Component {
 						</Col>
 						<Col xs={ 12 } sm={ 2 }>
 							<div className="w-100 h-100 d-flex justify-content-center flex-row align-items-end">
-								<Button variant="success" size="sm" onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
+								<Button variant="success" className="reset-button" size="sm" onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
 									<FontAwesomeIcon icon="plus" className="mr-2" />
 									Nuevo articulo
-								</Button>	
+								</Button>
 							</div>
 						</Col>
 					</Row>
@@ -295,8 +295,8 @@ export class ItemsTableComponent extends Component {
 							<tr>
 								{ headerTable.map(( columnName, index ) => (
 										<th key={ index } className="text-center">{ columnName }</th>
-									)) 
-								}	
+									))
+								}
 							</tr>
 						</thead>
 						<tbody>
@@ -307,23 +307,24 @@ export class ItemsTableComponent extends Component {
 			);
 		}
 
-		return ( 
+		return (
 			<Fragment>
 				<p className="text-center text-danger mb-4">
 					No hay articulos disponibles que mostrar. <br />
-				</p> 
+				</p>
 				<Row className="justify-content-center">
-					<Button variant="success" size="sm" onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
+					<Button variant="success" size="sm" className="reset-button"
+						onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
 						<FontAwesomeIcon icon="plus" className="mr-2" />
 						Nuevo articulo
-					</Button>	
+					</Button>
 				</Row>
 			</Fragment>
 		);
 	}
 
 	showContent() {
-		
+
 		if ( !this.state.loading ) {
 			return this.getTable();
 		}
@@ -338,15 +339,15 @@ export class ItemsTableComponent extends Component {
 				{ this.showContent() }
 				{ this.state.totalItems > 0 && (
 						<Row className="justify-content-center mt-2">
-							<PaginationComponent 
-								totalRegisters={ this.state.totalItems } 
-								send={ ( params ) => this.getAllItems( params ) } 
-								pagination={ 5 } 
+							<PaginationComponent
+								totalRegisters={ this.state.totalItems }
+								send={ ( params ) => this.getAllItems( params ) }
+								pagination={ 5 }
 							/>
 						</Row>
-					) 
+					)
 				}
-				<ModalItemsComponent 
+				<ModalItemsComponent
 					showModal={ this.state.showModal }
 					closeModal={ ( type, response ) => this.dispatchActions( type, response ) }
 					item={ this.state.item }
@@ -361,4 +362,4 @@ export class ItemsTableComponent extends Component {
 			</div>
 		);
 	}
-} 
+}

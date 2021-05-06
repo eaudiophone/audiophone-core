@@ -4,17 +4,17 @@ import { Row, Table, Button } from 'react-bootstrap';
 import { getDateWithHour } from '../../util-functions/date-format';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const headerTable = [ 
+const headerTable = [
 	'Tipo de servicio:', 
-	'Nombre cliente:', 
-	'Correo cliente:', 
+	'Nombre cliente:',
+	'Correo cliente:',
 	'Creado:',
 	'Estado:',
 	'Acciones:'
 ];
 
 export const BudgetTableComponent = ( props ) => {
-	
+
 	const { pagination, budgets, totalBudgets, search, dispatch, showPdf } = props;
 
 	return (
@@ -25,8 +25,8 @@ export const BudgetTableComponent = ( props ) => {
 					<tr>
 						{ headerTable.map(( columnName, index ) => (
 								<th key={ index } className="text-center">{ columnName }</th>
-							)) 
-						}	
+							))
+						}
 					</tr>
 				</thead>
 				<tbody>
@@ -44,17 +44,17 @@ export const BudgetTableComponent = ( props ) => {
 								</td>
 								<td>
 									<Row className="justify-content-center">
-										<Button 
+										<Button
 											variant="secondary"
 											size="sm"
 											className="point mr-2 "
 											onClick={ () => showPdf( budget.apiaudiophonebudgets_url ) }
-										>	
+										>
 											<FontAwesomeIcon icon="file-pdf" />
 										</Button>
-										<Button 
-											variant="info" 
-											size="sm" 
+										<Button
+											variant="info"
+											size="sm"
 											className="mr-2 point"
 											onClick={ () => dispatch('edit', budget ) }
 										>
@@ -63,21 +63,21 @@ export const BudgetTableComponent = ( props ) => {
 									</Row>
 								</td>
 							</tr>
-						))	
+						))
 					}
 					{ budgets.length === 0 && (
 							<tr className="text-center">
 								<td colSpan="6">No hay informacion de presupuestos generados</td>
 							</tr>
-						) 
+						)
 					}
 				</tbody>
 			</Table>
 			<Row className="justify-content-center mt-3">
-				<PaginationComponent 
-					totalRegisters={ totalBudgets } 
-					send={ ( params ) => pagination( params ) } 
-					pagination={ 5 } 
+				<PaginationComponent
+					totalRegisters={ totalBudgets }
+					send={ ( params ) => pagination( params ) }
+					pagination={ 5 }
 				/>
 			</Row>
 		</Fragment>
@@ -88,12 +88,11 @@ const getStatusClass = ( status ) => {
 
 	if ( status === 'PAGADO' ) {
 		return 'text-success';
-	
+
 	} else if ( status === 'NO_APLICA' ) {
 		return 'text-danger'
-	
+
 	} else {
 		return '';
 	}
 }
-
