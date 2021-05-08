@@ -1,0 +1,28 @@
+/* numeracion de días */
+.fc-day-number {
+  color: #000;
+}
+
+.fc-button-primary,
+.fc-button-primary:hover,
+.fc-button-primary:disabled {
+  background: var(--button-primary);
+  border-color: var(--button-primary);
+  border-radius: 5px !important;
+}
+
+.fc-button-primary:not(:disabled):active,
+.fc-button-primary:not(:disabled) .fc-button-active {
+  background-color: var(--button-primary);
+  border-color: var(--button-primary);
+}
+
+.fc-button-group button:first-child {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.fc-button-group button:last-child {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}

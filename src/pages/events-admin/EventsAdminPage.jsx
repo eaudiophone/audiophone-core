@@ -34,9 +34,9 @@ export class EventsAdminPage extends Component {
 		try {
 
 			this.idTerms = await this.eventService.getTerms();
-			
-			return this.setState({ 
-				loading: false, 
+
+			return this.setState({
+				loading: false,
 				eventsCalendar: await this.eventService.getAllEventsCalendar(),
 			});
 
@@ -48,42 +48,42 @@ export class EventsAdminPage extends Component {
 
 			this.message = error.message;
 			this.action = error.action;
-			
+
 			return this.setState({ showToast: true, loading: false });
 		}
 	}
 
 	newEvent( close = false, eventForm = null ) {
-		
+
 		if ( !eventForm ) {
 			return this.setState({ showModal: close });
 		}
 
 		let { values } = eventForm;
 
-		const { ok, message } = this.eventService.verifyRangeHours( 
-			values.apiaudiophonevents_begintime, 
-			values.apiaudiophonevents_finaltime 
+		const { ok, message } = this.eventService.verifyRangeHours(
+			values.apiaudiophonevents_begintime,
+			values.apiaudiophonevents_finaltime
 		);
 
 		if ( !ok && ( parseInt( values.id_apiaudiophoneservices ) === 2 ) ) {
-			
+
 			this.message = message;
-			this.action = 'Error'; 
+			this.action = 'Error';
 
 			return this.setState({ showToast: true, showModal: close });
 		}
 
-		values = { 
-			...values, 
-			apiaudiophonevents_totalhours: this.eventService.getDifferenceHours( 
-				values.apiaudiophonevents_begintime, 
-				values.apiaudiophonevents_finaltime, 
+		values = {
+			...values,
+			apiaudiophonevents_totalhours: this.eventService.getDifferenceHours(
+				values.apiaudiophonevents_begintime,
+				values.apiaudiophonevents_finaltime,
 			),
-			id_apiaudiophoneterms: parseInt( values.id_apiaudiophoneservices ) > 1 ? 
+			id_apiaudiophoneterms: parseInt( values.id_apiaudiophoneservices ) > 1 ?
 				this.idTerms.idTermsRecord : this.idTerms.idTermsRental,
 			id_apiaudiophoneservices: parseInt( values.id_apiaudiophoneservices ),
-			apiaudiophonevents_address: values.id_apiaudiophoneservices > 1 ? 
+			apiaudiophonevents_address: values.id_apiaudiophoneservices > 1 ?
 				'Estudio Principal Av. Principal de Manicomio Esq. Trinchera La Pastora' : values.apiaudiophonevents_address
  		};
 
@@ -92,36 +92,36 @@ export class EventsAdminPage extends Component {
 
 
 	editEvent( close = false, eventForm = null ) {
-		
+
 		if ( !eventForm ) {
 			return this.setState({ showModal: close });
 		}
 
 		let { values } = eventForm;
 
-		const { ok, message } = this.eventService.verifyRangeHours( 
-			values.apiaudiophonevents_begintime, 
-			values.apiaudiophonevents_finaltime 
+		const { ok, message } = this.eventService.verifyRangeHours(
+			values.apiaudiophonevents_begintime,
+			values.apiaudiophonevents_finaltime
 		);
 
 		if ( !ok && ( parseInt( values.id_apiaudiophoneservices ) === 2 ) ) {
-			
+
 			this.message = message;
-			this.action = 'Error'; 
+			this.action = 'Error';
 
 			return this.setState({ showToast: true, showModal: close });
 		}
 
- 		values = { 
-			...values, 
-			apiaudiophonevents_totalhours: this.eventService.getDifferenceHours( 
-				values.apiaudiophonevents_begintime, 
-				values.apiaudiophonevents_finaltime, 
+ 		values = {
+			...values,
+			apiaudiophonevents_totalhours: this.eventService.getDifferenceHours(
+				values.apiaudiophonevents_begintime,
+				values.apiaudiophonevents_finaltime,
 			),
-			id_apiaudiophoneterms: parseInt( values.id_apiaudiophoneservices ) > 1 ? 
+			id_apiaudiophoneterms: parseInt( values.id_apiaudiophoneservices ) > 1 ?
 				this.idTerms.idTermsRecord : this.idTerms.idTermsRental,
 			id_apiaudiophoneservices: parseInt( values.id_apiaudiophoneservices ),
-			apiaudiophonevents_address: values.id_apiaudiophoneservices > 1 ? 
+			apiaudiophonevents_address: values.id_apiaudiophoneservices > 1 ?
 				'Estudio Principal Av. Principal de Manicomio Esq. Trinchera La Pastora' : values.apiaudiophonevents_address
  		};
 
@@ -136,14 +136,14 @@ export class EventsAdminPage extends Component {
 	}
 
 	sendData( form, status = null ) {
-		
+
 		if ( form.apiaudiophonevents_id && status ) { // edit
 
 			Promise.all([ this.eventService.updateEvent( form ), this.eventService.updateStatusEvent( status ) ])
 				.then(([ respUpdate, respStatus ]) => {
 
 					const eventUpdate = respStatus.eventUpdate;
-			
+
 					this.message = respUpdate.message;
 					this.action = respUpdate.action;
 
@@ -151,9 +151,9 @@ export class EventsAdminPage extends Component {
 
 					console.log( events, eventUpdate );
 
-					this.setState(() => ({ 
+					this.setState(() => ({
 						eventsCalendar: events,
-						showToast: true, 
+						showToast: true,
 						showModal: false,
 					}));
 
@@ -170,11 +170,11 @@ export class EventsAdminPage extends Component {
 
 					this.message = error.message;
 					this.action = error.action;
-					
+
 					return this.setState({ showToast: true });
 
 				});
-		
+
 		} else {  // new event
 
 			this.eventService.registerEvent( form )
@@ -185,10 +185,10 @@ export class EventsAdminPage extends Component {
 
 					const events = this.state.eventsCalendar.concat([ resp.event ]);
 
-					return this.setState({ 
-						loading: false, 
-						showToast: true, 
-						eventsCalendar: events, 
+					return this.setState({
+						loading: false,
+						showToast: true,
+						eventsCalendar: events,
 						showModal: false,
 					});
 				})
@@ -200,7 +200,7 @@ export class EventsAdminPage extends Component {
 
 					this.message = error.message;
 					this.action = error.action;
-					
+
 					return this.setState({ showToast: true, showModal: false, });
 				})
 
@@ -209,12 +209,12 @@ export class EventsAdminPage extends Component {
 
 	redirectNewBudget( idEvent ) {
 
-		setTimeout(() => {					
-			
-			this.redirectRoute = `/budget/${ idEvent }`;	
-			
-			return this.setState({ redirect: true });	
-		
+		setTimeout(() => {
+
+			this.redirectRoute = `/budget/${ idEvent }`;
+
+			return this.setState({ redirect: true });
+
 		}, 1500 );
 	}
 
@@ -227,7 +227,7 @@ export class EventsAdminPage extends Component {
 		if ( apiaudiophonevents_status !== 'CERRADO' ) {
 
 			if ( this.apiaudiophonevents_id === apiaudiophonevents_id ) {
-				
+
 				if ( this.apiaudiophonevents_status !== 'CERRADO' ) {
 					return accum.concat([{
 						...event,
@@ -238,7 +238,7 @@ export class EventsAdminPage extends Component {
 
 			} else {
 				return accum.concat([ event ]);
-			
+
 			}
 		}
 
@@ -247,24 +247,24 @@ export class EventsAdminPage extends Component {
 	}
 
 	prepareData( resp, event, action ) {
-		
+
 		if ( action === 'new' ) {
 			return this.newEvent( resp, event );
 		}
 
-		return this.editEvent( resp, event );  
+		return this.editEvent( resp, event );
 	}
 
 	showContent() {
 
 		if ( !this.state.loading ) {
-			return ( 
-				<CalendarComponent 
-					events={ this.state.eventsCalendar } 
-					closeModal={ ( resp, event, action = 'edit' ) => this.prepareData( resp, event, action ) } 
+			return (
+				<CalendarComponent
+					events={ this.state.eventsCalendar }
+					closeModal={ ( resp, event, action = 'edit' ) => this.prepareData( resp, event, action ) }
 					openModal={ this.state.showModal }
 					showModal={ ( open ) => this.setState({ showModal: open }) }
-				/> 
+				/>
 			);
 		}
 
@@ -276,15 +276,15 @@ export class EventsAdminPage extends Component {
 		return (
 			<div>
 				{ this.state.redirect && ( <RedirectService route={ this.redirectRoute } /> ) }
-				<ToastComponent 
-					showToast={ this.state.showToast }  
-					content={ this.message } 
-					context={ this.action } 
+				<ToastComponent
+					showToast={ this.state.showToast }
+					content={ this.message }
+					context={ this.action }
 					onHide={ () => this.setState({ showToast: false }) }
 				/>
-				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
-					align-items-center pb-2 mb-3 border-bottom">
-					<h2>Calendarios de eventos</h2> 
+				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap
+					align-items-center pb-2 mb-3">
+					<h2 className="font-italic">Calendarios de eventos</h2> 
 				</div>
 				{ this.showContent() }
 			</div>

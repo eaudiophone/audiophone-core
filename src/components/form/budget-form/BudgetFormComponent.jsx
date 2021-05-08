@@ -9,27 +9,27 @@ import { BudgetSchema } from './BudgetSchema';
 import { FormInput } from '../FormComponent';
 
 export const BudgetFormComponent = ( props ) => {
-	
+
 	const { children, itemsLength, openModal, generateBudget } = props;
 
 	return (
 		<Fragment>
 			<Col xs={ 12 } className="mt-3 p-0">
 				<h3 className="mb-3">Datos del cliente</h3>
-				<Formik 
+				<Formik
 					validateOnChange={ true }
 					initialValues={ new Budget() }
 					validationSchema={ new BudgetSchema().getSchema() }
 					onSubmit={ ( values, actions ) => generateBudget({ values, actions }) }
 					children={ ( props ) => {
-							
+
 							// se pueden inyectar propiedades a los props que incluye
 							// formik
-							
+
 							const newProps = { ...props, itemsLength, openModal, children };
-							
+
 							return ( <ClientForm { ...newProps } /> )
-						} 
+						}
 					}
 				/>
 			</Col>
@@ -38,14 +38,14 @@ export const BudgetFormComponent = ( props ) => {
 }
 
 const ClientForm = ( props ) => {
-	
+
 	const { children, openModal, isValid, itemsLength, isSubmitting } = props;
 
 	return (
 		<FormFormik>
 			<Form.Row>
 				<Col sm={ 6 } className="p-3">
-					<Field 
+					<Field
 						component={ FormInput }
 						name="apiaudiophonebudgets_client_name"
 						type="text"
@@ -53,7 +53,7 @@ const ClientForm = ( props ) => {
 					/>
 				</Col>
 				<Col sm={ 6 } className="p-3">
-					<Field 
+					<Field
 						component={ FormInput }
 						name="apiaudiophonebudgets_client_email"
 						type="text"
@@ -61,7 +61,7 @@ const ClientForm = ( props ) => {
 					/>
 				</Col>
 				<Col sm={ 6 } className="p-3">
-					<Field 
+					<Field
 						component={ FormInput }
 						name="apiaudiophonebudgets_client_phone"
 						type="text"
@@ -69,7 +69,7 @@ const ClientForm = ( props ) => {
 					/>
 				</Col>
 				<Col sm={ 6 } className="p-3">
-					<Field 
+					<Field
 						component={ FormInput }
 						name="apiaudiophonebudgets_client_social"
 						type="text"
@@ -79,7 +79,7 @@ const ClientForm = ( props ) => {
 			</Form.Row>
 			<Form.Row>
 				<Col sm={ 12 } className="text-right">
-					<Button size="sm" onClick={ openModal } variant="success">
+					<Button size="sm" onClick={ openModal } variant="success" className="success-button">
 						<FontAwesomeIcon icon="plus" className="mr-2" />
 						Añadir aticulo
 					</Button>
@@ -88,13 +88,13 @@ const ClientForm = ( props ) => {
 			</Form.Row>
 			<Form.Row className="justify-content-center mt-3">
 				{ !isSubmitting && (
-						<Button type="submit" disabled={ !isValid || itemsLength === 0 }>
+						<Button type="submit" style={{ width: 240 }} disabled={ !isValid || itemsLength === 0 }>
 							Generar Presupuesto
 						</Button>
-					)  
+					)
 				}
 				{ isSubmitting && (
-						<Button type="submit" disabled>
+						<Button type="submit" disabled style={{ width: 240 }}>
 							<FontAwesomeIcon icon="spinner" spin className="mr-2" />
 							Generar Presupuesto
 						</Button>
@@ -106,4 +106,3 @@ const ClientForm = ( props ) => {
 	);
 
 }
-

@@ -51,7 +51,7 @@ const ModalEditEvent = ( props ) => {  // children
 
 						<label className="font-weight-bold">Estado del evento:</label>
 
-						<Form.Row className="justify-content-around mb-4 mt-3">
+						<Form.Row className="justify-content-around mb-4 mt-3 row-buttons">
 							{ STATUS_MEETINGS.map(( status, index ) => (
 									<Button
 										key={ index }
@@ -144,39 +144,41 @@ const ModalEditEvent = ( props ) => {  // children
 				</Modal.Body>
 
 
-				<Modal.Footer> { /* Botones */ }
+				{ /* Botones */ }
 
 					{ props.values.apiaudiophonevents_status === 'ACEPTADO' && (
-
+						<Modal.Footer>
 							<Button
 								variant="primary"
 								type="submit"
+								style={{ width: 240 }}
 								disabled={ !props.isValid }
-							>
+								>
 								Generar Presupuesto
 							</Button>
+						</Modal.Footer>
 						)
 					}
 
 					{ props.values.apiaudiophonevents_status !== 'INGRESADO' &&
 						props.values.apiaudiophonevents_status !== 'ACEPTADO' && (
 
-							<Fragment>
-								<Button variant="secondary" type="reset">
-									Limpiar formulario
-								</Button>
-								<Button
-									variant="primary"
-									type="submit"
-									disabled={ !props.isValid }
-								>
-									Editar
-								</Button>
-							</Fragment>
+							<Modal.Footer>
+								<Fragment>
+									<Button variant="secondary" type="reset">
+										Limpiar
+									</Button>
+									<Button
+										variant="primary"
+										type="submit"
+										disabled={ !props.isValid }
+										>
+										Editar
+									</Button>
+								</Fragment>
+							</Modal.Footer>
 						)
 					}
-
-				</Modal.Footer>
 
 			</FormFormik>
 		</Fragment>
@@ -266,7 +268,7 @@ const ModalNewEvent = ( props ) => {  // children
 				<Modal.Footer> { /* Botones */ }
 
 					<Button variant="secondary" type="reset">
-						Limpiar formulario
+						Limpiar
 					</Button>
 					<Button
 						variant="primary"

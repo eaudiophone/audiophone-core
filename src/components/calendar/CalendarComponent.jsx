@@ -10,17 +10,23 @@ import '@fullcalendar/core/main.css';
 import { compareDates } from '../../util-functions/date-format';
 
 import { ModalCalendarComponent } from './../modal/index';
+import './CalendarComponent.css';
 
 export class CalendarComponent extends Component {
 
+	/* documentación para mover dias en el calendario
+		eventDrop={ this.handleMoveEvent }
+		editable={ true } para mover eventos en el calendario
+	*/
+
 	calendarRef = React.createRef();
 	calendarAPI = null;
-	
+
 	eventSelected = null;
 	action = '';  // edit | new
 	date = ''; // fecha (solo nuevo evento)
 
-	constructor( props ) {	
+	constructor( props ) {
 		super( props );
 
 		this.state = { destroy: true }
@@ -35,7 +41,7 @@ export class CalendarComponent extends Component {
 
 	handleEventClick({ event }) {
 
-		const id = event._def.publicId; 
+		const id = event._def.publicId;
 		const result = this.calendarAPI.getEventById( id );
 
 		this.eventSelected = result.extendedProps;
@@ -52,7 +58,7 @@ export class CalendarComponent extends Component {
 			return;
 		}
 
-		this.eventSelected = null; 
+		this.eventSelected = null;
 		this.action = 'new';
 		this.date = result.date1;
 
@@ -63,7 +69,7 @@ export class CalendarComponent extends Component {
 
 		if ( this.eventSelected || this.action === 'new' ) {
 			return (
-				<ModalCalendarComponent 
+				<ModalCalendarComponent
 					showModal={ this.props.openModal }
 					closeModal={ ( resp, eventForm, action ) => this.props.closeModal( resp, eventForm, action ) }
 					event={ this.eventSelected }
@@ -73,22 +79,20 @@ export class CalendarComponent extends Component {
 			);
 		}
 	}
-	
+
 	render() {
 
 		return (
 
 			<Fragment>
-				<FullCalendar 
-					defaultView="dayGridMonth" 
-					plugins={[ dayGridPlugin, interactionPlugin ]} 
+				<FullCalendar
+					defaultView="dayGridMonth"
+					plugins={[ dayGridPlugin, interactionPlugin ]}
 					events={ this.props.events }
 					locale={ esLocale }
 					eventClick={ this.handleEventClick }
 					ref={ this.calendarRef }
 					dateClick={ this.handleDayClick }
-					// eventDrop={ this.handleMoveEvent }
-					// editable={ true } para mover eventos en el calendario
 				/>
 				{ this.renderModal() }
 			</Fragment>

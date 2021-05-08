@@ -9,10 +9,12 @@ import { RedirectService } from '../../services/RedirectService';
 import { ModalSelectItemsComponent } from '../../components/modal/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import './DetailBudgetPage.css';
+
 export class DetailBudgetPage extends Component {
 
 	eventService = new EventService();
-	budgetService = new BudgetService(); 
+	budgetService = new BudgetService();
 	event = {};
 
 	message = '';
@@ -39,13 +41,13 @@ export class DetailBudgetPage extends Component {
 		this.budgetService.getDataItemsBudget()
 			.then( response => this.getEvent( response.bd_items ))
 			.catch( error => {
-				
+
 				// console.log( error.data );
 
 				if ( error.status === 401 ) {
 					return this.setState({ redirect: true });
 				}
-	
+
 				if ( error.data ) {
 					return this.getEvent( error.data.bd_items );
 				}
@@ -56,15 +58,15 @@ export class DetailBudgetPage extends Component {
 
 
 	getEvent( items = [] ) {
-		
-		const idEvent = Number( this.props.match.params.id );		
+
+		const idEvent = Number( this.props.match.params.id );
 
 		this.eventService.getEvent( idEvent )
-			.then( event => { 
+			.then( event => {
 
 				this.event = event;
 
-				return this.setState({ loading: false, items }); 
+				return this.setState({ loading: false, items });
 			})
 			.catch( error => {
 
@@ -74,7 +76,7 @@ export class DetailBudgetPage extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-					
+
 				return this.setState({ showToast: true });
 			});
 	}
@@ -93,14 +95,14 @@ export class DetailBudgetPage extends Component {
 		}));
 
 		let price = 0;
-		
+
 		// realiza el calculo del total
 		itemsSelected.forEach(( item ) => price += item.apiaudiophonebudgets_items_subtotal );
 
 		return this.setState({
-			itemsSelected, 
+			itemsSelected,
 			showModal: false,
-			totalBudget: price 
+			totalBudget: price
 		});
 	}
 
@@ -109,7 +111,7 @@ export class DetailBudgetPage extends Component {
 		let price = 0;
 
 		let newArray = this.state.itemsSelected.filter(
-			( itemSelected ) => item.apiaudiophoneitems_id !== itemSelected.apiaudiophoneitems_id 
+			( itemSelected ) => item.apiaudiophoneitems_id !== itemSelected.apiaudiophoneitems_id
 		);
 
 		// realiza el calculo del total
@@ -117,7 +119,7 @@ export class DetailBudgetPage extends Component {
 
 		return this.setState({
 			itemsSelected: newArray,
-			totalBudget: price 
+			totalBudget: price
 		});
 	}
 
@@ -140,22 +142,22 @@ export class DetailBudgetPage extends Component {
 
 		this.budgetService.createBudget( data )
 			.then( response => {
-				
+
 				this.message = response.message;
 				this.action = response.action;
-				
+
 				this.setState({ showToast: true });
 
 				this.route = '/budget';
 
-				setTimeout(() => { 
+				setTimeout(() => {
 					actions.setSubmitting( false );
 					this.setState({ redirect: true });
 				} , 2000 );
 
 			})
 			.catch( error => {
-				
+
 				// console.log( error );
 
 				if ( error.status === 401 ) {
@@ -166,7 +168,7 @@ export class DetailBudgetPage extends Component {
 
 				this.message = error.message;
 				this.action = error.action;
-					
+
 				return this.setState({ showToast: true });
 			});
 	}
@@ -207,8 +209,8 @@ export class DetailBudgetPage extends Component {
 					<tr>
 						{ headerTable.map(( columnName, index ) => (
 								<th key={ index } className="text-center">{ columnName }</th>
-							)) 
-						}	
+							))
+						}
 					</tr>
 				</thead>
 				<tbody>
@@ -217,7 +219,7 @@ export class DetailBudgetPage extends Component {
 								<td>{ item.apiaudiophoneitems_name }</td>
 								<td>{ item.apiaudiophoneitems_description }</td>
 								<td>
-									<InputQuantity 
+									<InputQuantity
 										changeQuantity={ ( value, idItem ) => this.handleChange( value, idItem ) }
 										item={ item }
 									/>
@@ -230,7 +232,7 @@ export class DetailBudgetPage extends Component {
 									</Button>
 								</td>
 							</tr>
-						)) 
+						))
 					}
 					{	this.state.itemsSelected.length === 0 && (
 							<tr className="text-center">
@@ -242,7 +244,7 @@ export class DetailBudgetPage extends Component {
 				<tfoot>
 					<tr>
 						<td colSpan="6" className="text-right">
-							Total a pagar: 
+							Total a pagar:
 							<b className="ml-2">{ this.state.totalBudget.toFixed( 2 ) }$</b>
 						</td>
 					</tr>
@@ -257,9 +259,9 @@ export class DetailBudgetPage extends Component {
 				<h3>Detalles del Presupuesto</h3>
 				<p>
 					<b className="mr-2">
-						Nombre del evento: 
+						Nombre del evento:
 					</b> { this.event.apiaudiophonevents_title } <br />
-					<b className="mr-2">Tipo de presupuesto: </b> 
+					<b className="mr-2">Tipo de presupuesto: </b>
 					{ Number( this.event.id_apiaudiophoneservices ) === 1 ? 'Alquiler' : 'Grabación' }
 					<br />
 					<b className="mr-2">Fecha: </b> { getSpanishFormatDate( new Date().toISOString() ) }
@@ -278,7 +280,7 @@ export class DetailBudgetPage extends Component {
 					Caracas - Venezuela <br />
 					Telefonos: 0212-862-34-92 0416-905-57-06 <br />
 					Email: eaudiophonesa@gmail.com <br />
-				</p>	
+				</p>
 			</Col>
 		);
 	}
@@ -286,17 +288,17 @@ export class DetailBudgetPage extends Component {
 	showContent() {
 
 		if ( !this.state.loading ) {
-			return ( 
+			return (
 				<Fragment>
 					<Row className="p-3">
 						{ this.showInfo() }
 						{ this.showDetails() }
-						<BudgetFormComponent 
-							children={ this.getTable() } 
+						<BudgetFormComponent
+							children={ this.getTable() }
 							openModal={ () => this.setState({ showModal: true }) }
 							generateBudget={ ( form ) => this.generateBudget( form ) }
 							itemsLength={ this.state.itemsSelected.length }
-						/> 
+						/>
 					</Row>
 				</Fragment>
 			);
@@ -309,18 +311,18 @@ export class DetailBudgetPage extends Component {
 		return (
 			<Fragment>
 				{ this.state.redirect && ( <RedirectService route={ this.route } /> ) }
-				<ToastComponent 
-					content={ this.message } 
-					context={ this.action } 
-					showToast={ this.state.showToast } 
+				<ToastComponent
+					content={ this.message }
+					context={ this.action }
+					showToast={ this.state.showToast }
 					onHide={ () => this.setState({ showToast: false }) }
 				/>
-				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap 
-						align-items-center pb-2 mb-3 border-bottom">
-					<h2>Presupuesto de servicios: </h2>
+				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap
+						align-items-center pb-2 mb-3">
+					<h2 className="font-italic">Presupuesto de servicios: </h2>
 				</div>
 				{ this.showContent() }
-				<ModalSelectItemsComponent 
+				<ModalSelectItemsComponent
 					showModal={ this.state.showModal }
 					items={ this.state.items }
 					totalItems={ this.state.totalItems }
@@ -344,18 +346,19 @@ const InputQuantity = ( props ) => {
 
 		setValue( Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ) );
 
-		changeQuantity( 
-			Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ), 
-			idItem 
+		changeQuantity(
+			Number( val ) < 1 || Number( val ) > 9999 ? 1 : Number( val ),
+			idItem
 		);
 	}
 
 	return (
-		<input 
-			type="number" 
-			min="1" 
-			max="9999" 
-			onChange={ ( $event ) => handleChange( $event.target.value, item.apiaudiophoneitems_id ) } 
+		<input
+			className="form-control"
+			type="number"
+			min="1"
+			max="9999"
+			onChange={ ( $event ) => handleChange( $event.target.value, item.apiaudiophoneitems_id ) }
 			value={ value }
 		/>
 	);
