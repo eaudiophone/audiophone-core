@@ -281,13 +281,12 @@ export class ItemsTableComponent extends Component {
 						<Col xs={ 12 } sm={ 10 }>
 							<SearchBarComponent sendSearch={ ( search ) => this.sendSearch( search ) } />
 						</Col>
-						<Col xs={ 12 } sm={ 2 }>
-							<div className="w-100 h-100 d-flex justify-content-center flex-row align-items-end">
-								<Button variant="success" className="reset-button" size="sm" onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
-									<FontAwesomeIcon icon="plus" className="mr-2" />
-									Nuevo articulo
-								</Button>
-							</div>
+						<Col xs={ 12 } sm={ 2 } className="align-self-end text-center mt-3 mt-md-0">
+							<Button variant="success" className="reset-button" size="sm"
+								onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
+								<FontAwesomeIcon icon="plus" className="mr-2" />
+								Nuevo articulo
+							</Button>
 						</Col>
 					</Row>
 					<Table className="mt-4" striped responsive hover>

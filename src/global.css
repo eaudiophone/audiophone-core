@@ -119,6 +119,7 @@ input, select {
 	color: red;
 }
 
+/* tabs */
 .nav-tabs .nav-link {
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
@@ -149,6 +150,29 @@ table td  {
 
 table td button {
   border-radius: 5px !important;
+}
+
+/* modals */
+.modal-header {
+	background: var(--navbar-color);
+}
+
+.modal-header .close:focus {
+	outline: none;
+}
+
+.modal-body {
+	color: #000;
+	background: #d3d6d766;
+}
+
+.modal-footer {
+	background: var(--navbar-color);
+	justify-content: center;
+}
+
+.modal-footer button {
+	width: 120px;
 }
 
 /* media query */

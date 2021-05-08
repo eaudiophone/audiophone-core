@@ -63,7 +63,7 @@ const DeleleBudgetConfirm = ( props ) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={ () => confirm() }>
-          Limpiar datos
+          Limpiar
         </Button>
         <Button variant="primary" onClick={ () => confirm( budget, 'delete' ) }>
           Eliminar
@@ -85,7 +85,7 @@ const BudgetForm = ( props ) => {
 				 <Modal.Body>
 
 				 		<b>Estado del formulario:</b>
-				 		<Form.Row className="justify-content-around mb-4 mt-3">
+				 		<Form.Row className="justify-content-around mb-4 mt-3 row-buttons">
 				 			<Button
 				 				variant={ values.apiaudiophonebudgets_status === 'NO_APLICA' ? 'primary' : 'secondary' }
 				 				onClick={ () => setFieldValue( 'apiaudiophonebudgets_status', 'NO_APLICA' ) }
@@ -154,7 +154,7 @@ const BudgetForm = ( props ) => {
 	      </Modal.Body>
 	      <Modal.Footer>
 	        <Button variant="secondary" type="reset">
-	          Limpiar formulario
+	          Limpiar
 	        </Button>
 	        { !isSubmitting && (
 			        <Button variant="primary" disabled={ !isValid } type="submit">

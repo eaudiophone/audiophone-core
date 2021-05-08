@@ -282,21 +282,23 @@ export class UserTableComponent extends Component {
 						className={ user.apiaudiophoneusers_status === 1 ? 'success' : 'danger' }
 					/>
 				</td>
-				<td className="d-flex flex-row justify-content-around">
-					<Button
+				<td>
+					<div className="w-100 h-100 d-flex flex-row justify-content-around">
+						<Button
 							variant="warning"
 							onClick={ () => this.showModal( 'edit', user ) }
 							disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
-						>
+							>
 							<FontAwesomeIcon icon="user" className="point" />
-					</Button>
-					<Button
-						variant="danger"
-						onClick={ () => this.showModal( 'delete', user ) }
-						disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
-					>
-						<FontAwesomeIcon icon="trash" className="point" />
-					</Button>
+						</Button>
+						<Button
+							variant="danger"
+							onClick={ () => this.showModal( 'delete', user ) }
+							disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
+							>
+							<FontAwesomeIcon icon="trash" className="point" />
+						</Button>
+					</div>
 				</td>
 			</tr>
 
