@@ -36,3 +36,16 @@
 	margin-left: 15px;
 	border: 1px solid white;
 }
+
+.navbar-brand img {
+	max-width: 40px;
+	margin-right: 15px;
+}
+
+.navbar-brand {
+	padding: 0 !important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+	color: #000 !important;
+}

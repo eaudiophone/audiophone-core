@@ -3,7 +3,7 @@ import { BudgetTableComponent, LoadingComponent, ToastComponent } from '../../co
 import { BudgetService } from '../../services/BudgetService';
 import { RedirectService } from '../../services/RedirectService';
 import { ModalBudgetComponent } from '../../components/modal/index';
-import { URL_SERVER } from './../../enviroment/enviroment.prod';
+import { URL_SERVER } from './../../enviroment/enviroment';
 
 export class BudgetPage extends Component {
 

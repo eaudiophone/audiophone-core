@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { RedirectService } from '../../services/RedirectService';
 
 import { AuthService } from './../../services/AuthService';
+import LogoEA from '../../images/EA_blanco.svg';
 
 import './NavbarComponent.css';
 
@@ -65,7 +66,10 @@ class NavbarComponent extends Component {
 					variant="dark"
 					sticky="top"
 				>
-			  		<Navbar.Brand>Estudios Audiophone</Navbar.Brand>
+			  		<Navbar.Brand>
+							<img src={ LogoEA } alt="logo_EA" />
+							Audiophone
+						</Navbar.Brand>
 			  		<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			 		{ this.getProfile() }
 				</Navbar>

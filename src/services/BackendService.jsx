@@ -1,5 +1,5 @@
 // aqui se realizan todas las peticiones al API:
-import { CLIENT_SECRET, URL_SERVER } from './../enviroment/enviroment.prod';
+import { CLIENT_SECRET, URL_SERVER } from './../enviroment/enviroment';
 import axios from 'axios';
 
 export class BackendService {
