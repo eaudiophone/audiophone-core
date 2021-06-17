@@ -4,6 +4,7 @@ import { ModalCalendarComponent } from './modal-calendar/ModalCalendarComponent'
 import { ModalItemsComponent } from './modal-items/ModalItemsComponent';
 import { ModalSelectItemsComponent } from './modal-budget/ModalSelectItemsComponent';
 import { ModalBudgetComponent } from './modal-budget/ModalBudgetComponent';
+import { ModalClientComponent } from './modal-clients/ModalClientComponent';
 
 export {
 	ChangeRoleModal,
@@ -12,5 +13,6 @@ export {
 	ModalCalendarComponent,
 	ModalItemsComponent,
 	ModalSelectItemsComponent,
-	ModalBudgetComponent
+	ModalBudgetComponent,  
+	ModalClientComponent
 };

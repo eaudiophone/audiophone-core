@@ -16,7 +16,9 @@ export class ClientsPage extends Component {
 			<>
 				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
 				<TitleComponent title="Gestion de clientes"></TitleComponent>
-				<ClientsTableComponent />
+				<ClientsTableComponent 
+					redirect={ () => this.setState({ redirect: true }) } 
+				/>
 			</>
 		);
 	}
