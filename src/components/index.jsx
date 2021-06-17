@@ -8,8 +8,10 @@ import { CardComponent } from './card/CardComponent';
 import { UserTableComponent } from './tables/UserTableComponent';
 import { ItemsTableComponent } from './tables/ItemsTableComponent';
 import { BudgetTableComponent } from './tables/BudgetTableComponent';
+import { ClientsTableComponent } from './tables/ClientsTableComponent';
 import { CalendarComponent } from './calendar/CalendarComponent';
 import { FormEventComponent } from './form/events-form/FormEventComponent';
+import { TitleComponent } from './title/TitleComponent';
 
 export {
 	ToastComponent,
@@ -22,5 +24,7 @@ export {
 	CalendarComponent,
 	FormEventComponent,
 	ItemsTableComponent,
-	BudgetTableComponent
+	BudgetTableComponent,
+	TitleComponent,
+	ClientsTableComponent
 };

@@ -28,6 +28,7 @@ class NavbarComponent extends Component {
 					<Link className="dropdown-item" to="/day">Dias de servicios</Link>
 					<Link className="dropdown-item" to="/users">Usuarios</Link>
 					<Link className="dropdown-item" to="/items">Articulos</Link>
+					<Link className="dropdown-item" to="/clients">Clientes</Link>
 					<Link className="dropdown-item" to="/budget">Presupuestos</Link>
 				</NavDropdown>
 			);

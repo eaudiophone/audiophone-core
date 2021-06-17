@@ -8,7 +8,8 @@ import {
 	EventPage,
 	ProfilePage,
 	ItemsPage,
-	DetailBudgetPage
+	DetailBudgetPage,
+	ClientsPage
 } from '../pages/index';
 
 export const routesApp = [
@@ -22,6 +23,7 @@ export const routesApp = [
 	{ path: '/event/:id', component: EventPageForm, admin: false },
 	{ path: '/event', component: EventPage, admin: false },
 	{ path: '/items', component: ItemsPage, admin: true },
+	{ path: '/clients', component: ClientsPage, admin: true },
 	{ path: '/profile', component: ProfilePage },
 ];
 

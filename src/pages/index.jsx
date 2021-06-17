@@ -11,6 +11,7 @@ import { DayPage } from './day/DayPage';
 import { BudgetPage } from './budget/BudgetPage';
 import { DetailBudgetPage } from './budget/DetailBudgetPage';
 import { ItemsPage } from './items/ItemsPage';
+import { ClientsPage } from './clients/ClientsPage'
 
 export {
 	UserPage,
@@ -23,5 +24,6 @@ export {
 	ProfilePage,
 	EventPageForm,
 	ItemsPage,
-	DetailBudgetPage
+	DetailBudgetPage,
+	ClientsPage
 };

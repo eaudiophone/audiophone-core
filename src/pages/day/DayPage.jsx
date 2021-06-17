@@ -6,9 +6,8 @@ import TermsSchema from '../../components/form/terms-form/TermsSchema';
 import Terms from '../../models/TermsModels';
 import { DayService } from '../../services/DayService';
 import { verifyRangeHours } from '../../util-functions/date-format';
-import { ToastComponent } from '../../components/toasts/ToastComponent';
-import { LoadingComponent } from '../../components/loading/LoadingComponent';
 import { RedirectService } from '../../services/RedirectService';
+import { ToastComponent, LoadingComponent, TitleComponent } from '../../components/index';
 
 import './DayPage.css';
 
@@ -211,7 +210,7 @@ export class DayPage extends Component {
 	render() {
 
 		return (
-			<div>
+			<>
 				{ this.state.redirect && ( <RedirectService  route="/login" /> ) }
 				<ToastComponent
 					showToast={ this.state.showToast }
@@ -219,12 +218,9 @@ export class DayPage extends Component {
 					content={ this.message }
 					context={ this.action }
 				/>
-				<div className="d-flex justify-content-start flex-wrap flex-md-nowrap
-						align-items-center pb-2 mb-3">
-					<h2 className="font-italic">Dias de servicios</h2>
-				</div>
+				<TitleComponent title="Días de servicios"></TitleComponent>
 				{ this.showContent() }
-			</div>
+			</>
 		);
 	}
 }
