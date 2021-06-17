@@ -10,12 +10,15 @@ export const ModalClientComponent = ( props ) => {
 		<Modal size="lg" show={ showModal } onHide={ () => closeModal() }>
 			{
 				action === 'new' && (
-					<NewClient getForm={ ( response ) => closeModal( 'new', response ) } />
+					<NewClient confirm={ ( response ) => { 
+						console.log( response );
+						closeModal( 'new', response ) 
+					}} />
 				)
 			}
 			{
 				action === 'edit' && (
-					<EditClient client={ client } getForm={ ( response ) => closeModal('edit', response ) } />
+					<EditClient client={ client } confirm={ ( response ) => closeModal('edit', response ) } />
 				)
 			}
 		</Modal>

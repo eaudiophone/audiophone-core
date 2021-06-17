@@ -2,15 +2,22 @@ import React from 'react';
 import { Form, Formik, Field } from 'formik';
 import { Row, Col, Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Client from '../../../models/ClientModels';
+import { FormInput, NumberInput } from '../FormComponent';
+import ClientSchema from './ClientsSchema';
 
 export const ClientsForm = ( props ) => {
 	
-	const { client, getClient } = props;
+	const { client, getForm } = props;
 
 	return (
 		<>
-			<p>Client form works</p>
-			{/*<Formik>
+			<Formik
+				initialValues={ client || new Client() }
+				validateOnChange={ true }
+				onSubmit={ getForm }
+				validationSchema={ new ClientSchema()._schema }
+			>
 				{({ values, handleReset, isValid, isSubmitting }) => {
 					return (
 						<>
@@ -19,26 +26,29 @@ export const ClientsForm = ( props ) => {
 											<Row>
 												<Col sm={ 12 }>
 													<Field 
-														name="apiaudiophoneitems_name"
+														name="apiaudiophoneclients_name"
 														component={ FormInput }
 														type="text"
-														title="Nombre del articulo"
+														title="Nombre del cliente"
 													/>
 												</Col>
 
 												<Field 
-													name="apiaudiophoneitems_description"
-													component={ TextAreaInput }
-													type="textarea"
-													title="Descripción del articulo"
+													name="apiaudiophoneclients_ident"
+													component={ NumberInput }
+													type="number"
+													title="Número de identificación"
 												/>
 
-												<Field 
-													name="apiaudiophoneitems_price"
-													component={ DecimalNumberInput }
-													type="number"
-													title="Precio unitario del articulo"
-												/>
+												<Col sm={ 12 }>
+													<Field 
+														name="apiaudiophoneclients_phone"
+														component={ FormInput }
+														type="text"
+														title="Numero telefónico"
+													/>	
+												</Col>
+												
 											</Row>
 									</Modal.Body>
 
@@ -67,7 +77,7 @@ export const ClientsForm = ( props ) => {
 						</>
 					)
 				}}
-			</Formik>*/}
+			</Formik>
 		</>
 	); 
 }

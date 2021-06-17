@@ -49,7 +49,7 @@ export class ClientsTableComponent extends Component {
 					return;
 				}
 
-				console.log( error );
+				// console.log( error );
 
 				this.message = error.message;
 				this.action = error.action;
@@ -79,15 +79,23 @@ export class ClientsTableComponent extends Component {
 	dispatchActions( type, response ) {
 		
 		if ( type === 'new' ) {
-			// return this.activateItem( response );
+			this.setState({ showModal: false });
 
 		} else if ( type === 'edit' ) {
-			// return this.newItem( response );
+			this.setState({ showModal: false });
 
 		} else {
-			return this.setState({ showModal: false });
+			this.setState({ showModal: false });
 		
 		}
+	}
+
+	newClient({ actions, values }) {
+		console.log({ actions, values });
+	}
+
+	editClient({ actions, values }) {
+		console.log({ actions, values });
 	}
 
 	setRows( client ) {
