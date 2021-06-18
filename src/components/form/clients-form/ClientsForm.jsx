@@ -10,6 +10,8 @@ export const ClientsForm = ( props ) => {
 	
 	const { client, getForm } = props;
 
+	console.log( client );
+
 	return (
 		<>
 			<Formik

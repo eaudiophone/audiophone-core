@@ -1,9 +1,10 @@
 import  React, { Component }  from 'react';
-import { SearchBarComponent, ToastComponent } from '../index';
+import { SearchBarComponent, ToastComponent, LoadingComponent, PaginationComponent } from '../index';
 import { Row, Col, Table, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ClientService } from '../../services/ClientService';
 import { ModalClientComponent } from '../modal/index';
+import { getDateWithHour } from '../../util-functions/date-format';
 
 export class ClientsTableComponent extends Component {
 	constructor() {
@@ -18,7 +19,7 @@ export class ClientsTableComponent extends Component {
 			loading: true
 		}
 
-		this.header = ['Id', 'Nombre cliente', 'Numero de Identidad', 'Telefono', 'Acciones'];
+		this.header = ['Id', 'Nombre cliente', 'Numero de Identidad', 'Telefono', 'Creado', 'Acciones'];
 		this.limitPagination = 5;
 		this.action = '';
 		this.message = '';
@@ -30,16 +31,12 @@ export class ClientsTableComponent extends Component {
 		this.getAllClients();
 	}
 
-	getAllClients() {
+	getAllClients( pagination = null ) {
 		
-		this.clientService.getClients()
+		this.clientService.getClients( pagination )
 			.then(( response ) => {
 
-				console.log( response );
-
-				this.setState({
-					loading: false
-				});
+				this.setState( response );
 			})
 			.catch(( error ) => {
 
@@ -71,18 +68,22 @@ export class ClientsTableComponent extends Component {
 		
 		this.typeModal = action;
 
-		console.log( client );
+		if ( client ) {
+			this.setState({ showModal: true, client });
 
-		this.setState({ showModal: true });
+		} else {
+			this.setState({ showModal: true });
+		}
+
 	}
 
 	dispatchActions( type, response ) {
 		
 		if ( type === 'new' ) {
-			this.setState({ showModal: false });
+			this.newClient( response );
 
 		} else if ( type === 'edit' ) {
-			this.setState({ showModal: false });
+			this.editClient( response );
 
 		} else {
 			this.setState({ showModal: false });
@@ -91,11 +92,88 @@ export class ClientsTableComponent extends Component {
 	}
 
 	newClient({ actions, values }) {
-		console.log({ actions, values });
+		
+		this.clientService.createClient( values )
+			.then(( response ) => {
+				
+				actions.setSubmitting( false );  
+
+				this.message = response.message; 
+				this.action = 'Exito';
+
+				this.setState({
+					showModal: false,
+					showToast: true,
+					clients: this.state.clients.length < this.limitPagination ?
+						this.state.clients.concat([ response.client ]) : this.state.clients,
+					totalClients: this.state.clients.length + 1
+				});
+
+			})
+			.catch(( error ) => {
+
+				if ( error.status === 401 ) {
+					this.props.redirect();
+
+					return;
+				}
+
+				// console.log( error );
+
+				this.message = error.message;
+				this.action = error.action;
+
+				this.setState({
+					showToast: true,
+					showModal: false
+				});
+
+			});
 	}
 
 	editClient({ actions, values }) {
-		console.log({ actions, values });
+
+		this.clientService.updateClients( values )
+			.then(( response ) => {
+				
+				// console.log( response );
+
+				actions.setSubmitting( false );  
+
+				this.message = response.message; 
+				this.action = 'Exito';
+
+				this.setState({
+					showModal: false,
+					showToast: true,
+					clients: this.state.clients.map(( client ) => {
+						
+						if ( client.apiaudiophoneclients_id === response.clientUpdate.apiaudiophoneclients_id ) {
+							return response.clientUpdate;
+						}
+
+						return client;
+					})
+				});
+			})
+			.catch(( error ) => {
+
+				if ( error.status === 401 ) {
+					this.props.redirect();
+
+					return;
+				}
+
+				// console.log( error );
+
+				this.message = error.message;
+				this.action = error.action;
+
+				this.setState({
+					showToast: true,
+					showModal: false
+				});
+			})
 	}
 
 	setRows( client ) {
@@ -108,6 +186,7 @@ export class ClientsTableComponent extends Component {
 					<td>{ client.apiaudiophoneclients_name }</td>
 					<td>{ client.apiaudiophoneclients_ident }</td>
 					<td>{ client.apiaudiophoneclients_phone }</td>
+					<td>{ getDateWithHour( client.created_at ) }</td>
 					<td>
 						<Button
 							variant="info"
@@ -133,6 +212,22 @@ export class ClientsTableComponent extends Component {
 
 	}
 
+	showPagination() {
+
+		if ( this.state.clients.length > 0 ) {
+			
+			return (
+				<Row className="justify-content-center mt-2">
+					<PaginationComponent
+						totalRegisters={ this.state.totalClients }
+						send={ ( params ) => this.getAllClients( params ) }
+						pagination={ 5 }
+					/>
+				</Row>
+			);
+		}
+	}
+
 	render() {
 		return (
 			<>	
@@ -145,29 +240,36 @@ export class ClientsTableComponent extends Component {
 				<ModalClientComponent 
 					showModal={ this.state.showModal }
 					closeModal={ ( type, response ) => this.dispatchActions( type, response ) }
-					item={ this.state.client }
+					client={ this.state.client }
 					action={ this.typeModal }
 				/>
-				<Row>
-					<Col xs={ 12 } sm={ 10 }>
-						<SearchBarComponent sendSearch={ ( stringSearch ) => this.searchClient( stringSearch ) } />
-					</Col>
-					<Col xs={ 12 } sm={ 2 } className="align-self-end text-center mt-3 mt-md-0">
-						<Button variant="success" className="reset-button" size="sm"
-							onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
-							<FontAwesomeIcon icon="plus" className="mr-2" />
-							Nuevo cliente
-						</Button>
-					</Col>
-				</Row>
-				<Table className="mt-4" striped hover responsive>
-					<thead className="thead-dark">
-						<tr className="text-center">
-							{ this.header.map(( name, index ) => ( <th key={ index }>{ name }</th> )) }
-						</tr>
-					</thead>
-					<tbody>{ this.setRows() }</tbody>
-				</Table>
+				{ this.state.loading && ( <LoadingComponent /> ) }
+				{ !this.state.loading && (
+					<>
+						<Row>
+							<Col xs={ 12 } sm={ 10 }>
+								<SearchBarComponent sendSearch={ ( stringSearch ) => this.searchClient( stringSearch ) } />
+							</Col>
+							<Col xs={ 12 } sm={ 2 } className="align-self-end text-center mt-3 mt-md-0">
+								<Button variant="success" className="reset-button" size="sm"
+									onClick={ ( $event ) => this.handleClick( null, 'new' ) }>
+									<FontAwesomeIcon icon="plus" className="mr-2" />
+									Nuevo cliente
+								</Button>
+							</Col>
+						</Row>
+						<Table className="mt-4" striped hover responsive>
+							<thead className="thead-dark">
+								<tr className="text-center">
+									{ this.header.map(( name, index ) => ( <th key={ index }>{ name }</th> )) }
+								</tr>
+							</thead>
+							<tbody>{ this.setRows() }</tbody>
+						</Table>
+						{ this.showPagination() }
+					</>
+					) 
+				}
 			</>
 		);
 	}
