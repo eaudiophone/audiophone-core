@@ -5,7 +5,7 @@ import { getDateWithHour } from '../../util-functions/date-format';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const headerTable = [
-	'Tipo de servicio:', 
+	'Tipo de servicio:',
 	'Nombre cliente:',
 	'Correo cliente:',
 	'Creado:',
@@ -45,20 +45,20 @@ export const BudgetTableComponent = ( props ) => {
 								<td>
 									<Row className="justify-content-center">
 										<Button
+											variant="primary"
+											size="sm"
+											className="mr-2 point"
+											onClick={ () => dispatch('edit', budget ) }
+											>
+											<FontAwesomeIcon icon="pen" />
+										</Button>
+										<Button
 											variant="secondary"
 											size="sm"
 											className="point mr-2 "
 											onClick={ () => showPdf( budget.apiaudiophonebudgets_url ) }
 										>
 											<FontAwesomeIcon icon="file-pdf" />
-										</Button>
-										<Button
-											variant="info"
-											size="sm"
-											className="mr-2 point"
-											onClick={ () => dispatch('edit', budget ) }
-										>
-											<FontAwesomeIcon icon="pen" />
 										</Button>
 									</Row>
 								</td>

@@ -283,16 +283,19 @@ export class UserTableComponent extends Component {
 					/>
 				</td>
 				<td>
-					<div className="w-100 h-100 d-flex flex-row justify-content-around">
+					<div className="w-100 h-100 d-flex flex-row justify-content-center">
 						<Button
-							variant="warning"
+							size="sm"
+							variant="primary"
 							onClick={ () => this.showModal( 'edit', user ) }
 							disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
-							>
+							className="mr-2"
+						>
 							<FontAwesomeIcon icon="user" className="point" />
 						</Button>
 						<Button
-							variant="danger"
+							size="sm"
+							variant="secondary"
 							onClick={ () => this.showModal( 'delete', user ) }
 							disabled={ user.apiaudiophoneusers_id === JSON.parse( sessionStorage.getItem('logged') ).id }
 							>

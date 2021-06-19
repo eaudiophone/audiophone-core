@@ -1,11 +1,11 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { 
-	faUser, 
-	faTrash, 
-	faSearch, 
-	faSpinner, 
-	faPlus, 
+import {
+	faUser,
+	faTrash,
+	faSearch,
+	faSpinner,
+	faPlus,
 	faMicrophone,
 	faTruck,
 	faTimes,
@@ -16,10 +16,11 @@ import {
 	faExclamationCircle,
 	faInfoCircle,
 	faUserClock,
-	faFilePdf
+	faFilePdf,
+	faFileAlt
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(  
+library.add(
 	fas,
 	faSearch,
 	faSpinner,
@@ -36,5 +37,6 @@ library.add(
 	faExclamationCircle,
 	faInfoCircle,
 	faUserClock,
-	faFilePdf
+	faFilePdf,
+	faFileAlt
 );

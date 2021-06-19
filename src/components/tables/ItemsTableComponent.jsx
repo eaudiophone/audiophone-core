@@ -252,14 +252,14 @@ export class ItemsTableComponent extends Component {
 				</td>
 				<td>
 					<Button
-						variant="info"
+						variant="primary"
 						size="sm"
 						className="mr-2"
 						onClick={ ( $event ) => this.handleClick( item, 'edit' ) }>
 						<FontAwesomeIcon icon="pen" className="point" />
 					</Button>
 					<Button
-						variant="danger"
+						variant="secondary"
 						size="sm"
 						onClick={ ( $event ) => this.handleClick( item, 'delete' ) }
 					>

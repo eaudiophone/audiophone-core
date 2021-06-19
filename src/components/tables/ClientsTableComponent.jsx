@@ -11,7 +11,7 @@ export class ClientsTableComponent extends Component {
 		super();
 
 		this.state = {
-			clients: [],  
+			clients: [],
 			totalClients: 0,
 			client: {},
 			showToast: false,
@@ -32,7 +32,7 @@ export class ClientsTableComponent extends Component {
 	}
 
 	getAllClients( pagination = null ) {
-		
+
 		this.clientService.getClients( pagination )
 			.then(( response ) => {
 
@@ -65,7 +65,7 @@ export class ClientsTableComponent extends Component {
 	}
 
 	handleClick( client, action ) {
-		
+
 		this.typeModal = action;
 
 		if ( client ) {
@@ -78,7 +78,7 @@ export class ClientsTableComponent extends Component {
 	}
 
 	dispatchActions( type, response ) {
-		
+
 		if ( type === 'new' ) {
 			this.newClient( response );
 
@@ -87,18 +87,18 @@ export class ClientsTableComponent extends Component {
 
 		} else {
 			this.setState({ showModal: false });
-		
+
 		}
 	}
 
 	newClient({ actions, values }) {
-		
+
 		this.clientService.createClient( values )
 			.then(( response ) => {
-				
-				actions.setSubmitting( false );  
 
-				this.message = response.message; 
+				actions.setSubmitting( false );
+
+				this.message = response.message;
 				this.action = 'Exito';
 
 				this.setState({
@@ -135,19 +135,19 @@ export class ClientsTableComponent extends Component {
 
 		this.clientService.updateClients( values )
 			.then(( response ) => {
-				
+
 				// console.log( response );
 
-				actions.setSubmitting( false );  
+				actions.setSubmitting( false );
 
-				this.message = response.message; 
+				this.message = response.message;
 				this.action = 'Exito';
 
 				this.setState({
 					showModal: false,
 					showToast: true,
 					clients: this.state.clients.map(( client ) => {
-						
+
 						if ( client.apiaudiophoneclients_id === response.clientUpdate.apiaudiophoneclients_id ) {
 							return response.clientUpdate;
 						}
@@ -177,7 +177,7 @@ export class ClientsTableComponent extends Component {
 	}
 
 	setRows( client ) {
-		
+
 		if ( this.state.clients.length > 0 ) {
 
 			return this.state.clients.map(( client, index ) => (
@@ -189,11 +189,18 @@ export class ClientsTableComponent extends Component {
 					<td>{ getDateWithHour( client.created_at ) }</td>
 					<td>
 						<Button
-							variant="info"
+							variant="primary"
 							size="sm"
 							onClick={ ( $event ) => this.handleClick( client, 'edit' ) }
+							className="mr-2"
 						>
 							<FontAwesomeIcon icon="pen" className="point" />
+						</Button>
+						<Button
+							variant="secondary"
+							size="sm"
+						>
+							<FontAwesomeIcon icon="file-alt" className="point" />
 						</Button>
 					</td>
 				</tr>
@@ -203,7 +210,7 @@ export class ClientsTableComponent extends Component {
 
 			return (
 				<tr className="text-center">
-					<td colSpan={ 5 } className="text-danger">
+					<td colSpan={ 6 } className="text-danger">
 						No existen registros de clientes disponibles
 					</td>
 				</tr>
@@ -215,7 +222,7 @@ export class ClientsTableComponent extends Component {
 	showPagination() {
 
 		if ( this.state.clients.length > 0 ) {
-			
+
 			return (
 				<Row className="justify-content-center mt-2">
 					<PaginationComponent
@@ -230,14 +237,14 @@ export class ClientsTableComponent extends Component {
 
 	render() {
 		return (
-			<>	
-				<ToastComponent 
-					showToast={ this.state.showToast } 
-					content={ this.message } 
+			<>
+				<ToastComponent
+					showToast={ this.state.showToast }
+					content={ this.message }
 					context={ this.action }
 					onHide={ () => this.setState({ showToast: false }) }
 				/>
-				<ModalClientComponent 
+				<ModalClientComponent
 					showModal={ this.state.showModal }
 					closeModal={ ( type, response ) => this.dispatchActions( type, response ) }
 					client={ this.state.client }
@@ -268,7 +275,7 @@ export class ClientsTableComponent extends Component {
 						</Table>
 						{ this.showPagination() }
 					</>
-					) 
+					)
 				}
 			</>
 		);
