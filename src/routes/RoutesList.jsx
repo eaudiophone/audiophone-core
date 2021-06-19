@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { 
+import {
 	UserPage,
 	DayPage,
 	BudgetPage,
@@ -9,7 +9,8 @@ import {
 	ProfilePage,
 	ItemsPage,
 	DetailBudgetPage,
-	ClientsPage
+	ClientsPage,
+	BalancePage
 } from '../pages/index';
 
 export const routesApp = [
@@ -23,6 +24,7 @@ export const routesApp = [
 	{ path: '/event/:id', component: EventPageForm, admin: false },
 	{ path: '/event', component: EventPage, admin: false },
 	{ path: '/items', component: ItemsPage, admin: true },
+	{ path: '/clients/balance/:id', component: BalancePage, admin: true },
 	{ path: '/clients', component: ClientsPage, admin: true },
 	{ path: '/profile', component: ProfilePage },
 ];

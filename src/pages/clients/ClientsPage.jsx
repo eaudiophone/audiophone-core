@@ -9,15 +9,20 @@ export class ClientsPage extends Component {
 		this.state = {
 			redirect: false
 		}
+
+		this.route = '/login'
 	}
 
 	render() {
 		return (
 			<>
-				{ this.state.redirect && ( <RedirectService route="/login" /> ) }
+				{ this.state.redirect && ( <RedirectService route={ this.route } /> ) }
 				<TitleComponent title="Gestion de clientes"></TitleComponent>
-				<ClientsTableComponent 
-					redirect={ () => this.setState({ redirect: true }) } 
+				<ClientsTableComponent
+					redirect={ ( route = '/login' ) => {
+						this.route = route;						
+						this.setState({ redirect: true })
+					}}
 				/>
 			</>
 		);

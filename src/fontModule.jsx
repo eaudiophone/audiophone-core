@@ -17,11 +17,13 @@ import {
 	faInfoCircle,
 	faUserClock,
 	faFilePdf,
-	faFileAlt
+	faFileAlt,
+	faArrowCircleLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
 	fas,
+	faArrowCircleLeft,
 	faSearch,
 	faSpinner,
 	faTrash,

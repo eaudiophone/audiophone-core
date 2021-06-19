@@ -199,6 +199,7 @@ export class ClientsTableComponent extends Component {
 						<Button
 							variant="secondary"
 							size="sm"
+							onClick={ () => this.props.redirect('/clients/balance/' + client.apiaudiophoneclients_id ) }
 						>
 							<FontAwesomeIcon icon="file-alt" className="point" />
 						</Button>
