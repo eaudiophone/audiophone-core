@@ -245,7 +245,7 @@ export const FormButtonsLg = ({ reset, loading = false, disabled, widthAll = fal
         }
 
         { loading && (
-          <Button  block disabled className={ widthAll ? 'w-100' : 'button-w80' } variant="primary">
+          <Button  block disabled className={ widthAll ? 'w-100 font-20' : 'button-w80' } variant="primary">
             <FontAwesomeIcon className="mr-2" icon="spinner" spin />
             Enviar
           </Button>

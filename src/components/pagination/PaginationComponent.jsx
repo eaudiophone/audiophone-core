@@ -6,6 +6,8 @@ import './PaginationComponent.css';
 
 export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
+	console.log( totalRegisters );
+
 	const [ paginationNumber, setPaginationNumber ] = useState( 1 );
 
 	let limit = 0;

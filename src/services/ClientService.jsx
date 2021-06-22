@@ -16,8 +16,8 @@ export class ClientService {
 			this.authService.postClient(`apiaudiophoneclient/store/${ this.id }`, client )
 				.then(( response ) => {
 					resolve({
-						message: response.data.apiaudiophoneclientmessage, 
-						status: response.data.status,  
+						message: response.data.apiaudiophoneclientmessage,
+						status: response.data.status,
 						client: response.data.apiaudiophoneclientstore
 					})
 				})
@@ -29,16 +29,23 @@ export class ClientService {
 
 	getClients( pagination ) {
 
-		return new Promise(( resolve, reject ) => {
-			
-			let url = `apiaudiophoneclient/show/${ this.id }`;
+		console.log( pagination );
 
-			this.authService.postClient( url )
+		return new Promise(( resolve, reject ) => {
+
+			let url = `apiaudiophoneclient/show/${ this.id }`;
+			let body = null;
+
+			if ( pagination ) {
+					body = { start: pagination.start };
+			}
+
+			this.authService.postClient( url, body )
 				.then(( response ) => {
 					console.log( response );
 					resolve({
-						clients: response.data.apiaudiophoneclientshow.data,
-						totalClients: response.data.apiaudiophoneclientshow.total,  
+						clients: response.data.apiaudiophoneclientshow,
+						totalClients: response.data.bdclientstotal,
 						loading: false
 					});
 				})
@@ -65,5 +72,25 @@ export class ClientService {
 				})
 
 		});
+	}
+
+	searchClient( search = '' ) {
+
+		return new Promise( ( resolve, reject ) => {
+
+			let body = null;
+
+			if ( search.length > 0 ) {
+				 body = { stringsearch: search };
+			}
+
+			this.authService.postClient(`apiaudiophoneclient/show/${ this.id }`, body )
+				.then( resp => {
+					resolve({
+						clients: resp.data.apiaudiophoneclientshow
+					});
+				})
+				.catch( error => reject( this.authService.validateExceptionServer( error )) );
+			});
 	}
 }

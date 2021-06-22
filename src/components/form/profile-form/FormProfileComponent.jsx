@@ -33,7 +33,7 @@ const FormProfileComponent = ({ register = true, loading, getFormData, profile =
               </Col>
             </Row>
             { register && <FormButtonsLg reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } widthAll={ true } /> }
-            { !register && <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } /> }
+            { !register && <FormButtons reset={ handleReset } disabled={ !isValid } loading={ isSubmitting } widthAll={ true } /> }
           </FormFormik>
         )
       }

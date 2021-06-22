@@ -11,17 +11,16 @@ export const SearchBarComponent = ({ sendSearch }) => {
 
 	const validateText = () => {
 
+		showValidation( false );
+
 		const string = /^[A-Za-z\s0-9]+$/;
 		const email = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 		// const email = /^[A-Za-z0-9]+@[A-Za-z0-9]+(?:\.[A-Za-z]{2,3})$/;
 
 		if ( email.test( search ) || string.test( search ) ) {
-			
-			showValidation( false );
 			sendSearch( search );
-		
-		} else {
 
+		} else {
 			showValidation( true );
 		}
 
@@ -33,7 +32,7 @@ export const SearchBarComponent = ({ sendSearch }) => {
 			<Form.Label>Búsqueda personalizada:</Form.Label>
 			<InputGroup className="input">
 				<Form.Control
-					type="text"  
+					type="text"
 					value={ search }
 					onChange={ ( $event ) => setSearch( $event.target.value ) }
 					placeholder="Buscar ..."
@@ -47,11 +46,11 @@ export const SearchBarComponent = ({ sendSearch }) => {
 					</Button>
 				</InputGroup.Append>
 			</InputGroup>
-			{ validation && (  
+			{ validation && (
 				<div className="text-danger mt-2">Búsqueda inválida</div>
 			)}
 		</Form.Row>
-	);	
+	);
 };
 
 export const SearchFilterComponent = ({ filterSearch }) => {
@@ -61,15 +60,15 @@ export const SearchFilterComponent = ({ filterSearch }) => {
 	return (
 		<Form.Row>
 			<Form.Label>Filtrar por:</Form.Label>
-			<Form.Control 
+			<Form.Control
 				as="select"
 				onChange={ ( $event ) => filterSearch( $event.target.value ) }
 				name="searchSelect"
 				defaultValue="Todos"
 			>
 				{ options.map( ( element, index ) => (
-						<option value={ element } key={ index }>{ element }</option> 
-					)) 
+						<option value={ element } key={ index }>{ element }</option>
+					))
 				}
 			</Form.Control>
 		</Form.Row>

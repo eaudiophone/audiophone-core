@@ -61,7 +61,29 @@ export class ClientsTableComponent extends Component {
 
 
 	searchClient( search ) {
-		console.log( search );
+
+		this.clientService.searchClient( search )
+			.then(( response ) => {
+				this.setState( response );
+			})
+			.catch(( error ) => {
+				if ( error.status === 401 ) {
+					this.props.redirect();
+
+					return;
+				}
+
+				// console.log( error );
+
+				this.message = error.message;
+				this.action = error.action;
+
+				this.setState({
+					showToast: true,
+					showModal: false,
+					loading: false
+				});
+			});
 	}
 
 	handleClick( client, action ) {
@@ -106,9 +128,8 @@ export class ClientsTableComponent extends Component {
 					showToast: true,
 					clients: this.state.clients.length < this.limitPagination ?
 						this.state.clients.concat([ response.client ]) : this.state.clients,
-					totalClients: this.state.clients.length + 1
+					totalClients: this.state.totalClients + 1
 				});
-
 			})
 			.catch(( error ) => {
 
