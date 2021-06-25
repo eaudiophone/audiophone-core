@@ -12,6 +12,7 @@ import { ClientsTableComponent } from './tables/ClientsTableComponent';
 import { CalendarComponent } from './calendar/CalendarComponent';
 import { FormEventComponent } from './form/events-form/FormEventComponent';
 import { TitleComponent } from './title/TitleComponent';
+import { BalanceTableComponent } from './tables/BalanceTableComponent';
 
 export {
 	ToastComponent,
@@ -26,5 +27,6 @@ export {
 	ItemsTableComponent,
 	BudgetTableComponent,
 	TitleComponent,
-	ClientsTableComponent
+	ClientsTableComponent,
+	BalanceTableComponent
 };

@@ -12,7 +12,7 @@ function calculateTotalSeconds( time = '00:00' ) {
 
 	hour = parseInt( hour );
 	minutes = parseInt( minutes );
-	
+
 	let totalSeconds = ( hour * SECONDS.HOURS ) + ( minutes * SECONDS.MINUTES );
 
 	// console.log( totalSeconds );
@@ -25,6 +25,11 @@ function getDateWithHour( date = '' ) {
 }
 
 function getSpanishFormatDate( date = '' ) {
+
+	if ( !date ) {
+		return moment().format('DD-MM-YYYY');
+	}
+
 	return moment( date ).format('DD-MM-YYYY');
 }
 
@@ -33,39 +38,39 @@ function getHour( hour = '00:00', limit = 5 ) {
 }
 
 function verifyRangeHours( start = '00:00', end = '23:59' ) {
-	
+
 	const totalSecoundsBegin = calculateTotalSeconds( start );
 	const totalSecoundsFinal = calculateTotalSeconds( end );
 
 	// console.log( totalSecoundsBegin, totalSecoundsFinal );
 
 	if ( totalSecoundsBegin > totalSecoundsFinal ) {
-		
+
 		return {
 			ok: false,
 			message: 'La hora inicio no debe ser mayor que la hora final'
 		};
-	
+
 	} else if ( totalSecoundsFinal < totalSecoundsBegin ) {
-		
+
 		return {
 			ok: false,
 			message: 'La hora final no debe ser manor que la hora de inicio'
 		};
-	
+
 	} else if ( totalSecoundsBegin === totalSecoundsFinal ) {
-		
+
 		return {
 			ok: false,
 			message: 'Las horas no pueden ser iguales'
 		};
 
 	} else {
-		
+
 		return {
 			ok: true
 		};
-	} 
+	}
 }
 
 function getDifferenceHours( start = '00:00', end = '23:59', object = false ) {
@@ -99,15 +104,15 @@ function secondsToString( timeSeconds = 0, seconds = false ) {
 	minutes = ( minutes < 10 ) ? '0' + minutes : minutes;
 
 	if ( seconds ) {
-		
+
 		let seconds = ( timeSeconds % 60 );
 		seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
-		
-		return hour + ':' + minutes + ':' + seconds;  
-	
-	} 
-	
-	return hour + ':' + minutes; 
+
+		return hour + ':' + minutes + ':' + seconds;
+
+	}
+
+	return hour + ':' + minutes;
 }
 
 function hourToObject( format = '00:00' ) {
@@ -120,14 +125,14 @@ function hourToObject( format = '00:00' ) {
 	};
 }
 
-function compareDates( 
-	date1 = new Date().setHours( 0, 0, 0, 0 ), 
-	date2 = new Date().setHours( 0, 0, 0, 0 ) 
+function compareDates(
+	date1 = new Date().setHours( 0, 0, 0, 0 ),
+	date2 = new Date().setHours( 0, 0, 0, 0 )
 ) {
 
 		if ( date1 < date2 ) {
 			return false;
-		}  
+		}
 
 		return {
 			date1: moment( date1 ).format('YYYY-MM-DD'),
@@ -138,7 +143,7 @@ function compareDates(
 export {
 	hourToObject,
 	secondsToString,
-	verifyRangeHours, 
+	verifyRangeHours,
 	getHour,
 	calculateTotalSeconds,
 	getDateWithHour,

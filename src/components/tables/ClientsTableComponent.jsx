@@ -197,6 +197,11 @@ export class ClientsTableComponent extends Component {
 			})
 	}
 
+	showBalance( client ) {
+		sessionStorage.setItem('clientBalance', JSON.stringify( client ));
+		this.props.redirect('/clients/balance/' + client.apiaudiophoneclients_id );
+	}
+
 	setRows( client ) {
 
 		if ( this.state.clients.length > 0 ) {
@@ -220,7 +225,7 @@ export class ClientsTableComponent extends Component {
 						<Button
 							variant="secondary"
 							size="sm"
-							onClick={ () => this.props.redirect('/clients/balance/' + client.apiaudiophoneclients_id ) }
+							onClick={ () => this.showBalance( client ) }
 						>
 							<FontAwesomeIcon icon="file-alt" className="point" />
 						</Button>
