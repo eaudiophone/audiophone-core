@@ -33,6 +33,15 @@ function getSpanishFormatDate( date = '' ) {
 	return moment( date ).format('DD-MM-YYYY');
 }
 
+function getEnglishFormatDate( date = '' ) {
+
+	if ( !date ) {
+		return moment().format('YYYY-MM-DD');
+	}
+
+	return moment( date ).format('YYYY-MM-DD');
+}
+
 function getHour( hour = '00:00', limit = 5 ) {
 	return hour.slice( 0, limit );
 }
@@ -149,5 +158,6 @@ export {
 	getDateWithHour,
 	getDifferenceHours,
 	getSpanishFormatDate,
-	compareDates
+	compareDates,
+	getEnglishFormatDate
 };

@@ -17,7 +17,7 @@ export class BalancePage extends Component {
       <>
         { this.state.redirect && ( <RedirectService route={ this.route } /> ) }
         <TitleComponent
-          title="Balance de cliente"
+          title={`Balance de cliente ${this.client.apiaudiophoneclients_id}`}
           back={ () => {
             this.route = '/clients';
             this.setState({ redirect: true });
@@ -42,7 +42,7 @@ export class BalancePage extends Component {
               <h5>{ this.client.apiaudiophoneclients_ident }</h5>
             </div>
             <div  className="d-flex flex-row justify-content-between w-100 pb-3 pl-4 pr-4">
-              <h5 className="font-weight-bold">Fecha:</h5>
+              <h5 className="font-weight-bold">Fecha de documento:</h5>
               <h5>{ getSpanishFormatDate() }</h5>
             </div>
           </Col>

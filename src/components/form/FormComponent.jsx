@@ -11,7 +11,7 @@ export const EmailInput = ({ title, field, form, type, readonly = false }) => {
 			<Form.Control
 	     	{ ...field }
 	      type={ type }
-	      isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+	      isInvalid={ form.errors[ field.name ] && form.touched[ field.name ] }
 			/>
 	    <Form.Control.Feedback type="invalid">
 	      { form.errors[ field.name ] }
@@ -27,7 +27,7 @@ export const PasswordInput = ({ field, form, type, readonly = false }) => (
 		<Form.Control
       { ...field }
 			type={ type }
-			isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+			isInvalid={ form.errors[ field.name ] && form.touched[ field.name ] }
 	  />
     <Form.Control.Feedback type="invalid">
       { form.errors[ field.name ] }
@@ -108,25 +108,48 @@ export const HourInput = ({ title, field, form, type, columnSize = 12, readonly 
 };
 
 
-export const NumberInput = ({ field, form, type, columnSize = 12, title, readonly = false }) => {
+export const NumberInput = ({ field, form, type, columnSize = 12, title, readonly = false, onChange = null }) => {
 
-  return (
-    <Col sm={ columnSize }>
-      <Form.Group>
-        <Form.Label>{ title }</Form.Label>
-        <Form.Control
-          { ...field }
-          isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
-          type={ type }
-          readOnly={ readonly }
-          min="1"
-        />
-        <Form.Control.Feedback type="invalid">
-          { form.errors[ field.name ] }
-        </Form.Control.Feedback>
-      </Form.Group>
-    </Col>
-   );
+	if ( !onChange ) {
+		return (
+			<Col sm={ columnSize }>
+				<Form.Group>
+					<Form.Label>{ title }</Form.Label>
+					<Form.Control
+						{ ...field }
+						isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+						type={ type }
+						readOnly={ readonly }
+						min="1"
+						/>
+					<Form.Control.Feedback type="invalid">
+						{ form.errors[ field.name ] }
+					</Form.Control.Feedback>
+				</Form.Group>
+			</Col>
+		);
+		
+	} else {
+		return (
+			<Col sm={ columnSize }>
+				<Form.Group>
+					<Form.Label>{ title }</Form.Label>
+					<Form.Control
+						{ ...field }
+						isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+						type={ type }
+						readOnly={ readonly }
+						min="1"
+						onChange={ onChange }
+					/>
+					<Form.Control.Feedback type="invalid">
+						{ form.errors[ field.name ] }
+					</Form.Control.Feedback>
+				</Form.Group>
+			</Col>
+		);
+
+	}
 }
 
 export const DecimalNumberInput = ({ field, form, type, columnSize = 12, title, readonly = false }) => {
@@ -185,7 +208,7 @@ export const TextAreaInput = ({ type = 'textarea', form, field, columnSize = 12,
           { ...field }
           as={ type }
           readOnly={ readonly }
-          isInvalid={ form.errors[ field.name ] && ( form.touched[ field.name ] ) }
+          isInvalid={ form.errors[ field.name ] && form.touched[ field.name ] }
         />
         <Form.Control.Feedback type="invalid">
           { form.errors[ field.name ] }

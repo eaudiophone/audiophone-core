@@ -7,7 +7,7 @@ import { FormInput, NumberInput } from '../FormComponent';
 import ClientSchema from './ClientsSchema';
 
 export const ClientsForm = ( props ) => {
-	
+
 	const { client, getForm } = props;
 
 	console.log( client );
@@ -23,11 +23,11 @@ export const ClientsForm = ( props ) => {
 				{({ values, handleReset, isValid, isSubmitting }) => {
 					return (
 						<>
-							<Form>
+							<Form noValidate>
 									<Modal.Body>
 											<Row>
 												<Col sm={ 12 }>
-													<Field 
+													<Field
 														name="apiaudiophoneclients_name"
 														component={ FormInput }
 														type="text"
@@ -35,7 +35,7 @@ export const ClientsForm = ( props ) => {
 													/>
 												</Col>
 
-												<Field 
+												<Field
 													name="apiaudiophoneclients_ident"
 													component={ NumberInput }
 													type="number"
@@ -43,35 +43,35 @@ export const ClientsForm = ( props ) => {
 												/>
 
 												<Col sm={ 12 }>
-													<Field 
+													<Field
 														name="apiaudiophoneclients_phone"
 														component={ FormInput }
 														type="text"
 														title="Numero telefónico"
-													/>	
+													/>
 												</Col>
-												
+
 											</Row>
 									</Modal.Body>
 
 									<Modal.Footer>
-							    	
+
 							    	<Button variant="secondary" type="reset">
 								      Cancelar
 								    </Button>
-										
+
 										{ !isSubmitting && (
 						          <Button disabled={ !isValid } variant="primary" type="submit">
 						            Enviar
 						          </Button>
-						          ) 
+						          )
 						        }
 						        { isSubmitting && (
 						          <Button disabled variant="primary">
 						            <FontAwesomeIcon className="mr-2" icon="spinner" spin />
 						            Enviar
 						          </Button>
-						          ) 
+						          )
 						        }
 
 							  	</Modal.Footer>
@@ -81,5 +81,5 @@ export const ClientsForm = ( props ) => {
 				}}
 			</Formik>
 		</>
-	); 
+	);
 }
