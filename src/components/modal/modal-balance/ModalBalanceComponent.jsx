@@ -11,10 +11,7 @@ export const ModalBalanceComponent = ( props ) => {
       <Modal.Header closeButton>
         <Modal.Title>Nuevo registro</Modal.Title>
       </Modal.Header>
-      <BalanceFormModalComponent onClose={( values ) => {
-          console.log( values );
-          closeModal( values )
-        }} />
+      <BalanceFormModalComponent onClose={( type, values ) => closeModal( type, values ) } />
     </Modal>
   )
 }

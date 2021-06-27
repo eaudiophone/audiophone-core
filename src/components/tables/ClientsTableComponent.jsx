@@ -53,7 +53,6 @@ export class ClientsTableComponent extends Component {
 
 				this.setState({
 					showToast: true,
-					showModal: false,
 					loading: false
 				});
 			});

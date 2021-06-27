@@ -3,41 +3,83 @@ import { Row, Col, Table, Button } from 'react-bootstrap';
 import { SearchBarComponent, ToastComponent, LoadingComponent, PaginationComponent } from '../index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalBalanceComponent } from '../modal/index';
+import { BalanceServices } from '../../services/BalanceServices';
 
 export class BalanceTableComponent extends Component {
-  constructor() {
-    super();
+  constructor( props ) {
+    super( props );
     this.state = {
       loading: false,
       balances: [],
-      showModal: false
+      totalBalances: 0,
+      showModal: false,
+      showToast: false
     };
     this.header = ['Fecha', 'Horas Laboradas', 'Tarifa por hora', 'Debe', 'Haber', 'Acciones'];
     this.typeModal = 'new';
+    this.balanceServices = new BalanceServices();
+    this.action = '';
+    this.message = '';
+  }
+
+  componentDidMount() {
+    this.getBalance();
+  }
+
+  getBalance( pagination = null ) {
+
+    this.balanceServices.getBalanceClient( pagination, this.props.clientId )
+      .then(( response ) => {
+        this.setState( response );
+      })
+      .catch(( error ) => {
+
+        if ( error.status === 401 ) {
+          this.props.redirect();
+
+          return;
+        }
+
+        // console.log( error );
+
+        this.message = error.message;
+        this.action = error.action;
+
+        this.setState({
+          showToast: true,
+          loading: false
+        });
+      });
   }
 
   addBalance( balance ) {
     console.log( balance );
+    this.setState({ showModal: false });
   }
 
-  modifyBalance() {
-
+  editBalance( balance ) {
   }
 
   searchBalance( search ) {
     console.log( search );
   }
 
-  handleClick( type = 'new', balance ) {
-    if ( type === 'new' ) {
+  dispatchEvent( type, payload ) {
 
-      this.setState({ showModal: true });
+    if ( this.typeModal === 'new' ) {
+      this.addBalance( payload );
 
-      return;
+    } else if ( this.typeModal === 'edit' ) {
+      this.editBalance( payload );
+
+    } else {
+      this.setState({ showModal: false });
     }
+  }
 
-    console.log('edit');
-    return;
+  handleClick( type = 'new', balance ) {
+    this.typeModal = type;
+    this.setState({ showModal: true });
   }
 
   setRows() {
@@ -67,41 +109,54 @@ export class BalanceTableComponent extends Component {
   render() {
     return (
       <>
-        <Row className="mt-4">
-          <Col xs={ 12 } sm={ 10 }>
-            <SearchBarComponent sendSearch={ ( stringSearch ) => this.searchBalance( stringSearch ) } />
-          </Col>
-          <Col xs={ 12 } sm={ 2 } className="align-self-end text-center mt-3 mt-md-0">
-            <Button variant="success" className="reset-button" size="sm"
-              onClick={ ( $event ) => this.handleClick( 'new', null ) }>
-              <FontAwesomeIcon icon="plus" className="mr-2" />
-              Nuevo balance
-            </Button>
-          </Col>
-        </Row>
-        <Table className="mt-4" striped hover responsive>
-          <thead className="thead-dark">
-            <tr className="text-center">
-              { this.header.map( ( title, index ) => ( <th key={ index }>{ title }</th> ) ) }
-            </tr>
-          </thead>
-          <tbody>
-            { this.setRows() }
-          </tbody>
-        </Table>
-        <Row className="justify-content-center mt-3">
-          <Button
-            variant="primary"
-            className="reset-button"
-            disabled
-          >
-            Generar Balance
-          </Button>
-        </Row>
+        { this.state.loading && ( <LoadingComponent /> ) }
+        { !this.state.loading && (
+          <>
+            <Row className="mt-4">
+              <Col xs={ 12 } sm={ 10 }>
+                <SearchBarComponent sendSearch={ ( stringSearch ) => this.searchBalance( stringSearch ) } />
+              </Col>
+              <Col xs={ 12 } sm={ 2 } className="align-self-end text-center mt-3 mt-md-0">
+                <Button variant="success" className="reset-button" size="sm"
+                  onClick={ ( $event ) => this.handleClick( 'new', null ) }>
+                  <FontAwesomeIcon icon="plus" className="mr-2" />
+                  Nuevo balance
+                </Button>
+              </Col>
+            </Row>
+            <Table className="mt-4" striped hover responsive>
+              <thead className="thead-dark">
+                <tr className="text-center">
+                  { this.header.map( ( title, index ) => ( <th key={ index }>{ title }</th> ) ) }
+                </tr>
+              </thead>
+              <tbody>
+                { this.setRows() }
+              </tbody>
+            </Table>
+            <Row className="justify-content-center mt-3">
+              <Button
+                variant="primary"
+                className="reset-button"
+                disabled
+              >
+                Generar Balance
+              </Button>
+            </Row>
+          </>
+          )
+        }
+
         {/* modal insert balance */}
         <ModalBalanceComponent
           showModal={ this.state.showModal }
-          closeModal={ () => this.setState({ showModal: false }) }
+          closeModal={ ( type, payload ) => this.dispatchEvent( type, payload ) }
+        />
+        <ToastComponent
+          showToast={ this.state.showToast }
+          content={ this.message }
+          context={ this.action }
+          onHide={ () => this.setState({ showToast: false }) }
         />
       </>
     );

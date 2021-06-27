@@ -17,7 +17,7 @@ export class BalancePage extends Component {
       <>
         { this.state.redirect && ( <RedirectService route={ this.route } /> ) }
         <TitleComponent
-          title={`Balance de cliente ${this.client.apiaudiophoneclients_id}`}
+          title={`Balance de cliente ${ this.client.apiaudiophoneclients_id }`}
           back={ () => {
             this.route = '/clients';
             this.setState({ redirect: true });
@@ -47,7 +47,9 @@ export class BalancePage extends Component {
             </div>
           </Col>
         </Row>
-        <BalanceTableComponent  redirect={ ( route = '/login' ) => {
+        <BalanceTableComponent
+          clientId={ this.client.apiaudiophoneclients_id }  
+          redirect={ ( route = '/login' ) => {
             this.route = route;
             this.setState({ redirect: true });
           }} />

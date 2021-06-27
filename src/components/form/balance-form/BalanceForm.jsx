@@ -6,7 +6,7 @@ import BalanceSchema from './BalanceSchema';
 import { FormInputDate, FormInput, NumberInput } from '../FormComponent';
 
 export const BalanceFormModalComponent = ( props ) => {
-  const { onClose } = props;
+  const { onClose, edit } = props;
 
   return (
     <>
@@ -14,7 +14,7 @@ export const BalanceFormModalComponent = ( props ) => {
         initialValues={ new Balance() }
         validateOnChange={ true }
         validationSchema={ new BalanceSchema()._schema }
-        onSubmit={ ( values, actions ) => onClose({ values, actions })  }
+        onSubmit={ ( values, actions ) => onClose( edit ? 'edit' : 'new',  { values, actions })  }
       >
         {( values ) => {
           return (
