@@ -27,4 +27,21 @@ export class BalanceServices {
         .catch(( error ) => reject( this.authService.validateExceptionServer( error ) ));
     });
   }
+
+  createBalanceClient( balance ) {
+    return new Promise(( resolve, reject ) => {
+      let url = `apiaudiophonebalance/store/${ this.id }`;
+
+      this.authService.postClient( url, balance )
+        .then(( response ) => {
+          resolve({
+            balance: response.data.apiaudiophonebalancecreate,
+            totalBalances: response.data.bdbalancetotal
+          });
+        })
+        .catch(( error ) => {
+          reject( this.authService.validateExceptionServer( error ) );
+        })
+    });
+  }
 }

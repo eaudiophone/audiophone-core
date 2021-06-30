@@ -3,7 +3,7 @@ import { Row, Col, Modal, Button } from 'react-bootstrap';
 import { Form, Formik, Field } from 'formik';
 import Balance from '../../../models/BalanceModels';
 import BalanceSchema from './BalanceSchema';
-import { FormInputDate, FormInput, NumberInput } from '../FormComponent';
+import { FormInputDate, FormInput, NumberInput, DecimalNumberInput } from '../FormComponent';
 
 export const BalanceFormModalComponent = ( props ) => {
   const { onClose, edit } = props;
@@ -17,6 +17,7 @@ export const BalanceFormModalComponent = ( props ) => {
         onSubmit={ ( values, actions ) => onClose( edit ? 'edit' : 'new',  { values, actions })  }
       >
         {( values ) => {
+          console.log( values.isValid );
           return (
               <Form noValidate>
                 <Modal.Body>
@@ -49,21 +50,21 @@ export const BalanceFormModalComponent = ( props ) => {
                       name="apiaudiophonebalances_tarif"
                       type="number"
                       title="Tarifa por hora:"
-                      component={ NumberInput }
+                      component={ DecimalNumberInput }
                     />
                     <Field
                       columnSize={6}
                       name="apiaudiophonebalances_debe"
                       type="number"
                       title="Debe:"
-                      component={ NumberInput }
+                      component={ DecimalNumberInput }
                     />
                     <Field
                       columnSize={6}
                       name="apiaudiophonebalances_haber"
                       type="number"
                       title="Haber:"
-                      component={ NumberInput }
+                      component={ DecimalNumberInput }
                     />
                   </Row>
                 </Modal.Body>

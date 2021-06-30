@@ -3,7 +3,7 @@ import { Row, Col, Table, Button } from 'react-bootstrap';
 import { SearchBarComponent, ToastComponent, LoadingComponent, PaginationComponent } from '../index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalBalanceComponent } from '../modal/index';
-import { BalanceServices } from '../../services/BalanceServices';
+import { BalanceServices } from '../../services/BalanceService';
 
 export class BalanceTableComponent extends Component {
   constructor( props ) {
@@ -53,8 +53,43 @@ export class BalanceTableComponent extends Component {
   }
 
   addBalance( balance ) {
-    console.log( balance );
-    this.setState({ showModal: false });
+
+    let { actions, values } = balance;
+
+    // se calcula el total
+    if ( this.state.balances.length === 0 ) {
+      values.apiaudiophonebalances_total = values.apiaudiophonebalances_debe - values.apiaudiophonebalances_haber
+    }
+
+    values = { ...values, id_apiaudiophoneclients: this.props.clientId };
+
+
+    this.balanceServices.createBalanceClient( values )
+      .then(( response ) => {
+
+        this.setState({
+          showModal: false,
+          balances: this.state.balances.concat([ response.balance ]),
+          totalBalances: response.totalBalances
+        });
+
+      })
+      .catch( ( error ) => {
+
+        if ( error.status === 401 ) {
+          this.props.redirect();
+          return;
+        }
+
+        this.message = error.message;
+        this.action = error.action;
+
+        this.setState({
+          showToast: true,
+          showModal: false
+
+        });
+      });
   }
 
   editBalance( balance ) {
@@ -67,6 +102,7 @@ export class BalanceTableComponent extends Component {
   dispatchEvent( type, payload ) {
 
     if ( this.typeModal === 'new' ) {
+      console.log( this.typeModal );
       this.addBalance( payload );
 
     } else if ( this.typeModal === 'edit' ) {
