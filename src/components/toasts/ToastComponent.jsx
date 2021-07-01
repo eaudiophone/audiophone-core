@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ToastComponent = ({ showToast, content, context, onHide }) => {
 
+	console.log( context );
+
 	if ( context === 'Warning' ) {
 
 		return (
-			<Toast 
+			<Toast
 				className="toast-style warning-toast"
 				delay={ 3000 }
 				onClose={ () => onHide() }
@@ -16,7 +18,7 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 				autohide
 			>
 				<Toast.Body>
-					
+
 					<Row className="p-2">
 						<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
 							<FontAwesomeIcon icon="exclamation-circle" size="2x"/>
@@ -26,25 +28,25 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 							<p>{ content }</p>
 						</Col>
 					</Row>
-					
+
 				</Toast.Body>
-			</Toast>		
+			</Toast>
 
 		);
 
 	} else if ( context === 'Exito' ) {
 
-		
+
 		return (
-			<Toast 
-				className="toast-style success-toast" 
+			<Toast
+				className="toast-style success-toast"
 				delay={ 3000 }
 				onClose={ () => onHide() }
 				show={ showToast }
 				autohide
 			>
 				<Toast.Body>
-					
+
 					<Row className="p-2">
 						<Col sm={ 2 } className="d-flex flex-column align-items-center justify-content-center">
 							<FontAwesomeIcon icon="check-circle" size="2x"/>
@@ -54,16 +56,16 @@ export const ToastComponent = ({ showToast, content, context, onHide }) => {
 							<p>{ content }</p>
 						</Col>
 					</Row>
-					
+
 				</Toast.Body>
-			</Toast>		
+			</Toast>
 		);
 
-	}	
+	}
 
 	return (
-		<Toast 
-				className="toast-style fail-toast" 
+		<Toast
+				className="toast-style fail-toast"
 				delay={ 3000 }
 				onClose={ () => onHide() }
 				show={ showToast }

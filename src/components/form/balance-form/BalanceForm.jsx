@@ -4,9 +4,15 @@ import { Form, Formik, Field } from 'formik';
 import Balance from '../../../models/BalanceModels';
 import BalanceSchema from './BalanceSchema';
 import { FormInputDate, FormInput, NumberInput, DecimalNumberInput } from '../FormComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const BalanceFormModalComponent = ( props ) => {
   const { onClose, edit } = props;
+
+  const handleSubmit = ( values, actions ) => {
+    actions.setSubmitting( true );
+    onClose( edit ? 'edit' : 'new',  { values, actions });
+  }
 
   return (
     <>
@@ -14,10 +20,9 @@ export const BalanceFormModalComponent = ( props ) => {
         initialValues={ new Balance() }
         validateOnChange={ true }
         validationSchema={ new BalanceSchema()._schema }
-        onSubmit={ ( values, actions ) => onClose( edit ? 'edit' : 'new',  { values, actions })  }
+        onSubmit={ handleSubmit }
       >
         {( values ) => {
-          console.log( values.isValid );
           return (
               <Form noValidate>
                 <Modal.Body>
@@ -72,9 +77,19 @@ export const BalanceFormModalComponent = ( props ) => {
                   <Button variant="secondary" type="reset">
                     Limpiar
                   </Button>
-                  <Button variant="primary" type="submit"  disabled={ !values.isValid }>
-                    Enviar
-                  </Button>
+                  { !values.isSubmitting && (
+                    <Button disabled={ !values.isValid } variant="primary" type="submit">
+                      Enviar
+                    </Button>
+                    )
+                  }
+                  { values.isSubmitting && (
+                    <Button disabled variant="primary">
+                      <FontAwesomeIcon className="mr-2" icon="spinner" spin />
+                      Enviar
+                    </Button>
+                    )
+                  }
                 </Modal.Footer>
               </Form>
           )

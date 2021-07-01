@@ -20,8 +20,9 @@ export class BalanceServices {
         .then(( response ) => {
           resolve({
             loading: false,
-            totalBalances: response.data.bdbalancetotal,
-            balances: response.data.apiaudiophonebalanceshow
+            totalBalances: response.data.balance_clients,
+            balances: response.data.apiaudiophonebalanceshow,
+            total: this.calculateBalance( response.data.apiaudiophonebalanceshow )
           });
         })
         .catch(( error ) => reject( this.authService.validateExceptionServer( error ) ));
@@ -35,13 +36,25 @@ export class BalanceServices {
       this.authService.postClient( url, balance )
         .then(( response ) => {
           resolve({
-            balance: response.data.apiaudiophonebalancecreate,
-            totalBalances: response.data.bdbalancetotal
+            balance: response.data.apiaudiophonebalancestore,
+            message: response.data.message
           });
         })
         .catch(( error ) => {
           reject( this.authService.validateExceptionServer( error ) );
         })
     });
+  }
+
+  calculateBalance( balances = [] ) {
+
+    // retorna el total del valor del balance
+    let total = balances.reduce(( accum, balance, index ) => {
+      return accum += ( balance.apiaudiophonebalances_debe - balance.apiaudiophonebalances_haber )
+    }, 0);
+
+    console.log( total );
+
+    return total;
   }
 }

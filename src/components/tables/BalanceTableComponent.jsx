@@ -9,11 +9,12 @@ export class BalanceTableComponent extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      loading: false,
+      loading: true,
       balances: [],
       totalBalances: 0,
       showModal: false,
-      showToast: false
+      showToast: false,
+      total: 0 // es el calculo del balance
     };
     this.header = ['Fecha', 'Horas Laboradas', 'Tarifa por hora', 'Debe', 'Haber', 'Acciones'];
     this.typeModal = 'new';
@@ -63,14 +64,24 @@ export class BalanceTableComponent extends Component {
 
     values = { ...values, id_apiaudiophoneclients: this.props.clientId };
 
-
     this.balanceServices.createBalanceClient( values )
       .then(( response ) => {
 
+        actions.setSubmitting( false );
+
+        this.message = response.message;
+        this.action = 'Exito';
+
+        console.log({ message: this.message, action: this.action, balances: this.state.balances });
+
+        let balances = this.state.balances.concat([ response.balance ]);
+
+        console.log( balances );
+
         this.setState({
           showModal: false,
-          balances: this.state.balances.concat([ response.balance ]),
-          totalBalances: response.totalBalances
+          showToast: true,
+          balances
         });
 
       })
@@ -87,12 +98,12 @@ export class BalanceTableComponent extends Component {
         this.setState({
           showToast: true,
           showModal: false
-
         });
       });
   }
 
   editBalance( balance ) {
+    console.log( balance );
   }
 
   searchBalance( search ) {
@@ -102,7 +113,6 @@ export class BalanceTableComponent extends Component {
   dispatchEvent( type, payload ) {
 
     if ( this.typeModal === 'new' ) {
-      console.log( this.typeModal );
       this.addBalance( payload );
 
     } else if ( this.typeModal === 'edit' ) {
@@ -121,21 +131,31 @@ export class BalanceTableComponent extends Component {
   setRows() {
 
     if ( this.state.balances.length > 0 ) {
-      return (
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+      return this.state.balances.map(( balance ) => (
+        <tr className="text-center" key={ balance.apiaudiophonebalances_id }>
+          <td>{ balance.apiaudiophonebalances_date }</td>
+          <td>{ balance.apiaudiophonebalances_horlab } horas</td>
+          <td>{ balance.apiaudiophonebalances_tarif }$</td>
+          <td>{ balance.apiaudiophonebalances_debe }$</td>
+          <td>{ balance.apiaudiophonebalances_haber }$</td>
+          <td>
+            <Button
+  						variant="primary"
+  						size="sm"
+  						className="mr-2"
+  						onClick={ ( $event ) => this.handleClick( 'edit', balance ) }>
+  						<FontAwesomeIcon icon="pen" className="point" />
+  					</Button>
+          </td>
         </tr>
-      );
+      ));
 
     } else {
       return (
         <tr className="text-center">
-          <td colSpan={6} className="text-danger">No existen registros de balances disponibles</td>
+          <td colSpan={6} className="text-danger">
+            No existen registros de balances disponibles
+          </td>
         </tr>
       );
 
@@ -169,13 +189,18 @@ export class BalanceTableComponent extends Component {
               <tbody>
                 { this.setRows() }
               </tbody>
+              <tfoot>
+                <tr className="text-right">
+                  <td colSpan="6">Total:
+                    <span className={ this.addClassTotal( this.state.total ) }>
+                      { this.state.total }$
+                    </span>
+                  </td>
+                </tr>
+              </tfoot>
             </Table>
             <Row className="justify-content-center mt-3">
-              <Button
-                variant="primary"
-                className="reset-button"
-                disabled
-              >
+              <Button variant="primary" className="reset-button" disabled>
                 Generar Balance
               </Button>
             </Row>
@@ -196,5 +221,18 @@ export class BalanceTableComponent extends Component {
         />
       </>
     );
+  }
+
+  addClassTotal( total ) {
+    // retorna un string
+    if ( total < 0 ) {
+      return 'text-danger ml-2';
+
+    } else if ( total > 0 ) {
+      return 'text-success ml-2'
+
+    } else {
+      return 'ml-2'
+    }
   }
 }
