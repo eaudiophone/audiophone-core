@@ -7,6 +7,7 @@ export class BalanceServices {
   }
 
   getBalanceClient( pagination, clientId ) {
+
     return new Promise(( resolve, reject ) => {
       let url = `apiaudiophonebalance/show/${ this.id }`;
       let body = { id_apiaudiophoneclients: clientId };
@@ -29,6 +30,7 @@ export class BalanceServices {
   }
 
   createBalanceClient( balance ) {
+
     return new Promise(( resolve, reject ) => {
       let url = `apiaudiophonebalance/store/${ this.id }`;
 
@@ -42,6 +44,23 @@ export class BalanceServices {
         .catch(( error ) => {
           reject( this.authService.validateExceptionServer( error ) );
         })
+    });
+  }
+
+  searchBalance( search, clientId ) {
+
+    return new Promise(( resolve, reject ) => {
+      let url = `apiaudiophonebalance/show/${ this.id }`;
+      let body = { stringsearch: search, id_apiaudiophoneclients: clientId };
+
+      this.authService.postClient( url, body )
+        .then(( response ) => {
+          resolve({
+            totalBalances: response.data.count_balance_client,
+            balances: response.data.apiaudiophonebalanceshow,
+          });
+        })
+        .catch(( error ) => reject( this.authService.validateExceptionServer( error ) ));
     });
   }
 

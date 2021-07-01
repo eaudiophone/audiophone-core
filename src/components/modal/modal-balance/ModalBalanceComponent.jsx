@@ -4,14 +4,19 @@ import { BalanceFormModalComponent } from '../../form/balance-form/BalanceForm';
 
 export const ModalBalanceComponent = ( props ) => {
 
-  const { showModal, closeModal } = props;
+  const { showModal, closeModal, balance } = props;
 
   return (
-    <Modal size="lg" show={ showModal } onHide={ () => closeModal() }>
+    <Modal size="lg" show={ showModal } onHide={ () => closeModal( null, null ) }>
       <Modal.Header closeButton>
-        <Modal.Title>Nuevo registro</Modal.Title>
+        { !balance && ( <Modal.Title>Nuevo registro</Modal.Title> ) }
+        { balance && ( <Modal.Title>Editar registro { balance.apiaudiophonebalances_id }</Modal.Title> ) }
       </Modal.Header>
-      <BalanceFormModalComponent onClose={( type, values ) => { closeModal( type, values ) }} />
+      <BalanceFormModalComponent
+        balance={ balance }
+        edit={ balance ? true : false }
+        onClose={( type, values ) => { closeModal( type, values ) }}
+      />
     </Modal>
   )
 }

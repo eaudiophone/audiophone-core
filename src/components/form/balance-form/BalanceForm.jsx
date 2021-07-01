@@ -7,7 +7,7 @@ import { FormInputDate, FormInput, NumberInput, DecimalNumberInput } from '../Fo
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const BalanceFormModalComponent = ( props ) => {
-  const { onClose, edit } = props;
+  const { onClose, edit, balance } = props;
 
   const handleSubmit = ( values, actions ) => {
     actions.setSubmitting( true );
@@ -17,7 +17,7 @@ export const BalanceFormModalComponent = ( props ) => {
   return (
     <>
       <Formik
-        initialValues={ new Balance() }
+        initialValues={ !edit ? new Balance() : balance }
         validateOnChange={ true }
         validationSchema={ new BalanceSchema()._schema }
         onSubmit={ handleSubmit }

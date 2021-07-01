@@ -17,10 +17,11 @@ export class BalanceTableComponent extends Component {
       total: 0 // es el calculo del balance
     };
     this.header = ['Fecha', 'Horas Laboradas', 'Tarifa por hora', 'Debe', 'Haber', 'Acciones'];
-    this.typeModal = 'new';
+    this.typeModal = null;
     this.balanceServices = new BalanceServices();
     this.action = '';
     this.message = '';
+    this.balanceSelected = null;
   }
 
   componentDidMount() {
@@ -105,15 +106,37 @@ export class BalanceTableComponent extends Component {
   }
 
   searchBalance( search ) {
-    console.log( search );
+
+    this.balanceServices.searchBalance( search, this.props.clientId )
+      .then(( response ) => {
+        console.log( response );
+        this.setState( response );
+      })
+      .catch(( error ) => {
+
+        if ( error.status === 401 ) {
+          this.props.redirect();
+          return;
+        }
+
+        this.message = error.message;
+        this.action = error.action;
+
+        this.setState({
+          showToast: true,
+          showModal: false
+        });
+      })
+
+    // console.log( search );
   }
 
   dispatchEvent( type, payload ) {
 
-    if ( this.typeModal === 'new' ) {
+    if ( type === 'new' ) {
       this.addBalance( payload );
 
-    } else if ( this.typeModal === 'edit' ) {
+    } else if ( type === 'edit' ) {
       this.editBalance( payload );
 
     } else {
@@ -122,8 +145,15 @@ export class BalanceTableComponent extends Component {
   }
 
   handleClick( type = 'new', balance ) {
-    this.typeModal = type;
-    this.setState({ showModal: true });
+
+    if ( type === 'new' ) {
+      this.setState({ showModal: true });
+
+    } else {
+      this.balanceSelected = balance;
+      this.setState({ showModal: true });
+
+    }
   }
 
   showPagination() {
@@ -190,7 +220,7 @@ export class BalanceTableComponent extends Component {
                 <Button variant="success" className="reset-button" size="sm"
                   onClick={ ( $event ) => this.handleClick( 'new', null ) }>
                   <FontAwesomeIcon icon="plus" className="mr-2" />
-                  Nuevo balance
+                  Nuevo registro
                 </Button>
               </Col>
             </Row>
@@ -227,6 +257,7 @@ export class BalanceTableComponent extends Component {
         <ModalBalanceComponent
           showModal={ this.state.showModal }
           closeModal={ ( type, payload ) => this.dispatchEvent( type, payload ) }
+          balance={ this.balanceSelected }
         />
         <ToastComponent
           showToast={ this.state.showToast }
