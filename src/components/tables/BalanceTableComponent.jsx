@@ -67,21 +67,19 @@ export class BalanceTableComponent extends Component {
     this.balanceServices.createBalanceClient( values )
       .then(( response ) => {
 
+        // cantidad de registros por paginacion
+        const pagination = 5;
         actions.setSubmitting( false );
 
         this.message = response.message;
         this.action = 'Exito';
 
-        console.log({ message: this.message, action: this.action, balances: this.state.balances });
-
-        let balances = this.state.balances.concat([ response.balance ]);
-
-        console.log( balances );
-
         this.setState({
           showModal: false,
           showToast: true,
-          balances
+          balances: this.state.balances.length <= pagination ?
+            this.state.balances.concat([ response.balance ]) : this.state.balances,
+          totalBalances: this.state.totalBalances + 1
         });
 
       })
@@ -126,6 +124,22 @@ export class BalanceTableComponent extends Component {
   handleClick( type = 'new', balance ) {
     this.typeModal = type;
     this.setState({ showModal: true });
+  }
+
+  showPagination() {
+
+    if ( this.state.balances.length > 0 ) {
+      return (
+        <Row className="justify-content-center mt-2">
+          <PaginationComponent
+            totalRegisters={ this.state.totalBalances }
+            pagination={ 5 }
+            send={ ( params ) => this.getBalance( params ) }
+          />
+        </Row>
+      );
+
+    }
   }
 
   setRows() {
@@ -199,6 +213,7 @@ export class BalanceTableComponent extends Component {
                 </tr>
               </tfoot>
             </Table>
+            { this.showPagination() }
             <Row className="justify-content-center mt-3">
               <Button variant="primary" className="reset-button" disabled>
                 Generar Balance

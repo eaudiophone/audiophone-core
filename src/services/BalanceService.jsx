@@ -7,7 +7,6 @@ export class BalanceServices {
   }
 
   getBalanceClient( pagination, clientId ) {
-
     return new Promise(( resolve, reject ) => {
       let url = `apiaudiophonebalance/show/${ this.id }`;
       let body = { id_apiaudiophoneclients: clientId };
@@ -20,7 +19,7 @@ export class BalanceServices {
         .then(( response ) => {
           resolve({
             loading: false,
-            totalBalances: response.data.balance_clients,
+            totalBalances: response.data.count_balance_client,
             balances: response.data.apiaudiophonebalanceshow,
             total: this.calculateBalance( response.data.apiaudiophonebalanceshow )
           });
@@ -53,7 +52,7 @@ export class BalanceServices {
       return accum += ( balance.apiaudiophonebalances_debe - balance.apiaudiophonebalances_haber )
     }, 0);
 
-    console.log( total );
+    // console.log( total );
 
     return total;
   }

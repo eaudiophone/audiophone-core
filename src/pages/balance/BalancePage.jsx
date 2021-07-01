@@ -5,8 +5,8 @@ import { Row, Col } from 'react-bootstrap';
 import { getSpanishFormatDate } from '../../util-functions/date-format';
 
 export class BalancePage extends Component {
-  constructor() {
-    super();
+  constructor( props ) {
+    super( props );
     this.state = { redirect: false };
     this.route = '/login';
     this.client = JSON.parse( sessionStorage.getItem('clientBalance') );
@@ -48,7 +48,7 @@ export class BalancePage extends Component {
           </Col>
         </Row>
         <BalanceTableComponent
-          clientId={ this.client.apiaudiophoneclients_id }  
+          clientId={ this.client.apiaudiophoneclients_id }
           redirect={ ( route = '/login' ) => {
             this.route = route;
             this.setState({ redirect: true });
