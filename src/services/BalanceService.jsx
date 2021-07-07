@@ -67,6 +67,7 @@ export class BalanceServices {
   calculateBalance( balances = [] ) {
 
     // retorna el total del valor del balance
+
     let total = balances.reduce(( accum, balance, index ) => {
       return accum += ( balance.apiaudiophonebalances_debe - balance.apiaudiophonebalances_haber )
     }, 0);

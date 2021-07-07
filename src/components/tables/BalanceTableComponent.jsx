@@ -16,7 +16,7 @@ export class BalanceTableComponent extends Component {
       showToast: false,
       total: 0 // es el calculo del balance
     };
-    this.header = ['Fecha', 'Horas Laboradas', 'Tarifa por hora', 'Debe', 'Haber', 'Acciones'];
+    this.header = ['Fecha', 'Descripcion', 'Horas Laboradas', 'Tarifa por hora', 'Debe', 'Haber', 'Total', 'Acciones'];
     this.typeModal = null;
     this.balanceServices = new BalanceServices();
     this.action = '';
@@ -60,7 +60,12 @@ export class BalanceTableComponent extends Component {
 
     // se calcula el total
     if ( this.state.balances.length === 0 ) {
-      values.apiaudiophonebalances_total = values.apiaudiophonebalances_debe - values.apiaudiophonebalances_haber
+      values.apiaudiophonebalances_total = values.apiaudiophonebalances_debe - values.apiaudiophonebalances_haber;
+
+    } else {
+      values.apiaudiophonebalances_total = this.balanceServices.calculateBalance( this.state.balances ) +
+        ( values.apiaudiophonebalances_debe - values.apiaudiophonebalances_haber );
+
     }
 
     values = { ...values, id_apiaudiophoneclients: this.props.clientId };
@@ -78,7 +83,7 @@ export class BalanceTableComponent extends Component {
         this.setState({
           showModal: false,
           showToast: true,
-          balances: this.state.balances.length <= pagination ?
+          balances: this.state.balances.length < pagination ?
             this.state.balances.concat([ response.balance ]) : this.state.balances,
           totalBalances: this.state.totalBalances + 1
         });
@@ -147,6 +152,7 @@ export class BalanceTableComponent extends Component {
   handleClick( type = 'new', balance ) {
 
     if ( type === 'new' ) {
+      this.balanceSelected = null;
       this.setState({ showModal: true });
 
     } else {
@@ -178,10 +184,14 @@ export class BalanceTableComponent extends Component {
       return this.state.balances.map(( balance ) => (
         <tr className="text-center" key={ balance.apiaudiophonebalances_id }>
           <td>{ balance.apiaudiophonebalances_date }</td>
+          <td>{ balance.apiaudiophonebalances_desc }</td>
           <td>{ balance.apiaudiophonebalances_horlab } horas</td>
           <td>{ balance.apiaudiophonebalances_tarif }$</td>
           <td>{ balance.apiaudiophonebalances_debe }$</td>
           <td>{ balance.apiaudiophonebalances_haber }$</td>
+          <td className={ this.addClassTotal( balance.apiaudiophonebalances_total ) }>
+            { balance.apiaudiophonebalances_total }$
+          </td>
           <td>
             <Button
   						variant="primary"
@@ -197,7 +207,7 @@ export class BalanceTableComponent extends Component {
     } else {
       return (
         <tr className="text-center">
-          <td colSpan={6} className="text-danger">
+          <td colSpan="8" className="text-danger">
             No existen registros de balances disponibles
           </td>
         </tr>
@@ -233,15 +243,15 @@ export class BalanceTableComponent extends Component {
               <tbody>
                 { this.setRows() }
               </tbody>
-              <tfoot>
+              {/*<tfoot>
                 <tr className="text-right">
-                  <td colSpan="6">Total:
+                  <td colSpan="8">Total:
                     <span className={ this.addClassTotal( this.state.total ) }>
                       { this.state.total }$
                     </span>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot>*/}
             </Table>
             { this.showPagination() }
             <Row className="justify-content-center mt-3">
