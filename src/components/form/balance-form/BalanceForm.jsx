@@ -71,6 +71,17 @@ export const BalanceFormModalComponent = ( props ) => {
                       title="Haber:"
                       component={ DecimalNumberInput }
                     />
+                    { edit && (
+                        <Field
+                          columnSize={6}
+                          name="apiaudiophonebalances_total"
+                          type="number"
+                          title="Total para la fecha:"
+                          readonly={ true }
+                          component={ DecimalNumberInput }
+                        />
+                      )
+                    }
                   </Row>
                 </Modal.Body>
                 <Modal.Footer>

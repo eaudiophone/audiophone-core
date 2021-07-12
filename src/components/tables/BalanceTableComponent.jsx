@@ -16,7 +16,8 @@ export class BalanceTableComponent extends Component {
       showToast: false,
       total: 0 // es el calculo del balance
     };
-    this.header = ['Fecha', 'Descripcion', 'Horas Laboradas', 'Tarifa por hora', 'Debe', 'Haber', 'Total', 'Acciones'];
+    this.header = ['N°', 'Fecha', 'Descripcion', 'Horas Laboradas',
+      'Tarifa por hora', 'Debe', 'Haber', 'Total', 'Acciones'];
     this.typeModal = null;
     this.balanceServices = new BalanceServices();
     this.action = '';
@@ -54,40 +55,61 @@ export class BalanceTableComponent extends Component {
       });
   }
 
-  addBalance( balance ) {
+  async addBalance( balance ) {
 
     let { actions, values } = balance;
 
-    // se calcula el total
-    if ( this.state.balances.length === 0 ) {
-      values.apiaudiophonebalances_total = values.apiaudiophonebalances_debe - values.apiaudiophonebalances_haber;
+    // se elimina el total para no enviar a la bd
+    delete values.apiaudiophonebalances_total;
 
-    } else {
-      values.apiaudiophonebalances_total = this.balanceServices.calculateBalance( this.state.balances ) +
-        ( values.apiaudiophonebalances_debe - values.apiaudiophonebalances_haber );
+    // se resetean los valores del debe y haber
+    if ( values.apiaudiophonebalances_debe > 0 ) {
+      values.apiaudiophonebalances_haber = 0;
+    }
 
+    if ( values.apiaudiophonebalances_haber > 0 ) {
+      values.apiaudiophonebalances_debe = 0;
     }
 
     values = { ...values, id_apiaudiophoneclients: this.props.clientId };
 
+    // inserta los datos
     this.balanceServices.createBalanceClient( values )
       .then(( response ) => {
-
-        // cantidad de registros por paginacion
-        const pagination = 5;
-        actions.setSubmitting( false );
 
         this.message = response.message;
         this.action = 'Exito';
 
-        this.setState({
-          showModal: false,
-          showToast: true,
-          balances: this.state.balances.length < pagination ?
-            this.state.balances.concat([ response.balance ]) : this.state.balances,
-          totalBalances: this.state.totalBalances + 1
-        });
+        // actualiza el listado
+        this.balanceServices.getBalanceClient( null, this.props.clientId )
+          .then(( response ) => {
 
+            actions.setSubmitting( false );
+
+            this.setState({
+              showToast: true,
+              showModal: false,
+              totalBalances: response.totalBalances,
+              balances: response.balances
+            })
+          })
+          .catch(( error ) => {
+
+            if ( error.status === 401 ) {
+              this.props.redirect();
+
+              return;
+            }
+
+            actions.setSubmitting( false );
+
+            // console.log( error );
+
+            this.message = error.message;
+            this.action = error.action;
+
+            this.setState({ showToast: true, showModal: false });
+          });
       })
       .catch( ( error ) => {
 
@@ -183,6 +205,7 @@ export class BalanceTableComponent extends Component {
     if ( this.state.balances.length > 0 ) {
       return this.state.balances.map(( balance ) => (
         <tr className="text-center" key={ balance.apiaudiophonebalances_id }>
+          <td>{ balance.apiaudiophonebalances_id }</td>
           <td>{ balance.apiaudiophonebalances_date }</td>
           <td>{ balance.apiaudiophonebalances_desc }</td>
           <td>{ balance.apiaudiophonebalances_horlab } horas</td>
@@ -207,7 +230,7 @@ export class BalanceTableComponent extends Component {
     } else {
       return (
         <tr className="text-center">
-          <td colSpan="8" className="text-danger">
+          <td colSpan="9" className="text-danger">
             No existen registros de balances disponibles
           </td>
         </tr>

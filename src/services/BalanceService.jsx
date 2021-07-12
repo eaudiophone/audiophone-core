@@ -37,7 +37,13 @@ export class BalanceServices {
       this.authService.postClient( url, balance )
         .then(( response ) => {
           resolve({
-            balance: response.data.apiaudiophonebalancestore,
+            balance: {
+              ...response.data.apiaudiophonebalancestore,
+              apiaudiophonebalances_debe: response.data.apiaudiophonebalancestore.apiaudiophonebalances_debe.toFixed(2),
+              apiaudiophonebalances_haber: response.data.apiaudiophonebalancestore.apiaudiophonebalances_haber.toFixed(2),
+              apiaudiophonebalances_total: response.data.apiaudiophonebalancestore.apiaudiophonebalances_total.toFixed(2),
+              apiaudiophonebalances_tarif: response.data.apiaudiophonebalancestore.apiaudiophonebalances_tarif.toFixed(2)
+            },
             message: response.data.message
           });
         })
