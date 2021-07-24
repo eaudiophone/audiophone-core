@@ -107,7 +107,7 @@ export class BalanceServices {
       this.authService.deleteClient( url, balance )
         .then(( response ) => {
           resolve({
-            message: response.data.message,
+            message: response.data.apiaudiophonebalance_message,
             ok: true,
             status: 200
           });
