@@ -5,7 +5,7 @@ import { ModalItemsComponent } from './modal-items/ModalItemsComponent';
 import { ModalSelectItemsComponent } from './modal-budget/ModalSelectItemsComponent';
 import { ModalBudgetComponent } from './modal-budget/ModalBudgetComponent';
 import { ModalClientComponent } from './modal-clients/ModalClientComponent';
-import { ModalBalanceComponent } from './modal-balance/ModalBalanceComponent';
+import { ModalBalanceComponent, ModalBalanceConfirmComponent } from './modal-balance/ModalBalanceComponent';
 
 export {
 	ChangeRoleModal,
@@ -16,5 +16,6 @@ export {
 	ModalSelectItemsComponent,
 	ModalBudgetComponent,
 	ModalClientComponent,
-	ModalBalanceComponent
+	ModalBalanceComponent,
+	ModalBalanceConfirmComponent
 };

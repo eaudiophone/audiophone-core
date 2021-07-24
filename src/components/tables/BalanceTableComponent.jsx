@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Table, Button } from 'react-bootstrap';
 import { SearchBarComponent, ToastComponent, LoadingComponent, PaginationComponent } from '../index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalBalanceComponent } from '../modal/index';
+import { ModalBalanceComponent, ModalBalanceConfirmComponent } from '../modal/index';
 import { BalanceServices } from '../../services/BalanceService';
 
 export class BalanceTableComponent extends Component {
@@ -14,7 +14,8 @@ export class BalanceTableComponent extends Component {
       totalBalances: 0,
       showModal: false,
       showToast: false,
-      total: 0 // es el calculo del balance
+      total: 0, // es el calculo del balance
+      showModalConfirm: false
     };
     this.header = ['N°', 'Fecha', 'Descripcion', 'Horas Laboradas',
       'Tarifa por hora', 'Debe', 'Haber', 'Total', 'Acciones'];
@@ -244,11 +245,71 @@ export class BalanceTableComponent extends Component {
       });
   }
 
+  deleteBalance( balance ) {
+
+    if ( !balance ) {
+      this.setState({ showModalConfirm: false });
+      return;
+    }
+
+    // delete ...
+    this.balanceServices.deleteBalance( balance )
+      .then(( response ) => {
+
+        this.message = response.message;
+        this.action = 'Exito';
+
+        // actualiza el listado despues de eliminar
+        this.balanceServices.getBalanceClient(
+          JSON.parse( sessionStorage.getItem('balancePagination') ),
+          this.props.clientId
+        )
+          .then(( response ) => {
+
+            this.setState({
+              showToast: true,
+              showModal: false,
+              totalBalances: response.totalBalances,
+              balances: response.balances
+            })
+          })
+          .catch(( error ) => {
+
+            if ( error.status === 401 ) {
+              this.props.redirect();
+
+              return;
+            }
+
+            // console.log( error );
+
+            this.message = error.message;
+            this.action = error.action;
+
+            this.setState({ showToast: true, showModal: false });
+          });
+      })
+      .catch(( error ) => {
+        if ( error.status === 401 ) {
+          this.props.redirect();
+          return;
+        }
+
+        this.message = error.message;
+        this.action = error.action;
+
+        this.setState({
+          showToast: true,
+          showModal: false
+        });
+      });
+  }
+
   searchBalance( search ) {
 
     this.balanceServices.searchBalance( search, this.props.clientId )
       .then(( response ) => {
-        console.log( response );
+        // console.log( response );
         this.setState( response );
       })
       .catch(( error ) => {
@@ -278,6 +339,9 @@ export class BalanceTableComponent extends Component {
     } else if ( type === 'edit' ) {
       this.editBalance( payload );
 
+    } else if ( type === 'delete' ) {
+      this.deleteBalance( payload );
+
     } else {
       this.setState({ showModal: false });
     }
@@ -289,9 +353,13 @@ export class BalanceTableComponent extends Component {
       this.balanceSelected = null;
       this.setState({ showModal: true });
 
-    } else {
+    } else if ( type === 'edit' ) {
       this.balanceSelected = balance;
       this.setState({ showModal: true });
+
+    } else { // delete
+      this.balanceSelected = balance;
+      this.setState({ showModalConfirm: true });
 
     }
   }
@@ -335,6 +403,12 @@ export class BalanceTableComponent extends Component {
   						onClick={ ( $event ) => this.handleClick( 'edit', balance ) }>
   						<FontAwesomeIcon icon="pen" className="point" />
   					</Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={ ( $event ) => this.handleClick('delete', balance ) }>
+              <FontAwesomeIcon icon="trash" className="point" />
+            </Button>
           </td>
         </tr>
       ));
@@ -402,6 +476,11 @@ export class BalanceTableComponent extends Component {
         <ModalBalanceComponent
           showModal={ this.state.showModal }
           closeModal={ ( type, payload ) => this.dispatchEvent( type, payload ) }
+          balance={ this.balanceSelected }
+        />
+        <ModalBalanceConfirmComponent
+          showModal={ this.state.showModalConfirm }
+          closeModal={( type, payload ) => this.dispatchEvent( type, payload ) }
           balance={ this.balanceSelected }
         />
         <ToastComponent

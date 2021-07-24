@@ -99,4 +99,20 @@ export class BalanceServices {
         .catch( ( error ) => reject( this.authService.validateExceptionServer( error ) ));
     });
   }
+
+  deleteBalance( balance ) {
+    return new Promise(( resolve, reject ) => {
+      let url = `apiaudiophonebalance/destroy/${ this.id }`;
+
+      this.authService.deleteClient( url, balance )
+        .then(( response ) => {
+          resolve({
+            message: response.data.message,
+            ok: true,
+            status: 200
+          });
+        })
+        .catch(( error ) => reject( this.authService.validateExceptionServer( error ) ) );
+    });
+  }
 }
