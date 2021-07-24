@@ -82,4 +82,21 @@ export class BalanceServices {
 
     return total;
   }
+
+  updateBalance( balance ) {
+    return new Promise(( resolve, reject ) => {
+      let url = `apiaudiophonebalance/update/${ this.id }`;
+
+      this.authService.putClient( url, balance )
+        .then(( response ) => {
+          // console.log( response );
+          resolve({
+            message: response.data.message,
+            ok: true,
+            status: 200
+          });
+        })
+        .catch( ( error ) => reject( this.authService.validateExceptionServer( error ) ));
+    });
+  }
 }

@@ -29,11 +29,12 @@ export class BalanceTableComponent extends Component {
     this.getBalance();
   }
 
-  getBalance( pagination = null ) {
+  getBalance( pagination = { start: 1, end: 5 } ) {
 
     this.balanceServices.getBalanceClient( pagination, this.props.clientId )
       .then(( response ) => {
         this.setState( response );
+        sessionStorage.setItem('balancePagination', JSON.stringify( pagination ));
       })
       .catch(( error ) => {
 
@@ -55,23 +56,43 @@ export class BalanceTableComponent extends Component {
       });
   }
 
-  async addBalance( balance ) {
+  addBalance( balance ) {
 
     let { actions, values } = balance;
 
     // se elimina el total para no enviar a la bd
     delete values.apiaudiophonebalances_total;
 
+    if ( values.apiaudiophonebalances_haber === values.apiaudiophonebalances_debe ) {
+
+      actions.setSubmitting( false );
+
+      this.message = 'No puedes colocar el mismo valor en la columna del debe y el haber';
+      this.action = 'Error';
+
+      this.setState({
+        showToast: true,
+        showModal: false
+      });
+
+      return;
+    }
+
     // se resetean los valores del debe y haber
-    if ( values.apiaudiophonebalances_debe > 0 ) {
+    if ( +values.apiaudiophonebalances_debe > 0 ) {
       values.apiaudiophonebalances_haber = 0;
-    }
 
-    if ( values.apiaudiophonebalances_haber > 0 ) {
+    } else if ( +values.apiaudiophonebalances_haber > 0 ) {
       values.apiaudiophonebalances_debe = 0;
+
     }
 
-    values = { ...values, id_apiaudiophoneclients: this.props.clientId };
+    values = {
+      ...values,
+      apiaudiophonebalances_debe: Number.parseFloat( values.apiaudiophonebalances_debe ),
+      apiaudiophonebalances_haber: Number.parseFloat( values.apiaudiophonebalances_haber ),
+      id_apiaudiophoneclients: this.props.clientId
+    };
 
     // inserta los datos
     this.balanceServices.createBalanceClient( values )
@@ -80,8 +101,8 @@ export class BalanceTableComponent extends Component {
         this.message = response.message;
         this.action = 'Exito';
 
-        // actualiza el listado
-        this.balanceServices.getBalanceClient( null, this.props.clientId )
+        // actualiza el listado obtenemos la primera pagina
+        this.balanceServices.getBalanceClient( { start: 1, end: 5 }, this.props.clientId )
           .then(( response ) => {
 
             actions.setSubmitting( false );
@@ -129,7 +150,98 @@ export class BalanceTableComponent extends Component {
   }
 
   editBalance( balance ) {
-    console.log( balance );
+    let { actions, values } = balance;
+
+    // se elimina el total para no enviar a la bd
+    delete values.apiaudiophonebalances_total;
+
+    if ( values.apiaudiophonebalances_haber === values.apiaudiophonebalances_debe ) {
+
+      actions.setSubmitting( false );
+
+      this.message = 'No puedes colocar el mismo valor en la columna del debe y el haber';
+      this.action = 'Error';
+
+      this.setState({
+        showToast: true,
+        showModal: false
+      });
+
+      return;
+    }
+
+    // se resetean los valores del debe y haber
+    if ( +values.apiaudiophonebalances_debe > 0 ) {
+      values.apiaudiophonebalances_haber = 0;
+
+    } else if ( +values.apiaudiophonebalances_haber > 0 ) {
+      values.apiaudiophonebalances_debe = 0;
+
+    }
+
+    values = {
+      ...values,
+      apiaudiophonebalances_debe: Number.parseFloat( values.apiaudiophonebalances_debe ),
+      apiaudiophonebalances_haber: Number.parseFloat( values.apiaudiophonebalances_haber ),
+      id_apiaudiophoneclients: this.props.clientId
+    };
+
+    this.balanceServices.updateBalance( values )
+      .then(( response ) => {
+
+        this.message = response.message;
+        this.action = 'Exito';
+
+        // actualiza el listado despues de actualizar
+        this.balanceServices.getBalanceClient(
+          JSON.parse( sessionStorage.getItem('balancePagination') ),
+          this.props.clientId
+        )
+          .then(( response ) => {
+
+            actions.setSubmitting( false );
+
+            this.setState({
+              showToast: true,
+              showModal: false,
+              totalBalances: response.totalBalances,
+              balances: response.balances
+            })
+          })
+          .catch(( error ) => {
+
+            if ( error.status === 401 ) {
+              this.props.redirect();
+
+              return;
+            }
+
+            actions.setSubmitting( false );
+
+            // console.log( error );
+
+            this.message = error.message;
+            this.action = error.action;
+
+            this.setState({ showToast: true, showModal: false });
+          });
+      })
+      .catch(( error ) => {
+        if ( error.status === 401 ) {
+          this.props.redirect();
+          return;
+        }
+
+        actions.setSubmitting( false );
+
+        this.message = error.message;
+        this.action = error.action;
+
+        this.setState({
+          showToast: true,
+          showModal: false
+        });
+      });
   }
 
   searchBalance( search ) {
