@@ -268,7 +268,7 @@ export class BalanceTableComponent extends Component {
 
             this.setState({
               showToast: true,
-              showModal: false,
+              showModalConfirm: false,
               totalBalances: response.totalBalances,
               balances: response.balances
             })
@@ -286,7 +286,7 @@ export class BalanceTableComponent extends Component {
             this.message = error.message;
             this.action = error.action;
 
-            this.setState({ showToast: true, showModal: false });
+            this.setState({ showToast: true, showModalConfirm: false });
           });
       })
       .catch(( error ) => {
@@ -300,7 +300,7 @@ export class BalanceTableComponent extends Component {
 
         this.setState({
           showToast: true,
-          showModal: false
+          showModalConfirm: false
         });
       });
   }
