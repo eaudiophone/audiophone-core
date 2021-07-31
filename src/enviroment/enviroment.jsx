@@ -1,7 +1,7 @@
 // this is the env dev file
 export const URL_SERVER = {
-  enviroment: 'http://localhost:8000/api/',
-  documents: 'http://localhost:8000/'
+  enviroment: 'http://localhost/apiaudiophone/public/api/',
+  documents: 'http://localhost/apiaudiophone/public/'
 };
 
 export const CLIENT_SECRET = {

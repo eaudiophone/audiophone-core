@@ -170,7 +170,10 @@ export class BudgetPage extends Component {
 
 
 	showPdf( url ) {
-		return window.open(
+
+		url = url.replaceAll( /\\/g, '/');
+
+		window.open(
 			( process.env.REACT_APP_ASSETS || URL_SERVER.documents ) + url,
 			'_blank'
 		);

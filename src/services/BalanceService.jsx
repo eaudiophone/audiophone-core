@@ -115,4 +115,21 @@ export class BalanceServices {
         .catch(( error ) => reject( this.authService.validateExceptionServer( error ) ) );
     });
   }
+
+  generateBalance( idClient ) {
+    return new Promise(( resolve, reject ) => {
+      let url = `apiaudiophonebalance/balancepdf/${ this.id }`;
+      let body = { id_apiaudiophoneclients: idClient }
+
+      this.authService.postClient( url, body )
+        .then( response => {
+          resolve({
+            ok: true,
+            code: response.data.status,
+            message: response.data.apiaudiophonebalancemessage
+          });
+        })
+        .catch( error => reject( this.authService.validateExceptionServer( error ) ) )
+    })
+  }
 }

@@ -15,7 +15,8 @@ export class BalanceTableComponent extends Component {
       showModal: false,
       showToast: false,
       total: 0, // es el calculo del balance
-      showModalConfirm: false
+      showModalConfirm: false,
+      loadingBalance: false
     };
     this.header = ['N°', 'Fecha', 'Descripcion', 'Horas Laboradas',
       'Tarifa por hora', 'Debe', 'Haber', 'Total', 'Acciones'];
@@ -331,6 +332,33 @@ export class BalanceTableComponent extends Component {
     // console.log( search );
   }
 
+  generateBalance() {
+
+    this.setState({ loadingBalance: true })
+
+    this.balanceServices.generateBalance( this.props.clientId )
+      .then( response => {
+        this.message = response.message;
+        this.action = 'Exito';
+
+        this.setState({ showToast: true, loadingBalance: false });
+
+        setTimeout(() => this.props.redirect('/clients'), 3000)
+      })
+      .catch( error => {
+
+        if ( error.status === 401 ) {
+          this.props.redirect();
+          return;
+        }
+
+        this.message = error.message;
+        this.action = error.action;
+
+        this.setState({ showToast: true, loadingBalance: false });
+      });
+  }
+
   dispatchEvent( type, payload ) {
 
     if ( type === 'new' ) {
@@ -452,22 +480,35 @@ export class BalanceTableComponent extends Component {
               <tbody>
                 { this.setRows() }
               </tbody>
-              {/*<tfoot>
-                <tr className="text-right">
-                  <td colSpan="8">Total:
-                    <span className={ this.addClassTotal( this.state.total ) }>
-                      { this.state.total }$
-                    </span>
-                  </td>
-                </tr>
-              </tfoot>*/}
             </Table>
             { this.showPagination() }
-            <Row className="justify-content-center mt-3">
-              <Button variant="primary" className="reset-button" disabled>
-                Generar Balance
-              </Button>
-            </Row>
+            { this.state.balances.length > 0 && (
+                <Row className="justify-content-center mt-3">
+                  { !this.state.loadingBalance && (
+                      <Button
+                        variant="primary"
+                        className="reset-button"
+                        onClick={ this.generateBalance.bind( this ) }
+                        >
+                        <FontAwesomeIcon icon="file-alt" className="mr-3" />
+                        Generar Balance
+                      </Button>
+                    )
+                  }
+                  { this.state.loadingBalance && (
+                      <Button
+                        variant="primary"
+                        className="reset-button"
+                        disabled
+                        >
+                        <FontAwesomeIcon icon="spinner" spin className="mr-3" />
+                        Generar Balance
+                      </Button>
+                    )
+                  }
+                </Row>
+              )
+            }
           </>
           )
         }

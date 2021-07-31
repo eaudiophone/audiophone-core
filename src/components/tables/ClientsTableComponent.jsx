@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ClientService } from '../../services/ClientService';
 import { ModalClientComponent } from '../modal/index';
 import { getDateWithHour } from '../../util-functions/date-format';
+import { URL_SERVER } from './../../enviroment/enviroment';
 
 export class ClientsTableComponent extends Component {
 	constructor() {
@@ -29,6 +30,16 @@ export class ClientsTableComponent extends Component {
 
 	componentDidMount() {
 		this.getAllClients();
+	}
+
+	openBalance( url ) {
+
+		url = url.replaceAll( /\\/g, '/');
+
+		window.open(
+			( process.env.REACT_APP_ASSETS || URL_SERVER.documents ) + url,
+			'_blank'
+		);
 	}
 
 	getAllClients( pagination = null ) {
@@ -213,6 +224,16 @@ export class ClientsTableComponent extends Component {
 					<td>{ client.apiaudiophoneclients_phone }</td>
 					<td>{ getDateWithHour( client.created_at ) }</td>
 					<td>
+						{ client.apiaudiophoneclients_url && (
+								<Button
+									variant="primary"
+									size="sm"
+									className="mr-2"
+									onClick={ ( $event ) => this.openBalance( client.apiaudiophoneclients_url ) }>
+									<FontAwesomeIcon icon="file-pdf" className="point" />
+								</Button>
+							)
+						}
 						<Button
 							variant="primary"
 							size="sm"
