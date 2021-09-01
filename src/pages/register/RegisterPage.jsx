@@ -29,7 +29,7 @@ class RegisterPage extends Component {
 
 	getFormData( values, actions ) {
 
-		/*setTimeout(() => {
+		setTimeout(() => {
 			this.authService.post( 'apiaudiophoneuser/store',  values )
 			.then( resp => {
 
@@ -55,7 +55,7 @@ class RegisterPage extends Component {
 
 				this.setState({ toast: true, loading: false });
 			});
-		}, 2000 );*/
+		}, 2000 );
 	}
 
 	render() {
