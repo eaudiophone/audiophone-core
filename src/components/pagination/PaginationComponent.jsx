@@ -1,38 +1,16 @@
 import React, { useState } from 'react';
-import { Pagination } from 'react-bootstrap';
+import { Pagination, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import './PaginationComponent.css';
 
 export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
-	console.log( totalRegisters );
+	// console.log( totalRegisters );
 
 	const [ paginationNumber, setPaginationNumber ] = useState( 1 );
 
 	let limit = 0;
-
-	const getPagination = () => {
-
-		let items = [];
-
-		for ( let index = 1; index <= limit; index++ ) {
-
-			items.push(
-
-				<Pagination.Item
-					key={ index }
-					active={ index === paginationNumber }
-					onClick={ () => setUrl( index ) }
-				>
-					{ index }
-				</Pagination.Item>
-
-			);
-		}
-
-		return items;
-	};
 
 	const setUrl = ( index ) => {
 
@@ -55,11 +33,26 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 	}
 
 	return (
-		<Pagination>
-			<Pagination.Prev onClick={ () => setUrl( paginationNumber - 1 ) } />
-				{ getPagination() }
-			<Pagination.Next onClick={ () => setUrl( paginationNumber + 1 ) } />
-		</Pagination>
+		<>
+			<Row className="justify-content-between mb-4 mr-0">
+				<div>Total de registros:  <span className="ml-1">{ totalRegisters }</span></div>
+				<div>Pagina <span className="ml-1">{ paginationNumber }</span> de <span className="ml-1">{ limit }</span></div>
+			</Row>
+			<Row className="justify-content-center">
+				<Pagination>
+					<Pagination.First onClick={ () => setUrl( 1 ) } />
+					<Pagination.Prev onClick={ () => setUrl( paginationNumber - 1 ) } />
+						<Pagination.Item
+							active={ true }
+							onClick={ () => setUrl( paginationNumber ) }
+						>
+							{ paginationNumber }
+						</Pagination.Item>
+					<Pagination.Next onClick={ () => setUrl( paginationNumber + 1 ) } />
+					<Pagination.Last onClick={ () => setUrl( limit ) } />
+			</Pagination>
+			</Row>
+		</>
 	);
 };
 

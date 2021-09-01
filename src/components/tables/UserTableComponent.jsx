@@ -329,13 +329,11 @@ export class UserTableComponent extends Component {
 							{ this.getRows() }
 						</tbody>
 					</Table>
-					<Row className="justify-content-center mt-2">
-						<PaginationComponent
-							totalRegisters={ this.state.totalUsers }
-							send={ ( params ) => this.getPagination( params ) }
-							pagination={ 5 }
+					<PaginationComponent
+						totalRegisters={ this.state.totalUsers }
+						send={ ( params ) => this.getPagination( params ) }
+						pagination={ 5 }
 						/>
-					</Row>
 				</div>
 			);
 
