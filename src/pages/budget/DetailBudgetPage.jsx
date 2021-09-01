@@ -354,7 +354,7 @@ const InputQuantity = ( props ) => {
 
 	return (
 		<input
-			className="form-control"
+			className="form-control text-center"
 			type="number"
 			min="1"
 			max="9999"

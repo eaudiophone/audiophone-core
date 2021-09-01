@@ -337,13 +337,11 @@ export class ItemsTableComponent extends Component {
 			<div>
 				{ this.showContent() }
 				{ this.state.totalItems > 0 && (
-						<Row className="justify-content-center mt-2">
-							<PaginationComponent
-								totalRegisters={ this.state.totalItems }
-								send={ ( params ) => this.getAllItems( params ) }
-								pagination={ 5 }
-							/>
-						</Row>
+						<PaginationComponent
+							totalRegisters={ this.state.totalItems }
+							send={ ( params ) => this.getAllItems( params ) }
+							pagination={ 5 }
+						/>
 					)
 				}
 				<ModalItemsComponent

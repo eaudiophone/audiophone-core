@@ -271,13 +271,11 @@ export class ClientsTableComponent extends Component {
 		if ( this.state.clients.length > 0 ) {
 
 			return (
-				<Row className="justify-content-center mt-2">
-					<PaginationComponent
-						totalRegisters={ this.state.totalClients }
-						send={ ( params ) => this.getAllClients( params ) }
-						pagination={ 5 }
-					/>
-				</Row>
+				<PaginationComponent
+					totalRegisters={ this.state.totalClients }
+					send={ ( params ) => this.getAllClients( params ) }
+					pagination={ 5 }
+				/>
 			);
 		}
 	}

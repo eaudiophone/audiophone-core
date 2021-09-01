@@ -4,6 +4,8 @@ import { Row, Table, Button } from 'react-bootstrap';
 import { getDateWithHour } from '../../util-functions/date-format';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import './BudgetTableComponent.css';
+
 const headerTable = [
 	'Tipo de servicio:',
 	'Nombre cliente:',
@@ -67,19 +69,21 @@ export const BudgetTableComponent = ( props ) => {
 					}
 					{ budgets.length === 0 && (
 							<tr className="text-center">
-								<td colSpan="6">No hay informacion de presupuestos generados</td>
+								<td colSpan="6" className="text-danger">No hay informacion de presupuestos generados</td>
 							</tr>
 						)
 					}
 				</tbody>
 			</Table>
-			<Row className="justify-content-center mt-3">
-				<PaginationComponent
-					totalRegisters={ totalBudgets }
-					send={ ( params ) => pagination( params ) }
-					pagination={ 5 }
-				/>
-			</Row>
+			{ budgets.length > 0 && (
+					<PaginationComponent
+						totalRegisters={ totalBudgets }
+						send={ ( params ) => pagination( params ) }
+						pagination={ 5 }
+					/>
+				)
+			}
+
 		</Fragment>
 	);
 }

@@ -14,7 +14,9 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 	const setUrl = ( index ) => {
 
-		if ( index < 1 || index > limit ) { return; }
+		if ( index < 1 || index > limit ) {
+			return;
+		}
 
 		let end = index * pagination;
 		let start = index > 1 ? end - ( pagination - 1 ): 1;
@@ -34,7 +36,7 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 
 	return (
 		<>
-			<Row className="justify-content-between mb-4 mr-0">
+			<Row className="justify-content-between mb-4 w-100 mr-0">
 				<div>Total de registros:  <span className="ml-1">{ totalRegisters }</span></div>
 				<div>Pagina <span className="ml-1">{ paginationNumber }</span> de <span className="ml-1">{ limit }</span></div>
 			</Row>
@@ -50,7 +52,7 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 						</Pagination.Item>
 					<Pagination.Next onClick={ () => setUrl( paginationNumber + 1 ) } />
 					<Pagination.Last onClick={ () => setUrl( limit ) } />
-			</Pagination>
+				</Pagination>
 			</Row>
 		</>
 	);
