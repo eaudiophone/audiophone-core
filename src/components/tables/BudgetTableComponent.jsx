@@ -52,14 +52,17 @@ export const BudgetTableComponent = ( props ) => {
 											>
 											<FontAwesomeIcon icon="pen" />
 										</Button>
-										<Button
-											variant="secondary"
-											size="sm"
-											className="point mr-2 "
-											onClick={ () => showPdf( budget.apiaudiophonebudgets_url ) }
-										>
-											<FontAwesomeIcon icon="file-pdf" />
-										</Button>
+										{ budget.apiaudiophonebudgets_url && (
+												<Button
+													variant="secondary"
+													size="sm"
+													className="point mr-2 "
+													onClick={ () => showPdf( budget.apiaudiophonebudgets_url ) }
+													>
+													<FontAwesomeIcon icon="file-pdf" />
+												</Button>
+											)
+										}
 									</Row>
 								</td>
 							</tr>
