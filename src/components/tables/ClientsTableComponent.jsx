@@ -33,8 +33,8 @@ export class ClientsTableComponent extends Component {
 	}
 
 	openBalance( url ) {
-
-		url = url.replaceAll( /\\/g, '/');
+		
+		url = url.replace( /\\/g, '/');
 
 		window.open(
 			( process.env.REACT_APP_ASSETS || URL_SERVER.documents ) + url,
