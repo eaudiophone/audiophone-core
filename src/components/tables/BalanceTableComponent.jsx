@@ -399,7 +399,7 @@ export class BalanceTableComponent extends Component {
         <Row className="justify-content-center mt-2">
           <PaginationComponent
             totalRegisters={ this.state.totalBalances }
-            pagination={ 5 }
+            pagination={ 15 }
             send={ ( params ) => this.getBalance( params ) }
           />
         </Row>
