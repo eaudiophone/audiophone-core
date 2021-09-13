@@ -82,7 +82,7 @@ export const BudgetTableComponent = ( props ) => {
 					<PaginationComponent
 						totalRegisters={ totalBudgets }
 						send={ ( params ) => pagination( params ) }
-						pagination={ 5 }
+						pagination={ 15 }
 					/>
 				)
 			}

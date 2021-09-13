@@ -332,7 +332,7 @@ export class UserTableComponent extends Component {
 					<PaginationComponent
 						totalRegisters={ this.state.totalUsers }
 						send={ ( params ) => this.getPagination( params ) }
-						pagination={ 5 }
+						pagination={ 15 }
 						/>
 				</div>
 			);

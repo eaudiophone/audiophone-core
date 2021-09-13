@@ -27,7 +27,7 @@ export class BudgetPage extends Component {
 	}
 
 	componentDidMount() {
-		return this.getPagination({ start: 1, end: 5 }, true );
+		return this.getPagination({ start: 1, end: 15 }, true );
 	}
 
 	updateBudget({ values, actions }) {

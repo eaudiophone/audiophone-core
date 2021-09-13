@@ -37,8 +37,8 @@ export const PaginationComponent = ({ totalRegisters, pagination, send }) => {
 	return (
 		<>
 			<Row className="justify-content-between mb-4 w-100 mr-0">
-				<div>Total de registros:  <span className="ml-1">{ totalRegisters }</span></div>
-				<div>Pagina <span className="ml-1">{ paginationNumber }</span> de <span className="ml-1">{ limit }</span></div>
+				<div>Total de registros: <span className="ml-1">{ totalRegisters }</span></div>
+				<div>Página<span className="ml-1">{ paginationNumber }</span> de<span className="ml-1">{ limit }</span></div>
 			</Row>
 			<Row className="justify-content-center">
 				<Pagination>

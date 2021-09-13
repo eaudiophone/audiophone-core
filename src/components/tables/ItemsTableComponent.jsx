@@ -37,7 +37,7 @@ export class ItemsTableComponent extends Component {
 		return this.getAllItems();
 	}
 
-	getAllItems( pagination = { start: 1, end: 5 } ) {
+	getAllItems( pagination = { start: 1, end: 15 } ) {
 
 		this.itemService.getAllItems( pagination )
 			.then( response => {
@@ -340,7 +340,7 @@ export class ItemsTableComponent extends Component {
 						<PaginationComponent
 							totalRegisters={ this.state.totalItems }
 							send={ ( params ) => this.getAllItems( params ) }
-							pagination={ 5 }
+							pagination={ 15 }
 						/>
 					)
 				}

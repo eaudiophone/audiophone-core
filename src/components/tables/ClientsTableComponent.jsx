@@ -33,7 +33,7 @@ export class ClientsTableComponent extends Component {
 	}
 
 	openBalance( url ) {
-		
+
 		url = url.replace( /\\/g, '/');
 
 		window.open(
@@ -274,7 +274,7 @@ export class ClientsTableComponent extends Component {
 				<PaginationComponent
 					totalRegisters={ this.state.totalClients }
 					send={ ( params ) => this.getAllClients( params ) }
-					pagination={ 5 }
+					pagination={ 15 }
 				/>
 			);
 		}
